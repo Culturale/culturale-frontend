@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "culturale-front",
+    "slug": "culturale-front",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "culturale-front"
+}
