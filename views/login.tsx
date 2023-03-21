@@ -1,13 +1,14 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import {
+  KeyboardAvoidingView,
   StyleSheet,
   Text,
   View,
   Image,
   TextInput,
   Button,
-  TouchableOpacity,
+  TouchableOpacity
 } from "react-native";
 
 
@@ -15,28 +16,27 @@ export const LoginScreen = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     return (
-        <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
         <Image style={styles.image} source={require("../assets/logo.png")} />
         <StatusBar style="auto" />
+          <View style={styles.inputView}>
+              <TextInput
+              style={styles.TextInput}
+              placeholder="Email"
+              placeholderTextColor="#003f5c"
+              onChangeText={(email) => setEmail(email)}
+              />
+              </View>
 
-        <View style={styles.inputView}>
-            <TextInput
-            style={styles.TextInput}
-            placeholder="Email"
-            placeholderTextColor="#003f5c"
-            onChangeText={(email) => setEmail(email)}
-            />
-            </View>
-
-            <View style={styles.inputView}>
-            <TextInput
-            style={styles.TextInput}
-            placeholder="Contraseña"
-            placeholderTextColor="#003f5c"
-            secureTextEntry={true}
-            onChangeText={(password) => setPassword(password)}
-            /> 
-        </View>
+              <View style={styles.inputView}>
+              <TextInput
+              style={styles.TextInput}
+              placeholder="Contraseña"
+              placeholderTextColor="#003f5c"
+              secureTextEntry={true}
+              onChangeText={(password) => setPassword(password)}
+              /> 
+          </View>
 
         <TouchableOpacity>
           <Text style={styles.register}>¿No estás registrado?</Text> 
@@ -46,8 +46,9 @@ export const LoginScreen = () => {
           <Text style={styles.loginText}>ENTRA</Text> 
         </TouchableOpacity> 
 
-        </View>
-        );
+      </KeyboardAvoidingView>
+      
+    );
 }
 
 
