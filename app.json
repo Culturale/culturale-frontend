@@ -2,7 +2,13 @@
   "expo": {
     "name": "culturale-front",
     "slug": "culturale-front",
+    "platforms": ["ios", "android"],
     "version": "1.0.0",
+    "splash": {
+      "image": "./assets/splash-screen.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
     "assetBundlePatterns": [
       "**/*"
     ]
