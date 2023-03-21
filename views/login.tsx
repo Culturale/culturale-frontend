@@ -13,7 +13,7 @@ import {
 
 
 export const LoginScreen = () => {
-    const [email, setEmail] = useState('');
+    const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -22,9 +22,9 @@ export const LoginScreen = () => {
           <View style={styles.inputView}>
               <TextInput
               style={styles.TextInput}
-              placeholder="Email"
+              placeholder="Usuario"
               placeholderTextColor="#003f5c"
-              onChangeText={(email) => setEmail(email)}
+              onChangeText={(user) => setUser(user)}
               />
               </View>
 

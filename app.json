@@ -9,6 +9,14 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "La app accede a tus galería para subir la foto de perfil"
+        }
+      ]
+    ],
     "assetBundlePatterns": [
       "**/*"
     ]
