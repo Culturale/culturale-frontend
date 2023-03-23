@@ -28,6 +28,7 @@ export const LoginScreen = () => {
               />
               </View>
 
+
               <View style={styles.inputView}>
               <TextInput
               style={styles.TextInput}
