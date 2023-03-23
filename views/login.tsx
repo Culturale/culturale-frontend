@@ -12,7 +12,7 @@ import {
 } from "react-native";
 
 
-export const LoginScreen = () => {
+export const LoginScreen = ({navigation}: {navigation: any}) => {
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
     return (
@@ -38,7 +38,7 @@ export const LoginScreen = () => {
               /> 
           </View>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Text style={styles.register}>¿No estás registrado?</Text> 
         </TouchableOpacity>
 
