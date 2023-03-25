@@ -1,5 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
+import axios, { AxiosResponse } from 'axios';
 import * as ImagePicker from 'expo-image-picker';
 import { RadioButton } from 'react-native-paper';
 import DropDownPicker from "react-native-dropdown-picker";
@@ -16,9 +17,9 @@ import {
 } from "react-native";
 
 
-export const RegisterScreen = () => {
-    const [nom, setNom] = useState('');
-    const [user, setUser] = useState('');
+export const EditProfileScreen = () => {
+    const [name, setNom] = useState('');
+    const [username, setUser] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [telf, setTelf] = useState('');
@@ -30,6 +31,26 @@ export const RegisterScreen = () => {
         { label: 'Particular', value: 'particular' },
         { label: 'Empresa', value: 'empresa' }
     ]);
+
+    const handleEditProfile = async () => {
+        const SERVER_URL = 'http://172.20.10.8:8080';
+        const EditProfileData = {
+            username: username,
+            name: name,
+            password: password,
+            email: email,
+            profilePicture: image,
+            phoneNumber: telf,
+            usertype: items
+        };
+        axios.post(`${SERVER_URL}/users/login`, EditProfileData)
+            .then((response: AxiosResponse) => {
+                console.log('Respuesta del servidor:', response.data);
+            })
+            .catch((error: any) => {
+                console.error('Error al iniciar sesión:', error.response.data);
+            });
+    };
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
