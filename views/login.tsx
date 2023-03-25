@@ -1,5 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
+import axios, { AxiosResponse } from 'axios';
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -12,7 +13,24 @@ import {
 } from "react-native";
 
 
+
 export const LoginScreen = ({navigation}: {navigation: any}) => {
+
+    const handleLogin = async () => {
+      const SERVER_URL = 'http://172.20.10.8:8080';
+      const loginData = {
+        username: user,
+        password: password};
+
+      axios.post(`${SERVER_URL}/users/login`, loginData)
+  .then((response: AxiosResponse) => {
+    console.log('Respuesta del servidor:', response.data);
+  })
+  .catch((error: any) => {
+    console.error('Error al iniciar sesión:', error.response.data);
+  });
+    };
+
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
     return (
@@ -42,7 +60,7 @@ export const LoginScreen = ({navigation}: {navigation: any}) => {
           <Text style={styles.register}>¿No estás registrado?</Text> 
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.loginBtn}>
+        <TouchableOpacity onPress={ () => handleLogin()}style={styles.loginBtn}>
           <Text style={styles.loginText}>ENTRA</Text> 
         </TouchableOpacity> 
 
