@@ -26,7 +26,7 @@ export const RegisterScreen  = () => {
       email: email,
       password: password,
       phoneNumber: telf,
-      usertype: checked,
+      usertype: value,
       profilePicture: image
     };
 
@@ -44,7 +44,6 @@ export const RegisterScreen  = () => {
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [telf, setTelf] = useState('');
-    const [checked, setChecked] = React.useState('usuario');
     const [image, setImage] = useState('');
     const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
