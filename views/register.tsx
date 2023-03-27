@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import * as ImagePicker from 'expo-image-picker';
 import { RadioButton } from 'react-native-paper';
 import DropDownPicker from "react-native-dropdown-picker";
+import axios, { AxiosResponse } from 'axios';
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -17,17 +18,38 @@ import {
 
 
 export const RegisterScreen  = () => {
+  const handleRegister = async () => {
+    const SERVER_URL = 'http://192.168.1.38:8080';
+    const registerData = {
+      name: nom,
+      username: user,
+      email: email,
+      password: password,
+      phoneNumber: telf,
+      usertype: checked,
+      profilePicture: image
+    };
+
+    axios.post(`${SERVER_URL}/users/create`, registerData)
+.then((response: AxiosResponse) => {
+  console.log('Respuesta del servidor:', response.data);
+})
+.catch((error: any) => {
+  console.error('Error al registrar usuario:', error.response.data);
+});
+  };
+
     const [nom, setNom] = useState('');
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [telf, setTelf] = useState('');
-    const [checked, setChecked] = React.useState('particular');
+    const [checked, setChecked] = React.useState('usuario');
     const [image, setImage] = useState('');
     const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
   const [items, setItems] = useState([
-    {label: 'Particular', value: 'particular'},
+    {label: 'Particular', value: 'usuario'},
     {label: 'Empresa', value: 'empresa'}
   ]);
 
@@ -112,7 +134,7 @@ export const RegisterScreen  = () => {
             setItems={setItems}
           />
 
-          <TouchableOpacity style={styles.registerBtn}>
+          <TouchableOpacity onPress={ () => handleRegister()}  style={styles.registerBtn}>
             <Text style={styles.registerText}>CONFIRMAR</Text> 
           </TouchableOpacity> 
 
