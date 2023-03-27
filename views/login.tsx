@@ -17,7 +17,7 @@ import {
 export const LoginScreen = ({navigation}: {navigation: any}) => {
 
     const handleLogin = async () => {
-      const SERVER_URL = 'http://172.20.10.8:8080';
+      const SERVER_URL = 'http://192.168.1.38:8080';
       const loginData = {
         username: user,
         password: password};
@@ -60,7 +60,7 @@ export const LoginScreen = ({navigation}: {navigation: any}) => {
           <Text style={styles.register}>¿No estás registrado?</Text> 
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={ () => handleLogin()}style={styles.loginBtn}>
+        <TouchableOpacity onPress={ () => handleLogin()} style={styles.loginBtn}>
           <Text style={styles.loginText}>ENTRA</Text> 
         </TouchableOpacity> 
 
