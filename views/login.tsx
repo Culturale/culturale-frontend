@@ -12,8 +12,8 @@ import {
 } from "react-native";
 
 
-export const LoginScreen = () => {
-    const [email, setEmail] = useState('');
+export const LoginScreen = ({navigation}: {navigation: any}) => {
+    const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -22,9 +22,9 @@ export const LoginScreen = () => {
           <View style={styles.inputView}>
               <TextInput
               style={styles.TextInput}
-              placeholder="Email"
+              placeholder="Usuario"
               placeholderTextColor="#003f5c"
-              onChangeText={(email) => setEmail(email)}
+              onChangeText={(user) => setUser(user)}
               />
               </View>
 
@@ -39,7 +39,7 @@ export const LoginScreen = () => {
               /> 
           </View>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Text style={styles.register}>¿No estás registrado?</Text> 
         </TouchableOpacity>
 
