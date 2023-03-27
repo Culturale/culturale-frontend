@@ -19,7 +19,9 @@ import {
 
 export const RegisterScreen  = () => {
   const handleRegister = async () => {
-    const SERVER_URL = 'http://192.168.1.38:8080';
+    validateEmail();
+    validatePhone();
+    const SERVER_URL = 'http://172.20.10.8:8080';
     const registerData = {
       name: nom,
       username: user,
@@ -31,27 +33,32 @@ export const RegisterScreen  = () => {
     };
 
     axios.post(`${SERVER_URL}/users/create`, registerData)
-.then((response: AxiosResponse) => {
-  console.log('Respuesta del servidor:', response.data);
-})
-.catch((error: any) => {
-  console.error('Error al registrar usuario:', error.response.data);
-});
-  };
+      .then((response: AxiosResponse) => {
+        console.log('Respuesta del servidor:', response.data);
+      })
+      .catch((error: any) => {
+        console.error('Error al registrar usuario:', error.response.data);
+      });
+};
 
-    const [nom, setNom] = useState('');
-    const [user, setUser] = useState('');
-    const [password, setPassword] = useState('');
-    const [email, setEmail] = useState('');
-    const [telf, setTelf] = useState('');
-    const [checked, setChecked] = React.useState('usuario');
-    const [image, setImage] = useState('');
-    const [open, setOpen] = useState(false);
+
+
+  const [nom, setNom] = useState('');
+  const [user, setUser] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [telf, setTelf] = useState('');
+  const [checked, setChecked] = React.useState('usuario');
+  const [image, setImage] = useState('');
+  const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
   const [items, setItems] = useState([
     {label: 'Particular', value: 'usuario'},
     {label: 'Empresa', value: 'empresa'}
   ]);
+
+  const [emailError, setEmailError] = useState('');
+  const [phoneError, setPhoneError] = useState('');
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -64,6 +71,24 @@ export const RegisterScreen  = () => {
     
         if (!result.canceled) {
           setImage(result.assets[0].uri);
+        }
+      };
+
+      const validateEmail = () => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          setEmailError('Ingresa un correo electrónico válido');
+        } else {
+          setEmailError('');
+        }
+      };
+    
+      const validatePhone = () => {
+        const phoneRegex = /^[0-9]{9}$/;
+        if (!phoneRegex.test(telf)) {
+          setPhoneError('Ingresa un número de teléfono válido');
+        } else {
+          setPhoneError('');
         }
       };
 
@@ -110,19 +135,23 @@ export const RegisterScreen  = () => {
               <TextInput
               style={styles.TextInput}
               placeholder="Email"
+              onBlur={validateEmail}
               placeholderTextColor="#003f5c"
               onChangeText={(email) => setEmail(email)}
               />
           </View>
+          {emailError ? <Text style={{color: 'red'}}>{emailError}</Text> : null}
 
           <View style={styles.inputView}>
               <TextInput
               style={styles.TextInput}
               placeholder="Teléfono"
+              onBlur={validatePhone}
               placeholderTextColor="#003f5c"
               onChangeText={(telf) => setTelf(telf)}
               />
           </View>
+          {phoneError ? <Text style={{color: 'red'}}>{phoneError}</Text> : null}
 
           
           <DropDownPicker style={{backgroundColor: "#D2FFE6", width: "70%", alignSelf: 'center', marginBottom: 20}}
