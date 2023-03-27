@@ -20,15 +20,15 @@ export const ChatScreen = ({ navigation }: { navigation: any }) => {
     return (
         <View style={styles.container}>
             <KeyboardAvoidingView style={styles.topbar}>
-                <View style={[styles.basecontainer, flexdata1]}>
-                    <Image style={styles.image} source={require("../assets/logo-detail.png")} />
-                </View>
+                <TouchableOpacity onPress={() => navigation.navigate('Login')} style={[styles.basecontainer, flexdata1]}>
+                    <Image style={styles.sendpic} source={require("../assets/back.png")} />
+                </TouchableOpacity>
                 <View style={[styles.basecontainer, flexdata2]}>
                     <Text style={styles.baseText}>EventName</Text>
                 </View>
-                <TouchableOpacity onPress={() => navigation.navigate('Login')} style={[styles.basecontainer, flexdata3]}>
-                    <Text style={styles.baseText}>Back</Text>
-                </TouchableOpacity>           
+                <View style={[styles.basecontainer, flexdata1]}>
+                    <Image style={styles.image} source={require("../assets/logo-detail.png")} />
+                </View>        
             </KeyboardAvoidingView>    
             <View style={styles.chatbody}>
 
@@ -54,7 +54,6 @@ export const ChatScreen = ({ navigation }: { navigation: any }) => {
 
 const flexdata1 = { width: "20%" };
 const flexdata2 = { width: "60%" };
-const flexdata3 = { width: "20%" };
 
 const styles = StyleSheet.create({
     container: {
@@ -71,7 +70,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: "80%",
         height: 50,
-        //marginBottom: 20,
         justifyContent: "flex-start",
         alignItems: "flex-start",
     },
@@ -80,7 +78,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: 50,
         height: 50,
-        //marginBottom: 20,
         justifyContent: "center",
         alignItems: "center",
     },
@@ -95,15 +92,12 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
         backgroundColor: "#76d7b8",
         width: "100%",
-        //height: "14%",
         height: 90,
         flexDirection: "row",
     },
     chatbody: {
         backgroundColor: "#fff",
-        //backgroundColor: "#D2FFE6",
         width: "100%",
-        //height: "68%",
         flexGrow: 1,
     },
     chatinput: {
@@ -111,7 +105,6 @@ const styles = StyleSheet.create({
         gap: 10,
         backgroundColor: "#76d7b8",
         width: "100%",
-        //height: "18%",
         height: 90,
         flexDirection: "row",
     },
@@ -124,7 +117,7 @@ const styles = StyleSheet.create({
         height: 20,
     },
     baseText: {
-        fontFamily: 'Helvetica',
+        fontFamily: 'Roboto',
         fontSize: 20,
         color: 'black',
     },
