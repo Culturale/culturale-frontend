@@ -1,9 +1,10 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios, { AxiosResponse } from 'axios';
 import {
   KeyboardAvoidingView,
   StyleSheet,
+  Animated,
   Text,
   View,
   Image,
@@ -16,8 +17,32 @@ import {
 
 export const LoginScreen = ({navigation}: {navigation: any}) => {
 
+    const [user, setUser] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [opacity] = useState(new Animated.Value(0));
+
+    useEffect(() => {
+      if (error) {
+        Animated.timing(opacity, {
+          toValue: 1,
+          duration: 500,
+          useNativeDriver: true,
+        }).start();
+        setTimeout(() => {
+          Animated.timing(opacity, {
+            toValue: 0,
+            duration: 500,
+            useNativeDriver: true,
+          }).start(() => {
+            setError('');
+          });
+        }, 2000);
+      }
+    }, [error, opacity]);
+
     const handleLogin = async () => {
-      const SERVER_URL = 'http://172.20.10.8:8080';
+      const SERVER_URL = '';
       const loginData = {
         username: user,
         password: password};
@@ -25,14 +50,16 @@ export const LoginScreen = ({navigation}: {navigation: any}) => {
       axios.post(`${SERVER_URL}/users/login`, loginData)
   .then((response: AxiosResponse) => {
     console.log('Respuesta del servidor:', response.data);
+
   })
   .catch((error: any) => {
     console.error('Error al iniciar sesión:', error.response.data);
+    if (error.response.status == 400) setError('Usuario o contraseña incorrectas')
   });
     };
 
-    const [user, setUser] = useState('');
-    const [password, setPassword] = useState('');
+    
+
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding">
         <Image style={styles.image} source={require("../assets/logo.png")} />
@@ -46,6 +73,7 @@ export const LoginScreen = ({navigation}: {navigation: any}) => {
               />
               </View>
 
+
               <View style={styles.inputView}>
               <TextInput
               style={styles.TextInput}
@@ -56,11 +84,17 @@ export const LoginScreen = ({navigation}: {navigation: any}) => {
               /> 
           </View>
 
-        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+
+        <TouchableOpacity onPress={() => navigation.navigate('Chat')}>
           <Text style={styles.register}>¿No estás registrado?</Text> 
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={ () => handleLogin()}style={styles.loginBtn}>
+        <Animated.View style={{opacity}}>
+          {error && <Text style={{color: 'red', fontSize: 16}}>{error}</Text>}
+        </Animated.View>
+
+        <TouchableOpacity onPress={ () => handleLogin()} style={styles.loginBtn}>
+
           <Text style={styles.loginText}>ENTRA</Text> 
         </TouchableOpacity> 
 
@@ -78,6 +112,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   image: {
+    height: '50%',
     marginBottom: 40,
   },
   inputView: {
