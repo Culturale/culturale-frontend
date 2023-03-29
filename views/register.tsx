@@ -21,14 +21,14 @@ export const RegisterScreen  = () => {
   const handleRegister = async () => {
     validateEmail();
     validatePhone();
-    const SERVER_URL = 'http://172.20.10.8:8080';
+    const SERVER_URL = '';
     const registerData = {
       name: nom,
       username: user,
       email: email,
       password: password,
       phoneNumber: telf,
-      usertype: checked,
+      usertype: value,
       profilePicture: image
     };
 
@@ -43,14 +43,13 @@ export const RegisterScreen  = () => {
 
 
 
-  const [nom, setNom] = useState('');
-  const [user, setUser] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const [telf, setTelf] = useState('');
-  const [checked, setChecked] = React.useState('usuario');
-  const [image, setImage] = useState('');
-  const [open, setOpen] = useState(false);
+    const [nom, setNom] = useState('');
+    const [user, setUser] = useState('');
+    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
+    const [telf, setTelf] = useState('');
+    const [image, setImage] = useState('');
+    const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
   const [items, setItems] = useState([
     {label: 'Particular', value: 'usuario'},
