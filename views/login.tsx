@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
 import axios, { AxiosResponse } from 'axios';
+import AsyncStorage  from '@react-native-async-storage/async-storage';
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -42,14 +43,17 @@ export const LoginScreen = ({navigation}: {navigation: any}) => {
     }, [error, opacity]);
 
     const handleLogin = async () => {
-      const SERVER_URL = '';
+      const SERVER_URL = 'http://192.168.1.38:8080';
       const loginData = {
         username: user,
         password: password};
 
       axios.post(`${SERVER_URL}/users/login`, loginData)
   .then((response: AxiosResponse) => {
-    console.log('Respuesta del servidor:', response.data);
+    AsyncStorage.setItem('token', response.data.token);
+    console.log('Respuesta del servidor:', response.data.token);
+    navigation.navigate('Main');
+
 
   })
   .catch((error: any) => {
@@ -85,7 +89,7 @@ export const LoginScreen = ({navigation}: {navigation: any}) => {
           </View>
 
 
-        <TouchableOpacity onPress={() => navigation.navigate('Chat')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Text style={styles.register}>¿No estás registrado?</Text> 
         </TouchableOpacity>
 
