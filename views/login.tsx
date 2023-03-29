@@ -83,7 +83,7 @@ export const LoginScreen = ({navigation}: {navigation: any}) => {
               /> 
           </View>
 
-        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Chat')}>
           <Text style={styles.register}>¿No estás registrado?</Text> 
         </TouchableOpacity>
 
