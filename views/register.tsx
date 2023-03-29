@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import * as ImagePicker from 'expo-image-picker';
 import { RadioButton } from 'react-native-paper';
 import DropDownPicker from "react-native-dropdown-picker";
+import axios, { AxiosResponse } from 'axios';
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -17,19 +18,46 @@ import {
 
 
 export const RegisterScreen  = () => {
+  const handleRegister = async () => {
+    validateEmail();
+    validatePhone();
+    const SERVER_URL = '';
+    const registerData = {
+      name: nom,
+      username: user,
+      email: email,
+      password: password,
+      phoneNumber: telf,
+      usertype: value,
+      profilePicture: image
+    };
+
+    axios.post(`${SERVER_URL}/users/create`, registerData)
+      .then((response: AxiosResponse) => {
+        console.log('Respuesta del servidor:', response.data);
+      })
+      .catch((error: any) => {
+        console.error('Error al registrar usuario:', error.response.data);
+      });
+};
+
+
+
     const [nom, setNom] = useState('');
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [telf, setTelf] = useState('');
-    const [checked, setChecked] = React.useState('particular');
     const [image, setImage] = useState('');
     const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
   const [items, setItems] = useState([
-    {label: 'Particular', value: 'particular'},
+    {label: 'Particular', value: 'usuario'},
     {label: 'Empresa', value: 'empresa'}
   ]);
+
+  const [emailError, setEmailError] = useState('');
+  const [phoneError, setPhoneError] = useState('');
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -42,6 +70,24 @@ export const RegisterScreen  = () => {
     
         if (!result.canceled) {
           setImage(result.assets[0].uri);
+        }
+      };
+
+      const validateEmail = () => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          setEmailError('Ingresa un correo electrónico válido');
+        } else {
+          setEmailError('');
+        }
+      };
+    
+      const validatePhone = () => {
+        const phoneRegex = /^[0-9]{9}$/;
+        if (!phoneRegex.test(telf)) {
+          setPhoneError('Ingresa un número de teléfono válido');
+        } else {
+          setPhoneError('');
         }
       };
 
@@ -88,19 +134,23 @@ export const RegisterScreen  = () => {
               <TextInput
               style={styles.TextInput}
               placeholder="Email"
+              onBlur={validateEmail}
               placeholderTextColor="#003f5c"
               onChangeText={(email) => setEmail(email)}
               />
           </View>
+          {emailError ? <Text style={{color: 'red'}}>{emailError}</Text> : null}
 
           <View style={styles.inputView}>
               <TextInput
               style={styles.TextInput}
               placeholder="Teléfono"
+              onBlur={validatePhone}
               placeholderTextColor="#003f5c"
               onChangeText={(telf) => setTelf(telf)}
               />
           </View>
+          {phoneError ? <Text style={{color: 'red'}}>{phoneError}</Text> : null}
 
           
           <DropDownPicker style={{backgroundColor: "#D2FFE6", width: "70%", alignSelf: 'center', marginBottom: 20}}
@@ -112,7 +162,7 @@ export const RegisterScreen  = () => {
             setItems={setItems}
           />
 
-          <TouchableOpacity style={styles.registerBtn}>
+          <TouchableOpacity onPress={ () => handleRegister()}  style={styles.registerBtn}>
             <Text style={styles.registerText}>CONFIRMAR</Text> 
           </TouchableOpacity> 
 
