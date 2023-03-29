@@ -4,9 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from "./views/login";
 import RegisterScreen from "./views/register";
-
 import ChatScreen from "./views/chat";
-
 import HomeScreen from "./views/HomeScreen";
 
 

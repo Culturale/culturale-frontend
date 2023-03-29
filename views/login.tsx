@@ -16,6 +16,7 @@ import {
 
 
 export const LoginScreen = ({navigation}: {navigation: any}) => {
+
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -83,6 +84,7 @@ export const LoginScreen = ({navigation}: {navigation: any}) => {
               /> 
           </View>
 
+
         <TouchableOpacity onPress={() => navigation.navigate('Chat')}>
           <Text style={styles.register}>¿No estás registrado?</Text> 
         </TouchableOpacity>
@@ -92,6 +94,7 @@ export const LoginScreen = ({navigation}: {navigation: any}) => {
         </Animated.View>
 
         <TouchableOpacity onPress={ () => handleLogin()} style={styles.loginBtn}>
+
           <Text style={styles.loginText}>ENTRA</Text> 
         </TouchableOpacity> 
 
