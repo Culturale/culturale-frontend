@@ -43,7 +43,7 @@ export const LoginScreen = ({navigation}: {navigation: any}) => {
     }, [error, opacity]);
 
     const handleLogin = async () => {
-      const SERVER_URL = 'http://192.168.1.38:8080';
+      const SERVER_URL = '';
       const loginData = {
         username: user,
         password: password};
