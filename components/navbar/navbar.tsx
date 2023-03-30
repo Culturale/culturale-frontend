@@ -29,7 +29,6 @@ const Tab = createBottomTabNavigator();
 
 export default function NavBar () {
   return(
-    <NavigationContainer>
       <Tab.Navigator
       initialRouteName={homeName}
       screenOptions={({route}) => ({ headerShown: false, tabBarActiveTintColor: '#000',
@@ -58,7 +57,6 @@ export default function NavBar () {
         <Tab.Screen name={eventsName} component={EventsScreen}/>
         <Tab.Screen name={profileName} component={ProfileScreen}/>
 
-      </Tab.Navigator>    
-    </NavigationContainer>
+      </Tab.Navigator>
   )
 }

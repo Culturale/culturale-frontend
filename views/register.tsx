@@ -21,6 +21,29 @@ import {
 
 export const RegisterScreen  = () => {
 
+  const handleRegister = async () => {
+    validateEmail();
+    validatePhone();
+    const SERVER_URL = '';
+    const registerData = {
+      name: nom,
+      username: user,
+      email: email,
+      password: password,
+      phoneNumber: telf,
+      usertype: value,
+      profilePicture: image
+    };
+
+    axios.post(`${SERVER_URL}/users/create`, registerData)
+      .then((response: AxiosResponse) => {
+        console.log('Respuesta del servidor:', response.data);
+      })
+      .catch((error: any) => {
+        console.error('Error al registrar usuario:', error.response.data);
+      });
+};
+
     const [nom, setNom] = useState('');
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
