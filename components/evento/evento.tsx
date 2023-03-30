@@ -3,18 +3,20 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function Evento({ event } : {event: any}) {
+
+
   return (
     <View style={styles.container}>
       <Image source={{ uri: event.image }} style={styles.image} />
       <View style={styles.details}>
-        <Text style={styles.title}>{event.title}</Text>
+        <Text style={styles.title}>{event.denominacio}</Text>
             <View style={styles.subtitleContainer}>
             <Ionicons name="location-outline" size={16} color="#888" />
-            <Text style={styles.subtitle}>{event.place}</Text>
+            <Text style={styles.subtitle}>{event.adress}</Text>
             </View>
             <View style={styles.subtitleContainer}>
             <Ionicons name="calendar-outline" size={16} color="#888" />
-            <Text style={styles.subtitle}>{event.date}</Text>
+            <Text style={styles.subtitle}>{event.dataIni}</Text>
             </View>
       </View>
       <TouchableOpacity style={styles.button}>
@@ -23,6 +25,8 @@ export default function Evento({ event } : {event: any}) {
     </View>
   );
 }
+
+
 
 const styles = StyleSheet.create({
   container: {
