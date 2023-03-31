@@ -7,7 +7,7 @@ export default function Evento({ event } : {event: any}) {
 
   return (
     <View style={styles.container}>
-      <Image source={{ uri: event.image }} style={styles.image} />
+      <Image source={{ uri: event.url }} style={styles.image} />
       <View style={styles.details}>
         <Text style={styles.title}>{event.denominacio}</Text>
             <View style={styles.subtitleContainer}>
