@@ -1,8 +1,6 @@
 import type { AxiosInstance } from 'axios';
 import axios from 'axios';
 
-import type { IToken } from '~/domain/entities';
-
 import type { IAPI } from './api.interface';
 
 export class API implements IAPI {
@@ -14,19 +12,28 @@ export class API implements IAPI {
     this.baseURL = baseURL;
   }
 
-  public setup(token: IToken) {
-    this.token = token.accessToken;
+  public setup(token: string) {
+    this.token = token;
 
     this.axiosClient = axios.create({
       baseURL: this.baseURL,
       headers: {
         Accept: 'application/json',
         Authorization: `Bearer ${this.token}`,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      responseType: 'json'
+      responseType: 'json',
     });
 
     this.axiosClient.getUri();
+  }
+
+  public async login(username: string, password: string): Promise<string> {
+    const res = await this.axiosClient.post<string, string>('/login', {
+      username,
+      password,
+    });
+
+    return res;
   }
 }
