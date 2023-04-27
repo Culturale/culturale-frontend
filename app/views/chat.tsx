@@ -18,13 +18,13 @@ export const ChatScreen = ({ navigation }: { navigation: any }) => {
         <View style={styles.container}>
             <KeyboardAvoidingView style={styles.topbar}>
                 <TouchableOpacity style={[styles.basecontainer, flexdata1]} onPress={() => navigation.navigate('Login')}>
-                    <Image source={require('../assets/back.png')} style={styles.sendpic} />
+                    <Image source={require('../../assets/back.png')} style={styles.sendpic} />
                 </TouchableOpacity>
                 <View style={[styles.basecontainer, flexdata2]}>
                     <Text style={styles.baseText}>EventName</Text>
                 </View>
                 <View style={[styles.basecontainer, flexdata1]}>
-                    <Image source={require('../assets/logo-detail.png')} style={styles.image} />
+                    <Image source={require('../../assets/logo-detail.png')} style={styles.image} />
                 </View>
             </KeyboardAvoidingView>
             <View style={styles.chatbody}>
@@ -41,7 +41,7 @@ export const ChatScreen = ({ navigation }: { navigation: any }) => {
                 </View>
                 <View style={styles.send}>
                     <TouchableOpacity onPress={() => navigation.navigate('Chat')}>
-                        <Image source={require('../assets/send.png')} style={styles.sendpic} />
+                        <Image source={require('../../assets/send.png')} style={styles.sendpic} />
                     </TouchableOpacity>
                 </View>
             </KeyboardAvoidingView>

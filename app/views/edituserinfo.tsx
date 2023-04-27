@@ -67,7 +67,7 @@ export const EditProfileScreen = () => {
 
   return (
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
-            <Image source={require('../assets/logo.png')} style={styles.image} />
+            <Image source={require('../../assets/logo.png')} style={styles.image} />
             <StatusBar style="auto" />
 
             <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>

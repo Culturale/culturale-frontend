@@ -3,15 +3,26 @@ import React, { useState, useEffect } from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage  from '@react-native-async-storage/async-storage';
-import LoginScreen from "./views/login";
-import RegisterScreen from "./views/register";
-import ChatScreen from "./views/chat";
-import HomeScreen from "./views/HomeScreen";
-import MainContainer from "./views/mainContainer";
+import LoginScreen from "./app/views/login";
+import RegisterScreen from "./app/views/register";
+import ChatScreen from "./app/views/chat";
+import HomeScreen from "./app/views/HomeScreen";
+import MainContainer from "./app/views/mainContainer";
+import EventInfoScreen from "./app/views/InfoEventScreen"
 import { Text, View } from "react-native";
 
+export type RootStackParamList = {
+  Main: undefined;
+  Chat: undefined;
+  Home: undefined;
+  EventInfo: {event: Event};
+  Login: undefined;
+  Register: undefined;
 
-const Stack = createStackNavigator();
+
+};
+
+const Stack = createStackNavigator<RootStackParamList>();
 
 export default function App() {
 
@@ -44,6 +55,7 @@ export default function App() {
             <Stack.Screen name="Main" component={MainContainer} />
             <Stack.Screen name="Chat" component={ChatScreen} />
             <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="EventInfo" component={EventInfoScreen} />
           </>
         ) : (
           <>

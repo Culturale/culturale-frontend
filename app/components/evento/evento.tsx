@@ -1,11 +1,17 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { RootStackParamList } from '../../../App'
+
+type EventInfoScreenNavigationProp = NavigationProp<RootStackParamList, 'EventInfo'>;
 
 export default function Evento({ event } : {event: any}) {
+  const navigation = useNavigation<EventInfoScreenNavigationProp>();
+  
   return (
     <View style={styles.container}>
-      <Image source={{ uri: event.image }} style={styles.image} />
+      <Image source={{ uri: event.url }} style={styles.image} />
       <View style={styles.details}>
         <Text style={styles.title}>{event.denominacio}</Text>
             <View style={styles.subtitleContainer}>
@@ -17,7 +23,7 @@ export default function Evento({ event } : {event: any}) {
             <Text style={styles.subtitle}>{event.dataIni}</Text>
             </View>
       </View>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('EventInfo', {event: event})}>
         <Text style={styles.buttonText}>¡Apúntate!</Text>
       </TouchableOpacity>
     </View>

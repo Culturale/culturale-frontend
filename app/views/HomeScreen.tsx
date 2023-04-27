@@ -82,6 +82,10 @@ interface Event {
   denominacio: string;
   adress: string;
   dataIni: string;
+  dataFi: string;
+  horari: string;
+  url: string;
+
 }
 
 export default function HomeScreen ({ navigation } : {navigation: any}) {
@@ -129,7 +133,12 @@ export default function HomeScreen ({ navigation } : {navigation: any}) {
         event={{
           adress: item.adress,
           dataIni: item.dataIni,
-          denominacio: item.denominacio
+          denominacio: item.denominacio,
+          dataFi: item.dataFi,
+          descripcio: item.descripcio,
+          horari: item.horari,
+          url: item.url,
+
         }}
       />
   );
