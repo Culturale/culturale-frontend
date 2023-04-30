@@ -12,8 +12,8 @@ import {
   TouchableOpacity,
   FlatList
 } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import * as Font from 'expo-font';
+import { Ionicons } from '@expo/vector-icons';
 import Evento from '../components/evento/evento';
 
 
@@ -107,7 +107,7 @@ export default function HomeScreen ({ navigation } : {navigation: any}) {
   ];
 
   const [events, setEvents] = useState<Event[]>([]);
-  const SERVER_URL = 'http://192.168.1.38:8080';
+  const SERVER_URL = 'http://192.168.1.215:8080';
 
   useEffect(() => {
     axios.get(`${SERVER_URL}/events`)

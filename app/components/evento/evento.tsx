@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import * as Font from 'expo-font';
+import { Ionicons } from '@expo/vector-icons';
+
 
 export default function Evento({ event } : {event: any}) {
   return (

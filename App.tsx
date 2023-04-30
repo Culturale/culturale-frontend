@@ -3,11 +3,11 @@ import React, { useState, useEffect } from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage  from '@react-native-async-storage/async-storage';
-import LoginScreen from "./views/login";
-import RegisterScreen from "./views/register";
-import ChatScreen from "./views/chat";
-import HomeScreen from "./views/HomeScreen";
-import MainContainer from "./views/mainContainer";
+import LoginScreen from "./app/views/login";
+import RegisterScreen from "./app/views/register";
+import ChatScreen from "./app/views/chat";
+import HomeScreen from "./app/views/HomeScreen";
+import MainContainer from "./app/views/mainContainer";
 import { Text, View } from "react-native";
 
 

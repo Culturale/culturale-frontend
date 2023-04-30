@@ -41,10 +41,10 @@ export const LoginScreen = ({ navigation }: {navigation: any}) => {
   }, [error, opacity]);
 
   const handleLogin = async () => {
-    const SERVER_URL = '';
+    const SERVER_URL = 'http://192.168.1.215:8080';
     const loginData = {
-      password: password,
-      username: user
+      username: user,
+      password: password
     };
 
     axios.post(`${SERVER_URL}/users/login`, loginData)
@@ -61,7 +61,7 @@ export const LoginScreen = ({ navigation }: {navigation: any}) => {
 
   return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
-        <Image source={require('../assets/logo.png')} style={styles.image} />
+        <Image source={require('/../assets/logo.png')} style={styles.image} />
         <StatusBar style="auto" />
           <View style={styles.inputView}>
               <TextInput
