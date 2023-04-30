@@ -13,7 +13,7 @@ describe('chatFactory', () => {
           date: '2022-01-01T00:00:00.000Z',
         },
         {
-          _id: '012',
+          _id: '789',
           content: 'test-content2',
           userId: 'test-user2ID',
           date: '2022-01-02T00:00:00.000Z',
