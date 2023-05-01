@@ -15,6 +15,7 @@ import {
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import Evento from '../components/evento/evento';
+import { Background } from '@react-navigation/elements';
 
 
 /*
@@ -160,40 +161,39 @@ export default function HomeScreen ({ navigation } : {navigation: any}) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  titleContainer: {
+    paddingTop: 50,
+    paddingBottom: 16,
+    paddingHorizontal: 32,
+    backgroundColor: '#34b38a',
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
   bottomContainer: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
     padding: 16,
-    width: '100%'
+    width: '100%',
   },
-  container: {
+  subTitle: {
+    fontSize: 20,
+    fontWeight: 'bold'
+  },
+  hoyContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-    marginTop: 44
+    justifyContent: 'space-between',
+    marginVertical: 16,
   },
   eventContainer: {
     flex: 1,
-    width: '100%'
+    paddingHorizontal: 16,
   },
-  hoyContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-
-  subTitle: {
-    fontFamily: 'Helvetica',
-    fontSize: 18,
-    fontWeight: 'bold'
-  },
-  title: {
-    fontFamily: 'Helvetica',
-    fontSize: 24,
-    fontWeight: 'bold'
-  },
-
-  titleContainer: {
-    justifyContent: 'center'
-  }
 });
