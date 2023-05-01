@@ -12,7 +12,7 @@ export default function Evento({ event } : {event: any}) {
         <Text style={styles.title}>{event.denominacio}</Text>
             <View style={styles.subtitleContainer}>
             <Ionicons color="#888" name="location-outline" size={16} />
-            <Text style={styles.subtitle}>{event.adress}</Text>
+            <Text style={styles.subtitle}>{event.address}</Text>
             </View>
             <View style={styles.subtitleContainer}>
             <Ionicons color="#888" name="calendar-outline" size={16} />

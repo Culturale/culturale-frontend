@@ -108,7 +108,7 @@ export default function HomeScreen ({ navigation } : {navigation: any}) {
   ];
 
   const [events, setEvents] = useState<Event[]>([]);
-  const SERVER_URL = 'http://192.168.1.215:8080';
+  const SERVER_URL = 'http://192.168.8.103:8080';
 
   useEffect(() => {
     axios.get(`${SERVER_URL}/events`)
