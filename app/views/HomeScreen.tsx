@@ -12,10 +12,12 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
-  FlatList
+  FlatList,
+  Modal
 } from 'react-native';
 
 import Evento from '../components/evento/evento';
+import Filtro from '~/components/filtro/filtro';
 
 
 
@@ -34,7 +36,16 @@ export default function HomeScreen ({ navigation } : {navigation: any}) {
   
 
   const [events, setEvents] = useState<Event[]>([]);
+  const [showFiltro, setShowFiltro] = useState(false);
   const SERVER_URL = 'http://192.168.1.38:8081';
+
+  const toggleFiltro = () => {
+    setShowFiltro(!showFiltro);
+  }
+
+  const haz = () => {
+    
+  }
 
   useEffect(() => {
     axios.get(`${SERVER_URL}/events`)
@@ -77,7 +88,9 @@ export default function HomeScreen ({ navigation } : {navigation: any}) {
           </View>
           <View style={styles.hoyContainer}>
             <Text style={styles.subTitle}>Hoy</Text>
-            <Ionicons color="black" name="filter-outline" size={24} />
+            <TouchableOpacity onPress={()=> setShowFiltro(true)}>
+              <Ionicons color="black" name="filter-outline" size={24} />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.eventContainer}>
@@ -87,6 +100,10 @@ export default function HomeScreen ({ navigation } : {navigation: any}) {
           renderItem={renderItem}
         />
         </View>
+        <Modal visible={showFiltro}>
+          <Filtro onFiltrar={haz}/>
+        <Button title="Cerrar" onPress={toggleFiltro} />
+        </Modal>
       </View>
   );
 }

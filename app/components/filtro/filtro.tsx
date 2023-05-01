@@ -3,34 +3,25 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 import  { Picker } from '@react-native-picker/picker';
 import DatePicker from '@react-native-community/datetimepicker';
 
-const CATEGORIAS = ['teatre', 'divulgació', 'espectacle', 'concerts', 'conferencies', 'commemoracions', 'infantil', 'dansa'];
+const CATEGORIAS = ['Teatre', 'Divulgació', 'Espectacle', 'Concerts', 'Conferencies', 'Commemoracions', 'Infantil', 'Dansa'];
 
 export default function Filtro({ onFiltrar }) {
     const [denominacio, setDenominacio] = useState('');
     const [categoria, setCategoria] = useState('');
     const [dataIni, setDataIni] = useState(null);
     const [dataFi, setDataFi] = useState(null);
-    const [showDataIniPicker, setShowDataIniPicker] = useState(false);
-    const [showDataFiPicker, setShowDataFiPicker] = useState(false);
+
   
   
     const onDataIniChange = (event, selectedDate) => {
-      setShowDataIniPicker(false);
       setDataIni(selectedDate);
     };
   
     const onDataFiChange = (event, selectedDate) => {
-      setShowDataFiPicker(false);
       setDataFi(selectedDate);
     };
   
-    const showDataIniPickerModal = () => {
-      setShowDataIniPicker(true);
-    };
-  
-    const showDataFiPickerModal = () => {
-      setShowDataFiPicker(true);
-    };
+
 
   const filtrar = () => {
     const filtro = {
@@ -82,66 +73,75 @@ export default function Filtro({ onFiltrar }) {
           ))}
         </Picker>
       </View>
-      <Text>Fecha inicial:</Text>
-      <View>
-        <Text onPress={showDataIniPickerModal}>
-          {dataIni ? dataIni.toLocaleDateString() : 'Seleccionar fecha'}
-        </Text>
-        {showDataIniPicker && (
-          <DatePicker
-            value={dataIni || new Date()}
-            mode="date"
-            display="default"
-            onChange={onDataIniChange}
-          />
-        )}
+      <View style={styles.calendarCont}>
+        <Text style={styles.label}>Fecha inicial:</Text>
+        <View>
+            {(
+            <DatePicker
+                value={dataIni || new Date()}
+                mode="date"
+                display="default"
+                onChange={onDataIniChange}
+            />
+            )}
+        </View>
       </View>
-      <Text>Fecha final:</Text>
-      <View>
-        <Text onPress={showDataFiPickerModal}>
-          {dataFi ? dataFi.toLocaleDateString() : 'Seleccionar fecha'}
-        </Text>
-        {showDataIniPicker && (
-          <DatePicker
-            value={dataFi || new Date()}
-            mode="date"
-            display="default"
-            onChange={onDataFiChange}
-          />
-        )}
+      <View style={styles.calendarCont}>
+        <Text style={styles.label}>Fecha final:</Text>
+            <View >
+            {(
+            <DatePicker
+                value={dataFi || new Date()}
+                mode="date"
+                display="default"
+                onChange={onDataFiChange}
+            />
+            )}
+        </View>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: '#f0f0f0',
-    padding: 10,
-    borderRadius: 10,
-  },
-  inputContainer: {
-    flex: 1,
-    marginHorizontal: 5,
-  },
-  label: {
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    backgroundColor: '#fff',
-    padding: 5,
-    borderRadius: 5,
-  },
-  picker: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    backgroundColor: '#fff',
-    borderRadius: 5,
-  },
-});
+    container: {
+      backgroundColor: '#34b38a',
+      paddingHorizontal: 20,
+      paddingVertical: 10,
+      borderRadius: 10,
+      marginHorizontal: 10,
+      marginVertical: 5,
+      marginTop: 44,
+    },
+    inputContainer: {
+      marginVertical: 5,
+    },
+    label: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: 'white',
+    },
+    input: {
+      backgroundColor: 'white',
+      borderRadius: 5,
+      padding: 10,
+      marginTop: 5,
+    },
+    picker: {
+      backgroundColor: 'white',
+      borderRadius: 5,
+      marginTop: 5,
+    },
+
+    calendarCont: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginHorizontal: 20,
+        marginVertical: 10,
+      },
+      datePickerContainer: {
+        marginLeft: 20,
+      },
+  });
+  
