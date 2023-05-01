@@ -5,7 +5,8 @@ import { Infrastructure } from '~/infrastructure';
 import type { IRequestSubject } from '~/observables';
 
 import type { IApplication, UseCaseRequestID } from './application.interface';
-import { Controllers, UserController } from './controllers';
+import type { Controllers} from './controllers';
+import { UserController } from './controllers';
 import { login } from './use-cases';
 import type { UseCasesMap } from './use-cases/use-cases';
 

@@ -30,8 +30,8 @@ export class API implements IAPI {
 
   public async login(username: string, password: string): Promise<string> {
     const res = await this.axiosClient.post<string, string>('/login', {
-      username,
       password,
+      username,
     });
 
     return res;

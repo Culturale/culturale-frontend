@@ -1,5 +1,9 @@
+import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect } from 'react';
+import { observer } from 'mobx-react-lite';
+import type React from 'react';
+import { useState, useEffect } from 'react';
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -10,12 +14,12 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import { observer } from 'mobx-react-lite';
+
 import { useApplicationLayer } from '~/hooks';
-import { LoginScreenProps as Props } from './login-screen.props';
-import { useNavigation } from '@react-navigation/native';
-import { RootParamList } from '~/navigation';
-import { StackNavigationProp } from '@react-navigation/stack';
+import type { RootParamList } from '~/navigation';
+
+import type { LoginScreenProps as Props } from './login-screen.props';
+
 
 type LoginScreenNavigation = StackNavigationProp<RootParamList, 'Login'>;
 
