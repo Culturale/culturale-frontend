@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import * as Font from 'expo-font';
+import { Ionicons } from '@expo/vector-icons';
 import { RootStackParamList } from '../../../App'
 
 type EventInfoScreenNavigationProp = NavigationProp<RootStackParamList, 'EventInfo'>;

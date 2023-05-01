@@ -12,7 +12,8 @@ import {
   Button,
   TouchableOpacity
 } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import * as Font from 'expo-font';
+import { Ionicons } from '@expo/vector-icons';
 
 import EventsScreen from '../../views/EventsScreen';
 import HomeScreen from '../../views/HomeScreen';
