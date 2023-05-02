@@ -3,6 +3,7 @@ import type { definitions } from './schema';
 export type EventDocument = definitions['event'];
 export type UserDocument = definitions['user'];
 export type MessageDocument = definitions['message'];
+export type ChatDocument = definitions['chat'];
 export interface IAPI {
   setup: (token: string) => void;
 

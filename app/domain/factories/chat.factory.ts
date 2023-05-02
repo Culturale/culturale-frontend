@@ -1,8 +1,12 @@
-import {  Chat } from '~/domain/entities';
+import { Chat } from '~/domain/entities';
 import type { IChat } from '~/domain/entities';
+import { ChatDocument } from '~/infrastructure';
+import { messageFactory } from './message.factory';
 
-export function chatFactory(json: any): IChat {
-  const messages = json.messages || [];
+export function chatFactory(chatDocument: ChatDocument): IChat {
+  const messages = chatDocument.messages.map((messageDoc) =>
+    messageFactory(messageDoc),
+  );
 
   return new Chat(json.id, messages);
 }

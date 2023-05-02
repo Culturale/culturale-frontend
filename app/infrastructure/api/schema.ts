@@ -91,10 +91,11 @@ export interface definitions {
     id: string;
     codi: number;
     denominacio: string;
+    descripcio: string;
     dataIni?: string;
     dataFi?: string;
-    horari?: string;
-    address?: string;
+    horari: string;
+    address: string;
     url: string;
     participants?: definitions["user"][];
     chat?: definitions["chat"];
@@ -112,9 +113,10 @@ export interface definitions {
     messages?: definitions["message"][];
   };
   message: {
-    content?: string;
-    userId?: string;
-    date?: string;
+    id?: string;
+    content: string;
+    userId: string;
+    date: string;
   };
   error: {
     /** Format: int */

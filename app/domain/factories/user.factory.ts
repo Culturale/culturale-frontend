@@ -4,12 +4,12 @@ import { UserDocument } from '~/infrastructure';
 
 export function userFactory(userDocument: UserDocument): IUser {
   return new User(
-    json.username,
-    json.name,
-    json.password,
-    json.email,
-    json.profilePicture,
-    json.phoneNumber,
-    json.usertype,
+    userDocument.username,
+    userDocument.name,
+    userDocument.password,
+    userDocument.email,
+    userDocument.profilePicture,
+    userDocument.phoneNumber,
+    userDocument.userType,
   );
 }

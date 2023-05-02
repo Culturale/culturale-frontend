@@ -112,12 +112,17 @@ definitions:
       - codi
       - denominacio
       - url
+      - descripcio
+      - horari
+      - address
     properties:
       id:
         type: string
       codi:
         type: integer
       denominacio:
+        type: string
+      descripcio:
         type: string
       dataIni:
         type: string
@@ -161,7 +166,13 @@ definitions:
           $ref: '#/definitions/message'
   message:
     type: object
+    required:
+      - content
+      - userId
+      - date
     properties:
+      id:
+        type: string
       content:
         type: string
       userId:
