@@ -1,7 +1,8 @@
 import { User } from '~/domain/entities';
 import type { IUser } from '~/domain/entities';
+import { UserDocument } from '~/infrastructure';
 
-export function userFactory(json: any): IUser {
+export function userFactory(userDocument: UserDocument): IUser {
   return new User(
     json.username,
     json.name,
