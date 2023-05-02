@@ -1,12 +1,10 @@
-import type { MongoId } from '~/types/types';
-
 import type { IChat } from '../chat';
 import type { IUser } from '../user';
 
 import type { IEvent } from './event.interface';
 
 export type EventProps = {
-  id?: MongoId;
+  id?: string;
   codi: number;
   denominacio: string;
   descripcio: string;
@@ -20,7 +18,7 @@ export type EventProps = {
 };
 
 export class Event implements IEvent {
-  public id: MongoId;
+  public id: string;
   public codi: number;
   public denominacio: string;
   public descripcio: string;

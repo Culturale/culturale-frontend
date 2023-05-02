@@ -159,7 +159,12 @@ definitions:
         type: string
   chat:
     type: object
+    required:
+      - id
+      - messages
     properties:
+      id:
+        type: string
       messages:
         type: array
         items:

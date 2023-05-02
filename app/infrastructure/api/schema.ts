@@ -110,7 +110,8 @@ export interface definitions {
     userType?: string;
   };
   chat: {
-    messages?: definitions["message"][];
+    id: string;
+    messages: definitions["message"][];
   };
   message: {
     id?: string;

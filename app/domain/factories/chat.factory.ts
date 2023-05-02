@@ -8,5 +8,8 @@ export function chatFactory(chatDocument: ChatDocument): IChat {
     messageFactory(messageDoc),
   );
 
-  return new Chat(json.id, messages);
+  return new Chat({
+    id: chatDocument.id,
+    messages,
+  });
 }
