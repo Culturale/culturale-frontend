@@ -5,7 +5,7 @@ import { Infrastructure } from '~/infrastructure';
 import type { IRequestSubject } from '~/observables';
 
 import type { IApplication, UseCaseRequestID } from './application.interface';
-import type { Controllers} from './controllers';
+import { Controllers, EventController } from './controllers';
 import { UserController } from './controllers';
 import { login } from './use-cases';
 import type { UseCasesMap } from './use-cases/use-cases';
@@ -27,6 +27,7 @@ export class Application implements IApplication {
 
     this.controllers = {
       UserController: new UserController(),
+      EventController: new EventController(this.infrastructure),
     };
 
     this.useCases = {

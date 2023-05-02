@@ -1,21 +1,14 @@
 import { computed, makeObservable, observable } from 'mobx';
 
-import type { IMockInfrastructure} from '~/infrastructure/infrastructure.mock';
+import type { IMockInfrastructure } from '~/infrastructure/infrastructure.mock';
 import { MockInfrastructure } from '~/infrastructure/infrastructure.mock';
 import type { IRequestSubject, RequestSubscription } from '~/observables';
 import { RequestSubject } from '~/observables';
 
 import type { IApplication, UseCaseRequestID } from './application.interface';
-import type {
-  Controller,
-  Controllers} from './controllers';
-import {
-  RouteController,
-  DriverController
-} from './controllers';
-import {
-  login
-} from './use-cases';
+import type { Controller, Controllers } from './controllers';
+import { EventController, UserController } from './controllers';
+import { login } from './use-cases';
 import type { UseCasesMap } from './use-cases/use-cases';
 
 export interface IMockApplication extends IApplication {
@@ -30,22 +23,26 @@ export class MockApplication implements IMockApplication {
 
   public infrastructure: IMockInfrastructure;
   public errors: Map<string, Error> = new Map<string, Error>();
-  public readonly useCasesRequests: Map<UseCaseRequestID, IRequestSubject<unknown>> = new Map<
+  public readonly useCasesRequests: Map<
     UseCaseRequestID,
     IRequestSubject<unknown>
-  >();
+  > = new Map<UseCaseRequestID, IRequestSubject<unknown>>();
 
   private errorSubscription = (
     controller: Controller,
-    requestID: string
+    requestID: string,
   ): RequestSubscription<any> => ({
     onCompleteRequest: () => {
       const subject = controller.requestsSubjectsMap[requestID];
-      const newSubject = new RequestSubject<typeof subject.currentValue>(requestID);
+      const newSubject = new RequestSubject<typeof subject.currentValue>(
+        requestID,
+      );
       subject.unsubscribeFromRequest();
 
       controller.requestsSubjectsMap[requestID] = newSubject;
-      newSubject.subscribeToRequest(this.errorSubscription(controller, requestID));
+      newSubject.subscribeToRequest(
+        this.errorSubscription(controller, requestID),
+      );
     },
     onRequestFailed: (error: Error) => {
       this.errors.set(requestID, error);
@@ -54,8 +51,10 @@ export class MockApplication implements IMockApplication {
       subject.unsubscribeFromRequest();
 
       controller.requestsSubjectsMap[requestID] = newSubject;
-      newSubject.subscribeToRequest(this.errorSubscription(controller, requestID));
-    }
+      newSubject.subscribeToRequest(
+        this.errorSubscription(controller, requestID),
+      );
+    },
   });
 
   private setupErrorHandler() {
@@ -64,7 +63,7 @@ export class MockApplication implements IMockApplication {
 
       for (const requestID in requestsSubjectsMap) {
         requestsSubjectsMap[requestID].subscribeToRequest(
-          this.errorSubscription(this.controllers[key], requestID)
+          this.errorSubscription(this.controllers[key], requestID),
         );
       }
     }
@@ -75,7 +74,7 @@ export class MockApplication implements IMockApplication {
 
     this.controllers = {
       DriverController: new DriverController(),
-      RouteController: new RouteController(this.infrastructure)
+      RouteController: new RouteController(this.infrastructure),
     };
 
     this.useCases = {
@@ -83,18 +82,18 @@ export class MockApplication implements IMockApplication {
         const subject = login(
           this.infrastructure,
           this.controllers.DriverController,
-          this.controllers.RouteController
+          this.controllers.RouteController,
         );
         this.useCasesRequests.set('Login', subject);
         return subject;
-      }
+      },
     };
 
     this.setupErrorHandler();
 
     makeObservable(this, {
       controllerErrors: computed,
-      useCasesRequests: observable
+      useCasesRequests: observable,
     });
   }
 
