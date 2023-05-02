@@ -4,26 +4,81 @@
  */
 
 export interface paths {
-  '/events': {
+  "/events": {
     /** Returns all events from database */
     get: {
       responses: {
         /** Ok */
         200: {
-          schema: definitions['event'][];
+          schema: definitions["event"][];
         };
         /** Unauthorized */
         403: {
           schema: {
             data?: { [key: string]: unknown };
-            error?: definitions['error'];
+            error?: definitions["error"];
           };
         };
         /** Internal server error */
         500: {
           schema: {
             data?: { [key: string]: unknown };
-            error?: definitions['error'];
+            error?: definitions["error"];
+          };
+        };
+      };
+    };
+  };
+  "/users/create": {
+    /** Creates a user registered in in BE */
+    post: {
+      responses: {
+        /** Ok */
+        200: {
+          schema: {
+            user?: definitions["user"];
+            message?: string;
+          };
+        };
+        /** Bad request */
+        404: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+        /** Internal server error */
+        500: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+      };
+    };
+  };
+  "/events/:id/messages": {
+    /** Returns all messages of an event chat */
+    get: {
+      responses: {
+        /** Ok */
+        200: {
+          schema: {
+            messages?: definitions["message"][];
+          };
+        };
+        /** Bad request */
+        404: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+        /** Internal server error */
+        500: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
           };
         };
       };
@@ -41,8 +96,8 @@ export interface definitions {
     horari?: string;
     address?: string;
     url: string;
-    participants?: definitions['user'][];
-    chat?: definitions['chat'];
+    participants?: definitions["user"][];
+    chat?: definitions["chat"];
   };
   user: {
     name?: string;
@@ -54,7 +109,7 @@ export interface definitions {
     userType?: string;
   };
   chat: {
-    messages?: definitions['message'][];
+    messages?: definitions["message"][];
   };
   message: {
     content?: string;

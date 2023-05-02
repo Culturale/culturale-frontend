@@ -1,6 +1,8 @@
 import type { definitions } from './schema';
 
-type Event = definitions['event'];
+export type EventDocument = definitions['event'];
+export type UserDocument = definitions['user'];
+export type MessageDocument = definitions['message'];
 export interface IAPI {
   setup: (token: string) => void;
 
@@ -13,7 +15,9 @@ export interface IAPI {
     email: string,
     profilePicture: string,
     userType: string,
-  ) => Promise<void>;
+  ) => Promise<UserDocument>;
 
-  getAllEvents: () => Promise<Event[]>;
+  getAllEvents: () => Promise<EventDocument[]>;
+
+  getChatMessages: (id: string) => Promise<MessageDocument[]>;
 }
