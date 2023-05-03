@@ -5,6 +5,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 
 export default function Evento({ event } : {event: any}) {
+  const dataIni: Date = new Date(event.dataIni);
+  const data: string = dataIni.toLocaleDateString();
   return (
     <View style={styles.container}>
       <Image source={{ uri: event.image }} style={styles.image} />
@@ -12,11 +14,11 @@ export default function Evento({ event } : {event: any}) {
         <Text style={styles.title}>{event.denominacio}</Text>
             <View style={styles.subtitleContainer}>
             <Ionicons color="#888" name="location-outline" size={16} />
-            <Text style={styles.subtitle}>{event.address}</Text>
+            <Text style={styles.subtitle}>{event.adress}</Text>
             </View>
             <View style={styles.subtitleContainer}>
             <Ionicons color="#888" name="calendar-outline" size={16} />
-            <Text style={styles.subtitle}>{event.dataIni}</Text>
+            <Text style={styles.subtitle}>{data}</Text>
             </View>
       </View>
       <TouchableOpacity style={styles.button}>
@@ -31,16 +33,17 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     backgroundColor: '#34b38a',
     borderBottomRightRadius: 16,
-    bottom: 0,
+    bottom: 46,
     paddingHorizontal: 16,
-    paddingVertical: 8,
+    marginBottom: -10,
+    paddingVertical: 5,
     position: 'absolute',
     right: 0
   },
   buttonText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   container: {
     alignItems: 'center',

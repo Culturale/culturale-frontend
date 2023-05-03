@@ -18,7 +18,7 @@ import qs from 'qs';
 interface Event {
     _id: string;
     denominacio: string;
-    address: string;
+    adress: string;
     dataIni: string;
 }
 interface User {
@@ -76,7 +76,7 @@ const SearchScreen = () => {
   };
 
   //URL del servidor
-  const SERVER_URL = 'http://192.168.8.103:8080';
+  const SERVER_URL = 'http://192.168.8.101:8080';
 
   const handleSearch = () => {
     if (searchType === 'usuarios') {
@@ -131,7 +131,7 @@ const SearchScreen = () => {
         return (
             <Evento
                 event={{
-                address: item.address,
+                adress: item.adress,
                 dataIni: item.dataIni,
                 denominacio: item.denominacio
             }}
