@@ -21,7 +21,7 @@ export const RegisterScreen = () => {
   const handleRegister = async () => {
     validateEmail();
     validatePhone();
-    const SERVER_URL = 'http://192.168.8.101:8080';
+    const SERVER_URL = 'http://172.20.10.12:8080';
     const registerData = {
       email: email,
       name: nom,
@@ -92,7 +92,7 @@ export const RegisterScreen = () => {
 
   return (
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
-          <Image source={require('/../assets/logo.png')} style={styles.image} />
+          <Image source={require('../../assets/logo.png')} style={styles.image} />
           <StatusBar style="auto" />
 
           <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
