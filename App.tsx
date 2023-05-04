@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+//import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Text, View } from 'react-native';
 import { RootNavigator } from './app/navigation';
 
@@ -10,13 +10,13 @@ export default function App() {
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    AsyncStorage.getItem('token').then((value) => {
-      setToken(value);
+  // useEffect(() => {
+  //   AsyncStorage.getItem('token').then((value) => {
+  //     setToken(value);
 
-      setIsLoading(false);
-    });
-  }, []);
+  //     setIsLoading(false);
+  //   });
+  // }, []);
 
   if (isLoading) {
     return (
