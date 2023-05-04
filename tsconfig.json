@@ -13,19 +13,40 @@
     "noUnusedLocals": true,
     "sourceMap": true,
     "target": "esnext",
-    "lib": ["esnext"],
+    "lib": [
+      "esnext"
+    ],
     "resolveJsonModule": true,
     "paths": {
-      "~/e2e/*": ["e2e/*"],
-      "~/test/*": ["test/*"],
-      "~/storybook/*": ["storybook/*"],
-      "~/*": ["app/*"]
+      "~/e2e/*": [
+        "e2e/*"
+      ],
+      "~/test/*": [
+        "test/*"
+      ],
+      "~/storybook/*": [
+        "storybook/*"
+      ],
+      "~/*": [
+        "app/*"
+      ]
     },
     "rootDir": "./",
     "skipLibCheck": true,
-    "typeRoots": ["./app/types", "./node_modules/@types"],
+    "typeRoots": [
+      "./app/types",
+      "./node_modules/@types"
+    ],
     "useDefineForClassFields": true
   },
-  "exclude": ["node_modules"],
-  "include": ["index.js", "app", "test", "storybook"]
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "index.js",
+    "app",
+    "test",
+    "storybook"
+  ],
+  "extends": "expo/tsconfig.base"
 }
