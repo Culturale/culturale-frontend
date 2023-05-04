@@ -9,14 +9,14 @@ describe('chatFactory', () => {
         {
           _id: '456',
           content: 'test-content1',
-          userId: 'test-user1ID',
           date: '2022-01-01T00:00:00.000Z',
+          userId: 'test-user1ID',
         },
         {
           _id: '789',
           content: 'test-content2',
-          userId: 'test-user2ID',
           date: '2022-01-02T00:00:00.000Z',
+          userId: 'test-user2ID',
         },
       ],
     };

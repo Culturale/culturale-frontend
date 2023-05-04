@@ -1,59 +1,30 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useState, useEffect } from "react";
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import AsyncStorage  from '@react-native-async-storage/async-storage';
-import LoginScreen from "./app/views/login"
-import RegisterScreen from "./app/views/register";
-import ChatScreen from "./app/views/chat";
-import HomeScreen from "./app/views/HomeScreen";
-import MainContainer from "./app/views/mainContainer";
-import { Text, View } from "react-native";
+import * as React from 'react';
 
-
-const Stack = createStackNavigator();
+import { Application } from './app/application/application';
+import type { IApplication } from './app/application/application.interface';
+import { ApplicationLayerProvider } from './app/hooks/use-application-layer';
+import { RootNavigator } from './app/navigation';
 
 export default function App() {
+  const [applicationLayer, setApplicationLayer] = React.useState<
+    IApplication | undefined
+  >(undefined);
 
-  const [token, setToken] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    AsyncStorage.getItem('token').then((value) => {
-      setToken(value);
-      
-      setIsLoading(false);
-    });
+  React.useEffect(() => {
+    (async () => {
+      if (!applicationLayer) {
+        const app = new Application();
+        await app.setup();
+        setApplicationLayer(app);
+      }
+    })();
   }, []);
 
-  if (isLoading) {
-    return (
-      <View>
-        <Text>Cargando...</Text>
-      </View>
-    );
-  }
-
+  if (!applicationLayer) return null;
 
   return (
-    
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-        {token ? (
-          <>
-            <Stack.Screen name="Main" component={MainContainer} />
-            <Stack.Screen name="Chat" component={ChatScreen} />
-            <Stack.Screen name="Home" component={HomeScreen} />
-          </>
-        ) : (
-          <>
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Register" component={RegisterScreen} />
-          </>
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
-
-
+    <ApplicationLayerProvider value={applicationLayer}>
+      <RootNavigator />
+    </ApplicationLayerProvider>
   );
 }

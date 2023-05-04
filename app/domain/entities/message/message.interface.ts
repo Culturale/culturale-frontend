@@ -1,7 +1,5 @@
-import type { MongoId } from '~/types/types';
-
 export interface IMessage {
-  _id: MongoId;
+  id: string;
   content: string;
   userId: string;
   date: Date;

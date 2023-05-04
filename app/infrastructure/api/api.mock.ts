@@ -1,5 +1,3 @@
-import type { IToken } from '~/domain/entities';
-
 import type { IAPI } from './api.interface';
 
 export interface FailTaskInfo {
@@ -7,7 +5,7 @@ export interface FailTaskInfo {
 }
 
 export interface IMockAPI extends IAPI {
-  token: IToken;
+  token: string;
   mockError: (error: string) => void;
   failedTasks: Record<string, FailTaskInfo>;
   returnAPIError: boolean;
@@ -16,7 +14,7 @@ export interface IMockAPI extends IAPI {
 export class MockAPI implements IMockAPI {
   // @ts-ignore
   private readonly baseURL: string;
-  public token: IToken;
+  public token: string;
   public readonly failedTasks: Record<string, FailTaskInfo> = {};
   // @ts-ignore
   private error: string;
@@ -34,7 +32,11 @@ export class MockAPI implements IMockAPI {
     this.returnAPIError = true;
   }
 
-  public setup(token: IToken) {
+  public setup(token: string) {
     this.token = token;
+  }
+
+  public async login(_username: string, _password: string): Promise<string> {
+    return Promise.resolve('access-token');
   }
 }

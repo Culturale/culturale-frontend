@@ -4,12 +4,12 @@ import { userFactory } from '~/domain/factories';
 describe('userFactory', () => {
   it('should create a new User instance with correct atributes', () => {
     const json = {
-      username: 'test-username',
+      email: 'test-email',
       name: 'test-name',
       password: 'test-password',
-      email: 'test-email',
-      profilePicture: 'test-profilePicture',
       phoneNumber: 'test-phone',
+      profilePicture: 'test-profilePicture',
+      username: 'test-username',
       usertype: 'test-type',
     };
 
