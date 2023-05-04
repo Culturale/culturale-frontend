@@ -1,8 +1,10 @@
-import type { AxiosResponse } from 'axios';
-import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import * as ImagePicker from 'expo-image-picker';
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import { observer } from 'mobx-react-lite';
+import type React from 'react';
+import { useState } from 'react';
 import {
   KeyboardAvoidingView,
   Text,
@@ -13,13 +15,12 @@ import {
   Pressable,
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
+
+import { useApplicationLayer } from '~/hooks';
+import type { RootParamList } from '~/navigation';
+
 import type { RegisterScreenProps as Props } from './register-screen.props';
 import { RegisterScreenStyles as styles } from './register-screen.styles';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootParamList } from '~/navigation';
-import { observer } from 'mobx-react-lite';
-import { useApplicationLayer } from '~/hooks';
-import { useNavigation } from '@react-navigation/native';
 
 type RegisterScreenNavigation = StackNavigationProp<RootParamList, 'Signup'>;
 
@@ -29,29 +30,11 @@ export const RegisterScreen: React.FC<Props> = observer(() => {
   } = useApplicationLayer();
   const navigation = useNavigation<RegisterScreenNavigation>();
 
-  const handleRegister = async () => {
-    validateEmail();
-    validatePhone();
-    const SERVER_URL = '';
-    const registerData = {
-      email: email,
-      name: nom,
-      password: password,
-      phoneNumber: telf,
-      profilePicture: image,
-      username: user,
-      usertype: value,
-    };
-
-    axios
-      .post(`${SERVER_URL}/users/create`, registerData)
-      .then((response: AxiosResponse) => {
-        console.log('Respuesta del servidor:', response.data);
-      })
-      .catch((error: any) => {
-        console.error('Error al registrar usuario:', error.response.data);
-      });
-  };
+  function handleRegister() {
+    Signup(user, nom, password, email, image, value).subscribeToRequest({
+      onCompleteRequest: () => navigation.navigate('Login'),
+    });
+  }
 
   const [nom, setNom] = useState('');
   const [user, setUser] = useState('');
@@ -102,9 +85,9 @@ export const RegisterScreen: React.FC<Props> = observer(() => {
   };
 
   return (
-    <KeyboardAvoidingView behavior="padding" style={styles.container}>
+    <KeyboardAvoidingView behavior='padding' style={styles.container}>
       <Image source={require('../assets/logo.png')} style={styles.image} />
-      <StatusBar style="auto" />
+      <StatusBar style='auto' />
 
       <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
         <Pressable style={styles.button} onPress={pickImage}>
@@ -117,8 +100,8 @@ export const RegisterScreen: React.FC<Props> = observer(() => {
 
       <View style={styles.inputView}>
         <TextInput
-          placeholder="Nombre"
-          placeholderTextColor="#003f5c"
+          placeholder='Nombre'
+          placeholderTextColor='#003f5c'
           style={styles.TextInput}
           onChangeText={(nom) => setNom(nom)}
         />
@@ -126,8 +109,8 @@ export const RegisterScreen: React.FC<Props> = observer(() => {
 
       <View style={styles.inputView}>
         <TextInput
-          placeholder="Usuario"
-          placeholderTextColor="#003f5c"
+          placeholder='Usuario'
+          placeholderTextColor='#003f5c'
           style={styles.TextInput}
           onChangeText={(user) => setUser(user)}
         />
@@ -136,8 +119,8 @@ export const RegisterScreen: React.FC<Props> = observer(() => {
       <View style={styles.inputView}>
         <TextInput
           secureTextEntry
-          placeholder="Contraseña"
-          placeholderTextColor="#003f5c"
+          placeholder='Contraseña'
+          placeholderTextColor='#003f5c'
           style={styles.TextInput}
           onChangeText={(password) => setPassword(password)}
         />
@@ -145,8 +128,8 @@ export const RegisterScreen: React.FC<Props> = observer(() => {
 
       <View style={styles.inputView}>
         <TextInput
-          placeholder="Email"
-          placeholderTextColor="#003f5c"
+          placeholder='Email'
+          placeholderTextColor='#003f5c'
           style={styles.TextInput}
           onBlur={validateEmail}
           onChangeText={(email) => setEmail(email)}
@@ -157,8 +140,8 @@ export const RegisterScreen: React.FC<Props> = observer(() => {
 
       <View style={styles.inputView}>
         <TextInput
-          placeholder="Teléfono"
-          placeholderTextColor="#003f5c"
+          placeholder='Teléfono'
+          placeholderTextColor='#003f5c'
           style={styles.TextInput}
           onBlur={validatePhone}
           onChangeText={(telf) => setTelf(telf)}
