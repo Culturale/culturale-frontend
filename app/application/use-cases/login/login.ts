@@ -34,7 +34,7 @@ export function login(
         user.email,
         user.profilePicture,
         user.phoneNumber,
-        user.userType,
+        user.userType
       );
 
       userController.setUserInfo(userInfo);

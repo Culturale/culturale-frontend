@@ -86,9 +86,11 @@ export const RegisterScreen: React.FC<Props> = observer(() => {
 
   return (
     <KeyboardAvoidingView behavior='padding' style={styles.container}>
-      <Image source={require('../assets/logo.png')} style={styles.image} />
+      <Image
+        source={require('../../../assets/logo.png')}
+        style={styles.image}
+      />{' '}
       <StatusBar style='auto' />
-
       <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
         <Pressable style={styles.button} onPress={pickImage}>
           <Text style={styles.textButton}>Selecciona una imagen</Text>
@@ -97,7 +99,6 @@ export const RegisterScreen: React.FC<Props> = observer(() => {
           <Image source={{ uri: image }} style={{ height: 125, width: 125 }} />
         )}
       </View>
-
       <View style={styles.inputView}>
         <TextInput
           placeholder='Nombre'
@@ -106,7 +107,6 @@ export const RegisterScreen: React.FC<Props> = observer(() => {
           onChangeText={(nom) => setNom(nom)}
         />
       </View>
-
       <View style={styles.inputView}>
         <TextInput
           placeholder='Usuario'
@@ -115,7 +115,6 @@ export const RegisterScreen: React.FC<Props> = observer(() => {
           onChangeText={(user) => setUser(user)}
         />
       </View>
-
       <View style={styles.inputView}>
         <TextInput
           secureTextEntry
@@ -125,7 +124,6 @@ export const RegisterScreen: React.FC<Props> = observer(() => {
           onChangeText={(password) => setPassword(password)}
         />
       </View>
-
       <View style={styles.inputView}>
         <TextInput
           placeholder='Email'
@@ -135,9 +133,7 @@ export const RegisterScreen: React.FC<Props> = observer(() => {
           onChangeText={(email) => setEmail(email)}
         />
       </View>
-
       {emailError ? <Text style={{ color: 'red' }}>{emailError}</Text> : null}
-
       <View style={styles.inputView}>
         <TextInput
           placeholder='Teléfono'
@@ -147,9 +143,7 @@ export const RegisterScreen: React.FC<Props> = observer(() => {
           onChangeText={(telf) => setTelf(telf)}
         />
       </View>
-
       {phoneError ? <Text style={{ color: 'red' }}>{phoneError}</Text> : null}
-
       <DropDownPicker
         items={items}
         open={open}
@@ -164,7 +158,6 @@ export const RegisterScreen: React.FC<Props> = observer(() => {
         }}
         value={value}
       />
-
       <TouchableOpacity
         style={styles.registerBtn}
         onPress={() => handleRegister()}

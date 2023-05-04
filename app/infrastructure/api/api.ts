@@ -65,12 +65,12 @@ export class API implements IAPI {
     userType: string,
   ): Promise<UserDocument> {
     const res = await this.axiosClient.post<UserDocument>('/users/create', {
-      username,
+      email,
       name,
       password,
-      email,
       profilePicture,
       userType,
+      username,
     });
 
     if (res.status === 200) {

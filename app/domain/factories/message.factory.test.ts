@@ -6,8 +6,8 @@ describe('messageFactory', () => {
     const json = {
       _id: '123',
       content: 'test-content',
-      userId: 'test-UserID',
       date: '2022-01-01T00:00:00.000Z',
+      userId: 'test-UserID',
     };
 
     const message = messageFactory(json);
