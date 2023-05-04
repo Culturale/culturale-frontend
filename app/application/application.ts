@@ -69,11 +69,9 @@ export class Application implements IApplication {
       controllerErrors: computed,
       useCasesRequests: observable,
     });
-    console.log(this.useCases);
   }
 
   public async setup(): Promise<void> {
-    console.log('setup');
     await this.controllers.UserController.setup();
     if (this.controllers.UserController.token) {
       this.infrastructure.api.setup(this.controllers.UserController.token);
