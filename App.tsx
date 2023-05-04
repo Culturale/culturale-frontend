@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage  from '@react-native-async-storage/async-storage';
-import LoginScreen from "./app/views/login";
+import LoginScreen from "./app/views/login"
 import RegisterScreen from "./app/views/register";
 import ChatScreen from "./app/views/chat";
 import HomeScreen from "./app/views/HomeScreen";

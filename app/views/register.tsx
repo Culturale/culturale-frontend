@@ -21,7 +21,7 @@ export const RegisterScreen = () => {
   const handleRegister = async () => {
     validateEmail();
     validatePhone();
-    const SERVER_URL = '';
+    const SERVER_URL = 'http://172.20.10.12:8080';
     const registerData = {
       email: email,
       name: nom,
