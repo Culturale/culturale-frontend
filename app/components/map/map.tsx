@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import MapView, { Marker, Callout } from 'react-native-maps';
-import { StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import * as Location from 'expo-location';
 import axios from 'axios';
+import styles from './MapStyles';
 
 export default function Mapa({ latitud, longitud }) {
   const [region, setRegion] = useState({
@@ -84,8 +85,8 @@ export default function Mapa({ latitud, longitud }) {
             <Callout style={styles.callout}>
               <View>
                 <Text style={styles.eventName}>{marker.denominacio}</Text>
-                <Text style={styles.eventDescription}>{marker.dataIni}</Text>
                 <Text style={styles.eventDescription}>{marker.horari}</Text>
+                <Text style={styles.eventDescription}>{marker.dataIni}</Text>
                 <Text style={styles.eventDescription}>{marker.adress}</Text>
               </View>
               <TouchableOpacity style={styles.button}>
@@ -96,48 +97,10 @@ export default function Mapa({ latitud, longitud }) {
         ))}
       </MapView>
       {showCallout && (
-        <View style={styles.calloutOverlay}>
-          <TouchableOpacity style={styles.calloutOverlayTouchable} onPress={closeCallout} />
+        <View>
+          <TouchableOpacity onPress={closeCallout} />
         </View>
       )}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    ...StyleSheet.absoluteFillObject,
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  map: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  eventName: {
-    fontWeight: 'bold',
-  },
-  eventDescription: {
-    flex: 1
-  },
-  callout: {
-    padding: 10,
-    minWidth: 150,
-  },
-  button: {
-    alignSelf: 'flex-end',
-    backgroundColor: '#34b38a',
-    borderBottomRightRadius: 16,
-    bottom: 0,
-    paddingHorizontal: 9,
-    marginBottom: -5,
-    paddingVertical: 1,
-    position: 'absolute',
-    right: -5
-  },
-  buttonText: {
-    color: '#FFF',
-    fontSize: 12,
-    fontWeight: 'bold',
-  },
-});

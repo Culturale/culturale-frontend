@@ -17,7 +17,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import EventsScreen from '../../views/EventsScreen';
 import HomeScreen from '../../views/HomeScreen';
-import MapScreen from '../../views/MapScreen';
+import MapScreen from '../../views/MapView/MapScreen';
 import ProfileScreen from '../../views/ProfileScreen';
 import SearchScreen from '../../views/SearchScreen';
 
