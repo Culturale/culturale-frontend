@@ -1,6 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { AxiosResponse } from 'axios';
 import axios from 'axios';
+
+
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import {
@@ -14,6 +16,8 @@ import {
   Button,
   TouchableOpacity
 } from 'react-native';
+
+
 
 export const LoginScreen = ({ navigation }: {navigation: any}) => {
   const [user, setUser] = useState('');
@@ -55,7 +59,7 @@ export const LoginScreen = ({ navigation }: {navigation: any}) => {
       })
       .catch((error: any) => {
         console.error('Error al iniciar sesión:', error.response.data);
-        if (error.response.status == 400) setError('Usuario o contraseña incorrectas');
+        if (error.response.status === 400) setError('Usuario o contraseña incorrectas');
       });
   };
 
