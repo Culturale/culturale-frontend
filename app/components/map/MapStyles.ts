@@ -17,7 +17,7 @@ export default StyleSheet.create({
         flex: 1
       },
       callout: {
-        padding: 10,
+        flex:1,
         minWidth: 150,
       },
       button: {
