@@ -10,10 +10,8 @@ export type Login = {
 
 /**
  *  @param infrastructure
- *  @param driverController
- *  @param routeController
- *  @description Logs in the user to Auth0, requests Firebase credentials to BE, logs the user into Firebase and
- * asks RouteController to subscribe to route updates
+ *  @param userController
+ *  @description Logs in the user to Culturale API
  */
 export function login(
   infrastructure: IInfrastructure,

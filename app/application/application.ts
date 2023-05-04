@@ -8,6 +8,7 @@ import type { IApplication, UseCaseRequestID } from './application.interface';
 import type { Controllers } from './controllers';
 import { EventController, UserController } from './controllers';
 import { login } from './use-cases';
+import { signup } from './use-cases/signup';
 import type { UseCasesMap } from './use-cases/use-cases';
 
 export class Application implements IApplication {
@@ -39,6 +40,27 @@ export class Application implements IApplication {
           password
         );
         this.useCasesRequests.set('Login', subject);
+        return subject;
+      },
+      Signup: (
+        username: string,
+        name: string,
+        password: string,
+        email: string,
+        profilePicture: string,
+        userType: string
+      ) => {
+        const subject = signup(
+          this.infrastructure,
+          this.controllers.UserController,
+          username,
+          name,
+          password,
+          email,
+          profilePicture,
+          userType
+        );
+        this.useCasesRequests.set('Signup', subject);
         return subject;
       },
     };
