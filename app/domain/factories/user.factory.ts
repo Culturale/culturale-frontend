@@ -1,6 +1,6 @@
 import { User } from '~/domain/entities';
 import type { IUser } from '~/domain/entities';
-import { UserDocument } from '~/infrastructure';
+import type { UserDocument } from '~/infrastructure';
 
 export function userFactory(userDocument: UserDocument): IUser {
   return new User(
@@ -10,6 +10,6 @@ export function userFactory(userDocument: UserDocument): IUser {
     userDocument.email,
     userDocument.profilePicture,
     userDocument.phoneNumber,
-    userDocument.userType,
+    userDocument.userType
   );
 }

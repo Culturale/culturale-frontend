@@ -1,3 +1,5 @@
+import { makeObservable, observable } from 'mobx';
+
 import type { IChat } from '../chat';
 import type { IUser } from '../user';
 
@@ -55,11 +57,26 @@ export class Event implements IEvent {
     this.url = url;
     this.chat = chat;
     this.participants = participants || [];
+
+    makeObservable(this, {
+      adress: observable,
+      chat: observable,
+      codi: observable,
+      dataFi: observable,
+      dataIni: observable,
+      denominacio: observable,
+      descripcio: observable,
+      horari: observable,
+      participants: observable,
+      url: observable,
+    });
   }
+
   public updateParticipant(newParticipant: IUser): void {
     const newParticipants = [...this.participants, newParticipant];
     this.participants = newParticipants;
   }
+
   public get participantsUsernames(): string[] {
     const ids = this.participants.map((participant) => participant.username);
     return ids;

@@ -1,16 +1,17 @@
 import type { IEvent, EventProps } from '~/domain/entities';
 import { Event } from '~/domain/entities';
-import { EventDocument } from '~/infrastructure';
-import { userFactory } from './user.factory';
+import type { EventDocument } from '~/infrastructure';
+
 import { chatFactory } from './chat.factory';
+import { userFactory } from './user.factory';
 
 export function eventFactory(eventDocument: EventDocument): IEvent {
   const props: EventProps = {
     ...eventDocument,
+    chat: chatFactory(eventDocument.chat),
     dataFi: new Date(eventDocument.dataFi),
     dataIni: new Date(eventDocument.dataIni),
     participants: eventDocument.participants.map(userFactory),
-    chat: chatFactory(eventDocument.chat),
   };
   return new Event(props);
 }
