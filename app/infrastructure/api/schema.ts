@@ -4,6 +4,27 @@
  */
 
 export interface paths {
+  "/login": {
+    /** Logs in to Culturale API */
+    post: {
+      responses: {
+        /** Ok */
+        200: {
+          schema: {
+            user: definitions["user"];
+            token: string;
+          };
+        };
+        /** Internal server error */
+        500: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+      };
+    };
+  };
   "/events": {
     /** Returns all events from database */
     get: {

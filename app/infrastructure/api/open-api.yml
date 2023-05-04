@@ -10,6 +10,31 @@ produces:
 - application/json
 
 paths:
+  /login:
+    post:
+      description: Logs in to Culturale API
+      responses:
+        '200':
+          description: Ok
+          schema:
+            type: object
+            required:
+              - user
+              - token
+            properties:
+              user:
+                $ref: '#/definitions/user'
+              token:
+                type: string
+        '500':
+          description: Internal server error
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+              error:
+                $ref: '#/definitions/error'
   /events:
     get:
       description: Returns all events from database

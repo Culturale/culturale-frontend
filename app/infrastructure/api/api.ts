@@ -4,6 +4,7 @@ import axios from 'axios';
 import type {
   EventDocument,
   IAPI,
+  LoginResponse,
   MessageDocument,
   UserDocument,
 } from './api.interface';
@@ -33,8 +34,11 @@ export class API implements IAPI {
     this.axiosClient.getUri();
   }
 
-  public async login(username: string, password: string): Promise<string> {
-    const res = await this.axiosClient.post<string>('/login', {
+  public async login(
+    username: string,
+    password: string,
+  ): Promise<LoginResponse> {
+    const res = await this.axiosClient.post<LoginResponse>('/login', {
       password,
       username,
     });
