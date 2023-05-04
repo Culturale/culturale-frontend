@@ -16,7 +16,7 @@ export default function Mapa({ latitud, longitud }) {
   const [eventosMarkers, setEventosMarkers] = useState([]);
   const [showCallout, setShowCallout] = useState(false);
 
-  const SERVER_URL = 'http://192.168.8.101:8080';
+  const SERVER_URL = 'http://172.20.10.2:8080';
 
   useEffect(() => {
     // Obtiene la ubicación actual del dispositivo y actualiza la región del mapa
