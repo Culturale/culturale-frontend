@@ -37,6 +37,7 @@ export function login(
         user.userType
       );
 
+      infrastructure.api.setup(token);
       userController.setUserInfo(userInfo);
       userController.setToken(token);
       subject.completeRequest();

@@ -16,6 +16,14 @@ export class API implements IAPI {
 
   constructor(baseURL: string) {
     this.baseURL = baseURL;
+    this.axiosClient = axios.create({
+      baseURL: this.baseURL,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      responseType: 'json',
+    });
   }
 
   public setup(token: string) {
@@ -30,13 +38,11 @@ export class API implements IAPI {
       },
       responseType: 'json',
     });
-
-    this.axiosClient.getUri();
   }
 
   public async login(
     username: string,
-    password: string,
+    password: string
   ): Promise<LoginResponse> {
     const res = await this.axiosClient.post<LoginResponse>('/login', {
       password,
@@ -62,7 +68,7 @@ export class API implements IAPI {
     password: string,
     email: string,
     profilePicture: string,
-    userType: string,
+    userType: string
   ): Promise<UserDocument> {
     const res = await this.axiosClient.post<UserDocument>('/users/create', {
       email,
@@ -82,7 +88,7 @@ export class API implements IAPI {
 
   public async getChatMessages(id: string): Promise<MessageDocument[]> {
     const res = await this.axiosClient.get<MessageDocument[]>(
-      `/events/${id}/messages`,
+      `/events/${id}/messages`
     );
 
     if (res.status === 200) {
