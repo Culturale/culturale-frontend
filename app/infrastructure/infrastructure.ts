@@ -17,6 +17,6 @@ export class Infrastructure implements IInfrastructure {
     this.services = {
       location: new LocationService()
     };
-    this.api = new API(env.API_HOST);
+    this.api = new API(env.API_URL);
   }
 }

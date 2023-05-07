@@ -1,5 +1,4 @@
-import type { IToken } from '~/domain/entities';
-
 export interface IAPI {
-  setup: (token: IToken) => void;
+  setup: (token: string) => void;
+  login: (username: string, password: string) => Promise<string>;
 }
