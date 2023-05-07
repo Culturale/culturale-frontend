@@ -16,16 +16,6 @@ export interface ILocationService {
   getSpeed(): Promise<number | null>;
 
   /**
-   * Add location listener for changes
-   */
-  addListener(callback: (status: boolean) => void): void;
-
-  /**
-   * Remove location listener
-   */
-  removeListener(callback: (status: boolean) => void): void;
-
-  /**
    * Get current location subscription
    */
   getCurrentLocationSubscription(): () => void;

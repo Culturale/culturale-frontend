@@ -1,8 +1,10 @@
 import type { Controller } from '~/application/controllers/controller.interface';
+import type { IUser } from '~/domain';
 
 export interface IUserController extends Controller {
   isLoggedIn: boolean | null;
   token: string;
+  userInfo: IUser;
 
   /**
    * Get if login is needed
@@ -33,4 +35,10 @@ export interface IUserController extends Controller {
    * @public
    */
   setToken: (token: string) => void;
+
+  /**
+   * Sets user info
+   * @public
+   */
+  setUserInfo: (userInfo: IUser) => void;
 }

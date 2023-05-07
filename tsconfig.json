@@ -28,7 +28,7 @@
         "storybook/*"
       ],
       "~/*": [
-        "app/*"
+        "./app/*"
       ]
     },
     "rootDir": "./",
@@ -43,6 +43,7 @@
     "node_modules"
   ],
   "include": [
+    "App.tsx",
     "index.js",
     "app",
     "test",

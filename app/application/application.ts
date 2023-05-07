@@ -5,8 +5,10 @@ import { Infrastructure } from '~/infrastructure';
 import type { IRequestSubject } from '~/observables';
 
 import type { IApplication, UseCaseRequestID } from './application.interface';
-import { Controllers, UserController } from './controllers';
+import type { Controllers } from './controllers';
+import { EventController, UserController } from './controllers';
 import { login } from './use-cases';
+import { signup } from './use-cases/signup';
 import type { UseCasesMap } from './use-cases/use-cases';
 
 export class Application implements IApplication {
@@ -25,6 +27,7 @@ export class Application implements IApplication {
     this.infrastructure = new Infrastructure();
 
     this.controllers = {
+      EventController: new EventController(this.infrastructure),
       UserController: new UserController(),
     };
 
@@ -34,9 +37,30 @@ export class Application implements IApplication {
           this.infrastructure,
           this.controllers.UserController,
           username,
-          password,
+          password
         );
         this.useCasesRequests.set('Login', subject);
+        return subject;
+      },
+      Signup: (
+        username: string,
+        name: string,
+        password: string,
+        email: string,
+        profilePicture: string,
+        userType: string
+      ) => {
+        const subject = signup(
+          this.infrastructure,
+          this.controllers.UserController,
+          username,
+          name,
+          password,
+          email,
+          profilePicture,
+          userType
+        );
+        this.useCasesRequests.set('Signup', subject);
         return subject;
       },
     };
