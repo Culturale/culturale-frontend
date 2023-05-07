@@ -12,7 +12,7 @@ import type {
 import {
   RouteController,
   DriverController
-} from './controllers';
+} from './controllers'; 
 import {
   login
 } from './use-cases';

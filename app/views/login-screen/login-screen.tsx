@@ -56,7 +56,7 @@ export const LoginScreen: React.FC<Props> = observer(() => {
 
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
-      <Image source={require('../assets/logo.png')} style={styles.image} />
+      <Image source={require('../../../assets/logo.png')} style={styles.image} />
       <StatusBar style="auto" />
       <View style={styles.inputView}>
         <TextInput

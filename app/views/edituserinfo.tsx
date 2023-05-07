@@ -33,7 +33,7 @@ export const EditProfileScreen = () => {
   ]);
 
   const handleEditProfile = async () => {
-    const SERVER_URL = 'http://172.20.10.12:8080';
+    const SERVER_URL = 'http://192.168.1.247:8081';
     const EditProfileData = {
       email: email,
       name: name,
