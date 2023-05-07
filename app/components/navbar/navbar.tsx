@@ -10,12 +10,12 @@ import {
   Image,
   TextInput,
   Button,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import EventsScreen from '../../views/EventsScreen';
-import HomeScreen from '../../views/HomeScreen';
+import HomeScreen from '../../views/home-screen/home-screen';
 import MapScreen from '../../views/MapScreen';
 import ProfileScreen from '../../views/ProfileScreen';
 
@@ -26,9 +26,9 @@ const profileName = 'Perfil';
 
 const Tab = createBottomTabNavigator();
 
-export default function NavBar () {
+export default function NavBar() {
   return (
-      <Tab.Navigator
+    <Tab.Navigator
       initialRouteName={homeName}
       screenOptions={({ route }) => ({
         headerShown: false,
@@ -48,15 +48,14 @@ export default function NavBar () {
             iconName = focused ? 'person' : 'person-outline';
           }
 
-          return <Ionicons color={color} name={iconName} size={size}/>;
-        }
-      })}>
-
-        <Tab.Screen component={HomeScreen} name={homeName}/>
-        <Tab.Screen component={MapScreen} name={mapName}/>
-        <Tab.Screen component={EventsScreen} name={eventsName}/>
-        <Tab.Screen component={ProfileScreen} name={profileName}/>
-
-      </Tab.Navigator>
+          return <Ionicons color={color} name={iconName} size={size} />;
+        },
+      })}
+    >
+      <Tab.Screen component={HomeScreen} name={homeName} />
+      <Tab.Screen component={MapScreen} name={mapName} />
+      <Tab.Screen component={EventsScreen} name={eventsName} />
+      <Tab.Screen component={ProfileScreen} name={profileName} />
+    </Tab.Navigator>
   );
 }

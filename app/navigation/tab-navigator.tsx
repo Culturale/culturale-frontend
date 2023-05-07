@@ -1,7 +1,7 @@
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { observer } from 'mobx-react-lite';
 
-import HomeScreen from '~/views/HomeScreen';
+import HomeScreen from '~/views/home-screen/home-screen';
 
 import type { TabParamList } from './root-params';
 
