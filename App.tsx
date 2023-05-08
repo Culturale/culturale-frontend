@@ -8,8 +8,9 @@ import RegisterScreen from "./app/views/register";
 import ChatScreen from "./app/views/chat";
 import HomeScreen from "./app/views/HomeScreen";
 import MainContainer from "./app/views/mainContainer";
-import EventInfoScreen from "./app/views/InfoEventScreen"
+import EventInfoScreen from "./app/views/InfoEventScreen";
 import { Text, View } from "react-native";
+import EventsScreen from "~/views/EventsScreen";
 
 export type RootStackParamList = {
   Main: undefined;
@@ -18,6 +19,7 @@ export type RootStackParamList = {
   EventInfo: {event: Event};
   Login: undefined;
   Register: undefined;
+  Events: undefined;
 
 
 };
@@ -32,6 +34,7 @@ export default function App() {
   useEffect(() => {
     AsyncStorage.getItem('token').then((value) => {
       setToken(value);
+      console.log(value);
       
       setIsLoading(false);
     });
@@ -56,6 +59,7 @@ export default function App() {
             <Stack.Screen name="Chat" component={ChatScreen} />
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="EventInfo" component={EventInfoScreen} />
+            <Stack.Screen name="Events" component={EventsScreen} />
           </>
         ) : (
           <>

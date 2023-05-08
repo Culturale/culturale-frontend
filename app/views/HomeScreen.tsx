@@ -21,6 +21,7 @@ import Evento from '../components/evento/evento';
 
 interface Event {
   _id: string;
+  id_modif: string;
   denominacio: string;
   adress: string;
   dataIni: string;
@@ -40,7 +41,7 @@ export default function HomeScreen ({ navigation } : {navigation: any}) {
     axios.get(`${SERVER_URL}/events`)
       .then(response => {
         const modifiedEvents = response.data.events.map((event: Event, index: number) => {
-          event._id = (index + 1).toString();
+          event.id_modif = (index + 1).toString();
           return event;
         });
         setEvents(modifiedEvents);
@@ -52,8 +53,9 @@ export default function HomeScreen ({ navigation } : {navigation: any}) {
 
   const renderItem = ({ item } : {item: any}) => (
       <Evento
-        key={item._id}
+        key={item.id_modif}
         event={{
+          _id: item._id,
           adress: item.adress,
           dataIni: item.dataIni,
           denominacio: item.denominacio,

@@ -1,9 +1,30 @@
 import React from 'react';
+import type { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function EventInfoScreen (navigation: any) {
     const { event } = navigation.route.params;
+
+    const handleSubscribe = async (event) => {
+      const SERVER_URL = 'http://172.20.10.8:8081';
+      const subscribeData = {
+        id: event._id,
+        username: 'Rubitor5'
+      };
+      console.log(event);
+  
+      axios.post(`${SERVER_URL}/events/newParticipant`, subscribeData)
+        .then((response: AxiosResponse) => {
+          navigation.navigate('Events');
+          
+        })
+        .catch((error: any) => {
+          console.error('Error al suscribirse al evento:', error.response.data);
+        });
+    };
+
     return (
         <View style={styles.container}> 
           <View style={styles.titleContainer}>
@@ -21,7 +42,7 @@ export default function EventInfoScreen (navigation: any) {
           <Image source={{ uri: event.url }} style={styles.image} />
           <View style={styles.priceContainer}>
             <Text style={styles.price}>22,10€</Text>
-            <TouchableOpacity style={styles.buyButton}>
+            <TouchableOpacity style={styles.buyButton} onPress={() => handleSubscribe(event)}>
               <Text style={styles.buyButtonText}>Comprar</Text>
             </TouchableOpacity>
           </View>
