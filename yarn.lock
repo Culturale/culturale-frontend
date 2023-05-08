@@ -2985,6 +2985,11 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
+"@types/eslint-config-prettier@^6.11.0":
+  version "6.11.0"
+  resolved "https://registry.yarnpkg.com/@types/eslint-config-prettier/-/eslint-config-prettier-6.11.0.tgz#5e944e94240df9c1ba755c3b1ebc3879d96ab991"
+  integrity sha512-UBuZMZVog9c9jXvArbYtWH570sRWNaU6kEnUAHsHb/+zAufzPT4I+gMkUR2dVPWlqiceoRU1thjUVdGrAWVpCA==
+
 "@types/eslint-plugin-prettier@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@types/eslint-plugin-prettier/-/eslint-plugin-prettier-3.1.0.tgz#451b5e1e5f148a38dc41e9c5b61d45cd2e97af2c"
