@@ -1,4 +1,4 @@
-import { Linking } from 'react-native';
+/*import { Linking } from 'react-native';
 import type {
   ConfigureOptions,
   RequestPermissionOptions,
@@ -98,3 +98,4 @@ export class LocationService implements ILocationService {
     Linking.openSettings();
   }
 }
+*/
