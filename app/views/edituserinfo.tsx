@@ -33,7 +33,7 @@ export const EditProfileScreen = () => {
   ]);
 
   const handleEditProfile = async () => {
-    const SERVER_URL = 'http://172.20.10.8:8080';
+    const SERVER_URL = 'http://192.168.1.247:8081';
     const EditProfileData = {
       email: email,
       name: name,
@@ -67,7 +67,7 @@ export const EditProfileScreen = () => {
 
   return (
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
-            <Image source={require('../../assets/logo.png')} style={styles.image} />
+            <Image source={require('~/assets/logo.png')} style={styles.image} />
             <StatusBar style="auto" />
 
             <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>

@@ -19,7 +19,12 @@ module.exports = function (api) {
   }
 
   return {
-    presets: ['module:metro-react-native-babel-preset'],
+    presets: [
+      [
+        'module:metro-react-native-babel-preset',
+        { useTransformReactJSXExperimental: true },
+      ],
+    ],
     env: {
       production: {},
     },
@@ -35,6 +40,12 @@ module.exports = function (api) {
             '~/storybook': ['./storybook/'],
             '^~/(.+)': './app/\\1',
           },
+        },
+      ],
+      [
+        '@babel/plugin-transform-react-jsx',
+        {
+          runtime: 'automatic',
         },
       ],
       [

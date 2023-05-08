@@ -1,58 +1,50 @@
-import type { IDriverController, IRouteController } from '~/application/controllers';
-import type { IInfrastructure } from '~/infrastructure';
-import type { IRequestSubject} from '~/observables';
+import type { IUserController } from '~/application/controllers';
+import { User } from '~/domain';
+import type { IInfrastructure, LoginResponse } from '~/infrastructure';
+import type { IRequestSubject } from '~/observables';
 import { RequestSubject } from '~/observables';
 
 export type Login = {
-  args: [];
+  args: [username: string, password: string];
   responseType: IRequestSubject<void>;
 };
 
 /**
  *  @param infrastructure
- *  @param driverController
- *  @param routeController
- *  @description Logs in the user to Auth0, requests Firebase credentials to BE, logs the user into Firebase and
- * asks RouteController to subscribe to route updates
+ *  @param userController
+ *  @description Logs in the user to Culturale API
  */
 export function login(
-  _infrastructure: IInfrastructure,
-  _driverController: IDriverController,
-  _routeController: IRouteController
+  infrastructure: IInfrastructure,
+  userController: IUserController,
+  ...args: Login['args']
 ): Login['responseType'] {
+  const [username, password] = args;
   const subject = new RequestSubject<void>('Login');
   subject.startRequest();
 
-  setTimeout(() => {
-    subject.completeRequest();
-  }, 1500);
-  /*   infrastructure.services.auth
-    .login()
-    .then((token) => {
-      driverController.setToken(token);
+  infrastructure.api
+    .login(username, password)
+    .then((res: LoginResponse) => {
+      const { token, user } = res;
+      const userInfo = new User(
+        user.username,
+        user.name,
+        user.password,
+        user.email,
+        user.profilePicture,
+        user.phoneNumber,
+        user.userType
+      );
+
       infrastructure.api.setup(token);
-      infrastructure.services.firebase.analytics.setUserId(token.userId);
-      driverController.setIsLoggedIn(true);
-    })
-    .then(() => {
-      return infrastructure.api.requestFirestoreCredentials(driverController.driverID);
-    })
-    .then((res: DriverCredentialsResponse) => {
-      const {
-        data: { accessToken },
-      } = res;
-      infrastructure.services.firebase.setup(accessToken);
-    })
-    .then(() => {
-      routeController.setDriverId(driverController.driverID);
+      userController.setUserInfo(userInfo);
+      userController.setToken(token);
       subject.completeRequest();
     })
-    .catch((error: Error) => {
-      driverController.setIsLoggedIn(false);
-      driverController.setToken(null);
-      infrastructure.services.firebase.analytics.setUserId(null);
-      subject.failRequest(error);
-    }); */
+    .catch((e) => {
+      subject.failRequest(e);
+    });
 
   return subject;
 }
