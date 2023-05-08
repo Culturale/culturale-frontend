@@ -21,7 +21,13 @@ export const RootNavigator: React.FC = observer(() => {
     return (
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen component={TabNavigator} name='Main' />
+          <Stack.Screen
+            component={TabNavigator}
+            name='Main'
+            options={{
+              headerShown: false,
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     );
@@ -29,8 +35,20 @@ export const RootNavigator: React.FC = observer(() => {
     return (
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen component={LoginScreen} name='Login' />
-          <Stack.Screen component={RegisterScreen} name='Signup' />
+          <Stack.Screen
+            component={LoginScreen}
+            name='Login'
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            component={RegisterScreen}
+            name='Signup'
+            options={{
+              headerShown: false,
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     );
