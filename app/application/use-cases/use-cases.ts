@@ -7,5 +7,7 @@ type UseCases = {
 };
 
 export type UseCasesMap = {
-  [key in keyof UseCases]: (...args: UseCases[key]['args']) => UseCases[key]['responseType'];
+  [key in keyof UseCases]: (
+    ...args: UseCases[key]['args']
+  ) => UseCases[key]['responseType'];
 };

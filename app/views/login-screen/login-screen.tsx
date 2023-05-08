@@ -2,8 +2,8 @@ import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
 import { observer } from 'mobx-react-lite';
-import type React from 'react';
 import { useState, useEffect } from 'react';
+import type React from 'react';
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -20,7 +20,6 @@ import type { RootParamList } from '~/navigation';
 
 import type { LoginScreenProps as Props } from './login-screen.props';
 
-
 type LoginScreenNavigation = StackNavigationProp<RootParamList, 'Login'>;
 
 export const LoginScreen: React.FC<Props> = observer(() => {
@@ -28,6 +27,7 @@ export const LoginScreen: React.FC<Props> = observer(() => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [opacity] = useState(new Animated.Value(0));
+
   const {
     useCases: { Login },
   } = useApplicationLayer();
@@ -53,14 +53,15 @@ export const LoginScreen: React.FC<Props> = observer(() => {
   }, [error, opacity]);
 
   function handleLogin() {
-    Login(user, password).subscribeToRequest({
-      onCompleteRequest: () => navigation.navigate('Main'),
-    });
+    Login(user, password);
   }
 
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
-      <Image source={require('../assets/logo.png')} style={styles.image} />
+      <Image
+        source={require('../../../assets/logo.png')}
+        style={styles.image}
+      />
       <StatusBar style="auto" />
       <View style={styles.inputView}>
         <TextInput

@@ -1,8 +1,14 @@
-import { IEvent, eventFactory } from '~/domain';
-import { IEventController } from './event-controller.interface';
-import { IRequestSubject, RequestSubject } from '~/observables';
-import { EventDocument, IInfrastructure } from '~/infrastructure';
 import { action, makeObservable, observable } from 'mobx';
+
+import type { IEvent} from '~/domain';
+import { eventFactory } from '~/domain';
+import type { EventDocument, IInfrastructure } from '~/infrastructure';
+import type { IRequestSubject} from '~/observables';
+import { RequestSubject } from '~/observables';
+
+import type { IEventController } from './event-controller.interface';
+
+
 
 export class EventController implements IEventController {
   public events: IEvent[];

@@ -1,12 +1,11 @@
-import { DeviceEventEmitter, Linking } from 'react-native';
+import { Linking } from 'react-native';
 import type {
   ConfigureOptions,
   RequestPermissionOptions,
   Location,
-  Subscription
+  Subscription,
 } from 'react-native-location';
 import RNLocation from 'react-native-location';
-import RNSettings from 'react-native-settings';
 
 import type { IGeoCode } from '~/domain/entities';
 import { Geocode } from '~/domain/entities';
@@ -16,17 +15,17 @@ import type { ILocationService } from './location.interface';
 export const LocationOptions: ConfigureOptions = {
   desiredAccuracy: {
     android: 'highAccuracy',
-    ios: 'best'
+    ios: 'best',
   },
   interval: 10000,
-  maxWaitTime: 2000
+  maxWaitTime: 2000,
 };
 
 export const PERMISSIONS_OPTIONS: RequestPermissionOptions = {
   android: {
-    detail: 'fine'
+    detail: 'fine',
   },
-  ios: 'always'
+  ios: 'always',
 };
 
 export class LocationService implements ILocationService {
@@ -34,6 +33,9 @@ export class LocationService implements ILocationService {
   private lastKnownLocation: Geocode = null;
 
   constructor(private options: ConfigureOptions = {}) {}
+  isGpsEnabled(): Promise<boolean> {
+    throw new Error('Method not implemented.');
+  }
 
   async setup() {
     // Need this try catch to prevent the app from freezing when gps is denied on android
@@ -65,14 +67,6 @@ export class LocationService implements ILocationService {
     return location ? location.speed : null;
   }
 
-  public addListener(callback: (status: boolean) => void): void {
-    DeviceEventEmitter.addListener(RNSettings.GPS_PROVIDER_EVENT, callback);
-  }
-
-  public removeListener(callback: (status: boolean) => void): void {
-    DeviceEventEmitter.removeListener(RNSettings.GPS_PROVIDER_EVENT, callback);
-  }
-
   public getCurrentLocationSubscription(): Subscription {
     return this.locationUpdatesSubscription;
   }
@@ -98,11 +92,6 @@ export class LocationService implements ILocationService {
 
   public getLastKnownLocation(): IGeoCode {
     return this.lastKnownLocation;
-  }
-
-  public async isGpsEnabled(): Promise<boolean> {
-    const result = await RNSettings.getSetting(RNSettings.LOCATION_SETTING);
-    return result === RNSettings.ENABLED;
   }
 
   requestEnableLocationServices(): void {

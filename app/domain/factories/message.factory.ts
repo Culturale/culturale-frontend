@@ -1,6 +1,6 @@
 import { Message } from '~/domain/entities';
 import type { IMessage } from '~/domain/entities';
-import { MessageDocument } from '~/infrastructure';
+import type { MessageDocument } from '~/infrastructure';
 
 export function messageFactory(messageDocument: MessageDocument): IMessage {
   return new Message({

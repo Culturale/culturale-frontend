@@ -1,5 +1,5 @@
-import { IEvent } from '~/domain';
-import { IRequestSubject } from '~/observables';
+import type { IEvent } from '~/domain';
+import type { IRequestSubject } from '~/observables';
 
 export interface IEventController {
   readonly events: IEvent[];

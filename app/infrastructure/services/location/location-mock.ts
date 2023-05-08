@@ -1,7 +1,5 @@
-import { DeviceEventEmitter, Linking } from 'react-native';
-import RNSettings from 'react-native-settings';
+import { Linking } from 'react-native';
 
-import env from '~/config/env';
 import type { IGeoCode } from '~/domain/entities';
 import { Geocode } from '~/domain/entities';
 
@@ -19,7 +17,6 @@ export class MockLocationService implements IMockLocationService {
   public setupCalled = false;
 
   async setup() {
-    this.subscribeToLocationUpdates();
     this.setupCalled = true;
   }
 
@@ -36,26 +33,8 @@ export class MockLocationService implements IMockLocationService {
     return 10;
   }
 
-  addListener(callback: (enabled: boolean) => void): void {
-    env.MOCK_ENVIRONMENT ? callback(this.gpsEnabled) : jest.fn(() => callback(this.gpsEnabled));
-  }
-
-  removeListener(callback: (enabled: boolean) => void): void {
-    DeviceEventEmitter.removeListener(RNSettings.GPS_PROVIDER_EVENT, callback);
-  }
-
   public getCurrentLocationSubscription() {
     return this.locationUpdatesSubscription;
-  }
-
-  subscribeToLocationUpdates(): void {
-    this.locationUpdatesSubscription = env.MOCK_ENVIRONMENT
-      ? () => {
-          return new Geocode(3, 4);
-        }
-      : jest.fn(() => {
-        return new Geocode(3, 4);
-      });
   }
 
   unsubscribeFromLocationUpdates() {
