@@ -4,21 +4,15 @@ import { HomeScreenStyles as styles } from './home-screen.styles';
 import { HomeScreenProps as Props } from './home-screen.props';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import Evento from '../../components/evento/evento';
+import { Evento } from '~/components';
 import { useApplicationLayer } from '~/hooks';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootParamList } from '~/navigation';
-import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
-
-type HomeScreenNavigation = StackNavigationProp<RootParamList, 'Home'>;
 
 export const HomeScreen: React.FC<Props> = observer(() => {
   const {
     controllers: { EventController },
   } = useApplicationLayer();
   const events = EventController.events;
-  const navigation = useNavigation<HomeScreenNavigation>();
 
   useEffect(() => {
     EventController.fetchAllEvents();
