@@ -16,7 +16,6 @@ export class API implements IAPI {
 
   constructor(baseURL: string) {
     this.baseURL = baseURL;
-    console.log("URLLL", baseURL);
     this.axiosClient = axios.create({
       baseURL: this.baseURL,
       headers: {
