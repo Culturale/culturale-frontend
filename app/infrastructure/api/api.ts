@@ -16,6 +16,7 @@ export class API implements IAPI {
 
   constructor(baseURL: string) {
     this.baseURL = baseURL;
+    console.log("URLLL", baseURL);
     this.axiosClient = axios.create({
       baseURL: this.baseURL,
       headers: {
@@ -80,7 +81,7 @@ export class API implements IAPI {
       password,
       username,
     });
-
+    console.log('back response', res);
     return res;
   }
 
