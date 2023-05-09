@@ -18,7 +18,6 @@ export const ProfileScreen = observer(() => {
     controllers: {UserController},
   } = useApplicationLayer();
   const userInfo = UserController.userInfo;
-  console.log(userInfo.profilePicture);
     return (
       <View style={Styles.container}>
         <Text style={Styles.title}>Mi perfil</Text>
