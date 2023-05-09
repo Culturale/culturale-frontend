@@ -11,6 +11,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
+
     AsyncStorage.getItem('token').then((value) => {
       setToken(value);
 
