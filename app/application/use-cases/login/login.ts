@@ -1,5 +1,6 @@
 import type { IUserController } from '~/application/controllers';
-import type { IInfrastructure } from '~/infrastructure';
+import { User } from '~/domain';
+import type { IInfrastructure, LoginResponse } from '~/infrastructure';
 import type { IRequestSubject } from '~/observables';
 import { RequestSubject } from '~/observables';
 
@@ -10,10 +11,8 @@ export type Login = {
 
 /**
  *  @param infrastructure
- *  @param driverController
- *  @param routeController
- *  @description Logs in the user to Auth0, requests Firebase credentials to BE, logs the user into Firebase and
- * asks RouteController to subscribe to route updates
+ *  @param userController
+ *  @description Logs in the user to Culturale API
  */
 export function login(
   infrastructure: IInfrastructure,
@@ -26,8 +25,22 @@ export function login(
 
   infrastructure.api
     .login(username, password)
-    .then((token: string) => {
+    .then((res: LoginResponse) => {
+      const { token, user } = res;
+      const userInfo = new User(
+        user.username,
+        user.name,
+        user.password,
+        user.email,
+        user.profilePicture,
+        user.phoneNumber,
+        user.userType
+      );
+
+      infrastructure.api.setup(token);
+      userController.setUserInfo(userInfo);
       userController.setToken(token);
+      userController.setIsLoggedIn(true);
       subject.completeRequest();
     })
     .catch((e) => {

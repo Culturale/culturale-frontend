@@ -1,5 +1,9 @@
+import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect } from 'react';
+import { observer } from 'mobx-react-lite';
+import { useState, useEffect } from 'react';
+import type React from 'react';
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -10,12 +14,11 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import { observer } from 'mobx-react-lite';
+
 import { useApplicationLayer } from '~/hooks';
-import { LoginScreenProps as Props } from './login-screen.props';
-import { useNavigation } from '@react-navigation/native';
-import { RootParamList } from '~/navigation';
-import { StackNavigationProp } from '@react-navigation/stack';
+import type { RootParamList } from '~/navigation';
+
+import type { LoginScreenProps as Props } from './login-screen.props';
 
 type LoginScreenNavigation = StackNavigationProp<RootParamList, 'Login'>;
 
@@ -24,6 +27,7 @@ export const LoginScreen: React.FC<Props> = observer(() => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [opacity] = useState(new Animated.Value(0));
+
   const {
     useCases: { Login },
   } = useApplicationLayer();
@@ -49,19 +53,20 @@ export const LoginScreen: React.FC<Props> = observer(() => {
   }, [error, opacity]);
 
   function handleLogin() {
-    Login(user, password).subscribeToRequest({
-      onCompleteRequest: () => navigation.navigate('Main'),
-    });
+    Login(user, password);
   }
 
   return (
-    <KeyboardAvoidingView behavior="padding" style={styles.container}>
-      <Image source={require('../assets/logo.png')} style={styles.image} />
-      <StatusBar style="auto" />
+    <KeyboardAvoidingView behavior='padding' style={styles.container}>
+      <Image
+        source={require('../../../assets/logo.png')}
+        style={styles.image}
+      />
+      <StatusBar style='auto' />
       <View style={styles.inputView}>
         <TextInput
-          placeholder="Usuario"
-          placeholderTextColor="#003f5c"
+          placeholder='Usuario'
+          placeholderTextColor='#003f5c'
           style={styles.TextInput}
           onChangeText={(user) => setUser(user)}
         />
@@ -70,8 +75,8 @@ export const LoginScreen: React.FC<Props> = observer(() => {
       <View style={styles.inputView}>
         <TextInput
           secureTextEntry
-          placeholder="Contraseña"
-          placeholderTextColor="#003f5c"
+          placeholder='Contraseña'
+          placeholderTextColor='#003f5c'
           style={styles.TextInput}
           onChangeText={(password) => setPassword(password)}
         />

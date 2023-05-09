@@ -1,10 +1,9 @@
 import type { IChat } from '~/domain/entities/chat/chat.interface';
-import type { MongoId } from '~/types/types';
 
 import type { IUser } from '../user';
 
 export interface IEvent {
-  id: MongoId;
+  id: string;
   codi: number;
   denominacio: string;
   descripcio: string;

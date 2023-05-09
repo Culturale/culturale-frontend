@@ -4,17 +4,17 @@ import { eventFactory } from '~/domain/factories';
 describe('eventFactory', () => {
   it('should create a new Event instance with correct atributes', () => {
     const json = {
-      id: '20211006023',
+      adress: '123 Main St, Anytown, USA',
+      chat: 'test-chat',
       codi: 'ABC',
+      dataFi: '2022-01-02T00:00:00.000Z',
+      dataIni: '2022-01-01T00:00:00.000Z',
       denominacio: 'test-denominacio',
       descripcio: 'test-descripcio',
-      dataIni: '2022-01-01T00:00:00.000Z',
-      dataFi: '2022-01-02T00:00:00.000Z',
       horari: '9am - 5pm',
-      adress: '123 Main St, Anytown, USA',
-      url: 'test-url',
-      chat: 'test-chat',
+      id: '20211006023',
       participants: ['test-user1', 'test-user2'],
+      url: 'test-url',
     };
 
     const event = eventFactory(json);

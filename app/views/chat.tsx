@@ -44,7 +44,7 @@ export const ChatScreen = ({ navigation }: {navigation: any}) => {
 
     const messageData = {
       content: content,
-      //userId: userId,
+      // userId: userId,
       date: new Date()
     };
 

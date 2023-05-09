@@ -2,6 +2,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
 
+import type { IUser } from '~/domain';
+
 import type { IUserController } from './user-controller.interface';
 
 export enum DriverRequests {
@@ -14,6 +16,7 @@ export enum DriverRequests {
 export class UserController implements IUserController {
   public isLoggedIn: boolean | null = null;
   public token: string;
+  public userInfo: IUser;
 
   constructor(token?: string) {
     this.token = token;
@@ -24,7 +27,9 @@ export class UserController implements IUserController {
       removeToken: action,
       setIsLoggedIn: action,
       setToken: action,
+      setUserInfo: action,
       token: observable,
+      userInfo: observable,
     });
   }
 
@@ -33,10 +38,10 @@ export class UserController implements IUserController {
       this,
       {
         name: 'UserController',
-        properties: ['isLoggedIn', 'token'],
+        properties: ['isLoggedIn', 'token', 'userInfo'],
         storage: AsyncStorage,
       },
-      { fireImmediately: true },
+      { fireImmediately: true }
     );
   }
 
@@ -54,5 +59,9 @@ export class UserController implements IUserController {
 
   public setIsLoggedIn(state: boolean): void {
     this.isLoggedIn = state;
+  }
+
+  public setUserInfo(user: IUser): void {
+    this.userInfo = user;
   }
 }
