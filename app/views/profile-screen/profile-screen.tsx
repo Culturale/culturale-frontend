@@ -18,12 +18,13 @@ export const ProfileScreen = observer(() => {
     controllers: {UserController},
   } = useApplicationLayer();
   const userInfo = UserController.userInfo;
+  console.log(userInfo.profilePicture);
     return (
       <View style={Styles.container}>
         <Text style={Styles.title}>Mi perfil</Text>
         <View style={Styles.rowProfile}>
           <View style={Styles.titleData}>
-            <Image source={require('../../../assets/logo.png')} style={Styles.foto}/>
+            <Image src={userInfo.profilePicture} style={Styles.foto}/>
             <View style={Styles.contentData}>
               <Text style={Styles.number}>30</Text>
               <Text>Amigos</Text>
