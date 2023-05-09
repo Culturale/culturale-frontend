@@ -80,7 +80,6 @@ export class API implements IAPI {
       password,
       username,
     });
-    console.log('back response', res);
     return res;
   }
 
