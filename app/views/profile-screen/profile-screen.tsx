@@ -8,17 +8,16 @@ import {
   Button,
 } from 'react-native';
 
-import { UserController } from '~/application/controllers';
+
 import { useApplicationLayer } from '~/hooks';
 
 import { ProfileScreenStyles as Styles } from './profile-screen.styles';
 
 export const ProfileScreen = observer(() => {
-  const user = UserController;
   const {
-    controllers: {userController},
+    controllers: {UserController},
   } = useApplicationLayer();
-  
+  const userInfo = UserController.userInfo;
     return (
       <View style={Styles.container}>
         <Text style={Styles.title}>Mi perfil</Text>
@@ -35,13 +34,13 @@ export const ProfileScreen = observer(() => {
             </View>
           </View>
         </View>
-        <Text style={Styles.username}>elsaboix23</Text>
+        <Text style={Styles.username}>{userInfo.username}</Text>
         <View style={Styles.row}>
           <View style={Styles.column}>
             <Text style={Styles.titleRow}>Nombre:</Text>
           </View>
           <View style={Styles.column}>
-            <Text>Elsa Boix</Text>
+            <Text>{userInfo.name}</Text>
           </View>
         </View>
         <View style={Styles.row}>
@@ -49,7 +48,7 @@ export const ProfileScreen = observer(() => {
             <Text style={Styles.titleRow}>Correo electronico:</Text>
           </View>
           <View style={Styles.column}>
-            <Text>elsa.boix@gmail.com</Text>
+            <Text>{userInfo.email}</Text>
           </View>
         </View>
         <View style={Styles.row}>
@@ -57,7 +56,7 @@ export const ProfileScreen = observer(() => {
             <Text style={Styles.titleRow}>Teléfono</Text>
           </View>
           <View style={Styles.column}>
-            <Text>664753053</Text>
+            <Text>{userInfo.phoneNumber}</Text>
           </View>
         </View>
         <View style={Styles.editButton}>
