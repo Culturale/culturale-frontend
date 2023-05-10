@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import type {
   EventDocument,
+  GetEventsResponse,
   IAPI,
   LoginResponse,
   MessageDocument,
@@ -75,7 +76,7 @@ export class API implements IAPI {
 
   public async login(
     username: string,
-    password: string
+    password: string,
   ): Promise<LoginResponse> {
     const res = await this.post<LoginResponse>('/users/login', {
       password,
@@ -86,9 +87,9 @@ export class API implements IAPI {
   }
 
   public async getAllEvents(): Promise<EventDocument[]> {
-    const res = await this.get<EventDocument[]>('/events');
-    console.log(res);
-    return res;
+    const res = await this.get<GetEventsResponse>('/events');
+
+    return res.events;
   }
 
   public async signUp(
@@ -98,7 +99,7 @@ export class API implements IAPI {
     email: string,
     phoneNumber: string,
     usertype: string,
-    profilePicture?: string
+    profilePicture?: string,
   ): Promise<UserDocument> {
     const res = await this.post<UserDocument>('/users/create', {
       email,
@@ -117,7 +118,7 @@ export class API implements IAPI {
 
   public async getChatMessages(id: string): Promise<MessageDocument[]> {
     const res = await this.axiosClient.get<MessageDocument[]>(
-      `/events/${id}/messages`
+      `/events/${id}/messages`,
     );
 
     if (res.status === 200) {

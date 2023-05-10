@@ -1,11 +1,16 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { IEvent } from '~/domain';
 
-export function Evento({ event }: { event: any }) {
+interface Props {
+  event: IEvent;
+}
+
+export const Event: React.FC<Props> = ({ event }) => {
   return (
     <View style={styles.container}>
-      <Image source={{ uri: event.image }} style={styles.image} />
+      {/* <Image source={{ uri: event.image }} style={styles.image} /> */}
       <View style={styles.details}>
         <Text style={styles.title}>{event.denominacio}</Text>
         <View style={styles.subtitleContainer}>
@@ -14,7 +19,7 @@ export function Evento({ event }: { event: any }) {
         </View>
         <View style={styles.subtitleContainer}>
           <Ionicons color="#888" name="calendar-outline" size={16} />
-          <Text style={styles.subtitle}>{event.dataIni}</Text>
+          <Text style={styles.subtitle}>{event.dataIni.toUTCString()}</Text>
         </View>
       </View>
       <TouchableOpacity style={styles.button}>
@@ -22,7 +27,7 @@ export function Evento({ event }: { event: any }) {
       </TouchableOpacity>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   button: {

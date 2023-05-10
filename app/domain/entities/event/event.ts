@@ -13,9 +13,12 @@ export type EventProps = {
   dataIni: Date;
   dataFi: Date;
   horari: string;
-  address: string;
+  adress: string;
   url: string;
   chat?: IChat;
+  lat: number;
+  long: number;
+  photo: string;
   participants?: IUser[];
 };
 
@@ -29,6 +32,9 @@ export class Event implements IEvent {
   public horari: string;
   public adress: string;
   public url: string;
+  public lat: number;
+  public long: number;
+  public photo: string;
   public chat: IChat;
   public participants: IUser[];
 
@@ -41,7 +47,10 @@ export class Event implements IEvent {
       dataIni,
       dataFi,
       horari,
-      address,
+      adress,
+      lat,
+      long,
+      photo,
       url,
       chat,
       participants,
@@ -53,8 +62,11 @@ export class Event implements IEvent {
     this.dataIni = dataIni;
     this.dataFi = dataFi;
     this.horari = horari;
-    this.adress = address;
+    this.adress = adress;
     this.url = url;
+    this.photo = photo;
+    this.lat = lat;
+    this.long = long;
     this.chat = chat;
     this.participants = participants || [];
 

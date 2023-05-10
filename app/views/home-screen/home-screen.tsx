@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { Text, View, FlatList } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { Evento } from '~/components';
+import { Event } from '~/components';
 import { useApplicationLayer } from '~/hooks';
 
 import type { HomeScreenProps as Props } from './home-screen.props';
@@ -15,20 +15,14 @@ export const HomeScreen: React.FC<Props> = observer(() => {
     controllers: { EventController },
   } = useApplicationLayer();
   const events = EventController.events;
+  console.log(events);
 
   useEffect(() => {
     EventController.fetchAllEvents();
   }, []);
 
   const renderItem = ({ item }: { item: any }) => (
-    <Evento
-      key={item._id}
-      event={{
-        adress: item.adress,
-        dataIni: item.dataIni,
-        denominacio: item.denominacio,
-      }}
-    />
+    <Event key={item.id} event={item} />
   );
 
   return (
@@ -42,13 +36,13 @@ export const HomeScreen: React.FC<Props> = observer(() => {
         </View>
         <View style={styles.hoyContainer}>
           <Text style={styles.subTitle}>Hoy</Text>
-          <Ionicons color='black' name='filter-outline' size={24} />
+          <Ionicons color="black" name="filter-outline" size={24} />
         </View>
       </View>
       <View style={styles.eventContainer}>
         <FlatList
           data={events}
-          keyExtractor={(item) => item._id}
+          keyExtractor={(item) => item.id}
           renderItem={renderItem}
         />
       </View>
