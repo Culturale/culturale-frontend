@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react';
+import { observer } from 'mobx-react-lite';
+import type React from 'react';
+import { useEffect } from 'react';
 import { Text, View, FlatList } from 'react-native';
-import { HomeScreenStyles as styles } from './home-screen.styles';
-import { HomeScreenProps as Props } from './home-screen.props';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { Evento } from '~/components';
 import { useApplicationLayer } from '~/hooks';
-import { observer } from 'mobx-react-lite';
+
+import type { HomeScreenProps as Props } from './home-screen.props';
+import { HomeScreenStyles as styles } from './home-screen.styles';
 
 export const HomeScreen: React.FC<Props> = observer(() => {
   const {
@@ -40,7 +42,7 @@ export const HomeScreen: React.FC<Props> = observer(() => {
         </View>
         <View style={styles.hoyContainer}>
           <Text style={styles.subTitle}>Hoy</Text>
-          <Ionicons color="black" name="filter-outline" size={24} />
+          <Ionicons color='black' name='filter-outline' size={24} />
         </View>
       </View>
       <View style={styles.eventContainer}>

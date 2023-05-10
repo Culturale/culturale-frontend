@@ -85,13 +85,9 @@ export class API implements IAPI {
   }
 
   public async getAllEvents(): Promise<EventDocument[]> {
-    const res = await this.axiosClient.get<EventDocument[]>('/events');
-
-    if (res.status === 200) {
-      return res.data;
-    } else {
-      throw new Error('Error getting events');
-    }
+    const res = await this.get<EventDocument[]>('/events');
+    console.log(res);
+    return res;
   }
 
   public async signUp(
