@@ -1,14 +1,12 @@
 import { action, makeObservable, observable } from 'mobx';
 
-import type { IEvent} from '~/domain';
+import type { IEvent } from '~/domain';
 import { eventFactory } from '~/domain';
 import type { EventDocument, IInfrastructure } from '~/infrastructure';
-import type { IRequestSubject} from '~/observables';
+import type { IRequestSubject } from '~/observables';
 import { RequestSubject } from '~/observables';
 
 import type { IEventController } from './event-controller.interface';
-
-
 
 export class EventController implements IEventController {
   public events: IEvent[];
@@ -34,13 +32,20 @@ export class EventController implements IEventController {
     this.infrastructure.api
       .getAllEvents()
       .then((res: EventDocument[]) => {
-        const events: IEvent[] = res.map((document) => eventFactory(document));
+        const events: IEvent[] = [];
+        console.log(res);
+        for (const doc of res) {
+          const event = eventFactory(doc);
+          events.push(event);
+        }
 
+        console.log(events);
         this.setEvents(events);
 
         subject.completeRequest();
       })
       .catch((e: Error) => {
+        console.log(e);
         subject.failRequest(e);
       });
 

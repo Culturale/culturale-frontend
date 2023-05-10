@@ -1,0 +1,15 @@
+{
+  "id": "efgh5678",
+  "messages": [
+    {
+      "content": "Who else is excited for the music festival?",
+      "userId": "johndoe@example.com",
+      "date": "2023-08-05T12:10:00Z"
+    },
+    {
+      "content": "I am! I'll be performing on the main stage.",
+      "userId": "janesmith@example.com",
+      "date": "2023-08-05T12:15:00Z"
+    }
+  ]
+}
