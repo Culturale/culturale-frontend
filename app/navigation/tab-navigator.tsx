@@ -10,7 +10,11 @@ const Tab = createMaterialBottomTabNavigator<TabParamList>();
 export const TabNavigator: React.FC = observer(() => {
   return (
     <Tab.Navigator>
-      <Tab.Screen component={HomeScreen} name='Home' />
+      <Tab.Screen
+        component={HomeScreen}
+        name='Home'
+        options={{ tabBarIcon: 'home' }}
+      />
     </Tab.Navigator>
   );
 });

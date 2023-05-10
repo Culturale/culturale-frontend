@@ -15,6 +15,7 @@ export class API implements IAPI {
   private token: string;
 
   constructor(baseURL: string) {
+    console.log(baseURL);
     this.baseURL = baseURL;
     this.axiosClient = axios.create({
       baseURL: this.baseURL,

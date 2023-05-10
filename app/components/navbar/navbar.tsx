@@ -15,7 +15,6 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import EventsScreen from '../../views/EventsScreen';
-import HomeScreen from '../../views/home-screen/home-screen';
 import MapScreen from '../../views/MapScreen';
 import ProfileScreen from '../../views/ProfileScreen';
 
@@ -52,7 +51,6 @@ export default function NavBar() {
         },
       })}
     >
-      <Tab.Screen component={HomeScreen} name={homeName} />
       <Tab.Screen component={MapScreen} name={mapName} />
       <Tab.Screen component={EventsScreen} name={eventsName} />
       <Tab.Screen component={ProfileScreen} name={profileName} />
