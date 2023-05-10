@@ -7,5 +7,5 @@ export interface IUser {
     phoneNumber: string;
     usertype: string;
     followers: IUser[];
-    followed: IUser[];
+    followeds: IUser[];
 }

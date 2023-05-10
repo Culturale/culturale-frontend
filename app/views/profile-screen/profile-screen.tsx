@@ -25,11 +25,11 @@ export const ProfileScreen = observer(() => {
           <View style={Styles.titleData}>
             <Image src={userInfo.profilePicture} style={Styles.foto}/>
             <View style={Styles.contentData}>
-              <Text style={Styles.number}>{userInfo.followers.length}</Text>
+              <Text style={Styles.number}>{userInfo.followeds.length}</Text>
               <Text>Seguidores</Text>
             </View>
             <View style={Styles.contentData}>
-              <Text style={Styles.number}>{userInfo.followed.length}</Text>
+              <Text style={Styles.number}>{userInfo.followers.length}</Text>
               <Text>Siguiendo</Text>
             </View>
           </View>

@@ -9,7 +9,7 @@ export class User implements IUser {
   public phoneNumber: string;
   public usertype: string;
   public followers: IUser[];
-  public followed: IUser[];
+  public followeds: IUser[];
 
   constructor(
     username: string,
@@ -20,7 +20,7 @@ export class User implements IUser {
     phoneNumber: string,
     usertype: string,
     followers: IUser[],
-    followed: IUser[],
+    followeds: IUser[],
   ) {
     this.username = username;
     this.name = name;
@@ -30,6 +30,6 @@ export class User implements IUser {
     this.phoneNumber = phoneNumber;
     this.usertype = usertype;
     this.followers = followers || [];
-    this.followed = followed || [];
+    this.followeds = followeds || [];
   }
 }
