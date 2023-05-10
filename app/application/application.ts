@@ -28,7 +28,7 @@ export class Application implements IApplication {
 
     this.controllers = {
       EventController: new EventController(this.infrastructure),
-      UserController: new UserController(),
+      UserController: new UserController(this.infrastructure),
     };
 
     this.useCases = {

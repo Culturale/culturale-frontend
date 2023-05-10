@@ -2,7 +2,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
 
-import type { IUser } from '~/domain';
+import { IUser, userFactory } from '~/domain';
+import type { IInfrastructure } from '~/infrastructure';
 
 import type { IUserController } from './user-controller.interface';
 
@@ -17,10 +18,10 @@ export class UserController implements IUserController {
   public isLoggedIn: boolean | null = null;
   public token: string;
   public userInfo: IUser;
+  private infrastucture: IInfrastructure;
 
-  constructor(token?: string) {
-    this.token = token;
-
+  constructor(infrastucture: IInfrastructure ) {
+    this.infrastucture = infrastucture;
     makeObservable(this, {
       isLoggedIn: observable,
       isLoginNeeded: computed,
@@ -43,6 +44,24 @@ export class UserController implements IUserController {
       },
       { fireImmediately: true }
     );
+  }
+
+  public async modifyUser(username: string,
+    name: string,
+    password: string,
+    email: string,
+    phoneNumber: string,
+    usertype: string,
+    profilePicture?: string):Promise<void>{
+    const res = await this.infrastucture.api.editUser(username,
+      name,
+      password,
+      email,
+      phoneNumber,
+      usertype,
+      profilePicture);
+    const user = userFactory(res);
+    this.setUserInfo(user);
   }
 
   public get isLoginNeeded(): boolean {

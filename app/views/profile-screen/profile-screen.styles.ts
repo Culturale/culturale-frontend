@@ -95,6 +95,7 @@ export const ProfileScreenStyles =  StyleSheet.create({
     fontWeight: 'bold',
     paddingTop: 20, 
   },
+  
   titleData:{
     display: 'flex',
     flexDirection: 'row',

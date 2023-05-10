@@ -1,4 +1,6 @@
 
+import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import {
@@ -8,16 +10,19 @@ import {
   Button,
 } from 'react-native';
 
-
 import { useApplicationLayer } from '~/hooks';
+import type { RootParamList } from '~/navigation';
 
 import { ProfileScreenStyles as Styles } from './profile-screen.styles';
+
+type ProfileNavigation = StackNavigationProp<RootParamList, 'Profile'>;
 
 export const ProfileScreen = observer(() => {
   const {
     controllers: {UserController},
   } = useApplicationLayer();
   const userInfo = UserController.userInfo;
+  const navigation = useNavigation<ProfileNavigation>();
     return (
       <View style={Styles.container}>
         <Text style={Styles.title}>Mi perfil</Text>
@@ -60,7 +65,7 @@ export const ProfileScreen = observer(() => {
           </View>
         </View>
         <View style={Styles.editButton}>
-              <Button  title='Editar'></Button>
+              <Button color='#34b38a' title='Editar' onPress={() => navigation.navigate('EditProfile')}></Button>
         </View>
         <View style={Styles.containerInfo}>
           <View style={Styles.panelConfig}>

@@ -80,7 +80,6 @@ export class API implements IAPI {
       password,
       username,
     });
-    console.log(res);
     return res;
   }
 
@@ -115,6 +114,27 @@ export class API implements IAPI {
       usertype,
     });
 
+    return res;
+  }
+
+  public async editUser(
+    username: string,
+    name: string,
+    password: string,
+    email: string,
+    phoneNumber: string,
+    usertype: string,
+    profilePicture?: string
+  ): Promise<UserDocument> {
+    const res = await this.post<UserDocument>('/users/edit', {
+      email,
+      name,
+      password,
+      phoneNumber,
+      profilePicture,
+      username,
+      usertype,
+    });
     return res;
   }
 

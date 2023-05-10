@@ -1,0 +1,100 @@
+import {StyleSheet} from 'react-native';
+export const EditProfileScreenStyles =  StyleSheet.create({
+  buttons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingTop: 20,
+  },
+  column: {
+    alignItems: 'flex-start',
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  container: {
+    display: 'flex',
+    flex: 1,
+    fontFamily: 'Helvetica',
+    padding: 20,
+  },
+  editInputContainer:{
+    alignItems: 'center',
+    borderColor: 'gray',
+    borderRadius: 5,
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+    fontSize: 50,
+    paddingHorizontal: 10,
+  },
+  email: {
+    color: '#666',
+    fontSize: 16,
+  },
+  name: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  number: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    paddingBottom: 10,
+    paddingLeft: 10,
+  },
+  row: {
+    alignItems: 'center',
+    borderBottomColor: '#ccc',
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  rowProfile: {
+    display: 'flex',
+    gap: 30,
+    justifyContent: 'space-around',
+    margin: 20,
+  },
+  rows: {
+    paddingBottom: 100,
+  },
+  saveButton: {
+    alignItems: 'center',
+    backgroundColor: '#34b38a',
+    borderRadius: 5,
+    flexDirection: 'column',
+    padding: 10,
+    paddingHorizontal: 30,
+  },
+  cancelButton: {
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    borderRadius: 5,
+    borderColor: 'black',
+    borderWidth: 1,
+    flexDirection: 'column',
+    padding: 10,
+    paddingHorizontal: 30,
+  },
+  title:{
+    alignSelf: 'center',
+    display: 'flex',
+    fontFamily: 'Helvetica',
+    fontSize: 24,
+    fontWeight: 'bold',
+    paddingBottom: 40, 
+    paddingTop: 20,
+  },
+  titleRow: {
+    fontSize: 17
+  },
+  username: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    paddingBottom: 20,
+  },
+});
+
+  

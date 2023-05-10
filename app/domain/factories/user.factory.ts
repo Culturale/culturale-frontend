@@ -10,6 +10,8 @@ export function userFactory(userDocument: UserDocument): IUser {
     userDocument.email,
     userDocument.profilePicture,
     userDocument.phoneNumber,
-    userDocument.userType
+    userDocument.userType,
+    userDocument.followeds,
+    userDocument.followers
   );
 }

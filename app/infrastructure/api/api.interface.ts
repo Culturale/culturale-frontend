@@ -25,5 +25,14 @@ export interface IAPI {
 
   getAllEvents: () => Promise<EventDocument[]>;
 
+  editUser: (username: string,
+    name: string,
+    password: string,
+    email: string,
+    phoneNumber: string,
+    usertype: string,
+    profilePicture?: string
+  ) => Promise<UserDocument>;
+  
   getChatMessages: (id: string) => Promise<MessageDocument[]>;
 }
