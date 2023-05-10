@@ -4,6 +4,8 @@ export type EventDocument = definitions['event'];
 export type UserDocument = definitions['user'];
 export type MessageDocument = definitions['message'];
 export type ChatDocument = definitions['chat'];
+export type GetEventsResponse =
+  paths['/events']['get']['responses']['200']['schema'];
 
 export type LoginResponse =
   paths['/login']['post']['responses']['200']['schema'];
@@ -20,7 +22,7 @@ export interface IAPI {
     email: string,
     phoneNumber: string,
     userType: string,
-    profilePicture?: string
+    profilePicture?: string,
   ) => Promise<UserDocument>;
 
   getAllEvents: () => Promise<EventDocument[]>;

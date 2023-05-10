@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import type {
   EventDocument,
+  GetEventsResponse,
   IAPI,
   LoginResponse,
   MessageDocument,
@@ -15,6 +16,7 @@ export class API implements IAPI {
   private token: string;
 
   constructor(baseURL: string) {
+    console.log(baseURL);
     this.baseURL = baseURL;
     this.axiosClient = axios.create({
       baseURL: this.baseURL,
@@ -74,7 +76,7 @@ export class API implements IAPI {
 
   public async login(
     username: string,
-    password: string
+    password: string,
   ): Promise<LoginResponse> {
     const res = await this.post<LoginResponse>('/users/login', {
       password,
@@ -85,13 +87,9 @@ export class API implements IAPI {
   }
 
   public async getAllEvents(): Promise<EventDocument[]> {
-    const res = await this.axiosClient.get<EventDocument[]>('/events');
+    const res = await this.get<GetEventsResponse>('/events');
 
-    if (res.status === 200) {
-      return res.data;
-    } else {
-      throw new Error('Error getting events');
-    }
+    return res.events;
   }
 
   public async signUp(
@@ -101,7 +99,7 @@ export class API implements IAPI {
     email: string,
     phoneNumber: string,
     usertype: string,
-    profilePicture?: string
+    profilePicture?: string,
   ): Promise<UserDocument> {
     const res = await this.post<UserDocument>('/users/create', {
       email,
@@ -120,7 +118,7 @@ export class API implements IAPI {
 
   public async getChatMessages(id: string): Promise<MessageDocument[]> {
     const res = await this.axiosClient.get<MessageDocument[]>(
-      `/events/${id}/messages`
+      `/events/${id}/messages`,
     );
 
     if (res.status === 200) {

@@ -44,9 +44,12 @@ paths:
         '200': 
           description: Ok
           schema:
-            type: array 
-            items:
-              $ref: '#/definitions/event'
+            type: object
+            properties:
+              events:
+                type: array 
+                items:
+                  $ref: '#/definitions/event'
         '403':
           description: Unauthorized
           schema:
@@ -139,7 +142,12 @@ definitions:
       - url
       - descripcio
       - horari
-      - address
+      - adress
+      - dataIni
+      - dataFi
+      - lat
+      - long
+      - photo
     properties:
       id:
         type: string
@@ -155,9 +163,15 @@ definitions:
         type: string
       horari:
         type: string
-      address:
+      adress:
         type: string
       url:
+        type: string
+      lat:
+        type: number
+      long:
+        type: number
+      photo:
         type: string
       participants:
         type: array
@@ -167,6 +181,13 @@ definitions:
         $ref: '#/definitions/chat'
   user:
     type: object
+    required:
+      - name
+      - username
+      - email
+      - phoneNumber
+      - profilePicture
+      - usertype
     properties:
       name:
         type: string
@@ -174,14 +195,24 @@ definitions:
         type: string
       email:
         type: string
-      password:
-        type: string
       phoneNumber:
         type: string
       profilePicture:
         type: string
-      userType:
+      usertype:
         type: string
+      followers:
+        type: array
+        items:
+          $ref: '#/definitions/user'
+      followeds:
+        type: array
+        items:
+          $ref: '#/definitions/user'
+      eventSub:
+        type: array
+        items:
+          $ref: '#/definitions/event'
   chat:
     type: object
     required:
