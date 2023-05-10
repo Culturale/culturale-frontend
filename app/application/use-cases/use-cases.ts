@@ -1,9 +1,11 @@
 import type { Login } from './login';
 import type { NewMessage } from './newmessage';
+import type { Signup } from './signup';
 
 type UseCases = {
   Login: Login;
   NewMessage: NewMessage;
+  Signup: Signup;
 };
 
 export type UseCasesMap = {
