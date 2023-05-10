@@ -4,7 +4,7 @@ import type { IUser } from '~/domain';
 export interface IUserController extends Controller {
   isLoggedIn: boolean | null;
   token: string;
-  user: IUser;
+  userInfo: IUser;
 
   /**
    * Get if login is needed

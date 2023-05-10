@@ -37,8 +37,10 @@ export function login(
         user.userType
       );
 
+      infrastructure.api.setup(token);
       userController.setUserInfo(userInfo);
       userController.setToken(token);
+      userController.setIsLoggedIn(true);
       subject.completeRequest();
     })
     .catch((e) => {

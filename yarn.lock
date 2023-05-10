@@ -3089,6 +3089,10 @@
     filter-console "^0.1.1"
     react-error-boundary "^3.1.0"
 
+"@testing-library/react-native@^12.0.1":
+  version "12.1.2"
+  resolved "https://registry.yarnpkg.com/@testing-library/react-native/-/react-native-12.1.2.tgz#1935affe1106aeddf0087dff31a6d7414917c098"
+  integrity sha512-5rQMQpbSQAuJc4TxjTt1IoeT1a5eVXaa61hf/YcjV2QtGqCoyhuW8DvhTowrL7y2Ds4NzuYBmbVxjNPR6GIblw==
 "@testing-library/react-native@^12.0.0":
   version "12.1.2"
   resolved "https://registry.yarnpkg.com/@testing-library/react-native/-/react-native-12.1.2.tgz#1935affe1106aeddf0087dff31a6d7414917c098"
@@ -3259,9 +3263,9 @@
   integrity sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==
 
 "@types/node@*":
-  version "18.16.3"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.16.3.tgz#6bda7819aae6ea0b386ebc5b24bdf602f1b42b01"
-  integrity sha512-OPs5WnnT1xkCBiuQrZA4+YAV4HEJejmHneyraIaxsbev5yCEr6KMwINNFP9wQeFIw8FWcoTqF3vQsa5CDaI+8Q==
+  version "20.0.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.0.0.tgz#081d9afd28421be956c1a47ced1c9a0034b467e2"
+  integrity sha512-cD2uPTDnQQCVpmRefonO98/PPijuOnnEy5oytWJFPY1N9aJCz2wJ5kSGWO+zJoed2cY2JxQh6yBuUq4vIn61hw==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.1"
@@ -6186,9 +6190,9 @@ flatted@^3.1.0:
   integrity sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==
 
 flow-parser@0.*:
-  version "0.205.0"
-  resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.205.0.tgz#8756173b6488dedc31ab838e80c8f008d7a44e05"
-  integrity sha512-ZJ6VuLe/BoqeI4GsF+ZuzlpfGi3FCnBrb4xDYhgEJxRt7SAj3ibRuRSsuJSRcY+lQhPZRPNbNWiQqFMxramUzw==
+  version "0.205.1"
+  resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.205.1.tgz#337464aaf027b00b2514610386cf21a5f7c94137"
+  integrity sha512-+RF/e1Et6ZX2I/UG7SGAz3Z8+ulj9xKYLu5AD7Wi8H2llzncU8ZpdKfLR50pPvj4g2a/FbZWkXYL7qHc+zXJNA==
 
 flow-parser@^0.185.0:
   version "0.185.2"
@@ -10949,11 +10953,6 @@ react-native-screens@~3.15.0:
   dependencies:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
-
-react-native-settings@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-settings/-/react-native-settings-1.0.0.tgz#ba2be7503737b1c765167177ef83308f360ad914"
-  integrity sha512-He8MHBMAkhpHhmbJo2qIut3CU01lto6SbjvU5XYcdXhqEYlsOswLbm+Yi2aoelyKAvCmT9LhMBm7mRbPYaQB6Q==
 
 react-native-splash-screen@3.2.0:
   version "3.2.0"

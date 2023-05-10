@@ -31,7 +31,7 @@ export const RegisterScreen: React.FC<Props> = observer(() => {
   const navigation = useNavigation<RegisterScreenNavigation>();
 
   function handleRegister() {
-    Signup(user, nom, password, email, image, value).subscribeToRequest({
+    Signup(user, nom, password, email, telf, value, image).subscribeToRequest({
       onCompleteRequest: () => navigation.navigate('Login'),
     });
   }
@@ -89,7 +89,7 @@ export const RegisterScreen: React.FC<Props> = observer(() => {
       <Image
         source={require('../../../assets/logo.png')}
         style={styles.image}
-      />{' '}
+      />
       <StatusBar style='auto' />
       <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
         <Pressable style={styles.button} onPress={pickImage}>

@@ -47,8 +47,9 @@ export class Application implements IApplication {
         name: string,
         password: string,
         email: string,
-        profilePicture: string,
-        userType: string
+        phoneNumber: string,
+        userType: string,
+        profilePicture?: string
       ) => {
         const subject = signup(
           this.infrastructure,
@@ -57,8 +58,9 @@ export class Application implements IApplication {
           name,
           password,
           email,
-          profilePicture,
-          userType
+          phoneNumber,
+          userType,
+          profilePicture
         );
         this.useCasesRequests.set('Signup', subject);
         return subject;

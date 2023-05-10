@@ -27,7 +27,7 @@ export const LoginScreen: React.FC<Props> = observer(() => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [opacity] = useState(new Animated.Value(0));
-  console.log(useApplicationLayer());
+
   const {
     useCases: { Login },
   } = useApplicationLayer();
@@ -53,9 +53,7 @@ export const LoginScreen: React.FC<Props> = observer(() => {
   }, [error, opacity]);
 
   function handleLogin() {
-    Login(user, password).subscribeToRequest({
-      onCompleteRequest: () => navigation.navigate('Main'),
-    });
+    Login(user, password);
   }
 
   return (
