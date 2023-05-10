@@ -26,11 +26,11 @@ export const ProfileScreen = observer(() => {
             <Image src={userInfo.profilePicture} style={Styles.foto}/>
             <View style={Styles.contentData}>
               <Text style={Styles.number}>30</Text>
-              <Text>Amigos</Text>
+              <Text>Siguiendo</Text>
             </View>
             <View style={Styles.contentData}>
               <Text style={Styles.number}>30</Text>
-              <Text>Reviews</Text>
+              <Text>Seguidores</Text>
             </View>
           </View>
         </View>
@@ -60,7 +60,7 @@ export const ProfileScreen = observer(() => {
           </View>
         </View>
         <View style={Styles.editButton}>
-              <Button  color="white" title='Editar'></Button>
+              <Button  title='Editar'></Button>
         </View>
         <View style={Styles.containerInfo}>
           <View style={Styles.panelConfig}>

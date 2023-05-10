@@ -24,7 +24,8 @@ export const ProfileScreenStyles =  StyleSheet.create({
   },
 
   contentData:{
-    // alignItems: 'center !important',
+    // alignItems: 'center ',
+    align: 'center',
     alignSelf: 'center',
     display: 'flex',
     flexDirection: 'column',
@@ -32,7 +33,8 @@ export const ProfileScreenStyles =  StyleSheet.create({
     paddingLeft: 30,
   },
   editButton: {
-    backgroundColor: 'rgba(128, 128, 128, 0.5)',
+    backgroundColor: 'black',
+    border: 5,
     borderRadius: 10,
     color: 'black',
     margin: 20,
