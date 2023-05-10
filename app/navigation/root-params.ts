@@ -3,6 +3,7 @@ export type RootParamList = {
   Main: undefined;
   Signup: undefined;
   Home: undefined;
+  Chat: undefined;
 };
 
 export type TabParamList = {

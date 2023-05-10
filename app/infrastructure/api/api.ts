@@ -116,6 +116,19 @@ export class API implements IAPI {
     return res;
   }
 
+  public async newMessage(
+    content: string,
+    userId: string,
+    date: Date,
+  ): Promise<MessageDocument>{
+    const res = await this.post<MessageDocument> ('/events/newMessage', {
+      content,
+      userId,
+      date,
+    });
+    return res;
+  }
+
   public async getChatMessages(id: string): Promise<MessageDocument[]> {
     const res = await this.axiosClient.get<MessageDocument[]>(
       `/events/${id}/messages`,

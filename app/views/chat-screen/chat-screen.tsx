@@ -1,6 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
-import { StatusBar } from 'expo-status-bar';
 import { observer } from 'mobx-react-lite';
 import type React from 'react';
 import { useState, useEffect } from 'react';
@@ -13,6 +12,7 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
 
 import styles from './chat-styles';
@@ -22,14 +22,27 @@ import type { ChatScreenProps as Props } from './chat-screen.props';
 
 type ChatScreenNavigation = StackNavigationProp<RootParamList, 'Chat'>;
 
+
 export const ChatScreen: React.FC<Props> = observer (() => {
   const [content, setContent] = useState('');
   const [error, setError] = useState('');
   const [opacity] = useState(new Animated.Value(0));
   const {
     useCases: { NewMessage },
+    controllers: { EventController },
+    controllers: { UserController },
   } = useApplicationLayer();
   const navigation = useNavigation<ChatScreenNavigation>();
+
+  //const messages = Currentchat.messages;
+  //console.log(messages);
+  useEffect(() => {
+    EventController.fetchEventMessages(this);
+  }, []);
+
+  const renderItem = ({ item }: { item: any }) => (
+    <Event key={item.id} event={item} />
+  );
   
   useEffect(() => {
     if (error) {
@@ -50,8 +63,10 @@ export const ChatScreen: React.FC<Props> = observer (() => {
     }
   }, [error, opacity]);
 
+  
+
   function handleMessage() {
-    NewMessage(content).subscribeToRequest({
+    NewMessage(content, UserController.token, new Date()).subscribeToRequest({
       onCompleteRequest: () => navigation.navigate('Main'),
     });
   }
@@ -70,7 +85,11 @@ export const ChatScreen: React.FC<Props> = observer (() => {
             </View>
         </KeyboardAvoidingView>
         <View style={styles.chatbody}>
-
+          <FlatList
+            data={messages}
+            keyExtractor={(item) => item.id}
+            renderItem={renderItem}
+          />
         </View>
         <KeyboardAvoidingView style={styles.chatinput}>
             <View style={styles.inputChat}>

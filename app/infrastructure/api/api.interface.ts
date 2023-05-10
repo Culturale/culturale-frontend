@@ -25,6 +25,8 @@ export interface IAPI {
     profilePicture?: string,
   ) => Promise<UserDocument>;
 
+  newMessage: (content: string, userID: string, date: Date) => Promise<MessageDocument>;
+
   getAllEvents: () => Promise<EventDocument[]>;
 
   getChatMessages: (id: string) => Promise<MessageDocument[]>;
