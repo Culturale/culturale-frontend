@@ -36,7 +36,7 @@ export function login(
         user.phoneNumber,
         user.userType,
         user.followers,
-        user.followed,
+        user.followeds,
       );
 
       infrastructure.api.setup(token);

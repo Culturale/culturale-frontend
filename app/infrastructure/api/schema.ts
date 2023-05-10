@@ -3,8 +3,6 @@
  * Do not make direct changes to the file.
  */
 
-import { IUser } from "~/domain";
-
 export interface paths {
   '/login': {
     /** Logs in to Culturale API */
@@ -131,8 +129,8 @@ export interface definitions {
     phoneNumber?: string;
     profilePicture?: string;
     userType?: string;
-    followers?: IUser[];
-    followed?: IUser[]; 
+    followers?: definitions['user'][];
+    followeds?: definitions['user'][];
   };
   chat: {
     id: string;

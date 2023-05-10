@@ -29,7 +29,7 @@ export class User implements IUser {
     this.profilePicture = profilePicture;
     this.phoneNumber = phoneNumber;
     this.usertype = usertype;
-    this.followers = followers;
-    this.followed = followed;
+    this.followers = followers || [];
+    this.followed = followed || [];
   }
 }

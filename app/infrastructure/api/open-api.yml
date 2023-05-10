@@ -182,6 +182,14 @@ definitions:
         type: string
       userType:
         type: string
+      followers:
+        type: array
+        items:
+          $ref: '#/definitions/user'
+      followeds:
+        type: array
+        items:
+          $ref: '#/definitions/user'   
   chat:
     type: object
     required:
