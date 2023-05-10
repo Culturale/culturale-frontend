@@ -47,6 +47,8 @@ target 'culturalefront' do
   # Flags change depending on the env values.
   flags = get_default_flags()
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   use_react_native!(
     :path => config[:reactNativePath],
     :hermes_enabled => podfile_properties['expo.jsEngine'] == nil || podfile_properties['expo.jsEngine'] == 'hermes',
