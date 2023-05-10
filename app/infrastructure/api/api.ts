@@ -22,8 +22,40 @@ export class API implements IAPI {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      responseType: 'json',
     });
+  }
+
+  private async post<T>(path: string, body: object): Promise<T> {
+    return fetch(this.baseURL + path, {
+      body: JSON.stringify(body),
+      headers: {
+        Accept: 'application/json',
+        Authorization: this.token,
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+    })
+      .then((res) => res.json())
+      .then((data: T) => data)
+      .catch((err: Error) => {
+        throw err;
+      });
+  }
+
+  private async get<T>(path: string): Promise<T> {
+    return fetch(this.baseURL + path, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: this.token,
+        'Content-Type': 'application/json',
+      },
+      method: 'GET',
+    })
+      .then((res) => res.json())
+      .then((data: T) => data)
+      .catch((err: Error) => {
+        throw err;
+      });
   }
 
   public setup(token: string) {
@@ -44,12 +76,12 @@ export class API implements IAPI {
     username: string,
     password: string
   ): Promise<LoginResponse> {
-    const res = await this.axiosClient.post<LoginResponse>('/login', {
+    const res = await this.post<LoginResponse>('/users/login', {
       password,
       username,
     });
 
-    return res.data;
+    return res;
   }
 
   public async getAllEvents(): Promise<EventDocument[]> {
@@ -67,23 +99,23 @@ export class API implements IAPI {
     name: string,
     password: string,
     email: string,
-    profilePicture: string,
-    userType: string
+    phoneNumber: string,
+    usertype: string,
+    profilePicture?: string
   ): Promise<UserDocument> {
-    const res = await this.axiosClient.post<UserDocument>('/users/create', {
+    const res = await this.post<UserDocument>('/users/create', {
       email,
       name,
       password,
-      profilePicture,
-      userType,
+      phoneNumber,
+      profilePicture:
+        profilePicture ||
+        'https://projecteaws.s3.eu-west-3.amazonaws.com/profile.png',
       username,
+      usertype,
     });
 
-    if (res.status === 200) {
-      return res.data;
-    } else {
-      throw new Error('Error signing up');
-    }
+    return res;
   }
 
   public async getChatMessages(id: string): Promise<MessageDocument[]> {

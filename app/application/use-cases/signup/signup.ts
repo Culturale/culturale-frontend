@@ -10,8 +10,9 @@ export type Signup = {
     name: string,
     password: string,
     email: string,
-    profilePicture: string,
-    userType: string
+    phoneNumber: string,
+    userType: string,
+    profilePicture?: string
   ];
   responseType: IRequestSubject<void>;
 };
@@ -26,12 +27,28 @@ export function signup(
   userController: IUserController,
   ...args: Signup['args']
 ): Signup['responseType'] {
-  const [username, name, password, email, profilePicture, userType] = args;
+  const [
+    username,
+    name,
+    password,
+    email,
+    phoneNumber,
+    userType,
+    profilePicture,
+  ] = args;
   const subject = new RequestSubject<void>('Signup');
   subject.startRequest();
 
   infrastructure.api
-    .signUp(username, name, password, email, profilePicture, userType)
+    .signUp(
+      username,
+      name,
+      password,
+      email,
+      phoneNumber,
+      userType,
+      profilePicture
+    )
     .then((userInfo: UserDocument) => {
       const { username, name, email, profilePicture, phoneNumber, userType } =
         userInfo;

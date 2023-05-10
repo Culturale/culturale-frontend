@@ -57,16 +57,16 @@ export const LoginScreen: React.FC<Props> = observer(() => {
   }
 
   return (
-    <KeyboardAvoidingView behavior="padding" style={styles.container}>
+    <KeyboardAvoidingView behavior='padding' style={styles.container}>
       <Image
         source={require('../../../assets/logo.png')}
         style={styles.image}
       />
-      <StatusBar style="auto" />
+      <StatusBar style='auto' />
       <View style={styles.inputView}>
         <TextInput
-          placeholder="Usuario"
-          placeholderTextColor="#003f5c"
+          placeholder='Usuario'
+          placeholderTextColor='#003f5c'
           style={styles.TextInput}
           onChangeText={(user) => setUser(user)}
         />
@@ -75,8 +75,8 @@ export const LoginScreen: React.FC<Props> = observer(() => {
       <View style={styles.inputView}>
         <TextInput
           secureTextEntry
-          placeholder="Contraseña"
-          placeholderTextColor="#003f5c"
+          placeholder='Contraseña'
+          placeholderTextColor='#003f5c'
           style={styles.TextInput}
           onChangeText={(password) => setPassword(password)}
         />

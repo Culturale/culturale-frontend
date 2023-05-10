@@ -18,8 +18,9 @@ export interface IAPI {
     name: string,
     password: string,
     email: string,
-    profilePicture: string,
+    phoneNumber: string,
     userType: string,
+    profilePicture?: string
   ) => Promise<UserDocument>;
 
   getAllEvents: () => Promise<EventDocument[]>;
