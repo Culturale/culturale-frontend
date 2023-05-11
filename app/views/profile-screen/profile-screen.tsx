@@ -6,18 +6,32 @@ import {
   View,
   Image,
   Button,
+  TouchableOpacity,
+  
 } from 'react-native';
 
 
 import { useApplicationLayer } from '~/hooks';
 
 import { ProfileScreenStyles as Styles } from './profile-screen.styles';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { TabParamList } from '~/navigation';
+import { useNavigation } from '@react-navigation/native';
+
+type ShowFriendsNavigation = StackNavigationProp<TabParamList, 'ShowFriendsScreen'>;
 
 export const ProfileScreen = observer(() => {
   const {
     controllers: {UserController},
   } = useApplicationLayer();
+
   const userInfo = UserController.userInfo;
+  const navigation = useNavigation<ShowFriendsNavigation>();
+
+  function mostrarViewAmigos() {
+    navigation.navigate('ShowFriends');
+  }
+
     return (
       <View style={Styles.container}>
         <Text style={Styles.title}>Mi perfil</Text>
@@ -71,10 +85,10 @@ export const ProfileScreen = observer(() => {
             <Image source={require('../../../assets/card-logo.png')} style={Styles.icon}/>
             <Text style={Styles.configText}>Pagos</Text>
           </View>
-          <View style={Styles.panelConfig}>
+          <TouchableOpacity  style={Styles.panelConfig} onPress={() => { mostrarViewAmigos() }}>
             <Image source={require('../../../assets/friend-logo.png')} style={Styles.icon}/>
             <Text style={Styles.configText}>Mis amigos</Text>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
     );

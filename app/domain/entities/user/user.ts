@@ -32,4 +32,10 @@ export class User implements IUser {
     this.followers = followers || [];
     this.followeds = followeds || [];
   }
+    public get friends(): IUser[] {
+    const { followers, followeds } = this;
+    const amigos: IUser[] = followers.filter(user => followeds.includes(user));
+    return amigos;
+  }
+  
 }
