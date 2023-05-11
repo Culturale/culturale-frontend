@@ -1,0 +1,39 @@
+{
+  "id": "123456",
+  "codi": 789,
+  "denominacio": "Example Event",
+  "descripcio": "This is an example event.",
+  "dataIni": "2023-06-01T12:00:00Z",
+  "dataFi": "2023-06-01T15:00:00Z",
+  "horari": "12:00-15:00",
+  "adress": "123 Example St, Example City",
+  "url": "https://www.example.com/event",
+  "lat": 37.7749,
+  "long": -122.4194,
+  "photo": "https://www.example.com/event/photo.jpg",
+  "participants": [
+    {
+      "name": "John Doe",
+      "username": "johndoe",
+      "email": "johndoe@example.com",
+      "phoneNumber": "555-555-5555",
+      "profilePicture": "https://www.example.com/johndoe.jpg",
+      "userType": "attendee"
+    }
+  ],
+  "chat": {
+    "id": "abcdefg",
+    "messages": [
+      {
+        "content": "Hello, everyone!",
+        "userId": "johndoe@example.com",
+        "date": "2023-06-01T12:05:00Z"
+      },
+      {
+        "content": "Hi, John!",
+        "userId": "janesmith@example.com",
+        "date": "2023-06-01T12:10:00Z"
+      }
+    ]
+  }
+}

@@ -4,6 +4,9 @@ export type RootParamList = {
   Signup: undefined;  
   ShowFriends:undefined;
 
+  ProfileScreen: undefined;
+  EditProfile: undefined;
+  Home: undefined;
 };
 
 export type TabParamList = {

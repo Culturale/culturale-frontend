@@ -5,12 +5,15 @@ import type { ChatDocument } from '~/infrastructure';
 import { messageFactory } from './message.factory';
 
 export function chatFactory(chatDocument: ChatDocument): IChat {
-  const messages = chatDocument.messages.map((messageDoc) =>
-    messageFactory(messageDoc)
-  );
+  if (chatDocument.id) {
+    const messages = chatDocument.messages.map((messageDoc) =>
+      messageFactory(messageDoc),
+    );
 
-  return new Chat({
-    id: chatDocument.id,
-    messages,
-  });
+    return new Chat({
+      id: chatDocument.id,
+      messages,
+    });
+  }
+  return null;
 }

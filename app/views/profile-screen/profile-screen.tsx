@@ -1,28 +1,17 @@
-
+import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import {
-  Text,
-  View,
-  Image,
-  Button,
-  TouchableOpacity,
-  
-} from 'react-native';
-
-
+import { Text, View, Image, Button, TouchableOpacity } from 'react-native';
 import { useApplicationLayer } from '~/hooks';
-
 import { ProfileScreenStyles as Styles } from './profile-screen.styles';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { TabParamList } from '~/navigation';
-import { useNavigation } from '@react-navigation/native';
 
 type ShowFriendsNavigation = StackNavigationProp<TabParamList, 'ShowFriendsScreen'>;
 
 export const ProfileScreen = observer(() => {
   const {
-    controllers: {UserController},
+    controllers: { UserController },
   } = useApplicationLayer();
 
   const userInfo = UserController.userInfo;
@@ -91,5 +80,6 @@ export const ProfileScreen = observer(() => {
           </TouchableOpacity>
         </View>
       </View>
-    );
+    
+  );
 });

@@ -1,3 +1,5 @@
+import { IEvent } from '../event';
+
 export interface IUser {
     username: string;
     name: string;
@@ -8,6 +10,6 @@ export interface IUser {
     usertype: string;
     followers: IUser[];
     followeds: IUser[];
-    
+    eventSub: IEvent[];  
     readonly friends: IUser[];
-}
+  }

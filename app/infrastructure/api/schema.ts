@@ -4,14 +4,14 @@
  */
 
 export interface paths {
-  '/login': {
+  "/login": {
     /** Logs in to Culturale API */
     post: {
       responses: {
         /** Ok */
         200: {
           schema: {
-            user: definitions['user'];
+            user: definitions["user"];
             token: string;
           };
         };
@@ -19,45 +19,47 @@ export interface paths {
         500: {
           schema: {
             data?: { [key: string]: unknown };
-            error?: definitions['error'];
+            error?: definitions["error"];
           };
         };
       };
     };
   };
-  '/events': {
+  "/events": {
     /** Returns all events from database */
     get: {
       responses: {
         /** Ok */
         200: {
-          schema: definitions['event'][];
+          schema: {
+            events?: definitions["event"][];
+          };
         };
         /** Unauthorized */
         403: {
           schema: {
             data?: { [key: string]: unknown };
-            error?: definitions['error'];
+            error?: definitions["error"];
           };
         };
         /** Internal server error */
         500: {
           schema: {
             data?: { [key: string]: unknown };
-            error?: definitions['error'];
+            error?: definitions["error"];
           };
         };
       };
     };
   };
-  '/users/create': {
+  "/users/create": {
     /** Creates a user registered in in BE */
     post: {
       responses: {
         /** Ok */
         200: {
           schema: {
-            user?: definitions['user'];
+            user?: definitions["user"];
             message?: string;
           };
         };
@@ -65,41 +67,69 @@ export interface paths {
         404: {
           schema: {
             data?: { [key: string]: unknown };
-            error?: definitions['error'];
+            error?: definitions["error"];
           };
         };
         /** Internal server error */
         500: {
           schema: {
             data?: { [key: string]: unknown };
-            error?: definitions['error'];
+            error?: definitions["error"];
           };
         };
       };
     };
   };
-  '/events/:id/messages': {
+  "/events/:id/messages": {
     /** Returns all messages of an event chat */
     get: {
       responses: {
         /** Ok */
         200: {
           schema: {
-            messages?: definitions['message'][];
+            messages?: definitions["message"][];
           };
         };
         /** Bad request */
         404: {
           schema: {
             data?: { [key: string]: unknown };
-            error?: definitions['error'];
+            error?: definitions["error"];
           };
         };
         /** Internal server error */
         500: {
           schema: {
             data?: { [key: string]: unknown };
-            error?: definitions['error'];
+            error?: definitions["error"];
+          };
+        };
+      };
+    };
+  };
+  "/users/edit": {
+    /** Returns the edited user */
+    post: {
+      responses: {
+        /** Ok */
+        200: {
+          schema: {
+            user?: definitions["user"];
+            message?: string;
+          };
+        };
+        /** Bad request */
+        404: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+        /** Internal server error */
+        500: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
           };
         };
       };
@@ -113,28 +143,31 @@ export interface definitions {
     codi: number;
     denominacio: string;
     descripcio: string;
-    dataIni?: string;
-    dataFi?: string;
+    dataIni: string;
+    dataFi: string;
     horari: string;
-    address: string;
+    adress: string;
     url: string;
-    participants?: definitions['user'][];
-    chat?: definitions['chat'];
+    lat: number;
+    long: number;
+    photo: string;
+    participants?: definitions["user"][];
+    chat?: definitions["chat"];
   };
   user: {
-    name?: string;
-    username?: string;
-    email?: string;
-    password?: string;
-    phoneNumber?: string;
-    profilePicture?: string;
-    userType?: string;
-    followers?: definitions['user'][];
-    followeds?: definitions['user'][];
+    name: string;
+    username: string;
+    email: string;
+    phoneNumber: string;
+    profilePicture: string;
+    usertype: string;
+    followers?: definitions["user"][];
+    followeds?: definitions["user"][];
+    eventSub?: definitions["event"][];
   };
   chat: {
     id: string;
-    messages: definitions['message'][];
+    messages: definitions["message"][];
   };
   message: {
     id?: string;

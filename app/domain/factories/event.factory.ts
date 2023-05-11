@@ -6,12 +6,15 @@ import { chatFactory } from './chat.factory';
 import { userFactory } from './user.factory';
 
 export function eventFactory(eventDocument: EventDocument): IEvent {
-  const props: EventProps = {
-    ...eventDocument,
-    chat: chatFactory(eventDocument.chat),
-    dataFi: new Date(eventDocument.dataFi),
-    dataIni: new Date(eventDocument.dataIni),
-    participants: eventDocument.participants.map(userFactory),
-  };
-  return new Event(props);
+  if (eventDocument.id) {
+    const props: EventProps = {
+      ...eventDocument,
+      chat: chatFactory(eventDocument.chat),
+      dataFi: new Date(eventDocument.dataFi),
+      dataIni: new Date(eventDocument.dataIni),
+      participants: eventDocument.participants.map(userFactory),
+    };
+    return new Event(props);
+  }
+  return null;
 }
