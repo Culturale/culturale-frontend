@@ -58,4 +58,12 @@ export const MapScreenStyles = StyleSheet.create({
         fontSize: 12,
         fontWeight: 'bold',
     },
+    locationButton: {
+        position: 'absolute',
+        bottom: 16,
+        right: 16,
+        backgroundColor: '#333',
+        padding: 8,
+        borderRadius: 100,
+    },
 });

@@ -14,6 +14,10 @@
         "expo-image-picker",
         {
           "photosPermission": "La app accede a tus galería para subir la foto de perfil"
+        },
+        "expo-location",
+        {
+          "locationPermission": "La app accede a tu ubicacion actual para mostrar los eventos cercanos a ti."
         }
       ]
     ],

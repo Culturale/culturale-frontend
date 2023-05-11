@@ -5,30 +5,24 @@ import React, { useState, useEffect } from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import * as Location from 'expo-location';
 import { PROVIDER_GOOGLE } from 'react-native-maps';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 export default function MapScreen({ latitud, longitud }) {
   const {controllers:{EventController}} = useApplicationLayer();
   const events = EventController.events;
-
-  const [region, setRegion] = useState({
-    latitude: latitud,
-    longitude: longitud,
-    latitudeDelta: 2.0922,
-    longitudeDelta: 0.0421,
-  });
-
-    const [showCallout, setShowCallout] = useState(false);
-  
+  const [showCallout, setShowCallout] = useState(false);
     useEffect(() => {
       // Obtiene la ubicación actual del dispositivo y actualiza la región del mapa
       (async () => {
+        await Location.requestForegroundPermissionsAsync();
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
           return;
         }
   
         let location = await Location.getCurrentPositionAsync({});
+        console.log("HOLA");
         setRegion({
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
@@ -37,9 +31,31 @@ export default function MapScreen({ latitud, longitud }) {
         });
       })();
     }, []);
+
+    const [region, setRegion] = useState({
+        latitude: latitud,
+        longitude: longitud,
+        latitudeDelta: 10.0922,
+        longitudeDelta: 20.0421,
+      });
   
     const closeCallout = () => {
       setShowCallout(false);
+    };
+
+    const onPressLocation = async () => {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          return;
+        }
+      
+        let location = await Location.getCurrentPositionAsync({});
+        setRegion({
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          latitudeDelta: 10.0922,
+          longitudeDelta: 20.0421,
+        });
     };
 
   return (
@@ -76,6 +92,9 @@ export default function MapScreen({ latitud, longitud }) {
           </Marker>
         ))}
       </MapView>
+      <TouchableOpacity style={styles.locationButton} onPress={onPressLocation}>
+        <Ionicons name="md-locate" size={24} color="white" />
+      </TouchableOpacity>
       {showCallout && (
         <View>
           <TouchableOpacity onPress={closeCallout} />
