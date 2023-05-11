@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { Text, View, TextInput, TouchableOpacity, Image, Alert ,} from 'react-native';
 
 import { useApplicationLayer } from '~/hooks';
+import { S3Service } from '~/infrastructure/services/uploadPhoto';
 import type { RootParamList } from '~/navigation';
 
 import type { EditProfileScreenProps as Props } from './editProfile-screen.props';
@@ -69,6 +70,7 @@ export const EditProfileScreen: React.FC<Props> = observer(() => {
     );
     setEditingField('');
     setEditValue('');
+    console.log('edit', editingField);
   };
   
   const handleChooseProfilePicture = async () => {
@@ -101,7 +103,21 @@ export const EditProfileScreen: React.FC<Props> = observer(() => {
     });
 
     if (!pickerResult.canceled) {
-      UserController.setProfilePicture(pickerResult.uri);
+      const uploadService = new S3Service();
+      try{
+        const asset = pickerResult.assets[0];
+        const file = {
+          data: asset.uri,
+          name: 'profile-image',
+          type: asset.type,
+        };
+        const photo = await uploadService.uploadFile(file);
+        console.log(photo);
+      }catch(e){
+        console.error(e);
+      }
+      // UserController.setProfilePicture(photo);
+     
     }
   };
 
@@ -117,7 +133,7 @@ export const EditProfileScreen: React.FC<Props> = observer(() => {
       <Text style={Styles.title}>Editar perfil</Text>
       <TouchableOpacity onPress={handleChooseProfilePicture}>
         <Image src={userInfo.profilePicture} style={Styles.profilePicture} />
-        <Text>Cambiar foto de perfil</Text>
+        <Text style={Styles.changePhotoTxt}>Cambiar foto de perfil</Text>
       </TouchableOpacity>
       <View style={Styles.rows}>
         <View style={Styles.row}>
@@ -173,6 +189,7 @@ export const EditProfileScreen: React.FC<Props> = observer(() => {
           </TouchableOpacity>
         </View>
       )}
+      {editingField !== '' && 
       <View style={Styles.buttons}>
         {editingField !== '' && (
           <TouchableOpacity style={Styles.saveButton} onPress={handleSaveField}>
@@ -182,12 +199,13 @@ export const EditProfileScreen: React.FC<Props> = observer(() => {
         {editingField !== '' && (
           <TouchableOpacity
             style={Styles.cancelButton}
-            onPress={handleSaveField}
+            onPress={handleClearField}
           >
             {editingField && <Text>Cancelar</Text>}
           </TouchableOpacity>
         )}
       </View>
+      }
     </View>
   );
 });
