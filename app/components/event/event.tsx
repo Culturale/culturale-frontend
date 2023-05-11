@@ -5,9 +5,10 @@ import { IEvent } from '~/domain';
 
 interface Props {
   event: IEvent;
+  onPress?: () => void
 }
 
-export const Event: React.FC<Props> = ({ event }) => {
+export const Event: React.FC<Props> = ({ event, onPress }) => {
   return (
     <View style={styles.container}>
       {/* <Image source={{ uri: event.image }} style={styles.image} /> */}
@@ -22,7 +23,7 @@ export const Event: React.FC<Props> = ({ event }) => {
           <Text style={styles.subtitle}>{event.dataIni.toUTCString()}</Text>
         </View>
       </View>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={onPress}>
         <Text style={styles.buttonText}>¡Apúntate!</Text>
       </TouchableOpacity>
     </View>
