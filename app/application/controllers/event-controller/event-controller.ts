@@ -33,19 +33,16 @@ export class EventController implements IEventController {
       .getAllEvents()
       .then((res: EventDocument[]) => {
         const events: IEvent[] = [];
-        console.log(res);
         for (const doc of res) {
           const event = eventFactory(doc);
           events.push(event);
         }
 
-        console.log(events);
         this.setEvents(events);
 
         subject.completeRequest();
       })
       .catch((e: Error) => {
-        console.log(e);
         subject.failRequest(e);
       });
 

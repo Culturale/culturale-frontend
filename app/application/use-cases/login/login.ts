@@ -1,5 +1,5 @@
 import type { IUserController } from '~/application/controllers';
-import { User } from '~/domain';
+import { userFactory } from '~/domain';
 import type { IInfrastructure, LoginResponse } from '~/infrastructure';
 import type { IRequestSubject } from '~/observables';
 import { RequestSubject } from '~/observables';
@@ -27,15 +27,7 @@ export function login(
     .login(username, password)
     .then((res: LoginResponse) => {
       const { token, user } = res;
-      const userInfo = new User(
-        user.username,
-        user.name,
-        user.password,
-        user.email,
-        user.profilePicture,
-        user.phoneNumber,
-        user.userType
-      );
+      const userInfo = userFactory(user);
 
       infrastructure.api.setup(token);
       userController.setUserInfo(userInfo);

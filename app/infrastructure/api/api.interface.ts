@@ -10,6 +10,12 @@ export type GetEventsResponse =
 export type LoginResponse =
   paths['/login']['post']['responses']['200']['schema'];
 
+export type SignupResponse =
+  paths['/users/create']['post']['responses']['200']['schema'];
+
+export type EditUserResponse =
+  paths['/users/edit']['post']['responses']['200']['schema'];
+
 export interface IAPI {
   setup: (token: string) => void;
 
@@ -26,6 +32,15 @@ export interface IAPI {
   ) => Promise<UserDocument>;
 
   getAllEvents: () => Promise<EventDocument[]>;
+
+  editUser: (
+    username: string,
+    name: string,
+    email: string,
+    phoneNumber: string,
+    usertype: string,
+    profilePicture?: string,
+  ) => Promise<UserDocument>;
 
   getChatMessages: (id: string) => Promise<MessageDocument[]>;
 }

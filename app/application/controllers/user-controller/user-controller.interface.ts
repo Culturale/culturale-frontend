@@ -37,8 +37,29 @@ export interface IUserController extends Controller {
   setToken: (token: string) => void;
 
   /**
+   * Modifies user info
+   * @public
+   */
+  modifyUser: (
+    username: string,
+    name: string,
+    email: string,
+    phoneNumber: string,
+    usertype: string,
+    profilePicture?: string,
+  ) => Promise<void>;
+
+  /**
    * Sets user info
    * @public
    */
   setUserInfo: (userInfo: IUser) => void;
+
+  setProfilePicture: (profilePicture: string) => void ;
+
+  setUsername: (username: string) => void ;
+  setName: (name: string) => void ;
+  setEmail: (email: string) => void ;
+  setPhoneNumber: (phoneNumber: string) => void ;
+
 }

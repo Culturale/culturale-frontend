@@ -1,2 +1,2 @@
-export * from './navbar/navbar';
 export * from './event';
+export * from './text';

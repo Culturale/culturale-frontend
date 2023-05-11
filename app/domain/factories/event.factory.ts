@@ -6,9 +6,7 @@ import { chatFactory } from './chat.factory';
 import { userFactory } from './user.factory';
 
 export function eventFactory(eventDocument: EventDocument): IEvent {
-  console.log('event factory');
   if (eventDocument.id) {
-    console.log(eventDocument.participants.map(userFactory));
     const props: EventProps = {
       ...eventDocument,
       chat: chatFactory(eventDocument.chat),
