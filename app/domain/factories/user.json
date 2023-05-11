@@ -1,0 +1,75 @@
+{
+  "name": "John Doe",
+  "username": "johndoe",
+  "email": "johndoe@example.com",
+  "phoneNumber": "555-555-5555",
+  "profilePicture": "https://www.example.com/johndoe.jpg",
+  "userType": "attendee",
+  "followers": [
+    {
+      "name": "Jane Smith",
+      "username": "janesmith",
+      "email": "janesmith@example.com",
+      "phoneNumber": "555-555-5556",
+      "profilePicture": "https://www.example.com/janesmith.jpg",
+      "userType": "attendee"
+    }
+  ],
+  "followeds": [
+    {
+      "name": "Bob Johnson",
+      "username": "bobjohnson",
+      "email": "bobjohnson@example.com",
+      "phoneNumber": "555-555-5557",
+      "profilePicture": "https://www.example.com/bobjohnson.jpg",
+      "userType": "performer"
+    }
+  ],
+  "eventSub": [
+    {
+      "id": "abcd1234",
+      "codi": 567,
+      "denominacio": "Music Festival",
+      "descripcio": "Join us for a day of music, food, and fun!",
+      "dataIni": "2023-08-05T12:00:00Z",
+      "dataFi": "2023-08-05T22:00:00Z",
+      "horari": "12:00-22:00",
+      "adress": "123 Main St, Anytown, USA",
+      "url": "https://www.example.com/music-festival",
+      "lat": 37.7749,
+      "long": -122.4194,
+      "photo": "https://www.example.com/music-festival-photo.jpg",
+      "participants": [
+        {
+          "name": "John Doe",
+          "email": "johndoe@example.com",
+          "phoneNumber": "555-555-5555",
+          "profilePicture": "https://www.example.com/johndoe.jpg",
+          "userType": "attendee"
+        },
+        {
+          "name": "Jane Smith",
+          "email": "janesmith@example.com",
+          "phoneNumber": "555-555-5556",
+          "profilePicture": "https://www.example.com/janesmith.jpg",
+          "userType": "performer"
+        }
+      ],
+      "chat": {
+        "id": "efgh5678",
+        "messages": [
+          {
+            "content": "Who else is excited for the music festival?",
+            "userId": "johndoe@example.com",
+            "date": "2023-08-05T12:10:00Z"
+          },
+          {
+            "content": "I am! I'll be performing on the main stage.",
+            "userId": "janesmith@example.com",
+            "date": "2023-08-05T12:15:00Z"
+          }
+        ]
+      }
+    }
+  ]
+}

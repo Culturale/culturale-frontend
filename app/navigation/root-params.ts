@@ -2,8 +2,9 @@ export type RootParamList = {
   Login: undefined;
   Main: undefined;
   Signup: undefined;
-  Profile: undefined;
+  ProfileScreen: undefined;
   EditProfile: undefined;
+  Home: undefined;
 };
 
 export type TabParamList = {

@@ -31,7 +31,9 @@ export interface paths {
       responses: {
         /** Ok */
         200: {
-          schema: definitions["event"][];
+          schema: {
+            events?: definitions["event"][];
+          };
         };
         /** Unauthorized */
         403: {
@@ -141,24 +143,27 @@ export interface definitions {
     codi: number;
     denominacio: string;
     descripcio: string;
-    dataIni?: string;
-    dataFi?: string;
+    dataIni: string;
+    dataFi: string;
     horari: string;
-    address: string;
+    adress: string;
     url: string;
+    lat: number;
+    long: number;
+    photo: string;
     participants?: definitions["user"][];
     chat?: definitions["chat"];
   };
   user: {
-    name?: string;
-    username?: string;
-    email?: string;
-    password?: string;
-    phoneNumber?: string;
-    profilePicture?: string;
-    userType?: string;
+    name: string;
+    username: string;
+    email: string;
+    phoneNumber: string;
+    profilePicture: string;
+    usertype: string;
     followers?: definitions["user"][];
     followeds?: definitions["user"][];
+    eventSub?: definitions["event"][];
   };
   chat: {
     id: string;

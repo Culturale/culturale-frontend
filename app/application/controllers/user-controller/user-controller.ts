@@ -18,10 +18,10 @@ export class UserController implements IUserController {
   public isLoggedIn: boolean | null = null;
   public token: string;
   public userInfo: IUser;
-  private infrastucture: IInfrastructure;
+  private infrastructure: IInfrastructure;
 
-  constructor(infrastucture: IInfrastructure ) {
-    this.infrastucture = infrastucture;
+  constructor(infrastructure: IInfrastructure) {
+    this.infrastructure = infrastructure;
     makeObservable(this, {
       isLoggedIn: observable,
       isLoginNeeded: computed,
@@ -31,6 +31,7 @@ export class UserController implements IUserController {
       setUserInfo: action,
       token: observable,
       userInfo: observable,
+      modifyUser: action,
     });
   }
 
@@ -42,25 +43,28 @@ export class UserController implements IUserController {
         properties: ['isLoggedIn', 'token', 'userInfo'],
         storage: AsyncStorage,
       },
-      { fireImmediately: true }
+      { fireImmediately: true },
     );
   }
 
-  public async modifyUser(username: string,
+  public async modifyUser(
+    username: string,
     name: string,
-    password: string,
     email: string,
     phoneNumber: string,
     usertype: string,
-    profilePicture?: string):Promise<void>{
-    const res = await this.infrastucture.api.editUser(username,
+    profilePicture?: string,
+  ): Promise<void> {
+    const res = await this.infrastructure.api.editUser(
+      username,
       name,
-      password,
       email,
       phoneNumber,
       usertype,
-      profilePicture);
+      profilePicture,
+    );
     const user = userFactory(res);
+
     this.setUserInfo(user);
   }
 
