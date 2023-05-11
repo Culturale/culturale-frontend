@@ -2,7 +2,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
 
-import { IUser, userFactory } from '~/domain';
+import type { IUser} from '~/domain';
+import { userFactory } from '~/domain';
 import type { IInfrastructure } from '~/infrastructure';
 
 import type { IUserController } from './user-controller.interface';
@@ -25,13 +26,18 @@ export class UserController implements IUserController {
     makeObservable(this, {
       isLoggedIn: observable,
       isLoginNeeded: computed,
+      modifyUser: action,
       removeToken: action,
+      setEmail: action,
       setIsLoggedIn: action,
+      setName: action,
+      setPhoneNumber: action,
+      setProfilePicture: action,
       setToken: action,
       setUserInfo: action,
+      setUsername: action,
       token: observable,
       userInfo: observable,
-      modifyUser: action,
     });
   }
 
@@ -78,6 +84,26 @@ export class UserController implements IUserController {
 
   public removeToken(): void {
     this.token = null;
+  }
+
+  public setProfilePicture(profilePicture: string): void {
+    this.userInfo.profilePicture = profilePicture;
+  }
+
+  public setUsername(username: string): void {
+    this.userInfo.username = username;
+  }
+
+  public setName(name: string): void {
+    this.userInfo.name = name;
+  }
+
+  public setEmail(email: string): void {
+    this.userInfo.email = email;
+  }
+
+  public setPhoneNumber(phoneNumber: string): void {
+    this.userInfo.phoneNumber = phoneNumber;
   }
 
   public setIsLoggedIn(state: boolean): void {

@@ -54,4 +54,12 @@ export interface IUserController extends Controller {
    * @public
    */
   setUserInfo: (userInfo: IUser) => void;
+
+  setProfilePicture: (profilePicture: string) => void ;
+
+  setUsername: (username: string) => void ;
+  setName: (name: string) => void ;
+  setEmail: (email: string) => void ;
+  setPhoneNumber: (phoneNumber: string) => void ;
+
 }

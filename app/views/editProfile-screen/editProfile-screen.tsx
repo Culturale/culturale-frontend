@@ -1,10 +1,11 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
+import * as ImagePicker from 'expo-image-picker';
 import { observer } from 'mobx-react-lite';
 import type React from 'react';
 import { useState } from 'react';
-import { Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, Image, Alert ,} from 'react-native';
 
 import { useApplicationLayer } from '~/hooks';
 import type { RootParamList } from '~/navigation';
@@ -33,6 +34,8 @@ export const EditProfileScreen: React.FC<Props> = observer(() => {
     switch (field) {
       case 'nombre':
         return userInfo.name;
+      case 'username':
+        return userInfo.username;
       case 'email':
         return userInfo.email;
       case 'telefono':
@@ -44,16 +47,16 @@ export const EditProfileScreen: React.FC<Props> = observer(() => {
   const handleSaveField = async () => {
     switch (editingField) {
       case 'nombre':
-        userInfo.name = editValue;
+        UserController.setName(editValue);
         break;
       case 'email':
-        userInfo.email = editValue;
+        UserController.setEmail(editValue);
         break;
       case 'username':
-        userInfo.username = editValue;
+        UserController.setUsername(editValue);
         break;
       case 'telefono':
-        userInfo.phoneNumber = editValue;
+        UserController.setPhoneNumber(editValue);
         break;
     }
     await UserController.modifyUser(
@@ -67,6 +70,40 @@ export const EditProfileScreen: React.FC<Props> = observer(() => {
     setEditingField('');
     setEditValue('');
   };
+  
+  const handleChooseProfilePicture = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (status !== 'granted') {
+      Alert.alert(
+        'Permiso requerido',
+        '¿Quieres darle permiso a Culturale para acceder a tu biblioteca de fotos?',
+        [
+          {
+            style: 'cancel',
+            text: 'Cancelar',
+          },
+          {
+            onPress: () => {
+              ImagePicker.requestMediaLibraryPermissionsAsync();
+            },
+            text: 'Permitir',
+          },
+        ]
+      );
+      return;
+    }
+
+    const pickerResult = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [1, 1], // square aspect ratio
+      quality: 1, // highest quality
+    });
+
+    if (!pickerResult.canceled) {
+      UserController.setProfilePicture(pickerResult.uri);
+    }
+  };
 
   const handleClearField = () => {
     setEditValue('');
@@ -78,6 +115,10 @@ export const EditProfileScreen: React.FC<Props> = observer(() => {
         <Ionicons color="black" name="arrow-back" size={24} />
       </TouchableOpacity>
       <Text style={Styles.title}>Editar perfil</Text>
+      <TouchableOpacity onPress={handleChooseProfilePicture}>
+        <Image src={userInfo.profilePicture} style={Styles.profilePicture} />
+        <Text>Cambiar foto de perfil</Text>
+      </TouchableOpacity>
       <View style={Styles.rows}>
         <View style={Styles.row}>
           <View style={Styles.column}>
