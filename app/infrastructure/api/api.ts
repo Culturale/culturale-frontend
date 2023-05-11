@@ -2,11 +2,13 @@ import type { AxiosInstance } from 'axios';
 import axios from 'axios';
 
 import type {
+  EditUserResponse,
   EventDocument,
   GetEventsResponse,
   IAPI,
   LoginResponse,
   MessageDocument,
+  SignupResponse,
   UserDocument,
 } from './api.interface';
 
@@ -16,7 +18,6 @@ export class API implements IAPI {
   private token: string;
 
   constructor(baseURL: string) {
-    console.log(baseURL);
     this.baseURL = baseURL;
     this.axiosClient = axios.create({
       baseURL: this.baseURL,
@@ -82,7 +83,6 @@ export class API implements IAPI {
       password,
       username,
     });
-
     return res;
   }
 
@@ -101,7 +101,7 @@ export class API implements IAPI {
     usertype: string,
     profilePicture?: string,
   ): Promise<UserDocument> {
-    const res = await this.post<UserDocument>('/users/create', {
+    const res = await this.post<SignupResponse>('/users/create', {
       email,
       name,
       password,
@@ -113,7 +113,27 @@ export class API implements IAPI {
       usertype,
     });
 
-    return res;
+    return res.user;
+  }
+
+  public async editUser(
+    username: string,
+    name: string,
+    email: string,
+    phoneNumber: string,
+    usertype: string,
+    profilePicture?: string,
+  ): Promise<UserDocument> {
+    const res = await this.post<EditUserResponse>('/users/edit', {
+      email,
+      name,
+      phoneNumber,
+      profilePicture,
+      username,
+      usertype,
+    });
+
+    return res.user;
   }
 
   public async newMessage(

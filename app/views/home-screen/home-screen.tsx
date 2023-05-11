@@ -15,7 +15,6 @@ export const HomeScreen: React.FC<Props> = observer(() => {
     controllers: { EventController },
   } = useApplicationLayer();
   const events = EventController.events;
-  console.log(events);
 
   useEffect(() => {
     EventController.fetchAllEvents();

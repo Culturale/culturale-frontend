@@ -2,7 +2,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
 
-import type { IUser } from '~/domain';
+import type { IUser} from '~/domain';
+import { userFactory } from '~/domain';
+import type { IInfrastructure } from '~/infrastructure';
 
 import type { IUserController } from './user-controller.interface';
 
@@ -17,17 +19,23 @@ export class UserController implements IUserController {
   public isLoggedIn: boolean | null = null;
   public token: string;
   public userInfo: IUser;
+  private infrastructure: IInfrastructure;
 
-  constructor(token?: string) {
-    this.token = token;
-
+  constructor(infrastructure: IInfrastructure) {
+    this.infrastructure = infrastructure;
     makeObservable(this, {
       isLoggedIn: observable,
       isLoginNeeded: computed,
+      modifyUser: action,
       removeToken: action,
+      setEmail: action,
       setIsLoggedIn: action,
+      setName: action,
+      setPhoneNumber: action,
+      setProfilePicture: action,
       setToken: action,
       setUserInfo: action,
+      setUsername: action,
       token: observable,
       userInfo: observable,
     });
@@ -41,8 +49,29 @@ export class UserController implements IUserController {
         properties: ['isLoggedIn', 'token', 'userInfo'],
         storage: AsyncStorage,
       },
-      { fireImmediately: true }
+      { fireImmediately: true },
     );
+  }
+
+  public async modifyUser(
+    username: string,
+    name: string,
+    email: string,
+    phoneNumber: string,
+    usertype: string,
+    profilePicture?: string,
+  ): Promise<void> {
+    const res = await this.infrastructure.api.editUser(
+      username,
+      name,
+      email,
+      phoneNumber,
+      usertype,
+      profilePicture,
+    );
+    const user = userFactory(res);
+
+    this.setUserInfo(user);
   }
 
   public get isLoginNeeded(): boolean {
@@ -55,6 +84,26 @@ export class UserController implements IUserController {
 
   public removeToken(): void {
     this.token = null;
+  }
+
+  public setProfilePicture(profilePicture: string): void {
+    this.userInfo.profilePicture = profilePicture;
+  }
+
+  public setUsername(username: string): void {
+    this.userInfo.username = username;
+  }
+
+  public setName(name: string): void {
+    this.userInfo.name = name;
+  }
+
+  public setEmail(email: string): void {
+    this.userInfo.email = email;
+  }
+
+  public setPhoneNumber(phoneNumber: string): void {
+    this.userInfo.phoneNumber = phoneNumber;
   }
 
   public setIsLoggedIn(state: boolean): void {
