@@ -10,6 +10,9 @@ export type GetEventsResponse =
 export type LoginResponse =
   paths['/login']['post']['responses']['200']['schema'];
 
+export type SignupResponse =
+  paths['/users/create']['post']['responses']['200']['schema'];
+
 export type EditUserResponse =
   paths['/users/edit']['post']['responses']['200']['schema'];
 

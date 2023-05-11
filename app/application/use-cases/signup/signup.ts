@@ -1,5 +1,5 @@
 import type { IUserController } from '~/application/controllers';
-import { User } from '~/domain';
+import { userFactory } from '~/domain';
 import type { IInfrastructure, UserDocument } from '~/infrastructure';
 import type { IRequestSubject } from '~/observables';
 import { RequestSubject } from '~/observables';
@@ -12,7 +12,7 @@ export type Signup = {
     email: string,
     phoneNumber: string,
     userType: string,
-    profilePicture?: string
+    profilePicture?: string,
   ];
   responseType: IRequestSubject<void>;
 };
@@ -47,20 +47,10 @@ export function signup(
       email,
       phoneNumber,
       userType,
-      profilePicture
+      profilePicture,
     )
     .then((userInfo: UserDocument) => {
-      const { username, name, email, profilePicture, phoneNumber, userType } =
-        userInfo;
-      const user = new User(
-        username,
-        name,
-        password,
-        email,
-        profilePicture,
-        phoneNumber,
-        userType
-      );
+      const user = userFactory(userInfo);
 
       userController.setUserInfo(user);
 

@@ -8,6 +8,7 @@ import type {
   IAPI,
   LoginResponse,
   MessageDocument,
+  SignupResponse,
   UserDocument,
 } from './api.interface';
 
@@ -100,7 +101,7 @@ export class API implements IAPI {
     usertype: string,
     profilePicture?: string,
   ): Promise<UserDocument> {
-    const res = await this.post<UserDocument>('/users/create', {
+    const res = await this.post<SignupResponse>('/users/create', {
       email,
       name,
       password,
@@ -112,7 +113,7 @@ export class API implements IAPI {
       usertype,
     });
 
-    return res;
+    return res.user;
   }
 
   public async editUser(
