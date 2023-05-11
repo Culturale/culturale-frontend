@@ -5,9 +5,11 @@ export type RootParamList = {
   ProfileScreen: undefined;
   EditProfile: undefined;
   Home: undefined;
+  Map: undefined;
 };
 
 export type TabParamList = {
   Home: undefined;
   Profile: undefined;
+  Map: undefined;
 };
