@@ -6,8 +6,8 @@ import { eventFactory } from './event.factory';
 export function userFactory(userDocument: UserDocument): IUser {
   return new User({
     ...userDocument,
-    followeds: userDocument.followeds.map(userFactory),
-    followers: userDocument.followers.map(userFactory),
-    eventSub: userDocument.eventSub.map(eventFactory),
+    followeds: userDocument.followeds?.map(userFactory),
+    followers: userDocument.followers?.map(userFactory),
+    eventSub: userDocument.eventSub?.map(eventFactory),
   });
 }

@@ -57,6 +57,7 @@ export const ShowFriendsStyles =  StyleSheet.create({
     height: 50,
     borderRadius: 25,
     marginRight: 16,
+    
   },
   username: {
     fontSize: 18,
@@ -67,6 +68,7 @@ export const ShowFriendsStyles =  StyleSheet.create({
     height: 40,
     marginBottom: 10,
     width: 40,
+    marginRight: 16,
   },
     
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, ScrollView } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { ShowFriendsStyles as styles } from './showFriends-screen.styles';
 import { IUser } from '~/domain';
@@ -18,20 +18,20 @@ export const ShowFriendsScreen = observer(() => {
       return userString === followedString;
     });
   });
-  console.log(amigos)
-  const userInfo = UserController.userInfo;
+  //const amigos:IUser[] = UserController.userInfo.friends;
+  
   if(amigos.length > 0){
     return (
       <View style={styles.container}>
         <Text style={styles.header}>Mis amigos</Text>
-        <View style={styles.listContainer}>
+        <ScrollView style={styles.listContainer}>
           {amigos.map((amigo) => (
-            <View key={amigo.username} style= {styles.userContainer} >
-             <Image src={amigo.profilePicture} style={ styles.foto}/>
-              <Text style={styles.username}> {amigo.username}</Text>
+            <View key={amigo.username} style={styles.userContainer}>
+              <Image src={amigo.profilePicture} style={styles.foto} />
+              <Text style={styles.username}>{amigo.username}</Text>
             </View>
           ))}
-        </View>
+        </ScrollView>
       </View>
     );
   }
