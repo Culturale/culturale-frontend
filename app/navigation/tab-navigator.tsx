@@ -2,11 +2,12 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { createStackNavigator } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { EditProfileScreen, ProfileScreen, HomeScreen } from '~/views';
+import { EditProfileScreen, ProfileScreen, HomeScreen, SearchScreen} from '~/views';
 
 import type { RootParamList, TabParamList } from './root-params';
 
 const ProfileStack = createStackNavigator<RootParamList>();
+const SearchStack = createStackNavigator<RootParamList>();
 const Tab = createMaterialBottomTabNavigator<TabParamList>();
 
 const ProfileStackNavigator: React.FC = observer(() => {
@@ -26,6 +27,18 @@ const ProfileStackNavigator: React.FC = observer(() => {
   );
 });
 
+const SearchStackNavigator: React.FC = observer(() => {
+  return (
+    <SearchStack.Navigator>
+      <SearchStack.Screen
+        component={SearchScreen}
+        name="Search"
+        options={{ headerShown: false }}
+      />
+    </SearchStack.Navigator>
+  );
+});
+
 export const TabNavigator: React.FC = observer(() => {
   return (
     <Tab.Navigator
@@ -35,6 +48,8 @@ export const TabNavigator: React.FC = observer(() => {
 
           if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home-outline';
+          } else if (route.name === 'Search') {
+            iconName = focused ? 'search' : 'search-outline';
           } else if (route.name === 'Profile') {
             iconName = focused ? 'person' : 'person-outline';
           }
@@ -49,6 +64,7 @@ export const TabNavigator: React.FC = observer(() => {
       })}
     >
       <Tab.Screen component={HomeScreen} name="Home" />
+      <Tab.Screen component={SearchStackNavigator} name="Search" />
       <Tab.Screen component={ProfileStackNavigator} name="Profile" />
     </Tab.Navigator>
   );

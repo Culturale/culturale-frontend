@@ -7,6 +7,9 @@ export type ChatDocument = definitions['chat'];
 export type GetEventsResponse =
   paths['/events']['get']['responses']['200']['schema'];
 
+export type GetEventsByDenominacioResponse =
+  paths['/events/denominacio/:denominacio']['get']['responses']['200']['schema'];
+
 export type LoginResponse =
   paths['/login']['post']['responses']['200']['schema'];
 
@@ -32,6 +35,10 @@ export interface IAPI {
   ) => Promise<UserDocument>;
 
   getAllEvents: () => Promise<EventDocument[]>;
+
+  getEventsByCategory: (category: string) => Promise<EventDocument[]>;
+
+  getEventsByDenominacio: (denominacio: string) => Promise<EventDocument[]>;
 
   editUser: (
     username: string,

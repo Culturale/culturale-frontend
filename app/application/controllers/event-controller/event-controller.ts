@@ -49,6 +49,54 @@ export class EventController implements IEventController {
     return subject;
   }
 
+  public fetchEventsByCategory(category: string): IRequestSubject<void> {
+    const subject = new RequestSubject<void>();
+    subject.startRequest();
+
+    this.infrastructure.api
+      .getEventsByCategory(category)
+      .then((res: EventDocument[]) => {
+        const events: IEvent[] = [];
+        for (const doc of res) {
+          const event = eventFactory(doc);
+          events.push(event);
+        }
+
+        this.setEvents(events);
+
+        subject.completeRequest();
+      })
+      .catch((e: Error) => {
+        subject.failRequest(e);
+      });
+
+    return subject;
+  }
+
+  public fetchEventsByDenominacio(denominacio: string): IRequestSubject<void> {
+    const subject = new RequestSubject<void>();
+    subject.startRequest();
+
+    this.infrastructure.api
+      .getEventsByDenominacio(denominacio)
+      .then((res: EventDocument[]) => {
+        const events: IEvent[] = [];
+        for (const doc of res) {
+          const event = eventFactory(doc);
+          events.push(event);
+        }
+
+        this.setEvents(events);
+
+        subject.completeRequest();
+      })
+      .catch((e: Error) => {
+        subject.failRequest(e);
+      });
+
+    return subject;
+  }
+
   public fetchEventMessages(eventId: string): IRequestSubject<void> {
     const subject = new RequestSubject<void>();
     subject.startRequest();

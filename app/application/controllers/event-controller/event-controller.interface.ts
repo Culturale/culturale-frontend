@@ -14,6 +14,20 @@ export interface IEventController {
   /**
    *
    * @public
+   * @description Fetches events by category from API and saves them to events property
+   */
+  fetchEventsByCategory: (category: string) => IRequestSubject<void>;
+
+  /**
+   *
+   * @public
+   * @description Fetches events by denominacio from API and saves them to events property
+   */
+  fetchEventsByDenominacio: (denominacio: string) => IRequestSubject<void>;
+
+  /**
+   *
+   * @public
    * @description Fetches all messages of an event and updates that event
    */
   fetchEventMessages: (eventId: string) => IRequestSubject<void>;

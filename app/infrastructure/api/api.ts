@@ -87,8 +87,22 @@ export class API implements IAPI {
   }
 
   public async getAllEvents(): Promise<EventDocument[]> {
+    console.log('HOLA');
     const res = await this.get<GetEventsResponse>('/events');
+    console.log('HOLA');
+    return res.events;
+  }
 
+  public async getEventsByCategory(category: string): Promise<EventDocument[]> {
+    const res = await this.get<GetEventsResponse>(`/events/categoria/${category}`);
+
+    return res.events;
+  }
+
+  public async getEventsByDenominacio(denominacio: string): Promise<EventDocument[]> {
+    console.log('HOLA');
+    const res = await this.get<GetEventsResponse>(`/events/denominacio/${denominacio}`);
+    console.log('ADEU');
     return res.events;
   }
 
