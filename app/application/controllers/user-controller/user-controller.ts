@@ -1,8 +1,12 @@
 import AsyncStorage from '@react-native-community/async-storage';
+import type { ManagedUpload } from 'aws-sdk/clients/s3';
+import type { ImagePickerAsset } from 'expo-image-picker';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
 
 import type { IUser} from '~/domain';
+import { Buffer } from 'buffer';
+
 import { userFactory } from '~/domain';
 import type { IInfrastructure } from '~/infrastructure';
 
@@ -37,6 +41,7 @@ export class UserController implements IUserController {
       setUserInfo: action,
       setUsername: action,
       token: observable,
+      uploadPhoto: action,
       userInfo: observable,
     });
   }
@@ -84,6 +89,16 @@ export class UserController implements IUserController {
 
   public removeToken(): void {
     this.token = null;
+  }
+  
+  public async uploadPhoto (asset: ImagePickerAsset): Promise<ManagedUpload.SendData> {
+    const file = {
+      data: asset.base64,
+      name: this.userInfo.username,
+      type: 'image/png',
+    };
+    const buffer = Buffer.from(asset.base64, 'base64');
+    return await this.infrastructure.services.aws3.uploadFile(buffer,file);
   }
 
   public setProfilePicture(profilePicture: string): void {

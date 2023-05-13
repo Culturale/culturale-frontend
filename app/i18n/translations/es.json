@@ -1,1 +1,12 @@
-{}
+{
+    "editProfileScreen": {
+        "buttonSave": "Guardar",
+        "buttonCancel": "Cancelar",
+        "name": "Nombre:",
+        "username": "Nombre Usuario:",
+        "changePhoto": "Cambiar foro de perfil",
+        "email": "Correo electrónico",
+        "telephone": "Teléfono:",
+        "editProfile": "Editar perfil"
+    }
+}

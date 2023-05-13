@@ -83,7 +83,6 @@ export class API implements IAPI {
       password,
       username,
     });
-    console.log(res);
     return res;
   }
 

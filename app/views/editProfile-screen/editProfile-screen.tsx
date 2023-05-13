@@ -5,10 +5,10 @@ import * as ImagePicker from 'expo-image-picker';
 import { observer } from 'mobx-react-lite';
 import type React from 'react';
 import { useState } from 'react';
-import { Text, View, TextInput, TouchableOpacity, Image, Alert ,} from 'react-native';
+import { View, TextInput, Text as TextDynamic, TouchableOpacity, Image, Alert ,} from 'react-native';
 
+import { Text } from '~/components';
 import { useApplicationLayer } from '~/hooks';
-import { S3Service } from '~/infrastructure/services/uploadPhoto';
 import type { RootParamList } from '~/navigation';
 
 import type { EditProfileScreenProps as Props } from './editProfile-screen.props';
@@ -70,7 +70,6 @@ export const EditProfileScreen: React.FC<Props> = observer(() => {
     );
     setEditingField('');
     setEditValue('');
-    console.log('edit', editingField);
   };
   
   const handleChooseProfilePicture = async () => {
@@ -98,21 +97,18 @@ export const EditProfileScreen: React.FC<Props> = observer(() => {
 
     const pickerResult = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
-      aspect: [1, 1], // square aspect ratio
-      quality: 1, // highest quality
+      aspect: [1, 1], 
+      base64: true, 
+      quality: 1,
     });
 
     if (!pickerResult.canceled) {
-      const uploadService = new S3Service();
       try{
-        const asset = pickerResult.assets[0];
-        const file = {
-          data: asset.uri,
-          name: 'profile-image',
-          type: asset.type,
-        };
-        const photo = await uploadService.uploadFile(file);
-        console.log(photo);
+      const asset = pickerResult.assets[0];
+      await UserController.uploadPhoto(asset);
+      const newPhoto = `https://projecteaws.s3.eu-west-3.amazonaws.com/${userInfo.username}`;
+      UserController.setProfilePicture(newPhoto);
+      setEditingField('');
       }catch(e){
         console.error(e);
       }
@@ -123,6 +119,7 @@ export const EditProfileScreen: React.FC<Props> = observer(() => {
 
   const handleClearField = () => {
     setEditValue('');
+    setEditingField('');
   };
 
   return (
@@ -130,49 +127,49 @@ export const EditProfileScreen: React.FC<Props> = observer(() => {
       <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen')}>
         <Ionicons color="black" name="arrow-back" size={24} />
       </TouchableOpacity>
-      <Text style={Styles.title}>Editar perfil</Text>
+      <Text style={Styles.title}  tx='editProfileScreen.editProfile'/>
       <TouchableOpacity onPress={handleChooseProfilePicture}>
         <Image src={userInfo.profilePicture} style={Styles.profilePicture} />
-        <Text style={Styles.changePhotoTxt}>Cambiar foto de perfil</Text>
+        <Text style={Styles.changePhotoTxt}  tx='editProfileScreen.changePhoto'/>
       </TouchableOpacity>
       <View style={Styles.rows}>
         <View style={Styles.row}>
           <View style={Styles.column}>
-            <Text style={Styles.titleRow}>Nombre Usuario:</Text>
+            <Text style={Styles.titleRow} tx='editProfileScreen.username'/>
           </View>
           <View style={Styles.column}>
             <TouchableOpacity onPress={() => handleEditField('username')}>
-              <Text>{userInfo.username}</Text>
+              <TextDynamic>{userInfo.username}</TextDynamic>
             </TouchableOpacity>
           </View>
         </View>
         <View style={Styles.row}>
           <View style={Styles.column}>
-            <Text style={Styles.titleRow}>Nombre:</Text>
+            <Text style={Styles.titleRow} tx='editProfileScreen.name'/>
           </View>
           <View style={Styles.column}>
             <TouchableOpacity onPress={() => handleEditField('nombre')}>
-              <Text>{userInfo.name}</Text>
+              <TextDynamic>{userInfo.name}</TextDynamic>
             </TouchableOpacity>
           </View>
         </View>
         <View style={Styles.row}>
           <View style={Styles.column}>
-            <Text style={Styles.titleRow}>Correo electrónico:</Text>
+            <Text style={Styles.titleRow} tx='editProfileScreen.email'/>
           </View>
           <View style={Styles.column}>
             <TouchableOpacity onPress={() => handleEditField('email')}>
-              <Text>{userInfo.email}</Text>
+              <TextDynamic>{userInfo.email}</TextDynamic>
             </TouchableOpacity>
           </View>
         </View>
         <View style={Styles.row}>
           <View style={Styles.column}>
-            <Text style={Styles.titleRow}>Teléfono:</Text>
+            <Text style={Styles.titleRow}  tx='editProfileScreen.telephone'/>
           </View>
           <View style={Styles.column}>
             <TouchableOpacity onPress={() => handleEditField('telefono')}>
-              <Text>{userInfo.phoneNumber}</Text>
+              <TextDynamic>{userInfo.phoneNumber}</TextDynamic>
             </TouchableOpacity>
           </View>
         </View>
@@ -185,24 +182,24 @@ export const EditProfileScreen: React.FC<Props> = observer(() => {
             onChangeText={setEditValue}
           />
           <TouchableOpacity onPress={handleClearField}>
-            <Text>X</Text>
+            <TextDynamic>X</TextDynamic>
           </TouchableOpacity>
         </View>
       )}
       {editingField !== '' && 
       <View style={Styles.buttons}>
         {editingField !== '' && (
-          <TouchableOpacity style={Styles.saveButton} onPress={handleSaveField}>
-            {editingField && <Text>Guardar</Text>}
-          </TouchableOpacity>
+          <TouchableOpacity
+          style={Styles.cancelButton}
+          onPress={handleClearField}
+        >
+          {editingField && <Text tx='editProfileScreen.buttonCancel'/>}
+        </TouchableOpacity>
         )}
         {editingField !== '' && (
-          <TouchableOpacity
-            style={Styles.cancelButton}
-            onPress={handleClearField}
-          >
-            {editingField && <Text>Cancelar</Text>}
-          </TouchableOpacity>
+           <TouchableOpacity style={Styles.saveButton} onPress={handleSaveField}>
+           {editingField && <Text tx='editProfileScreen.buttonSave'/>}
+         </TouchableOpacity>
         )}
       </View>
       }

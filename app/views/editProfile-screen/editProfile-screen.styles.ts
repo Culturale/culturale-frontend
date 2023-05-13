@@ -43,6 +43,7 @@ export const EditProfileScreenStyles =  StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 10,
     paddingHorizontal: 10,
+    paddingVertical: 5,
   },
   email: {
     color: '#666',
@@ -61,10 +62,10 @@ export const EditProfileScreenStyles =  StyleSheet.create({
   },
   profilePicture: {
     alignSelf: 'center',
-    borderRadius: 30,
-    height: 75,
+    borderRadius: 60,
+    height: 85,
     marginBottom: 5,
-    width: 75,
+    width: 85,
   },
   row: {
     alignItems: 'center',
