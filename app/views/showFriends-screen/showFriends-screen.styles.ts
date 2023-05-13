@@ -22,6 +22,14 @@ export const ShowFriendsStyles =  StyleSheet.create({
       fontSize: 16,
       fontWeight: 'bold',
     },
+    input: {
+      borderWidth: 1,
+      borderColor: '#ccc',
+      borderRadius: 4,
+      padding: 10,
+      marginBottom: 10,
+      width: '100%',
+    },
     friendInfo: {
       fontSize: 14,
       color: '#666',
@@ -49,7 +57,11 @@ export const ShowFriendsStyles =  StyleSheet.create({
     },
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
-
+    paddingVertical: 10,
+    borderBottomColor: 'lightgray',
+    borderBottomWidth: 1,
+    justifyContent: 'space-between',
+    marginRight: 10, // ajusta el margen a la derecha
     elevation: 2,
   },
   profilePicture: {
@@ -70,7 +82,22 @@ export const ShowFriendsStyles =  StyleSheet.create({
     width: 40,
     marginRight: 16,
   },
-    
+ 
+  removeButton: {
+    color: 'red',
+    marginLeft: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: 'red',
+    alignSelf: 'flex-start', // ajusta la alineación del botón
+  },
+  mostraramigo:{
+    flexDirection: 'row',
+    alignItems: 'center',
+  }
+  
 });
 
   
