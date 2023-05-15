@@ -50,6 +50,12 @@ export interface IUserController extends Controller {
   ) => Promise<void>;
 
   /**
+   * Modifies user followers
+   * @public
+   */
+  removeFriend(userUsername:string, friendUsername: string): Promise<void>;
+
+  /**
    * Sets user info
    * @public
    */

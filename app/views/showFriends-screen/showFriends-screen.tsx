@@ -1,32 +1,22 @@
-import React from 'react';
-import { View, Text, Image, ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View , Image, ScrollView, TextInput, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { ShowFriendsStyles as styles } from './showFriends-screen.styles';
 import { IUser } from '~/domain';
 import { useApplicationLayer } from '~/hooks';
+import { Text } from '~/components/text';
 
 export const ShowFriendsScreen = observer(() => {
   const {
     controllers: {UserController},
   } = useApplicationLayer();
 
-  const handleRemoveFriend = async (friendId: string) => {
-    // try {
-    //   const response = await fetch(`/users/deleteFollowers/${friendId}`, {
-    //     method: 'PUT',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'Authorization': `Bearer ${UserController.userInfo.token}`,
-    //     },
-    //   });
-    //   if (!response.ok) {
-    //     throw new Error('Error al eliminar amigo');
-    //   }
-    //   UserController.removeFriend(friendId);
-    // } catch (error) {
-    //   console.error(error);
-    // }
+  const handleRemoveFriend = async (friendUsername: string) => {
+    console.log('friendUsername', friendUsername);
+      UserController.removeFriend(UserController.userInfo.username, friendUsername);
+    
   }
+  const [searchTerm, setSearchTerm] = useState('');
 
   const amigos: IUser[] = UserController.userInfo.followers.filter(user => {
     const userString = JSON.stringify(user);
@@ -35,20 +25,30 @@ export const ShowFriendsScreen = observer(() => {
       return userString === followedString;
     });
   });
+  const filteredAmigos = amigos.filter(amigo => {
+    return amigo.username.toLowerCase().includes(searchTerm.toLowerCase());
+  });
 
   if(amigos.length > 0){
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>Mis amigos</Text>
+        <Text style={styles.header} tx='showFriendsScreen.myfriends' />
+        <TextInput
+          style={styles.input}
+          placeholder="Uwqqsername"
+          value={searchTerm}
+          onChangeText={value => setSearchTerm(value)}
+        />
         <ScrollView style={styles.listContainer}>
-          {amigos.map((amigo) => (
+          {filteredAmigos.map((amigo) => (
             <View key={amigo.username} style={styles.userContainer}>
               < View style={styles.mostraramigo}>
+    
               <Image src={amigo.profilePicture} style={styles.foto} />
-              <Text style={styles.username}>{amigo.username}</Text>
+              <Text style={styles.username} text={amigo.username}/>
               </View>
               <TouchableOpacity onPress={() => handleRemoveFriend(amigo.username)}>
-                <Text style={styles.removeButton}>Eliminar</Text>
+                <Text style={styles.removeButton} tx='showFriendsScreen.delete' />
               </TouchableOpacity>
             </View>
           ))}
@@ -62,7 +62,7 @@ export const ShowFriendsScreen = observer(() => {
         <Text style={styles.header}>Mis amigos</Text>
         <Text style={styles.noFriendsMessage}>
           <Text>¡Esto está muy vacío!</Text>
-          <Text> Añade a gente nueva para empezar esta aventura </Text>
+          <Text tx='showFriendsScreen.noFriends' />
         </Text>
       </View>
     );

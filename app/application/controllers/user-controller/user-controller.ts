@@ -52,7 +52,19 @@ export class UserController implements IUserController {
       { fireImmediately: true },
     );
   }
-
+  public async removeFriend(userUsername: string, friendUsername:string): Promise<void> {
+    console.log("borrando")
+     await this.infrastructure.api.removeFriend(userUsername, friendUsername);
+     console.log("borrado1")
+    const index = this.userInfo.followeds.findIndex(user => user.username === friendUsername);
+    if (index !== -1) {
+      this.userInfo.followeds.splice(index, 1);
+    }
+    
+  }
+  public setUserFollowers(token: string): void {
+    this.token = token;
+  }
   public async modifyUser(
     username: string,
     name: string,

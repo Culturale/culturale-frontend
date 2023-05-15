@@ -1,1 +1,11 @@
-{}
+{
+
+
+    "showFriendsScreen":{
+        "myfriends":"Mis amigos",
+        "vacio":" ¡Esto está muy vacío!",
+        "noFriends":" Añade a gente nueva para empezar esta aventura",
+        "delete": "Eliminar"
+
+    }
+}

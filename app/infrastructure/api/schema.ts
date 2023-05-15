@@ -135,6 +135,34 @@ export interface paths {
       };
     };
   };
+  "/users/deleteFollower": {
+    /** Deletes de users follower */
+    delete: {
+      responses: {
+        /** Ok */
+        201: {
+          schema: {
+            followers?: definitions["user"][];
+            message?: string;
+          };
+        };
+        /** Internal server error */
+        404: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+        /** Internal server error */
+        500: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+      };
+    };
+  };
 }
 
 export interface definitions {
