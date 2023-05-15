@@ -4,6 +4,7 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import type React from 'react';
 import { Image, Linking, Platform, Text, TouchableOpacity, View } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
 
 import type { RootParamList } from '~/navigation';
 
@@ -20,6 +21,7 @@ export const EventScreen: React.FC<Props> = observer((props: Props) => {
       const url = `${scheme}${lat},${long}`;
       Linking.openURL(url);
     };
+    console.log(event.photo);
     const navigation = useNavigation<EventScreenNavigation>();
     return (
       <>
@@ -32,6 +34,9 @@ export const EventScreen: React.FC<Props> = observer((props: Props) => {
           <View style={styles.titleContainer}>
             <Text style={styles.title}>{event.denominacio}</Text>
           </View>
+          <View style={{flexDirection:'row', gap: 10, marginTop: 10}}>
+          <Image source={{ uri: event.photo ? event.photo : 'https://archive.org/download/no-photo-available/no-photo-available.png'}} style={styles.photo}/>
+          <View style={{flexDirection:'column'}}>
           <View style={styles.subtitleContainer}>
           <Ionicons color="#888" name="location-outline" size={16} />
           <Text style={styles.subtitle}>{event.adress}</Text>
@@ -44,42 +49,38 @@ export const EventScreen: React.FC<Props> = observer((props: Props) => {
           <TouchableOpacity onPress={() => Linking.openURL(event.url)}>
             <Text style={[styles.description, { color: 'blue' }]}>+ Información</Text>
           </TouchableOpacity>
+          </View>
+          </View>
+          {/* <Image source={{ uri:'https://static.mfah.com/images/main-campus-18.15829485354753099698.jpg?width=1680'}} style={styles.photo}/> */}
           <View style={styles.priceContainer}>
-            <Text style={styles.price}>22,10€</Text>
-            <TouchableOpacity style={styles.buyButton}>
-              <Text style={styles.buyButtonText}>Comprar</Text>
+            <View style={{flexDirection:'column', gap: 10, justifyContent: 'flex-end', marginTop: 10}}>
+              <Text style={styles.price}>22,10€</Text>
+              <TouchableOpacity style={styles.buyButton}>
+                <Text style={styles.buyButtonText}>Comprar</Text>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity onPress={handleOpenMaps}>
+              <Text style={[styles.description, { color: 'blue' }]}>¿Cómo llegar?</Text>
             </TouchableOpacity>
           </View>
-          <Image source={{ uri: event.photo}} />
-          <TouchableOpacity onPress={handleOpenMaps}>
-            <Text style={[styles.description, { color: 'blue' }]}>¿Cómo llegar?</Text>
-          </TouchableOpacity>
-          {/* <View style={styles.reviewContainer}>
-            <Text style={styles.reviewTitle}>Reviews</Text>
-            <View style={styles.starContainer}>
-              <Image source={require('../../assets/filled-star--v1.png')} style={styles.star} />
-              <Image source={require('../../assets/filled-star--v1.png')} style={styles.star} />
-              <Image source={require('../../assets/filled-star--v1.png')} style={styles.star} />
-              <Image source={require('../../assets/filled-star--v1.png')} style={styles.star} />
-              <Image source={require('../../assets/descarga.png')} style={styles.star} />
-            </View>
-          </View> */}
-          {/* <View style={styles.reviewDetailsContainer}>
-            <View style={styles.reviewCont}>
-              <View>
-                <Text style={styles.reviewDetailsTitle}>"¡Excelente!"</Text>
-                <Text style={styles.reviewDetailsAuthor}>Juan Pérez</Text>
-                <View style={{ flexDirection: 'column'}}>
-                  <Text style={styles.reviewDetailsRating}>4/5</Text>
-                  <View style={{ flexDirection: 'column' }}>
-                    <Text style={styles.reviewDetailsDescription}>
-                      "Excelente producto, buena calidad y precio justo."
-                    </Text>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View> */}
+          <View style={styles.mapContainer}>
+        <MapView
+          initialRegion={{
+            latitude: event.lat,
+            latitudeDelta: 0.02,
+            longitude: event.long,
+            longitudeDelta: 0.02,
+          }}
+          style={styles.map}
+        >
+          <Marker
+            coordinate={{
+              latitude: event.lat,
+              longitude: event.long,
+            }}
+          />
+        </MapView>
+      </View>
         </View>
        </>
     );
