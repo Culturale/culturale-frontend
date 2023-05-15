@@ -79,7 +79,10 @@ export class Event implements IEvent {
       denominacio: observable,
       descripcio: observable,
       horari: observable,
+      lat: observable,
+      long: observable,
       participants: observable,
+      photo: observable,
       url: observable,
     });
   }

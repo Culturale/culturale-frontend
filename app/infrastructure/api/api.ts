@@ -88,7 +88,7 @@ export class API implements IAPI {
 
   public async getAllEvents(): Promise<EventDocument[]> {
     const res = await this.get<GetEventsResponse>('/events');
-
+    console.log('events', res);
     return res.events;
   }
 

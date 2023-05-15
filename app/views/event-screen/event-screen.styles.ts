@@ -4,6 +4,7 @@ export const EventScreenStyles =StyleSheet.create({
     backArrow: {
       display: 'flex',
       paddingTop: 30,
+      paddingLeft: 10,
     },
     buyButton: {
       alignSelf: 'flex-end',
@@ -19,6 +20,7 @@ export const EventScreenStyles =StyleSheet.create({
       fontWeight: 'bold',
     },
     container: {
+      display: 'flex',
       marginTop: 0,
       padding: 20,
     },
@@ -32,9 +34,28 @@ export const EventScreenStyles =StyleSheet.create({
       width: '100%',
     },
     image: {
-      height: 200,
+      height: 50,
       marginTop: 10,
+      maxWidth: 50,
       width: '100%',
+    },
+    map: {
+      height: 100,
+      width: '100%',
+      borderRadius: 10,
+    },
+    mapContainer: {
+      alignItems: 'center',
+      flex: 1,
+      justifyContent: 'center',
+      marginTop: 50,
+      height: 5,
+    },
+    photo: {
+      alignSelf: 'flex-end', 
+      flexDirection: 'column', 
+      height: 125,
+      width: 125,
     },
     price: {
       alignSelf: 'flex-end',
