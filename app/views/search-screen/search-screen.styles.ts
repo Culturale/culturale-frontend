@@ -24,7 +24,6 @@ export const SearchScreenStyles =  StyleSheet.create({
         top: 55,
       },
       searchTextContainer: {
-        backgroundColor: '#eee',
         borderRadius: 20,
         backgroundColor: '#fff',
         flexDirection: 'row',
