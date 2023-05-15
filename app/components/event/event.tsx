@@ -1,7 +1,8 @@
-import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import type React from 'react';
+import { View, Text , TouchableOpacity, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { IEvent } from '~/domain';
+
+import type { IEvent } from '~/domain';
 
 interface Props {
   event: IEvent;
@@ -20,7 +21,7 @@ export const Event: React.FC<Props> = ({ event, onPress }) => {
         </View>
         <View style={styles.subtitleContainer}>
           <Ionicons color="#888" name="calendar-outline" size={16} />
-          <Text style={styles.subtitle}>{event.dataIni.toUTCString()}</Text>
+          <Text style={styles.subtitle}>{event.dataIni.toLocaleDateString()}</Text>
         </View>
       </View>
       <TouchableOpacity style={styles.button} onPress={onPress}>
