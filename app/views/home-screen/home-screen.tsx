@@ -14,7 +14,7 @@ import type { RootParamList } from '~/navigation';
 import type { HomeScreenProps as Props } from './home-screen.props';
 import { HomeScreenStyles as styles } from './home-screen.styles';
 
-type HomeNavigation = StackNavigationProp<RootParamList, 'EventScreen'>;
+type HomeNavigation = StackNavigationProp<RootParamList, 'Home'>;
 
 
 export const HomeScreen: React.FC<Props> = observer(() => {
