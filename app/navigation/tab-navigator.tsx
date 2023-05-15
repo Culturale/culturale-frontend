@@ -29,7 +29,7 @@ const ProfileStackNavigator: React.FC = observer(() => {
     </ProfileStack.Navigator>
   );
 });
-
+g
 
 const HomeStackNavigator: React.FC = observer(() => {
   return (

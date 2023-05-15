@@ -12,7 +12,7 @@ export const ShowFriendsScreen = observer(() => {
   } = useApplicationLayer();
 
   const handleRemoveFriend = async (friendUsername: string) => {
-    console.log('friendUsername', friendUsername);
+
       UserController.removeFriend(UserController.userInfo.username, friendUsername);
     
   }
