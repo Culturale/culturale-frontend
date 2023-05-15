@@ -1,35 +1,28 @@
-import type React from 'react';
-import { View, Text , TouchableOpacity, StyleSheet, Image } from 'react-native';
+import React from 'react';
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import type { IEvent } from '~/domain';
-
-interface Props {
-  event: IEvent;
-}
-
-export const Event: React.FC<Props> = ({ event }) => {
+export default function Evento({ event } : {event: any}) {
   return (
     <View style={styles.container}>
-      {/* <Image source={{ uri: event.image }} style={styles.image} /> */}
+      <Image source={{ uri: event.image }} style={styles.image} />
       <View style={styles.details}>
         <Text style={styles.title}>{event.denominacio}</Text>
-        <View style={styles.subtitleContainer}>
-          <Ionicons color="#888" name="location-outline" size={16} />
-          <Text style={styles.subtitle}>{event.adress}</Text>
-        </View>
-        <View style={styles.subtitleContainer}>
-          <Ionicons color="#888" name="calendar-outline" size={16} />
-          <Text style={styles.subtitle}>{event.dataIni.toLocaleDateString()}</Text>
-        </View>
+            <View style={styles.subtitleContainer}>
+            <Ionicons color="#888" name="location-outline" size={16} />
+            <Text style={styles.subtitle}>{event.adress}</Text>
+            </View>
+            <View style={styles.subtitleContainer}>
+            <Ionicons color="#888" name="calendar-outline" size={16} />
+            <Text style={styles.subtitle}>{event.dataIni}</Text>
+            </View>
       </View>
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>¡Apúntate!</Text>
-        <Image source={{ uri: event.photo}} style={styles.image} />
       </TouchableOpacity>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   button: {
@@ -40,12 +33,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     position: 'absolute',
-    right: 0,
+    right: 0
   },
   buttonText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   container: {
     alignItems: 'center',
@@ -59,33 +52,33 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: {
       height: 2,
-      width: 0,
+      width: 0
     },
     shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    shadowRadius: 3.84
   },
 
   details: {
     flex: 1,
-    padding: 10,
+    padding: 10
   },
 
   image: {
     height: '100%',
-    width: 80,
+    width: 80
   },
   subtitle: {
     color: '#666',
     fontSize: 14,
-    marginLeft: 4,
+    marginLeft: 4
   },
   subtitleContainer: {
     alignItems: 'center',
     flexDirection: 'row',
-    marginBottom: 4,
+    marginBottom: 4
   },
   title: {
     fontSize: 16,
-    fontWeight: 'bold',
-  },
+    fontWeight: 'bold'
+  }
 });

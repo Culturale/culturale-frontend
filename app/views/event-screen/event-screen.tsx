@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import type React from 'react';
-import { Image, Linking, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Linking, Platform, Text, TouchableOpacity, View } from 'react-native';
 
 import type { RootParamList } from '~/navigation';
 
@@ -14,6 +14,12 @@ type EventScreenNavigation = StackNavigationProp<RootParamList, 'EditProfile'>;
 
 export const EventScreen: React.FC<Props> = observer((props: Props) => {
     const { event } = props.route.params;
+    const handleOpenMaps = () => {
+      const { lat, long } = event;
+      const scheme = Platform.OS === 'ios' ? 'maps:' : 'geo:';
+      const url = `${scheme}${lat},${long}`;
+      Linking.openURL(url);
+    };
     const navigation = useNavigation<EventScreenNavigation>();
     return (
       <>
@@ -44,6 +50,10 @@ export const EventScreen: React.FC<Props> = observer((props: Props) => {
               <Text style={styles.buyButtonText}>Comprar</Text>
             </TouchableOpacity>
           </View>
+          <Image source={{ uri: event.photo}} />
+          <TouchableOpacity onPress={handleOpenMaps}>
+            <Text style={[styles.description, { color: 'blue' }]}>¿Cómo llegar?</Text>
+          </TouchableOpacity>
           {/* <View style={styles.reviewContainer}>
             <Text style={styles.reviewTitle}>Reviews</Text>
             <View style={styles.starContainer}>

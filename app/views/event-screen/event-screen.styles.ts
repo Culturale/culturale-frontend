@@ -32,9 +32,15 @@ export const EventScreenStyles =StyleSheet.create({
       width: '100%',
     },
     image: {
-      height: 200,
+      height: 50,
       marginTop: 10,
+      maxWidth: 50,
       width: '100%',
+    },
+    photo: {
+      height: 50,
+      resizeMode: 'cover',
+      width: 50,
     },
     price: {
       alignSelf: 'flex-end',
