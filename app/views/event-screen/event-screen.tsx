@@ -22,7 +22,6 @@ export const EventScreen: React.FC<Props> = observer((props: Props) => {
       const url = `${scheme}${lat},${long}`;
       Linking.openURL(url);
     };
-    console.log(event.photo);
     const navigation = useNavigation<EventScreenNavigation>();
     return (
       <>
