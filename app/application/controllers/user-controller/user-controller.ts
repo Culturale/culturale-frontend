@@ -81,15 +81,9 @@ export class UserController implements IUserController {
     this.setUserInfo(user);
   }
 
-<<<<<<< Updated upstream
   public async addParticipant(id: string): Promise<void> {
     await this.infrastructure.api.addParticipant(
       this.userInfo.username,
-=======
-  public async addParticipant(id: string, username: string): Promise<void> {
-    await this.infrastructure.api.addParticipant(
-      username,
->>>>>>> Stashed changes
       id
     );
   }

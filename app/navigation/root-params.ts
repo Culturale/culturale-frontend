@@ -7,6 +7,8 @@ export type RootParamList = {
   ProfileScreen: undefined;
   EditProfile: undefined;
   Home: undefined;
+  MyEventsScreen: undefined;
+  HomeScreen: undefined;
   EventScreen: { event: IEvent };
 };
 
