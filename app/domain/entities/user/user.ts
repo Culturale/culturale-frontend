@@ -1,4 +1,5 @@
-import { IEvent } from '../event';
+import type { IEvent } from '../event';
+
 import type { IUser } from './user.interface';
 
 export interface UserProps {

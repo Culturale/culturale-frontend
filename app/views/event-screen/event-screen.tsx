@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import type React from 'react';
+import { useState } from 'react';
 import { Image, Linking, Platform, Text, TouchableOpacity, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
@@ -26,12 +27,15 @@ export const EventScreen: React.FC<Props> = observer((props: Props) => {
     const {
       controllers: { UserController },
     } = useApplicationLayer();
-
+    const enrolled: boolean = UserController.userInfo.eventSub.some((eventUser) => eventUser.id === event.id);
+    const [showSuccess, setShowSuccess] = useState(enrolled);
     function addParticipantEvent(){
-      const userInfo = UserController.userInfo;
-      UserController.addParticipant(userInfo.username, event.id);
+      UserController.addParticipant(event.id);
+      UserController.addEventSub(event);
+      setShowSuccess(true);
     }
     const navigation = useNavigation<EventScreenNavigation>();
+
     return (
       <>
         <View style={styles.backArrow}>
@@ -60,13 +64,16 @@ export const EventScreen: React.FC<Props> = observer((props: Props) => {
           </TouchableOpacity>
           </View>
           </View>
-          {/* <Image source={{ uri:'https://static.mfah.com/images/main-campus-18.15829485354753099698.jpg?width=1680'}} style={styles.photo}/> */}
           <View style={styles.priceContainer}>
             <View style={{flexDirection:'column', gap: 10, justifyContent: 'flex-end', marginTop: 10}}>
               <Text style={styles.price}>22,10€</Text>
-              <TouchableOpacity style={styles.buyButton} onPress={addParticipantEvent}>
+              {!showSuccess ? (<TouchableOpacity style={styles.buyButton} onPress={addParticipantEvent}>
                 <TraductionText style={styles.buyButtonText} tx='eventScreen.BuyText'/>
-              </TouchableOpacity>
+              </TouchableOpacity>): (
+              <View style={styles.successContainer}>
+                  <Ionicons color="green" name="checkmark-circle-outline" size={32} />
+                  <Text style={styles.successText}>Compra realizada correctamente</Text>
+              </View>)}
             </View>
             <TouchableOpacity onPress={handleOpenMaps}>
               <TraductionText style={styles.goButton} tx='eventScreen.ComoLlegar'/>
