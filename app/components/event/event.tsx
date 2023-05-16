@@ -1,7 +1,9 @@
-import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import type React from 'react';
+import { View, Text , TouchableOpacity, StyleSheet, Image } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { IEvent } from '~/domain';
+
+import { Text as TraductionText } from '~/components';
+import type { IEvent } from '~/domain';
 
 interface Props {
   event: IEvent;
@@ -19,11 +21,13 @@ export const Event: React.FC<Props> = ({ event }) => {
         </View>
         <View style={styles.subtitleContainer}>
           <Ionicons color="#888" name="calendar-outline" size={16} />
-          <Text style={styles.subtitle}>{event.dataIni.toUTCString()}</Text>
+          <Text style={styles.subtitle}>{event.dataIni.toLocaleDateString()}</Text>
         </View>
       </View>
+      <Image source={{ uri: event.photo ? event.photo : 'https://archive.org/download/no-photo-available/no-photo-available.png'}} style={{alignSelf: 'flex-end',height: 125, width: 106}}/>
       <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>¡Apúntate!</Text>
+      {/* <Image source={{ uri:'https://static.mfah.com/images/main-campus-18.15829485354753099698.jpg?width=1680'}} style={{height: 125,width: 125,alignSelf: 'flex-end'}}/> */}
+        <TraductionText style={styles.buttonText} tx="event.join"/>
       </TouchableOpacity>
     </View>
   );
@@ -33,7 +37,7 @@ const styles = StyleSheet.create({
   button: {
     alignSelf: 'flex-end',
     backgroundColor: '#34b38a',
-    borderBottomRightRadius: 16,
+    borderBottomRightRadius: 10,
     bottom: 0,
     paddingHorizontal: 16,
     paddingVertical: 8,

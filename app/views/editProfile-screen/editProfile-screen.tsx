@@ -74,7 +74,6 @@ export const EditProfileScreen: React.FC<Props> = observer(() => {
   
   const handleChooseProfilePicture = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
     if (status !== 'granted') {
       Alert.alert(
         'Permiso requerido',
