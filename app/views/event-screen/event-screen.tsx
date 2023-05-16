@@ -6,6 +6,7 @@ import type React from 'react';
 import { Image, Linking, Platform, Text, TouchableOpacity, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
+import { Text as TraductionText } from '~/components';
 import type { RootParamList } from '~/navigation';
 
 import type { EventScreenProps as Props } from './event-screen.props';
@@ -47,7 +48,7 @@ export const EventScreen: React.FC<Props> = observer((props: Props) => {
           </View>
           <Text style={styles.description}>{event.descripcio}</Text>
           <TouchableOpacity onPress={() => Linking.openURL(event.url)}>
-            <Text style={[styles.description, { color: 'blue' }]}>+ Información</Text>
+            <TraductionText style={styles.goButton} tx='eventScreen.information'/>
           </TouchableOpacity>
           </View>
           </View>
@@ -56,11 +57,11 @@ export const EventScreen: React.FC<Props> = observer((props: Props) => {
             <View style={{flexDirection:'column', gap: 10, justifyContent: 'flex-end', marginTop: 10}}>
               <Text style={styles.price}>22,10€</Text>
               <TouchableOpacity style={styles.buyButton}>
-                <Text style={styles.buyButtonText}>Comprar</Text>
+                <TraductionText style={styles.buyButtonText} tx='eventScreen.BuyText'/>
               </TouchableOpacity>
             </View>
             <TouchableOpacity onPress={handleOpenMaps}>
-              <Text style={[styles.description, { color: 'blue' }]}>¿Cómo llegar?</Text>
+              <TraductionText style={styles.goButton} tx='eventScreen.ComoLlegar'/>
             </TouchableOpacity>
           </View>
           <View style={styles.mapContainer}>

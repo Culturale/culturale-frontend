@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Text, View, Image, Button } from 'react-native';
 
+import { Text as TraductionText } from '~/components';
 import { useApplicationLayer } from '~/hooks';
 import type { RootParamList } from '~/navigation';
 
@@ -19,24 +20,24 @@ export const ProfileScreen = observer(() => {
   const navigation = useNavigation<ProfileNavigation>();
   return (
     <View style={Styles.container}>
-      <Text style={Styles.title}>Mi perfil</Text>
+      <TraductionText style={Styles.title} tx="perfil.miperfil"/>
       <View style={Styles.rowProfile}>
         <View style={Styles.titleData}>
           <Image src={userInfo.profilePicture} style={Styles.foto} />
           <View style={Styles.contentData}>
             <Text style={Styles.number}>{userInfo.followeds.length}</Text>
-            <Text>Seguidores</Text>
+            <TraductionText tx='perfil.seguidores'/>
           </View>
           <View style={Styles.contentData}>
             <Text style={Styles.number}>{userInfo.followers.length}</Text>
-            <Text>Siguiendo</Text>
+            <TraductionText tx='perfil.siguiendo'/>
           </View>
         </View>
       </View>
       <Text style={Styles.username}>{userInfo.username}</Text>
       <View style={Styles.row}>
         <View style={Styles.column}>
-          <Text style={Styles.titleRow}>Nombre:</Text>
+          <TraductionText tx='perfil.nombre' style={Styles.titleRow}/>
         </View>
         <View style={Styles.column}>
           <Text>{userInfo.name}</Text>
@@ -44,7 +45,7 @@ export const ProfileScreen = observer(() => {
       </View>
       <View style={Styles.row}>
         <View style={Styles.column}>
-          <Text style={Styles.titleRow}>Correo electronico:</Text>
+          <TraductionText style={Styles.titleRow} tx='perfil.email'/>
         </View>
         <View style={Styles.column}>
           <Text>{userInfo.email}</Text>
@@ -52,7 +53,7 @@ export const ProfileScreen = observer(() => {
       </View>
       <View style={Styles.row}>
         <View style={Styles.column}>
-          <Text style={Styles.titleRow}>Teléfono</Text>
+          <TraductionText style={Styles.titleRow} tx='perfil.telephone'/>
         </View>
         <View style={Styles.column}>
           <Text>{userInfo.phoneNumber}</Text>
@@ -71,21 +72,21 @@ export const ProfileScreen = observer(() => {
             source={require('../../../assets/config-logo.png')}
             style={Styles.icon}
           />
-          <Text style={Styles.configText}>Configuracion</Text>
+          <TraductionText style={Styles.configText} tx="perfil.configuracion"/>
         </View>
         <View style={Styles.panelConfig}>
           <Image
             source={require('../../../assets/card-logo.png')}
             style={Styles.icon}
           />
-          <Text style={Styles.configText}>Pagos</Text>
+          <TraductionText style={Styles.configText} tx="perfil.pagos"/>
         </View>
         <View style={Styles.panelConfig}>
           <Image
             source={require('../../../assets/friend-logo.png')}
             style={Styles.icon}
           />
-          <Text style={Styles.configText}>Mis amigos</Text>
+          <TraductionText style={Styles.configText} tx="perfil.amigos"/>
         </View>
       </View>
     </View>

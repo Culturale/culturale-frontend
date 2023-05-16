@@ -2,6 +2,7 @@ import type React from 'react';
 import { View, Text , TouchableOpacity, StyleSheet, Image } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import { Text as TraductionText } from '~/components';
 import type { IEvent } from '~/domain';
 
 interface Props {
@@ -23,10 +24,10 @@ export const Event: React.FC<Props> = ({ event }) => {
           <Text style={styles.subtitle}>{event.dataIni.toLocaleDateString()}</Text>
         </View>
       </View>
-      <Image source={{ uri: event.photo ? event.photo : 'https://archive.org/download/no-photo-available/no-photo-available.png'}} style={{height: 125,width: 106, alignSelf: 'flex-end'}}/>
+      <Image source={{ uri: event.photo ? event.photo : 'https://archive.org/download/no-photo-available/no-photo-available.png'}} style={{alignSelf: 'flex-end',height: 125, width: 106}}/>
       <TouchableOpacity style={styles.button}>
       {/* <Image source={{ uri:'https://static.mfah.com/images/main-campus-18.15829485354753099698.jpg?width=1680'}} style={{height: 125,width: 125,alignSelf: 'flex-end'}}/> */}
-        <Text style={styles.buttonText}>¡Apúntate!</Text>
+        <TraductionText style={styles.buttonText} tx="event.join"/>
       </TouchableOpacity>
     </View>
   );
