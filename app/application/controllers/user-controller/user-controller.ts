@@ -79,6 +79,13 @@ export class UserController implements IUserController {
     this.setUserInfo(user);
   }
 
+  public async addParticipant(id: string, username: string): Promise<void> {
+    await this.infrastructure.api.addParticipant(
+      username,
+      id
+    );
+  }
+
   public get isLoginNeeded(): boolean {
     return !this.token;
   }

@@ -136,6 +136,14 @@ export class API implements IAPI {
     return res.user;
   }
 
+  public async addParticipant(id: string, username: string): Promise<void> {
+    const x = await this.post<EditUserResponse>('/events/newParticipant', {
+      id,
+      username
+    });
+    console.log(x);
+  }
+
   public async getChatMessages(id: string): Promise<MessageDocument[]> {
     const res = await this.axiosClient.get<MessageDocument[]>(
       `/events/${id}/messages`,

@@ -7,6 +7,7 @@ import { Image, Linking, Platform, Text, TouchableOpacity, View } from 'react-na
 import MapView, { Marker } from 'react-native-maps';
 
 import { Text as TraductionText } from '~/components';
+import { useApplicationLayer } from '~/hooks';
 import type { RootParamList } from '~/navigation';
 
 import type { EventScreenProps as Props } from './event-screen.props';
@@ -22,6 +23,14 @@ export const EventScreen: React.FC<Props> = observer((props: Props) => {
       const url = `${scheme}${lat},${long}`;
       Linking.openURL(url);
     };
+    const {
+      controllers: { UserController },
+    } = useApplicationLayer();
+
+    function addParticipantEvent(){
+      const userInfo = UserController.userInfo;
+      UserController.addParticipant(userInfo.username, event.id);
+    }
     const navigation = useNavigation<EventScreenNavigation>();
     return (
       <>
@@ -55,7 +64,7 @@ export const EventScreen: React.FC<Props> = observer((props: Props) => {
           <View style={styles.priceContainer}>
             <View style={{flexDirection:'column', gap: 10, justifyContent: 'flex-end', marginTop: 10}}>
               <Text style={styles.price}>22,10€</Text>
-              <TouchableOpacity style={styles.buyButton}>
+              <TouchableOpacity style={styles.buyButton} onPress={addParticipantEvent}>
                 <TraductionText style={styles.buyButtonText} tx='eventScreen.BuyText'/>
               </TouchableOpacity>
             </View>

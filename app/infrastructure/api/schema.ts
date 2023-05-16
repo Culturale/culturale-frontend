@@ -135,6 +135,33 @@ export interface paths {
       };
     };
   };
+  "/events/newParticipant": {
+    /** It adds a participant into an event */
+    post: {
+      responses: {
+        /** Ok */
+        200: {
+          schema: {
+            message?: string;
+          };
+        };
+        /** Bad request */
+        404: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+        /** Internal server error */
+        500: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+      };
+    };
+  };
 }
 
 export interface definitions {
