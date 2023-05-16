@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 export const EventScreenStyles =StyleSheet.create({
     backArrow: {
       display: 'flex',
+      paddingLeft: 10,
       paddingTop: 30,
     },
     buyButton: {
@@ -19,6 +20,7 @@ export const EventScreenStyles =StyleSheet.create({
       fontWeight: 'bold',
     },
     container: {
+      display: 'flex',
       marginTop: 0,
       padding: 20,
     },
@@ -31,10 +33,35 @@ export const EventScreenStyles =StyleSheet.create({
       height: 120,
       width: '100%',
     },
+    goButton: {
+      color: 'blue',
+      fontSize: 16,
+      lineHeight: 24,
+      textAlign: 'justify' ,
+    },
     image: {
-      height: 200,
+      height: 50,
       marginTop: 10,
+      maxWidth: 50,
       width: '100%',
+    },
+    map: {
+      borderRadius: 10,
+      height: 100,
+      width: '100%',
+    },
+    mapContainer: {
+      alignItems: 'center',
+      flex: 1,
+      height: 5,
+      justifyContent: 'center',
+      marginTop: 50,
+    },
+    photo: {
+      alignSelf: 'flex-end', 
+      flexDirection: 'column', 
+      height: 125,
+      width: 125,
     },
     price: {
       alignSelf: 'flex-end',

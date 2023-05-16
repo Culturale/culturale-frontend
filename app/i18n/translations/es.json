@@ -1,1 +1,36 @@
-{}
+{
+    "editProfileScreen": {
+        "buttonSave": "Guardar",
+        "buttonCancel": "Cancelar",
+        "name": "Nombre:",
+        "username": "Nombre Usuario:",
+        "changePhoto": "Cambiar foro de perfil",
+        "email": "Correo electrónico",
+        "telephone": "Teléfono:",
+        "editProfile": "Editar perfil"
+    },
+    "eventScreen": {
+        "ComoLlegar": "¿Cómo llegar?",
+        "BuyText": "Comprar",
+        "information": "+ Información"
+    },
+    "event": {
+        "join": "¡Apúntate!"
+    },
+    "home": {
+        "inicio": "Inicio",
+        "near": "Cerca de ti",
+        "today": "Hoy"
+    },
+    "perfil": {
+        "seguidores": "Seguidores",
+        "siguiendo": "Siguiendo",
+        "nombre": "Nombre:",
+        "email": "Correo electrónico:",
+        "telephone": "Teléfono:",
+        "configuracion": "Configuracion",
+        "pagos": "Mis pagos",
+        "amigos": "Mis amigos",
+        "miperfil": "Mi perfil"
+    }
+}

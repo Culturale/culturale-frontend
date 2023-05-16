@@ -1,1 +1,37 @@
-{}
+{
+    "editProfileScreen": {
+      "buttonSave": "Save",
+      "buttonCancel": "Cancel",
+      "name": "Name:",
+      "username": "Username:",
+      "changePhoto": "Change profile photo",
+      "email": "Email",
+      "telephone": "Phone:",
+      "editProfile": "Edit profile"
+    },
+    "eventScreen": {
+      "ComoLlegar": "How to get there?",
+      "BuyText": "Buy",
+      "information": "+ Information"
+    },
+    "event": {
+      "join": "Join now!"
+    },
+    "home": {
+      "inicio": "Home",
+      "near": "Near you",
+      "today": "Today"
+    },
+    "perfil": {
+      "seguidores": "Followers",
+      "siguiendo": "Following",
+      "nombre": "Name:",
+      "email": "Email:",
+      "telephone": "Phone:",
+      "configuracion": "Settings",
+      "pagos": "My payments",
+      "amigos": "My friends",
+      "miperfil": "My profile"
+    }
+  }
+  

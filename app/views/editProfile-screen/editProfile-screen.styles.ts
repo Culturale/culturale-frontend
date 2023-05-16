@@ -5,12 +5,6 @@ export const EditProfileScreenStyles =  StyleSheet.create({
     justifyContent: 'space-around',
     paddingTop: 20,
   },
-  column: {
-    alignItems: 'flex-start',
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
   cancelButton: {
     alignItems: 'center',
     backgroundColor: 'transparent',
@@ -20,6 +14,18 @@ export const EditProfileScreenStyles =  StyleSheet.create({
     flexDirection: 'column',
     padding: 10,
     paddingHorizontal: 30,
+  },
+  changePhotoTxt: {
+    alignSelf: 'center',
+    color: '34b38a',
+    padding: 10,
+    paddingBottom: 20,
+  },
+  column: {
+    alignItems: 'flex-start',
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
   container: {
     display: 'flex',
@@ -37,6 +43,7 @@ export const EditProfileScreenStyles =  StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 10,
     paddingHorizontal: 10,
+    paddingVertical: 5,
   },
   email: {
     color: '#666',
@@ -54,10 +61,11 @@ export const EditProfileScreenStyles =  StyleSheet.create({
     paddingLeft: 10,
   },
   profilePicture: {
-    borderRadius: 30,
-    height: 75,
+    alignSelf: 'center',
+    borderRadius: 60,
+    height: 85,
     marginBottom: 5,
-    width: 75,
+    width: 85,
   },
   row: {
     alignItems: 'center',
