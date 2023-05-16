@@ -136,7 +136,11 @@ export class API implements IAPI {
   }
 
   public async addParticipant(id: string, username: string): Promise<void> {
+<<<<<<< Updated upstream
     await this.post<EditUserResponse>('/events/newParticipant', {
+=======
+    await this.post<EditUserResponse>('/users/edit', {
+>>>>>>> Stashed changes
       id,
       username
     });

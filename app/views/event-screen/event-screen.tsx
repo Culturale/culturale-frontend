@@ -7,7 +7,10 @@ import { useState } from 'react';
 import { Image, Linking, Platform, Text, TouchableOpacity, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
+<<<<<<< Updated upstream
 import { Text as TraductionText } from '~/components';
+=======
+>>>>>>> Stashed changes
 import { useApplicationLayer } from '~/hooks';
 import type { RootParamList } from '~/navigation';
 
@@ -18,6 +21,7 @@ type EventScreenNavigation = StackNavigationProp<RootParamList, 'EditProfile'>;
 
 export const EventScreen: React.FC<Props> = observer((props: Props) => {
     const { event } = props.route.params;
+<<<<<<< Updated upstream
     const handleOpenMaps = () => {
       const { lat, long } = event;
       const scheme = Platform.OS === 'ios' ? 'maps:' : 'geo:';
@@ -34,6 +38,11 @@ export const EventScreen: React.FC<Props> = observer((props: Props) => {
       UserController.addEventSub(event);
       setShowSuccess(true);
     }
+=======
+    const {
+      controllers: { UserController },
+    } = useApplicationLayer();
+>>>>>>> Stashed changes
     const navigation = useNavigation<EventScreenNavigation>();
 
     return (

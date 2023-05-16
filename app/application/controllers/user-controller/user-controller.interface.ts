@@ -61,7 +61,11 @@ export interface IUserController extends Controller {
 
   setProfilePicture: (profilePicture: string) => void ;
 
+<<<<<<< Updated upstream
   addParticipant: (id: string)=> Promise<void>;
+=======
+  addParticipant: (id: string, username: string)=> Promise<void>;
+>>>>>>> Stashed changes
 
   setUsername: (username: string) => void ;
   setName: (name: string) => void ;
