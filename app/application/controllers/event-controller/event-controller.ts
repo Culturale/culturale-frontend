@@ -10,6 +10,7 @@ import type { IEventController } from './event-controller.interface';
 
 export class EventController implements IEventController {
   public events: IEvent[];
+  public SearchEvents: IEvent[];
   private readonly infrastructure: IInfrastructure;
 
   constructor(infrastructure: IInfrastructure) {
@@ -23,6 +24,10 @@ export class EventController implements IEventController {
 
   public setEvents(events: IEvent[]): void {
     this.events = events;
+  }
+
+  public setEventsSearch(events: IEvent[]): void {
+    this.SearchEvents = events;
   }
 
   public fetchAllEvents(): IRequestSubject<void> {
@@ -56,13 +61,13 @@ export class EventController implements IEventController {
     this.infrastructure.api
       .getEventsByCategory(category)
       .then((res: EventDocument[]) => {
-        const events: IEvent[] = [];
+        const SearchEvents: IEvent[] = [];
         for (const doc of res) {
           const event = eventFactory(doc);
-          events.push(event);
+          SearchEvents.push(event);
         }
 
-        this.setEvents(events);
+        this.setEventsSearch(SearchEvents);
 
         subject.completeRequest();
       })
@@ -80,13 +85,13 @@ export class EventController implements IEventController {
     this.infrastructure.api
       .getEventsByDenominacio(denominacio)
       .then((res: EventDocument[]) => {
-        const events: IEvent[] = [];
+        const SearchEvents: IEvent[] = [];
         for (const doc of res) {
           const event = eventFactory(doc);
-          events.push(event);
+          SearchEvents.push(event);
         }
 
-        this.setEvents(events);
+        this.setEventsSearch(SearchEvents);
 
         subject.completeRequest();
       })
@@ -94,6 +99,32 @@ export class EventController implements IEventController {
         subject.failRequest(e);
       });
 
+    return subject;
+  }
+
+  public fetchEventsByFilters(denominacio?: string,
+    descripcio?: string,
+    dataIni?: Date,
+    dataFi?: Date,
+    horari?: string,
+    price?: string
+  ): IRequestSubject<void> {
+    const subject = new RequestSubject<void>();
+    subject.startRequest();
+  
+    this.infrastructure.api
+      .fetchEventsByFilters(denominacio, descripcio, dataIni, dataFi, horari, price)
+      .then((res: EventDocument[]) => {
+        const searchEvents: IEvent[] = res.map((doc: EventDocument) => eventFactory(doc));
+  
+        this.setEventsSearch(searchEvents);
+  
+        subject.completeRequest();
+      })
+      .catch((e: Error) => {
+        subject.failRequest(e);
+      });
+  
     return subject;
   }
 

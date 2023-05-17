@@ -28,7 +28,7 @@ export const Event: React.FC<Props> = ({ event }) => {
         </View>
       </View>
       <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>¡Apúntate!</Text>
+        <Text style={styles.buttonText}>¡Ver evento!</Text>
       </TouchableOpacity>
     </View>
   );

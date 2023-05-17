@@ -3,6 +3,7 @@ import type { IRequestSubject } from '~/observables';
 
 export interface IEventController {
   readonly events: IEvent[];
+  readonly SearchEvents: IEvent[];
 
   /**
    *
@@ -14,16 +15,31 @@ export interface IEventController {
   /**
    *
    * @public
-   * @description Fetches events by category from API and saves them to events property
+   * @description Fetches SearchEvents by denominacio from API and saves them to events property
    */
   fetchEventsByCategory: (category: string) => IRequestSubject<void>;
 
   /**
    *
    * @public
-   * @description Fetches events by denominacio from API and saves them to events property
+   * @description Fetches SearchEvents by denominacio from API and saves them to events property
    */
   fetchEventsByDenominacio: (denominacio: string) => IRequestSubject<void>;
+
+  /**
+   *
+   * @public
+   * @description Fetches SearchEvents by denominacio, decripcio, dataIni, dataFi, horari, price
+   *              from API and saves them to events property
+   */
+
+  fetchEventsByFilters: (denominacio?: string,
+                         descripcio?: string,
+                         dataIni?: Date,
+                         dataFi?: Date,
+                         horari?: string,
+                         price?: string
+                        ) => IRequestSubject<void>;
 
   /**
    *
@@ -38,4 +54,11 @@ export interface IEventController {
    * @description Sets events property
    */
   setEvents: (events: IEvent[]) => void;
+
+  /**
+   *
+   * @public
+   * @description Sets SearchEvents property
+   */
+  setEventsSearch: (SearchEvents: IEvent[]) => void;
 }

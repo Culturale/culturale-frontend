@@ -94,4 +94,20 @@ export const SearchScreenStyles =  StyleSheet.create({
         textAlign: 'center',
         marginTop: 20,
       },
+      filtersContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: 16,
+        paddingHorizontal: 16,
+      },
+      filter: {
+        flex: 1,
+        paddingTop:100,
+        marginHorizontal:20,
+      },
+      datePicker: {
+        width: 200,
+        marginBottom: 10,
+      },
 });

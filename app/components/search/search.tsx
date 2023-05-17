@@ -1,40 +1,42 @@
-import { useApplicationLayer } from '~/hooks';
+import React, { useState } from 'react';
+import { View, Text, TextInput, Switch, TouchableOpacity } from 'react-native';
+import Slider from '@react-native-community/slider';
 
-type SearchType = 'users' | 'events';
+const FilterPanel = () => {
+  const [category, setCategory] = useState('');
+  const [priceRange, setPriceRange] = useState([0, 100]);
+  const [isNew, setIsNew] = useState(false);
 
-class SearchController {
-    const {controllers:{EventController}} = useApplicationLayer();
-    const events = EventController.events;
-
-    const {controllers:{UserController}} = useApplicationLayer();
-    const users = UserController.userInfo;
-    
-    if (searchType === 'usuarios') {
-        const params = {
-          username: searchText
-        };
-        .then(response => {
-          const modifiedUsers = response.data.user.map((user: User, index: number) => {
-            user._id = (index + 1).toString();
-            return user;
-          })
-          setSearchResults(modifiedUsers);
-        })
-        .catch(error => {
-            console.log(error);
-        });
-    }
-
-    else if (searchType === 'eventos') {
-        .then(response => {
-          const modifiedEvents = response.data.event.map((event: Event, index: number) => {
-              event._id = (index + 1).toString();
-              return event;
-          });
-          setSearchResults(modifiedEvents);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
+  const handleApplyFilters = () => {
+    // Aplicar los filtros a los resultados
+    // Llamar a la función de búsqueda con los filtros seleccionados
   };
+
+  return (
+    <View>
+      <Text>Categoría:</Text>
+      <TextInput
+        placeholder="Escribe la categoría"
+        value={category}
+        onChangeText={setCategory}
+      />
+
+      <Text>Rango de precio:</Text>
+      <Slider
+        minimumValue={0}
+        maximumValue={100}
+        values={priceRange}
+        onValueChange={setPriceRange}
+      />
+
+      <Text>Nuevo:</Text>
+      <Switch value={isNew} onValueChange={setIsNew} />
+
+      <TouchableOpacity onPress={handleApplyFilters}>
+        <Text>Aplicar filtros</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+export default FilterPanel;

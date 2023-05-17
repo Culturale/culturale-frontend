@@ -45,6 +45,29 @@ export class API implements IAPI {
       });
   }
 
+  private async getEvents<T>(path: string, params: object): Promise<T> {
+    const url = new URL(this.baseURL + path);
+  
+    // Agregar los parámetros a la URL
+    Object.keys(params).forEach((key) => {
+      url.searchParams.append(key, params[key]);
+    });
+    console.log(url);
+    return fetch(url.toString(), {
+      headers: {
+        Accept: 'application/json',
+        Authorization: this.token,
+        'Content-Type': 'application/json',
+      },
+      method: 'GET',
+    })
+      .then((res) => res.json())
+      .then((data: T) => data)
+      .catch((err: Error) => {
+        throw err;
+      });
+  }
+
   private async get<T>(path: string): Promise<T> {
     return fetch(this.baseURL + path, {
       headers: {
@@ -87,9 +110,7 @@ export class API implements IAPI {
   }
 
   public async getAllEvents(): Promise<EventDocument[]> {
-    console.log('HOLA');
     const res = await this.get<GetEventsResponse>('/events');
-    console.log('HOLA');
     return res.events;
   }
 
@@ -100,9 +121,29 @@ export class API implements IAPI {
   }
 
   public async getEventsByDenominacio(denominacio: string): Promise<EventDocument[]> {
-    console.log('HOLA');
     const res = await this.get<GetEventsResponse>(`/events/denominacio/${denominacio}`);
-    console.log('ADEU');
+    return res.events;
+  }
+
+  public async fetchEventsByFilters(denominacio?: string,
+                                    descripcio?: string,
+                                    dataIni?: Date,
+                                    dataFi?: Date,
+                                    horari?: string,
+                                    price?: string): Promise<EventDocument[]> {
+    const params = {
+      denominacio,
+      descripcio,
+      dataIni,
+      dataFi,
+      horari,
+      price,
+    };
+    console.log("HOLITAAAA");
+    console.log(denominacio);
+    console.log(price);
+    const res = await this.getEvents<GetEventsResponse>(`/events/filters/`, params);
+    console.log(res.events)
     return res.events;
   }
 

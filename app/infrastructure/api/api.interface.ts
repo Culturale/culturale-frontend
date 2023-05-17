@@ -49,5 +49,13 @@ export interface IAPI {
     profilePicture?: string,
   ) => Promise<UserDocument>;
 
+  fetchEventsByFilters: (denominacio?: string,
+    descripcio?: string,
+    dataIni?: Date,
+    dataFi?: Date,
+    horari?: string,
+    price?: string
+   ) => Promise<EventDocument[]>;
+
   getChatMessages: (id: string) => Promise<MessageDocument[]>;
 }
