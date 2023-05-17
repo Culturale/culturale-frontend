@@ -7,6 +7,11 @@ export default StyleSheet.create({
     padding: 10,
     width: '100%'
   },
+  backArrow: {
+        display: 'flex',
+        paddingTop: 30,
+        paddingLeft: 10,
+  },
   baseText: {
     color: 'black',
     fontFamily: 'Roboto',
@@ -65,5 +70,14 @@ export default StyleSheet.create({
     paddingHorizontal: 5,
     paddingTop: 30,
     width: '100%'
+  },
+  title: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  titleContainer: {
+    alignSelf: 'center',
+    marginBottom: 10,
   }
 });

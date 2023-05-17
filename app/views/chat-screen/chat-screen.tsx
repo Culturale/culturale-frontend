@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
@@ -15,15 +16,16 @@ import {
   FlatList,
 } from 'react-native';
 
-import styles from './chat-styles';
 import { useApplicationLayer } from '~/hooks';
 import type { RootParamList } from '~/navigation';
 import type { ChatScreenProps as Props } from './chat-screen.props';
+import styles from './chat-styles';
 
-type ChatScreenNavigation = StackNavigationProp<RootParamList, 'Chat'>;
+type ChatScreenNavigation = StackNavigationProp<RootParamList, 'ChatScreen'>;
 
+export const ChatScreen: React.FC<Props> = observer((props: Props) => {
+  const { event } = props.route.params;
 
-export const ChatScreen: React.FC<Props> = observer (() => {
   const [content, setContent] = useState('');
   const [error, setError] = useState('');
   const [opacity] = useState(new Animated.Value(0));
@@ -32,18 +34,21 @@ export const ChatScreen: React.FC<Props> = observer (() => {
     controllers: { EventController },
     controllers: { UserController },
   } = useApplicationLayer();
+
   const navigation = useNavigation<ChatScreenNavigation>();
 
-  //const messages = Currentchat.messages;
-  //console.log(messages);
+  const [messages] = useState([]);
+
   useEffect(() => {
-    EventController.fetchEventMessages(this);
+      EventController.fetchEventMessages(event.id);
   }, []);
 
   const renderItem = ({ item }: { item: any }) => (
-    <Event key={item.id} event={item} />
+      <View style={styles.messageContainer}>
+        <Text style={styles.messageText}>{item.message}</Text>
+      </View>
   );
-  
+
   useEffect(() => {
     if (error) {
       Animated.timing(opacity, {
@@ -63,26 +68,25 @@ export const ChatScreen: React.FC<Props> = observer (() => {
     }
   }, [error, opacity]);
 
-  
+
 
   function handleMessage() {
     NewMessage(content, UserController.token, new Date()).subscribeToRequest({
-      onCompleteRequest: () => navigation.navigate('Main'),
+      onCompleteRequest: () => navigation.navigate('ChatScreen', { event: event }),
     });
   }
 
   return (
     <View style={styles.container}>
         <KeyboardAvoidingView style={styles.topbar}>
-            <TouchableOpacity style={[styles.basecontainer, flexdata1]} onPress={() => navigation.navigate('Login')}>
-                <Image source={require('../assets/back.png')} style={styles.sendpic} />
+          <View style={styles.backArrow}>
+            <TouchableOpacity onPress={() => navigation.navigate('EventScreen', { event : event })}>
+              <Ionicons color="black" name="arrow-back" size={24} />
             </TouchableOpacity>
-            <View style={[styles.basecontainer, flexdata2]}>
-                <Text style={styles.baseText}>EventName</Text>
-            </View>
-            <View style={[styles.basecontainer, flexdata1]}>
-                <Image source={require('../../../assets/logo-detail.png')} style={styles.image} />
-            </View>
+          </View>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>{event.denominacio}</Text>
+          </View>
         </KeyboardAvoidingView>
         <View style={styles.chatbody}>
           <FlatList

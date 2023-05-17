@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { EditProfileScreen, ProfileScreen, HomeScreen, EventScreen } from '~/views';
+import { EditProfileScreen, ProfileScreen, HomeScreen, EventScreen,} from '~/views';
 
 import type { RootParamList, TabParamList } from './root-params';
 

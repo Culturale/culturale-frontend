@@ -7,7 +7,7 @@ export type RootParamList = {
   ProfileScreen: undefined;
   EditProfile: undefined;
   Home: undefined;
-  Chat: undefined;
+  ChatScreen: { event: IEvent };
   EventScreen: { event: IEvent };
 };
 

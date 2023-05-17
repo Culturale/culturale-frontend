@@ -31,7 +31,7 @@ export interface IAPI {
     profilePicture?: string,
   ) => Promise<UserDocument>;
 
-  newMessage: (content: string, userID: string, date: Date) => Promise<MessageDocument>;
+  newMessage: (content: string, userId: string, date: Date) => Promise<MessageDocument>;
 
   getAllEvents: () => Promise<EventDocument[]>;
 
