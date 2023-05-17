@@ -61,13 +61,9 @@ export interface IUserController extends Controller {
 
   setProfilePicture: (profilePicture: string) => void ;
 
-  addParticipant: (id: string)=> Promise<void>;
-
   setUsername: (username: string) => void ;
   setName: (name: string) => void ;
   addEventSub: (event: IEvent) => void;
   setEmail: (email: string) => void ;
   setPhoneNumber: (phoneNumber: string) => void ;
-
-
 }

@@ -47,4 +47,8 @@ export class User implements IUser {
     this.followers = followers || [];
     this.eventSub = eventSub || [];
   }
+
+  public addEventSub(event: IEvent): void{
+    this.eventSub.push(event);
+  }
 }

@@ -1,3 +1,5 @@
 import type { IEvent } from '~/domain';
 
-export interface EventScreenProps {event: IEvent;}
+export interface EventScreenProps {
+  [x: string]: any;event: IEvent;
+}

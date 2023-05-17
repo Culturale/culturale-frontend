@@ -6,7 +6,7 @@ import type { ImagePickerAsset } from 'expo-image-picker';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
 
-import type { IEvent, IUser} from '~/domain';
+import { IEvent, IUser, User, UserProps} from '~/domain';
 import { userFactory } from '~/domain';
 import type { IInfrastructure } from '~/infrastructure';
 
@@ -28,7 +28,6 @@ export class UserController implements IUserController {
   constructor(infrastructure: IInfrastructure) {
     this.infrastructure = infrastructure;
     makeObservable(this, {
-      addParticipant: action,
       isLoggedIn: observable,
       isLoginNeeded: computed,
       modifyUser: action,
@@ -77,16 +76,9 @@ export class UserController implements IUserController {
       profilePicture,
     );
     const user = userFactory(res);
-
     this.setUserInfo(user);
   }
 
-  public async addParticipant(id: string): Promise<void> {
-    await this.infrastructure.api.addParticipant(
-      this.userInfo.username,
-      id
-    );
-  }
 
   public get isLoginNeeded(): boolean {
     return !this.token;
@@ -115,7 +107,9 @@ export class UserController implements IUserController {
   }
 
   public addEventSub(event: IEvent): void {
-    this.userInfo.eventSub.push(event);
+    const castedUser = new User(this.userInfo as UserProps);
+    castedUser.addEventSub(event);
+    this.setUserInfo(this.userInfo);
   }
 
   public setUsername(username: string): void {

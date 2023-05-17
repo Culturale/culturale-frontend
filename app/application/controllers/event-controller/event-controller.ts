@@ -1,6 +1,6 @@
 import { action, makeObservable, observable } from 'mobx';
 
-import type { IEvent } from '~/domain';
+import type { IEvent, IUser } from '~/domain';
 import { eventFactory } from '~/domain';
 import type { EventDocument, IInfrastructure } from '~/infrastructure';
 import type { IRequestSubject } from '~/observables';
@@ -16,6 +16,7 @@ export class EventController implements IEventController {
     this.infrastructure = infrastructure;
 
     makeObservable(this, {
+      addParticipant: action,
       events: observable,
       setEvents: action,
     });
@@ -47,6 +48,15 @@ export class EventController implements IEventController {
       });
 
     return subject;
+  }
+
+  public async addParticipant(event: IEvent, user: IUser): Promise<void> {
+    await this.infrastructure.api.addParticipant(
+      event.id,
+      user.username,
+    );
+    const eventToBeMod: IEvent = this.events[(this.events.indexOf(event))];
+    eventToBeMod.updateParticipant(user);
   }
 
   public fetchEventMessages(eventId: string): IRequestSubject<void> {

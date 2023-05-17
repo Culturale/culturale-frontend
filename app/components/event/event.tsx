@@ -11,9 +11,12 @@ interface Props {
 }
 
 export const Event: React.FC<Props> = ({ event }) => {
+  const {
+    controllers: { UserController },
+  } = useApplicationLayer();
+  const enrolled: boolean = event.participants.some((participant) => participant.username === UserController.userInfo.username);
   return (
     <View style={styles.container}>
-      {/* <Image source={{ uri: event.image }} style={styles.image} /> */}
       <View style={styles.details}>
         <Text style={styles.title}>{event.denominacio}</Text>
         <View style={styles.subtitleContainer}>
@@ -26,10 +29,9 @@ export const Event: React.FC<Props> = ({ event }) => {
         </View>
       </View>
       <Image source={{ uri: event.photo ? event.photo : 'https://archive.org/download/no-photo-available/no-photo-available.png'}} style={{alignSelf: 'flex-end',height: 125, width: 106}}/>
-      <TouchableOpacity style={styles.button}>
-      {/* <Image source={{ uri:'https://static.mfah.com/images/main-campus-18.15829485354753099698.jpg?width=1680'}} style={{height: 125,width: 125,alignSelf: 'flex-end'}}/> */}
+      {! enrolled && <TouchableOpacity style={styles.button}>
         <TraductionText style={styles.buttonText} tx="event.join"/>
-      </TouchableOpacity>
+      </TouchableOpacity>}
     </View>
   );
 };

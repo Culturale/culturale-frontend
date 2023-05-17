@@ -25,13 +25,13 @@ export const EventScreen: React.FC<Props> = observer((props: Props) => {
       Linking.openURL(url);
     };
     const {
-      controllers: { UserController },
+      controllers: { UserController, EventController },
     } = useApplicationLayer();
     const enrolled: boolean = UserController.userInfo.eventSub.some((eventUser) => eventUser.id === event.id);
     const [showSuccess, setShowSuccess] = useState(enrolled);
     function addParticipantEvent(){
-      UserController.addParticipant(event.id);
       UserController.addEventSub(event);
+      EventController.addParticipant(event, UserController.userInfo);
       setShowSuccess(true);
     }
     const navigation = useNavigation<EventScreenNavigation>();

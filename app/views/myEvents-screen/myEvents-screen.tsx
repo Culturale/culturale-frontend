@@ -1,12 +1,12 @@
 import * as GoogleCalendar from 'expo-calendar';
+
 import { observer } from 'mobx-react-lite';
-import type React from 'react';
-import { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 
 import { Event } from '~/components';
-import type { IEvent } from '~/domain';
+import { IEvent, Event as EventDomain, EventProps } from '~/domain';
 import { useApplicationLayer } from '~/hooks';
 
 import { MyEventsScreenStyles as styles} from './myEvents-screen.styles';
@@ -59,7 +59,11 @@ export const MyEventsScreen = observer(() => {
   //     console.log('Error al agregar el evento al calendario:', error);
   //   }
   // }
-  const filteredEvents = eventSub.filter((event) => event.dataIni.split('T')[0] === selectedDay);
+  const filteredEvents = eventSub.filter((event) => { 
+    const castedEvent = new EventDomain(event as EventProps);
+    return castedEvent.dataIni.split('T')[0] === selectedDay
+  });
+
   return (
     <View>
       <Calendar
@@ -72,7 +76,7 @@ export const MyEventsScreen = observer(() => {
       onDayPress={handleDayPress}
     />
       {selectedDay ? (
-        <View>
+       <ScrollView horizontal>
           {filteredEvents.length > 0 ? (
             filteredEvents.map((event) => (
               <TouchableOpacity key={event.id} onPress={()=>(event)}>
@@ -82,7 +86,7 @@ export const MyEventsScreen = observer(() => {
           ) : (
             <Text style={styles.noEvents}>No tienes eventos para el día seleccionado</Text>
           )}
-        </View>
+        </ScrollView>
       ) : null}
     </View>
   );
