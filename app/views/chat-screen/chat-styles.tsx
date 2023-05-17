@@ -72,12 +72,14 @@ export default StyleSheet.create({
     width: '100%'
   },
   title: {
-    fontSize: 12,
+    fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
   },
   titleContainer: {
     alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 10,
   }
 });
