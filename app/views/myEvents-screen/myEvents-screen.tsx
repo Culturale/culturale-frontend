@@ -69,8 +69,6 @@ export const MyEventsScreen = observer(() => {
     const eventDate = castedEvent.dataIni instanceof Date
       ? castedEvent.dataIni.toISOString().split('T')[0]
       : castedEvent.dataIni.split('T')[0];
-    
-    console.log(castedEvent.denominacio, typeof eventDate, eventDate);
     return eventDate === selectedDay;
   });
 
@@ -83,7 +81,6 @@ export const MyEventsScreen = observer(() => {
           [selectedDay]: { dots: [{ color: 'green', selected: true }] },
         }}
         markingType="multi-dot"
-        renderDay={(date) => renderCustomMarking(date.dateString)}
         onDayPress={handleDayPress}
       />
       {selectedDay ? (
