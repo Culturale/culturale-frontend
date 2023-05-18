@@ -1,3 +1,6 @@
+import type { ManagedUpload } from 'aws-sdk/clients/s3';
+import type { ImagePickerAsset } from 'expo-image-picker';
+
 import type { Controller } from '~/application/controllers/controller.interface';
 import type { IUser } from '~/domain';
 
@@ -60,6 +63,7 @@ export interface IUserController extends Controller {
    * @public
    */
   setUserInfo: (userInfo: IUser) => void;
+  uploadPhoto: (asset: ImagePickerAsset) => Promise<ManagedUpload.SendData> ;
 
   setProfilePicture: (profilePicture: string) => void ;
 
@@ -67,5 +71,6 @@ export interface IUserController extends Controller {
   setName: (name: string) => void ;
   setEmail: (email: string) => void ;
   setPhoneNumber: (phoneNumber: string) => void ;
+
 
 }

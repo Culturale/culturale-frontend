@@ -3,9 +3,12 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Text, View, Image, Button, TouchableOpacity } from 'react-native';
+import { Text as TraductionText } from '~/components';
 import { useApplicationLayer } from '~/hooks';
 import { ProfileScreenStyles as Styles } from './profile-screen.styles';
-import { TabParamList } from '~/navigation';
+import { RootParamList, TabParamList } from '~/navigation';
+
+type ProfileNavigation = StackNavigationProp<RootParamList, 'Profile'>;
 
 type ShowFriendsNavigation = StackNavigationProp<TabParamList, 'ShowFriendsScreen'>;
 
@@ -13,34 +16,35 @@ export const ProfileScreen = observer(() => {
   const {
     controllers: { UserController },
   } = useApplicationLayer();
+  
 
   const userInfo = UserController.userInfo;
-  const navigation = useNavigation<ShowFriendsNavigation>();
-
+  const navigationFriends = useNavigation<ShowFriendsNavigation>();
+  const navigationProfile = useNavigation<ProfileNavigation>();
   function mostrarViewAmigos() {
-    navigation.navigate('ShowFriends');
+    navigationFriends.navigate('ShowFriends');
   }
 
     return (
       <View style={Styles.container}>
-        <Text style={Styles.title}>Mi perfil</Text>
+        <TraductionText style={Styles.title} tx="perfil.miperfil"/>
         <View style={Styles.rowProfile}>
           <View style={Styles.titleData}>
             <Image src={userInfo.profilePicture} style={Styles.foto}/>
             <View style={Styles.contentData}>
               <Text style={Styles.number}>{userInfo.followeds.length}</Text>
-              <Text>Seguidores</Text>
+              <TraductionText tx='perfil.seguidores'/>
             </View>
             <View style={Styles.contentData}>
               <Text style={Styles.number}>{userInfo.followers.length}</Text>
-              <Text>Siguiendo</Text>
+              <TraductionText tx='perfil.siguiendo'/>
             </View>
           </View>
         </View>
         <Text style={Styles.username}>{userInfo.username}</Text>
         <View style={Styles.row}>
           <View style={Styles.column}>
-            <Text style={Styles.titleRow}>Nombre:</Text>
+            <TraductionText tx='perfil.nombre' style={Styles.titleRow}/>
           </View>
           <View style={Styles.column}>
             <Text>{userInfo.name}</Text>
@@ -48,7 +52,7 @@ export const ProfileScreen = observer(() => {
         </View>
         <View style={Styles.row}>
           <View style={Styles.column}>
-            <Text style={Styles.titleRow}>Correo electronico:</Text>
+            <TraductionText style={Styles.titleRow} tx='perfil.email'/>
           </View>
           <View style={Styles.column}>
             <Text>{userInfo.email}</Text>
@@ -56,30 +60,35 @@ export const ProfileScreen = observer(() => {
         </View>
         <View style={Styles.row}>
           <View style={Styles.column}>
-            <Text style={Styles.titleRow}>Teléfono</Text>
+            <TraductionText style={Styles.titleRow} tx='perfil.telephone'/>
           </View>
           <View style={Styles.column}>
             <Text>{userInfo.phoneNumber}</Text>
           </View>
         </View>
         <View style={Styles.editButton}>
-              <Button  title='Editar'></Button>
+        <Button
+          color="#34b38a"
+          title="Editar"
+          onPress={() => navigationProfile.navigate('EditProfile')}
+        ></Button>
         </View>
         <View style={Styles.containerInfo}>
           <View style={Styles.panelConfig}>
             <Image source={require('../../../assets/config-logo.png')} style={Styles.icon} />
-            <Text style={Styles.configText}>Configuracion</Text>
+            <TraductionText style={Styles.configText} tx="perfil.configuracion"/>
           </View>
           <View style={Styles.panelConfig}>
             <Image source={require('../../../assets/card-logo.png')} style={Styles.icon}/>
-            <Text style={Styles.configText}>Pagos</Text>
+            <TraductionText style={Styles.configText} tx="perfil.pagos"/>
           </View>
           <TouchableOpacity  style={Styles.panelConfig} onPress={() => { mostrarViewAmigos() }}>
             <Image source={require('../../../assets/friend-logo.png')} style={Styles.icon}/>
-            <Text style={Styles.configText}>Mis amigos</Text>
+            <TraductionText style={Styles.configText} tx="perfil.amigos"/>
           </TouchableOpacity>
         </View>
       </View>
     
   );
 });
+
