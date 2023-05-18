@@ -1,20 +1,13 @@
 import type React from 'react';
-import { View, Text , TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text , StyleSheet, Image } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { Text as TraductionText } from '~/components';
 import type { IEvent } from '~/domain';
-import { useApplicationLayer } from '~/hooks';
-
 interface Props {
   event: IEvent;
 }
 
 export const Event: React.FC<Props> = ({ event }) => {
-  const {
-    controllers: { UserController },
-  } = useApplicationLayer();
-  const enrolled: boolean = event.participants.some((participant) => participant.username === UserController.userInfo.username);
   return (
     <View style={styles.container}>
       <View style={styles.details}>
@@ -29,9 +22,9 @@ export const Event: React.FC<Props> = ({ event }) => {
         </View>
       </View>
       <Image source={{ uri: event.photo ? event.photo : 'https://archive.org/download/no-photo-available/no-photo-available.png'}} style={{alignSelf: 'flex-end',height: 125, width: 106}}/>
-      {! enrolled && <TouchableOpacity style={styles.button}>
+      {/* {! enrolled && <TouchableOpacity style={styles.button}>
         <TraductionText style={styles.buttonText} tx="event.join"/>
-      </TouchableOpacity>}
+      </TouchableOpacity>} */}
     </View>
   );
 };
