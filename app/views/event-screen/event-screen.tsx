@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import type React from 'react';
@@ -16,25 +16,30 @@ import { EventScreenStyles as styles } from './event-screen.styles';
 
 type EventScreenNavigation = StackNavigationProp<RootParamList, 'EditProfile'>;
 
-export const EventScreen: React.FC<Props> = observer((props: Props) => {
-    const { event } = props.route.params;
-    const handleOpenMaps = () => {
-      const { lat, long } = event;
-      const scheme = Platform.OS === 'ios' ? 'maps:' : 'geo:';
-      const url = `${scheme}${lat},${long}`;
-      Linking.openURL(url);
-    };
-    const {
-      controllers: { UserController, EventController },
-    } = useApplicationLayer();
-    const enrolled: boolean = UserController.userInfo.eventSub.some((eventUser) => eventUser.id === event.id);
-    const [showSuccess, setShowSuccess] = useState(enrolled);
+export const EventScreen: React.FC<Props> = observer(() => {
+  const navigation = useNavigation<EventScreenNavigation>();
+  const { params } = useRoute<RouteProp<RootParamList, 'EventScreen'>>();
+  const {
+    controllers: { UserController, EventController },
+  } = useApplicationLayer();
+  const eventId = params.eventId;
+  const event = EventController.events.filter((event)=> event?.id === eventId)[0];
+  const enrolled: boolean = UserController.userInfo.eventSub.some((eventUser) => eventUser?.id === event.id);
+  const [showSuccess, setShowSuccess] = useState(enrolled);
+
+  const handleOpenMaps = () => {
+    const { lat, long } = event;
+    const scheme = Platform.OS === 'ios' ? 'maps:' : 'geo:';
+    const url = `${scheme}${lat},${long}`;
+    Linking.openURL(url);
+  };
+
+
     function addParticipantEvent(){
       UserController.addEventSub(event);
       EventController.addParticipant(event, UserController.userInfo);
       setShowSuccess(true);
     }
-    const navigation = useNavigation<EventScreenNavigation>();
 
     return (
       <>

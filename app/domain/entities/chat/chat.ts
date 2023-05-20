@@ -5,17 +5,17 @@ import type { IMessage } from '~/domain/entities/message/message.interface';
 import type { IChat } from './chat.interface';
 
 export type ChatProps = {
-  id: string;
+  _id: string;
   messages: IMessage[];
 };
 
 export class Chat implements IChat {
-  public id: string;
+  public _id: string;
   public messages?: IMessage[];
 
   constructor(props: ChatProps) {
-    const { id, messages } = props;
-    this.id = id;
+    const { _id, messages } = props;
+    this._id = _id;
     this.messages = messages;
 
     makeObservable(this, {

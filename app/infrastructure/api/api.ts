@@ -83,6 +83,11 @@ export class API implements IAPI {
       password,
       username,
     });
+
+    if (!res?.user) {
+      throw Error('User not found');
+    }
+
     return res;
   }
 

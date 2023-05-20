@@ -10,12 +10,14 @@ import { Event as EventDomain } from '~/domain';
 import { useApplicationLayer } from '~/hooks';
 
 import { MyEventsScreenStyles as styles} from './myEvents-screen.styles';
+
 export const MyEventsScreen = observer(() => {
   const [selectedDay, setSelectedDay] = useState('');
   const {
     controllers: { UserController },
   } = useApplicationLayer();
   const eventSub: IEvent[] = UserController.userInfo.eventSub;
+  console.log('eventSub', eventSub);
   const handleDayPress = (day) => {
     setSelectedDay(day.dateString);
   };
@@ -24,10 +26,7 @@ export const MyEventsScreen = observer(() => {
   const getMarkedDates = (events: IEvent[]) => {
     const markedDates = {};
     events.forEach((event) => {
-      const castedEvent = new EventDomain(event as EventProps);
-      const eventDate = castedEvent.dataIni instanceof Date
-        ? castedEvent.dataIni.toISOString().split('T')[0]
-        : castedEvent.dataIni.split('T')[0];
+      const eventDate = event.dataIni.toISOString().split('T')[0];
       markedDates[eventDate] = { dots: [{ color: 'blue' }] };
     });
   
@@ -65,10 +64,7 @@ export const MyEventsScreen = observer(() => {
     }
   }
   const filteredEvents = eventSub.filter((event) => { 
-    const castedEvent = new EventDomain(event as EventProps);
-    const eventDate = castedEvent.dataIni instanceof Date
-      ? castedEvent.dataIni.toISOString().split('T')[0]
-      : castedEvent.dataIni.split('T')[0];
+    const eventDate = event?.dataIni.toISOString().split('T')[0];
     return eventDate === selectedDay;
   });
 

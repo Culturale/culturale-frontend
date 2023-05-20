@@ -201,7 +201,7 @@ definitions:
   event:
     type: object
     required:
-      - id
+      - _id
       - codi
       - denominacio
       - url
@@ -214,7 +214,7 @@ definitions:
       - long
       - photo
     properties:
-      id:
+      _id:
         type: string
       codi:
         type: integer
@@ -248,12 +248,15 @@ definitions:
     type: object
     required:
       - name
+      - _id
       - username
       - email
       - phoneNumber
       - profilePicture
       - usertype
     properties:
+      _id:
+        type: string
       name:
         type: string
       username:
@@ -281,10 +284,10 @@ definitions:
   chat:
     type: object
     required:
-      - id
+      - _id
       - messages
     properties:
-      id:
+      _id:
         type: string
       messages:
         type: array
@@ -297,7 +300,7 @@ definitions:
       - userId
       - date
     properties:
-      id:
+      _id:
         type: string
       content:
         type: string

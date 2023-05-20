@@ -51,12 +51,16 @@ export class EventController implements IEventController {
   }
 
   public async addParticipant(event: IEvent, user: IUser): Promise<void> {
-    await this.infrastructure.api.addParticipant(
-      event.id,
-      user.username,
-    );
-    const eventToBeMod: IEvent = this.events[(this.events.indexOf(event))];
-    eventToBeMod.updateParticipant(user);
+    try{
+      await this.infrastructure.api.addParticipant(
+        event.id,
+        user.username,
+      );
+      event.updateParticipant(user);
+    }catch(error){
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
   }
 
   public fetchEventMessages(eventId: string): IRequestSubject<void> {

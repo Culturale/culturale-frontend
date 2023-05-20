@@ -166,7 +166,7 @@ export interface paths {
 
 export interface definitions {
   event: {
-    id: string;
+    _id: string;
     codi: number;
     denominacio: string;
     descripcio: string;
@@ -182,6 +182,7 @@ export interface definitions {
     chat?: definitions["chat"];
   };
   user: {
+    _id: string;
     name: string;
     username: string;
     email: string;
@@ -193,11 +194,11 @@ export interface definitions {
     eventSub?: definitions["event"][];
   };
   chat: {
-    id: string;
+    _id: string;
     messages: definitions["message"][];
   };
   message: {
-    id?: string;
+    _id?: string;
     content: string;
     userId: string;
     date: string;

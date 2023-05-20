@@ -6,7 +6,7 @@ import type { ImagePickerAsset } from 'expo-image-picker';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
 
-import { IEvent, IUser, User, UserProps} from '~/domain';
+import type { IEvent, IUser} from '~/domain';
 import { userFactory } from '~/domain';
 import type { IInfrastructure } from '~/infrastructure';
 
@@ -107,8 +107,7 @@ export class UserController implements IUserController {
   }
 
   public addEventSub(event: IEvent): void {
-    const castedUser = new User(this.userInfo as UserProps);
-    castedUser.addEventSub(event);
+    this.userInfo.addEventSub(event);
     this.setUserInfo(this.userInfo);
   }
 

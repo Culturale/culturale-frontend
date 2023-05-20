@@ -13,7 +13,6 @@ export const Event: React.FC<Props> = ({ event }) => {
       <View style={styles.details}>
         <Text style={styles.title}>{event.denominacio}</Text>
         <View style={styles.subtitleContainer}>
-          <Ionicons color="#888" name="location-outline" size={16} />
           <Text style={styles.subtitle}>{event.adress}</Text>
         </View>
         <View style={styles.subtitleContainer}>
