@@ -1,4 +1,4 @@
-import type { IEvent } from '~/domain';
+import type { IEvent, IUser } from '~/domain';
 
 export type RootParamList = {
   Login: undefined;
@@ -16,4 +16,8 @@ export type TabParamList = {
   Home: undefined;
   Profile: undefined;
   ShowFriendsScreen: undefined;
+};
+
+export type UserParamList = {
+  ShowUserScreen: { user: IUser };
 };
