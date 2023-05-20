@@ -108,7 +108,6 @@ export class UserController implements IUserController {
 
   public addEventSub(event: IEvent): void {
     this.userInfo.addEventSub(event);
-    this.setUserInfo(this.userInfo);
   }
 
   public setUsername(username: string): void {
