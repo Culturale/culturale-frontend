@@ -83,12 +83,16 @@ export class API implements IAPI {
       password,
       username,
     });
+
+    if (!res?.user) {
+      throw Error('User not found');
+    }
+
     return res;
   }
 
   public async getAllEvents(): Promise<EventDocument[]> {
     const res = await this.get<GetEventsResponse>('/events');
-    console.log('events', res);
     return res.events;
   }
 
@@ -134,6 +138,13 @@ export class API implements IAPI {
     });
 
     return res.user;
+  }
+
+  public async addParticipant(id: string, username: string): Promise<void> {
+    await this.post<MessageDocument>('/events/newParticipant', {
+      id,
+      username
+    });
   }
 
   public async getChatMessages(id: string): Promise<MessageDocument[]> {

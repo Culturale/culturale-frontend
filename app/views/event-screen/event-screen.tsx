@@ -1,12 +1,14 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import type React from 'react';
+import { useState } from 'react';
 import { Image, Linking, Platform, Text, TouchableOpacity, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
 import { Text as TraductionText } from '~/components';
+import { useApplicationLayer } from '~/hooks';
 import type { RootParamList } from '~/navigation';
 
 import type { EventScreenProps as Props } from './event-screen.props';
@@ -14,15 +16,31 @@ import { EventScreenStyles as styles } from './event-screen.styles';
 
 type EventScreenNavigation = StackNavigationProp<RootParamList, 'EditProfile'>;
 
-export const EventScreen: React.FC<Props> = observer((props: Props) => {
-    const { event } = props.route.params;
-    const handleOpenMaps = () => {
-      const { lat, long } = event;
-      const scheme = Platform.OS === 'ios' ? 'maps:' : 'geo:';
-      const url = `${scheme}${lat},${long}`;
-      Linking.openURL(url);
-    };
-    const navigation = useNavigation<EventScreenNavigation>();
+export const EventScreen: React.FC<Props> = observer(() => {
+  const navigation = useNavigation<EventScreenNavigation>();
+  const { params } = useRoute<RouteProp<RootParamList, 'EventScreen'>>();
+  const {
+    controllers: { UserController, EventController },
+  } = useApplicationLayer();
+  const eventId = params.eventId;
+  const event = EventController.events.filter((event)=> event?.id === eventId)[0];
+  const enrolled: boolean = UserController.userInfo.eventSub.some((eventUser) => eventUser?.id === event.id);
+  const [showSuccess, setShowSuccess] = useState(enrolled);
+
+  const handleOpenMaps = () => {
+    const { lat, long } = event;
+    const scheme = Platform.OS === 'ios' ? 'maps:' : 'geo:';
+    const url = `${scheme}${lat},${long}`;
+    Linking.openURL(url);
+  };
+
+
+    function addParticipantEvent(){
+      UserController.addEventSub(event);
+      EventController.addParticipant(event, UserController.userInfo);
+      setShowSuccess(true);
+    }
+
     return (
       <>
         <View style={styles.backArrow}>
@@ -51,13 +69,16 @@ export const EventScreen: React.FC<Props> = observer((props: Props) => {
           </TouchableOpacity>
           </View>
           </View>
-          {/* <Image source={{ uri:'https://static.mfah.com/images/main-campus-18.15829485354753099698.jpg?width=1680'}} style={styles.photo}/> */}
           <View style={styles.priceContainer}>
             <View style={{flexDirection:'column', gap: 10, justifyContent: 'flex-end', marginTop: 10}}>
               <Text style={styles.price}>22,10€</Text>
-              <TouchableOpacity style={styles.buyButton}>
+              {!showSuccess ? (<TouchableOpacity style={styles.buyButton} onPress={addParticipantEvent}>
                 <TraductionText style={styles.buyButtonText} tx='eventScreen.BuyText'/>
-              </TouchableOpacity>
+              </TouchableOpacity>): (
+              <View style={styles.successContainer}>
+                  <Ionicons color="green" name="checkmark-circle-outline" size={32} />
+                  <Text style={styles.successText}>Compra realizada correctamente</Text>
+              </View>)}
             </View>
             <TouchableOpacity onPress={handleOpenMaps}>
               <TraductionText style={styles.goButton} tx='eventScreen.ComoLlegar'/>

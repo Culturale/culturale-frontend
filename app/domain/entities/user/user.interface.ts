@@ -1,4 +1,4 @@
-import { IEvent } from '../event';
+import type { IEvent } from '../event';
 
 export interface IUser {
   username: string;
@@ -10,4 +10,6 @@ export interface IUser {
   followers: IUser[];
   followeds: IUser[];
   eventSub: IEvent[];
+
+  addEventSub: (event: IEvent) => void;
 }

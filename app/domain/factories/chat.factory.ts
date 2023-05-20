@@ -5,13 +5,13 @@ import type { ChatDocument } from '~/infrastructure';
 import { messageFactory } from './message.factory';
 
 export function chatFactory(chatDocument: ChatDocument): IChat {
-  if (chatDocument.id) {
+  if (chatDocument._id) {
     const messages = chatDocument.messages.map((messageDoc) =>
       messageFactory(messageDoc),
     );
 
     return new Chat({
-      id: chatDocument.id,
+      _id: chatDocument._id,
       messages,
     });
   }

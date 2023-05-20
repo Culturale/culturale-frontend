@@ -1,12 +1,12 @@
+import { Buffer } from 'buffer';
+
 import AsyncStorage from '@react-native-community/async-storage';
 import type { ManagedUpload } from 'aws-sdk/clients/s3';
 import type { ImagePickerAsset } from 'expo-image-picker';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
 
-import type { IUser} from '~/domain';
-import { Buffer } from 'buffer';
-
+import type { IEvent, IUser} from '~/domain';
 import { userFactory } from '~/domain';
 import type { IInfrastructure } from '~/infrastructure';
 
@@ -46,6 +46,7 @@ export class UserController implements IUserController {
     });
   }
 
+
   public async setup() {
     await makePersistable(
       this,
@@ -75,9 +76,9 @@ export class UserController implements IUserController {
       profilePicture,
     );
     const user = userFactory(res);
-
     this.setUserInfo(user);
   }
+
 
   public get isLoginNeeded(): boolean {
     return !this.token;
@@ -103,6 +104,10 @@ export class UserController implements IUserController {
 
   public setProfilePicture(profilePicture: string): void {
     this.userInfo.profilePicture = profilePicture;
+  }
+
+  public addEventSub(event: IEvent): void {
+    this.userInfo.addEventSub(event);
   }
 
   public setUsername(username: string): void {
