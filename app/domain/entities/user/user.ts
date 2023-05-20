@@ -1,4 +1,7 @@
-import { IEvent } from '../event';
+import { action, makeObservable, observable } from 'mobx';
+
+import type { IEvent } from '../event';
+
 import type { IUser } from './user.interface';
 
 export interface UserProps {
@@ -45,6 +48,15 @@ export class User implements IUser {
     this.followeds = followeds || [];
     this.followers = followers || [];
     this.eventSub = eventSub || [];
+
+    makeObservable(this, {
+      addEventSub: action,
+      eventSub: observable,
+    });
+  }
+
+  public addEventSub(event: IEvent): void{
+    this.eventSub.push(event);
   }
   
   public get friends(): IUser[] {

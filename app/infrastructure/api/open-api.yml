@@ -165,6 +165,37 @@ paths:
                 type: object
               error:
                 $ref: '#/definitions/error'
+  /events/newParticipant:
+    post:
+      description: 'It adds a participant into an event'
+      security:
+        - bearerAuth: []
+      responses:
+        '200': 
+          description: Ok
+          schema:
+            type: object 
+            properties:
+              message:
+                type: string
+        '404':
+          description: Bad request
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+              error:
+                $ref: '#/definitions/error'
+        '500':
+          description: Internal server error
+          schema:
+            type: object 
+            properties:
+              data:
+                type: object
+              error:
+                $ref: '#/definitions/error'
 
   /users/deleteFollower:
     delete:
@@ -206,7 +237,7 @@ definitions:
   event:
     type: object
     required:
-      - id
+      - _id
       - codi
       - denominacio
       - url
@@ -219,7 +250,7 @@ definitions:
       - long
       - photo
     properties:
-      id:
+      _id:
         type: string
       codi:
         type: integer
@@ -253,12 +284,15 @@ definitions:
     type: object
     required:
       - name
+      - _id
       - username
       - email
       - phoneNumber
       - profilePicture
       - usertype
     properties:
+      _id:
+        type: string
       name:
         type: string
       username:
@@ -286,10 +320,10 @@ definitions:
   chat:
     type: object
     required:
-      - id
+      - _id
       - messages
     properties:
-      id:
+      _id:
         type: string
       messages:
         type: array
@@ -302,7 +336,7 @@ definitions:
       - userId
       - date
     properties:
-      id:
+      _id:
         type: string
       content:
         type: string

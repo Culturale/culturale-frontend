@@ -19,7 +19,7 @@ type HomeNavigation = StackNavigationProp<RootParamList, 'Home'>;
 
 export const HomeScreen: React.FC<Props> = observer(() => {
   const {
-    controllers: { EventController },
+    controllers: { EventController, UserController },
   } = useApplicationLayer();
   const events = EventController.events;
   const navigation = useNavigation<HomeNavigation>();
@@ -30,7 +30,7 @@ export const HomeScreen: React.FC<Props> = observer(() => {
 
   const renderItem = ({ item }: { item: IEvent }) => {
     const handleEventClick = () => {
-      navigation.navigate('EventScreen', { event : item });
+      navigation.navigate('EventScreen', { eventId : item.id });
     };
     return (
       <TouchableOpacity onPress={handleEventClick}>

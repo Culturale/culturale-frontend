@@ -2,7 +2,7 @@ import type { ManagedUpload } from 'aws-sdk/clients/s3';
 import type { ImagePickerAsset } from 'expo-image-picker';
 
 import type { Controller } from '~/application/controllers/controller.interface';
-import type { IUser } from '~/domain';
+import type { IEvent, IUser } from '~/domain';
 
 export interface IUserController extends Controller {
   isLoggedIn: boolean | null;
@@ -69,8 +69,7 @@ export interface IUserController extends Controller {
 
   setUsername: (username: string) => void ;
   setName: (name: string) => void ;
+  addEventSub: (event: IEvent) => void;
   setEmail: (email: string) => void ;
   setPhoneNumber: (phoneNumber: string) => void ;
-
-
 }
