@@ -1,20 +1,31 @@
-import { MapScreenStyles as styles } from './map-screen.styles';
-import { useApplicationLayer } from '~/hooks';
-import MapView, { Marker, Callout } from 'react-native-maps';
+import { observer } from 'mobx-react-lite';
 import React, { useState, useEffect } from 'react';
-import {View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
-import * as Location from 'expo-location';
-import { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Marker, Callout } from 'react-native-maps';
+import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import { useApplicationLayer } from '~/hooks';
+import * as Location from 'expo-location';
+import { PROVIDER_GOOGLE } from 'react-native-maps';
 
-export default function MapScreen({ latitud, longitud }) {
+import { MapScreenStyles as styles } from './map-screen.styles';
+import type { MapScreenProps as Props } from './map-screen.props';
 
-  const {controllers:{EventController}} = useApplicationLayer();
+export const MapScreen: React.FC<Props> = observer(() => {
+  const {
+    controllers: { EventController },
+  } = useApplicationLayer();
   const events = EventController.events;
+
   const [showCallout, setShowCallout] = useState(false);
+  //Lloc a buscar:
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
+  const [region, setRegion] = useState({
+    latitude: 41.3851,
+    longitude: 2.1734,
+    latitudeDelta: 0.09,
+    longitudeDelta: 0.09,
+  });
 
     useEffect(() => {
       // Obtiene la ubicación actual del dispositivo y actualiza la región del mapa
@@ -26,7 +37,7 @@ export default function MapScreen({ latitud, longitud }) {
         }
   
         let location = await Location.getCurrentPositionAsync({});
-        console.log("HOLA");
+
         //NO ENTRA, NO demana permis per la ubi...
         setRegion({
           latitude: location.coords.latitude,
@@ -37,13 +48,6 @@ export default function MapScreen({ latitud, longitud }) {
       })();
     }, []);
 
-    const [region, setRegion] = useState({
-        latitude: 41.3851,
-        longitude: 2.1734,
-        latitudeDelta: 0.09,
-        longitudeDelta: 0.09,
-      });
-  
     const closeCallout = () => {
       setShowCallout(false);
     };
@@ -84,14 +88,17 @@ export default function MapScreen({ latitud, longitud }) {
 
   return (
     <View style={styles.container}>
+
         <View style={styles.titleContainer}>
             <Text style={styles.title}>Mapa</Text>
         </View>
+
         <View style={styles.bottomContainer}>
             <View>
                 <Text style={styles.subTitle}>Eventos interesantes cerca de mí...</Text>
             </View>
         </View>
+        
         <View style={styles.map}>
             <MapView style={styles.map} region={region} provider={PROVIDER_GOOGLE}>
                 <View style={styles.searchContainer}>
@@ -134,8 +141,8 @@ export default function MapScreen({ latitud, longitud }) {
                                         <Ionicons name="card" size={18} color="#888" />
                                     </View>
                                     <Text>{event.price}</Text>
-                                    <TouchableOpacity style={styles.button}>
-                                        <Text style={styles.buttonText}>¡Apúntate!</Text>
+                                    <TouchableOpacity>
+                                        <Text style={styles.buttonText}>Ver evento</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -156,7 +163,7 @@ export default function MapScreen({ latitud, longitud }) {
         </View>
     </View>
     );
-}
+});
 
 /*          
 
