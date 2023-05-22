@@ -1,3 +1,4 @@
+import { IUser } from '~/domain';
 import type { definitions, paths } from './schema';
 
 export type EventDocument = definitions['event'];
@@ -16,7 +17,10 @@ export type SignupResponse =
 export type EditUserResponse =
   paths['/users/edit']['post']['responses']['200']['schema'];
 
+export type RemoveFollowerResponse =
+  paths['/users/deleteFollower']['delete']['responses']['201']['schema'];
 export interface IAPI {
+  
   setup: (token: string) => void;
 
   login: (username: string, password: string) => Promise<LoginResponse>;
@@ -44,5 +48,9 @@ export interface IAPI {
     profilePicture?: string,
   ) => Promise<UserDocument>;
 
+  addParticipant: (id: string, username: string)=> Promise<void>;
+
   getChatMessages: (id: string) => Promise<MessageDocument[]>;
+
+  removeFriend(userUsername: string, friendUsername:string): Promise<UserDocument[]>;
 }

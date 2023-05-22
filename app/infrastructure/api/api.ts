@@ -8,6 +8,7 @@ import type {
   IAPI,
   LoginResponse,
   MessageDocument,
+  RemoveFollowerResponse,
   SignupResponse,
   UserDocument,
 } from './api.interface';
@@ -83,12 +84,16 @@ export class API implements IAPI {
       password,
       username,
     });
+
+    if (!res?.user) {
+      throw Error('User not found');
+    }
+
     return res;
   }
 
   public async getAllEvents(): Promise<EventDocument[]> {
     const res = await this.get<GetEventsResponse>('/events');
-    console.log('events', res);
     return res.events;
   }
 
@@ -132,7 +137,6 @@ export class API implements IAPI {
       username,
       usertype,
     });
-
     return res.user;
   }
 
@@ -147,6 +151,46 @@ export class API implements IAPI {
       date,
     });
     return res;
+  }
+
+  public async removeFriend(username: string, follower:string): Promise<UserDocument[]> {
+    const res = await this.delete<RemoveFollowerResponse>('/users/deleteFollower', {
+      username,
+      follower
+    });
+
+    return res.followers;
+  }
+
+  private async delete<T>(path: string, body: object): Promise<T> {
+    console.log("URL", this.baseURL + path);
+    console.log("body",body);
+    console.log("token", this.token + path);
+    const response = await fetch(this.baseURL + path, {
+      body: JSON.stringify(body),
+      headers: {
+        Accept: 'application/json',
+        Authorization: this.token,
+        "Content-Type": "application/json"
+      },
+      method: 'DELETE',
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const json = await response.json();
+    console.log(json);
+    return json as T;
+  }  
+
+  
+  public async addParticipant(id: string, username: string): Promise<void> {
+    await this.post<MessageDocument>('/events/newParticipant', {
+      id,
+      username
+    });
   }
 
   public async getChatMessages(id: string): Promise<MessageDocument[]> {

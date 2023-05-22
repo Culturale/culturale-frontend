@@ -5,8 +5,8 @@ import type { EventDocument } from '~/infrastructure';
 import { chatFactory } from './chat.factory';
 import { userFactory } from './user.factory';
 
-export function eventFactory(eventDocument: EventDocument): IEvent {
-  if (eventDocument.id) {
+export function eventFactory(eventDocument: EventDocument | string): IEvent {
+  if (typeof eventDocument !== 'string') {
     const props: EventProps = {
       ...eventDocument,
       chat: chatFactory(eventDocument.chat),
