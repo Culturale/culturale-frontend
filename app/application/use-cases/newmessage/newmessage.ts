@@ -18,11 +18,13 @@ export function newmessage(
 ): NewMessage['responseType'] {
   const [content, userId, date] = args;
   const subject = new RequestSubject<void>('newMessage');
+  console.log("Usecase");
   subject.startRequest();
 
   infrastructure.api
     .newMessage(content, userId, date)
     .then((res: MessageDocument) => {
+      console.log("CompleteUsecase");
       subject.completeRequest();
     })
     .catch((e) => {

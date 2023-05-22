@@ -68,13 +68,18 @@ export default StyleSheet.create({
     flexDirection: 'row',
     height: 90,
     paddingHorizontal: 5,
-    paddingTop: 30,
-    width: '100%'
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
+    flex: 1,
+  },
+  titleWrapper: {
+    flex: 1,
+    alignItems: 'center',
   },
   titleContainer: {
     alignSelf: 'center',

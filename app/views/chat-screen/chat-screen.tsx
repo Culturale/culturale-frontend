@@ -40,13 +40,14 @@ export const ChatScreen: React.FC<Props> = observer((props: Props) => {
   const [messages] = useState([]);
 
   useEffect(() => {
-      EventController.fetchEventMessages(event.id);
+    EventController.fetchEventMessages(event.id);
+    console.log("Loading chat screen")
   }, []);
 
   const renderItem = ({ item }: { item: any }) => (
-      <View style={styles.messageContainer}>
-        <Text style={styles.messageText}>{item.message}</Text>
-      </View>
+    <View style={styles.messageContainer}>
+      <Text style={styles.messageText}>{item.message}</Text>
+    </View>
   );
 
   useEffect(() => {
@@ -68,48 +69,44 @@ export const ChatScreen: React.FC<Props> = observer((props: Props) => {
     }
   }, [error, opacity]);
 
-
-
   function handleMessage() {
+    console.log("Button");
     NewMessage(content, UserController.token, new Date()).subscribeToRequest({
       onCompleteRequest: () => navigation.navigate('ChatScreen', { event: event }),
     });
   }
 
+  console.log('render')
+
   return (
     <View style={styles.container}>
-        <KeyboardAvoidingView style={styles.topbar}>
-          <View style={styles.backArrow}>
-            <TouchableOpacity onPress={() => navigation.navigate('EventScreen', { event : event })}>
-              <Ionicons color="black" name="arrow-back" size={24} />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.titleContainer}>
-            <Text style={styles.title}>{event.denominacio}</Text>
-          </View>
-        </KeyboardAvoidingView>
-        <View style={styles.chatbody}>
-          <FlatList
-            data={messages}
-            keyExtractor={(item) => item.id}
-            renderItem={renderItem}
+      <KeyboardAvoidingView style={styles.topbar}>
+        <View style={styles.backArrow}>
+          <TouchableOpacity onPress={() => navigation.navigate('EventScreen', { event: event })}>
+            <Ionicons color="black" name="arrow-back" size={24} />
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.title}>{event.denominacio}</Text>
+        <View style={styles.backArrow} />
+      </KeyboardAvoidingView>
+      <View style={styles.chatbody}>
+        <FlatList data={messages} keyExtractor={(item) => item.id} renderItem={renderItem} />
+      </View>
+      <KeyboardAvoidingView style={styles.chatinput}>
+        <View style={styles.inputChat}>
+          <TextInput
+            placeholder="Message"
+            placeholderTextColor="#003f5c"
+            style={styles.TextInput}
+            onChangeText={(content) => setContent(content)}
           />
         </View>
-        <KeyboardAvoidingView style={styles.chatinput}>
-            <View style={styles.inputChat}>
-                <TextInput
-                placeholder="Message"
-                placeholderTextColor="#003f5c"
-                style={styles.TextInput}
-                onChangeText={(content) => setContent(content)}
-                />
-            </View>
-            <View style={styles.send}>
-                <TouchableOpacity onPress={ () => handleMessage()}>
-                    <Image source={require('../../../assets/send.png')} style={styles.sendpic} />
-                </TouchableOpacity>
-            </View>
-        </KeyboardAvoidingView>
+        <View style={styles.send}>
+          <TouchableOpacity onPress={handleMessage}>
+            <Image onPress={handleMessage} source={require('../../../assets/send.png')} style={styles.sendpic} />
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
     </View>
   );
 });
