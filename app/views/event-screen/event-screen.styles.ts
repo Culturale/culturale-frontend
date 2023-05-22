@@ -3,8 +3,21 @@ import { StyleSheet } from 'react-native';
 export const EventScreenStyles =StyleSheet.create({
     backArrow: {
       display: 'flex',
-      paddingTop: 30,
       paddingLeft: 10,
+      paddingTop: 30,
+    },
+    backButton: {
+      backgroundColor: '#007AFF',
+      borderRadius: 8,
+      marginLeft: 16,
+      paddingHorizontal: 16,
+      paddingVertical: 10,
+    },
+    backButtonText: {
+      color: 'white',
+      fontSize: 16,
+      fontWeight: 'bold',
+      textAlign: 'center',
     },
     buyButton: {
       alignSelf: 'flex-end',
@@ -33,6 +46,12 @@ export const EventScreenStyles =StyleSheet.create({
       height: 120,
       width: '100%',
     },
+    goButton: {
+      color: 'blue',
+      fontSize: 16,
+      lineHeight: 24,
+      textAlign: 'justify' ,
+    },
     image: {
       height: 50,
       marginTop: 10,
@@ -40,16 +59,16 @@ export const EventScreenStyles =StyleSheet.create({
       width: '100%',
     },
     map: {
+      borderRadius: 10,
       height: 100,
       width: '100%',
-      borderRadius: 10,
     },
     mapContainer: {
       alignItems: 'center',
       flex: 1,
+      height: 5,
       justifyContent: 'center',
       marginTop: 50,
-      height: 5,
     },
     photo: {
       alignSelf: 'flex-end', 
@@ -64,6 +83,7 @@ export const EventScreenStyles =StyleSheet.create({
       fontWeight: 'bold',
       marginRight: 10,
     },
+  
     priceContainer: {
       flexDirection: 'column',
       justifyContent: 'flex-end',
@@ -72,13 +92,13 @@ export const EventScreenStyles =StyleSheet.create({
       paddingVertical: 5,
       width: '100%',
     },
-  
     reviewCont: {
       backgroundColor: '#cdcdcd',
       borderRadius: 5,
       margin: 5,
       padding: 5,
     },
+  
     reviewContainer: {
       alignItems: 'flex-start',
       marginTop: 20,
@@ -91,15 +111,16 @@ export const EventScreenStyles =StyleSheet.create({
     reviewDetailsContainer: {
       marginTop: 10,
     },
-  
     reviewDetailsDescription: {
       fontSize: 14,
     },
+  
     reviewDetailsRating: {
       fontSize: 14,
       fontWeight: 'bold',
       marginRight: 5,
     },
+  
     reviewDetailsTitle: {
       fontSize: 16,
       fontWeight: 'bold',
@@ -109,18 +130,15 @@ export const EventScreenStyles =StyleSheet.create({
       fontSize: 18,
       fontWeight: 'bold',
     },
-  
     star: {
       height: 20,
       marginRight: 5,
       width: 20,
     },
-  
     starContainer: {
       flexDirection: 'row',
       marginTop: 5,
     },
-  
     subtitle: {
       color: '#666',
       fontSize: 16,
@@ -130,6 +148,18 @@ export const EventScreenStyles =StyleSheet.create({
       alignItems: 'center',
       flexDirection: 'row',
       marginBottom: 10,
+    },
+  
+    successContainer: {
+      alignItems: 'center',
+      alignSelf: 'flex-end',
+      flexDirection: 'row',
+      paddingBottom: 10,
+    },
+    successText: {
+      color: 'green',
+      fontSize: 16,
+      marginLeft: 8,
     },
     title: {
       fontSize: 24,

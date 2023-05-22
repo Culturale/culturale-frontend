@@ -135,11 +135,60 @@ export interface paths {
       };
     };
   };
+  "/users/deleteFollower": {
+    /** Deletes de users follower */
+    delete: {
+      responses: {
+        /** Ok */
+        201: {
+          schema: {
+            followers?: definitions["user"][];
+            message?: string;
+          };
+        };
+        /** Internal server error */
+        /** Internal server error */
+        500: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+      };
+    };
+  };
+  "/events/newParticipant": {
+    /** It adds a participant into an event */
+    post: {
+      responses: {
+        /** Ok */
+        200: {
+          schema: {
+            message?: string;
+          };
+        };
+        /** Bad request */
+        404: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+        /** Internal server error */
+        500: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+      };
+    };
+  };
 }
 
 export interface definitions {
   event: {
-    id: string;
+    _id: string;
     codi: number;
     denominacio: string;
     descripcio: string;
@@ -155,6 +204,7 @@ export interface definitions {
     chat?: definitions["chat"];
   };
   user: {
+    _id: string;
     name: string;
     username: string;
     email: string;
@@ -166,11 +216,11 @@ export interface definitions {
     eventSub?: definitions["event"][];
   };
   chat: {
-    id: string;
+    _id: string;
     messages: definitions["message"][];
   };
   message: {
-    id?: string;
+    _id?: string;
     content: string;
     userId: string;
     date: string;
