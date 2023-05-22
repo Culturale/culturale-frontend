@@ -18,10 +18,9 @@ export const ShowFriendsScreen = observer(() => {
   const navigationUser = useNavigation();
 
   const handleRemoveFriend = async (friendUsername: string) => {
-    console.log('friendUsername', friendUsername);
-    UserController.removeFriend(UserController.userInfo.username, friendUsername);
-  };
-
+      UserController.removeFriend(UserController.userInfo.username, friendUsername);
+    
+  }
   const [searchTerm, setSearchTerm] = useState('');
 
   const amigos: IUser[] = UserController.userInfo.followers.filter((user) => {

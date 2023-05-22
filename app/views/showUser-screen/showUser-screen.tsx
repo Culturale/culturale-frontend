@@ -7,18 +7,22 @@ import { Text as TraductionText } from '~/components';
 import { useApplicationLayer } from '~/hooks';
 import { ShowUserStyles as Styles } from './showUser-screen.styles';
 import { IUser, User } from '~/domain';
+import { RootParamList } from '~/navigation';
 
 
 type ProfileScreenProps = {
   navigation: StackNavigationProp<{}>;
   route: { params: { user: IUser } };
 };
+type UserScreenNavigation = StackNavigationProp<RootParamList, 'ShowUserScreen'>;
 
 export const ShowUserScreen: React.FC<ProfileScreenProps> = observer(({ route }) => {
+  const navigation = useNavigation<UserScreenNavigation>();
+  const { params } = useRoute<RouteProp<RootParamList, 'EventScreen'>>();
   const {
-    controllers: { UserController },
+    controllers: { UserController, EventController },
   } = useApplicationLayer();
-  const userInfo = route.params;
+  const eventId = params.eventId;
 
   function followUser(): void {
     throw new Error('Function not implemented.');
@@ -72,20 +76,6 @@ export const ShowUserScreen: React.FC<ProfileScreenProps> = observer(({ route })
           title="Follow"
           onPress={() => followUser()}
         ></Button>
-        </View>
-        <View style={Styles.containerInfo}>
-          <View style={Styles.panelConfig}>
-            <Image source={require('../../../assets/config-logo.png')} style={Styles.icon} />
-            <TraductionText style={Styles.configText} tx="perfil.configuracion"/>
-          </View>
-          <View style={Styles.panelConfig}>
-            <Image source={require('../../../assets/card-logo.png')} style={Styles.icon}/>
-            <TraductionText style={Styles.configText} tx="perfil.pagos"/>
-          </View>
-          <TouchableOpacity  style={Styles.panelConfig} onPress={() => { mostrarViewAmigos() }}>
-            <Image source={require('../../../assets/friend-logo.png')} style={Styles.icon}/>
-            <TraductionText style={Styles.configText} tx="perfil.amigos"/>
-          </TouchableOpacity>
         </View>
       </View>
     

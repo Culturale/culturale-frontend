@@ -9,8 +9,10 @@ export type RootParamList = {
   ProfileScreen: undefined;
   EditProfile: undefined;
   Home: undefined;
-  EventScreen: { event: IEvent };
   ShowUserScreen: { user: IUser };
+  MyEventsScreen: undefined;
+  HomeScreen: undefined;
+  EventScreen: { eventId: string };
 };
 
 export type TabParamList = {

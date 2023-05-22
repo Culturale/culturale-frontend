@@ -12,7 +12,6 @@ import type {
   SignupResponse,
   UserDocument,
 } from './api.interface';
-import { IUser } from '~/domain/entities';
 
 export class API implements IAPI {
   private axiosClient: AxiosInstance;
@@ -85,12 +84,16 @@ export class API implements IAPI {
       password,
       username,
     });
+
+    if (!res?.user) {
+      throw Error('User not found');
+    }
+
     return res;
   }
 
   public async getAllEvents(): Promise<EventDocument[]> {
     const res = await this.get<GetEventsResponse>('/events');
-    console.log('events', res);
     return res.events;
   }
 
@@ -139,13 +142,11 @@ export class API implements IAPI {
   }
 
   public async removeFriend(username: string, follower:string): Promise<UserDocument[]> {
-    console.log("Borradi?")
-    
     const res = await this.delete<RemoveFollowerResponse>('/users/deleteFollower', {
       username,
       follower
     });
-    console.log("borradoApi")
+
     return res.followers;
   }
   private async delete<T>(path: string, body: object): Promise<T> {
@@ -172,6 +173,12 @@ export class API implements IAPI {
   }  
 
   
+  public async addParticipant(id: string, username: string): Promise<void> {
+    await this.post<MessageDocument>('/events/newParticipant', {
+      id,
+      username
+    });
+  }
 
   public async getChatMessages(id: string): Promise<MessageDocument[]> {
     const res = await this.axiosClient.get<MessageDocument[]>(

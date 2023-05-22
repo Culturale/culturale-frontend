@@ -46,6 +46,8 @@ export interface IAPI {
     profilePicture?: string,
   ) => Promise<UserDocument>;
 
+  addParticipant: (id: string, username: string)=> Promise<void>;
+
   getChatMessages: (id: string) => Promise<MessageDocument[]>;
 
   removeFriend(userUsername: string, friendUsername:string): Promise<UserDocument[]>;
