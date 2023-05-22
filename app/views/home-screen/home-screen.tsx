@@ -25,6 +25,7 @@ export const HomeScreen: React.FC<Props> = observer(() => {
 
   useEffect(() => {
     EventController.fetchAllEvents();
+    console.log('events', EventController.events);
   }, []);
 
   const renderItem = ({ item }: { item: IEvent }) => {
