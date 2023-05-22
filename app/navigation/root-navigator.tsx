@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import type React from 'react';
 
 import { useApplicationLayer } from '~/hooks';
-import { LoginScreen, RegisterScreen, ChatScreen } from '~/views';
+import { LoginScreen, RegisterScreen, PayScreen } from '~/views';
 import type { RootParamList } from './root-params';
 import { TabNavigator } from './tab-navigator';
 
@@ -28,8 +28,8 @@ export const RootNavigator: React.FC = observer(() => {
             }}
           />
           <Stack.Screen
-            component={ChatScreen} // Add ChatScreen as a screen
-            name="ChatScreen"
+            component={PayScreen} // Add PayScreen as a screen
+            name="PayScreen"
             options={{
               headerShown: false,
             }}
