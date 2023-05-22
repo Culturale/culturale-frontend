@@ -25,7 +25,10 @@ const ProfileStackNavigator: React.FC = observer(() => {
         name="EditProfile"
         options={{ headerShown: false }}
       />
-      <ProfileStack.Screen component={ShowFriendsScreen} name="ShowFriends" />
+      <ProfileStack.Screen 
+      component={ShowFriendsScreen} 
+      name="ShowFriends" 
+      />
     </ProfileStack.Navigator>
   );
 });

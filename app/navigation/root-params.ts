@@ -10,14 +10,13 @@ export type RootParamList = {
   EditProfile: undefined;
   Home: undefined;
   EventScreen: { event: IEvent };
+  ShowUserScreen: { user: IUser };
 };
 
 export type TabParamList = {
   Home: undefined;
   Profile: undefined;
   ShowFriendsScreen: undefined;
-};
-
-export type UserParamList = {
   ShowUserScreen: { user: IUser };
 };
+
