@@ -101,13 +101,50 @@ export const SearchScreenStyles =  StyleSheet.create({
         marginTop: 16,
         paddingHorizontal: 16,
       },
-      filter: {
-        flex: 1,
-        paddingTop:100,
-        marginHorizontal:20,
-      },
-      datePicker: {
-        width: 200,
-        marginBottom: 10,
-      },
+      // filter: {
+      //   flex: 1,
+      //   paddingTop:100,
+      //   marginHorizontal:20,
+      // },
+      // datePicker: {
+      //   width: 200,
+      //   marginBottom: 10,
+      // },
+      // sliderTrack: {
+      //   height: 5,
+      //   borderRadius: 2,
+      //   backgroundColor: '#E0E0E0',
+      // },
+      // sliderThumb: {
+      //   width: 20,
+      //   height: 20,
+      //   borderRadius: 10,
+      //   backgroundColor: '#FF6F00',
+      // },
+      
+
+  filter: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#FFFFFF',
+  },
+  datePicker: {
+    width: '100%',
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: '#CCCCCC',
+    borderRadius: 4,
+    padding: 8,
+  },
+  sliderTrack: {
+    height: 5,
+    borderRadius: 2,
+    backgroundColor: '#E0E0E0',
+  },
+  sliderThumb: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: '#FF6F00',
+  },
 });

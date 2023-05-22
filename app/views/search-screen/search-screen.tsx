@@ -1,10 +1,11 @@
 import { observer } from 'mobx-react-lite';
 import type React from 'react';
 import { useEffect, useState } from 'react';
-import { Text, View, FlatList, TextInput, TouchableOpacity,Switch, StatusBar} from 'react-native';
+import { Text, View, FlatList, TextInput, TouchableOpacity,Switch,Button, StatusBar} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Slider from 'react-native-slider';
-import DatePicker from 'react-native-datepicker';
+import DatePickerModal from 'react-native-modal-datetime-picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import { useApplicationLayer } from '~/hooks';
 
@@ -23,20 +24,35 @@ export const SearchScreen: React.FC<Props> = observer(() => {
     //Denominacio:
     const [searchText, setSearchText] = useState('');
     //Data Inici:
-    const [selectedStartDate, setSelectedStartDate] = useState('');
+    const [selectedStartDate, setSelectedStartDate] = useState(new Date());
     //Data Fi:
-    const [selectedEndDate, setSelectedEndDate] = useState('');
-    //Horari:
-    const [selectedSchedule, setSelectedSchedule] = useState('');
+    const [selectedEndDate, setSelectedEndDate] = useState(new Date());
     //Descripcio:
     const [searchDescription, setSearchDescription] = useState('');
     //Price:
-    const [priceRangeMax, setPriceRangeMax] = useState([0, 200]);
+    const [priceRangeMax, setPriceRangeMax] = useState('');
 
     //Per saber si volen buscar usuaris o events:
     const [searchType, setSearchType] = useState('eventos');
     //Per que surti al input, buscar usuari/evento:
     const [userSearch, setUserSearch] = useState(false);
+
+    const [showPickerIni, setShowPickerIni] = useState(false);
+    const [showPickerEnd, setShowPickerEnd] = useState(false);
+    const showDatePickerIni = () => {
+      setShowPickerIni(true);
+    };
+    const handleDateChangeIni = (date) => {
+        setSelectedStartDate(date);
+      setShowPickerIni(false);
+    };
+    const showDatePickerEnd = () => {
+      setShowPickerEnd(true);
+    };
+    const handleDateChangeEnd = (date) => {
+        setSelectedEndDate(date);
+      setShowPickerEnd(false);
+    };
 
     const UserSearchButton = ({ selected, onPress }) => {
         return (
@@ -74,7 +90,7 @@ export const SearchScreen: React.FC<Props> = observer(() => {
         );
     };
 
-    const handleSearch = (searchText: string) => {
+    const handleSearch = () => {
         if (searchType === 'usuarios') {
             // .then(response => {
             //   const modifiedUsers = response.data.user.map((user: User, index: number) => {
@@ -90,9 +106,9 @@ export const SearchScreen: React.FC<Props> = observer(() => {
         }
 
         else if (searchType === 'eventos') {
-          const amount = priceRangeMax;
-          const amountString = amount.toLocaleString() + '€';
-          EventController.fetchEventsByFilters(searchText, searchDescription, new Date(selectedStartDate), new Date(selectedEndDate), selectedSchedule, amountString);
+          console.log("HOLA");
+          console.log(searchText);
+          EventController.fetchEventsByFilters(searchText, searchDescription, selectedStartDate, selectedEndDate, searchDescription, priceRangeMax);
           const events = EventController.SearchEvents;
           setSearchResults(events);
         }
@@ -125,20 +141,9 @@ export const SearchScreen: React.FC<Props> = observer(() => {
         }
       };
 
-      const handleApplyFilters = () => {
-        console.log("HOLA");
-        console.log(searchText);
-        const amount = priceRangeMax;
-          const amountString = amount.toLocaleString() + '€';
-          EventController.fetchEventsByFilters(searchText, searchDescription, new Date(selectedStartDate), new Date(selectedEndDate), selectedSchedule, amountString);
-          const events = EventController.SearchEvents;
-          setSearchResults(events);
-      };
-    
       return (
         <View style={styles.container}>
             <StatusBar barStyle="dark-content" />
-            {/* Panel de filtros */}
             <View style={styles.titleContainer}>
                 <Text style={styles.title}>Búsqueda</Text>
             </View>
@@ -149,7 +154,7 @@ export const SearchScreen: React.FC<Props> = observer(() => {
                         style={styles.input}
                         value={searchText}
                         onChangeText={setSearchText}
-                        onSubmitEditing={() => handleSearch(searchText)}
+                        onSubmitEditing={() => handleSearch()}
                         placeholder={`Buscar ${userSearch ? 'usuarios por username' : 'eventos por denominacio'}`}
                         placeholderTextColor="#aaa"
                         //userSearch={userSearch}
@@ -175,42 +180,33 @@ export const SearchScreen: React.FC<Props> = observer(() => {
                 </View>
             </View>
             <View style={styles.filter}>
-            <Text>Fecha Fin Maxima:</Text>
-            <DatePicker
-              style={styles.datePicker}
-              date={selectedEndDate}
-              mode="date"
-              placeholder="Seleccionar fecha"
-              format="YYYY-MM-DD"
-              minDate="2023-01-01"
-              maxDate="2023-12-31"
-              onDateChange={setSelectedEndDate}
-              useNativeDriver={false}
-            />
-            <Text>Fecha Inicio minima:</Text>
-            <DatePicker
-              style={styles.datePicker}
-              date={selectedStartDate}
-              mode="date"
-              placeholder="Seleccionar fecha"
-              format="YYYY-MM-DD"
-              minDate="2023-01-01"
-              maxDate="2023-12-31"
-              onDateChange={setSelectedStartDate}
-              useNativeDriver={false}
-            />
-
-              <Text>Rango de precio:</Text>
-              <Slider
-                minimumValue={0}
-                maximumValue={100}
-                values={priceRangeMax}
-                onValueChange={setPriceRangeMax}
-                useNativeDriver={false}
+              <Button title="Seleccionar fecha de inicio" onPress={showDatePickerIni} />
+              <DatePickerModal
+                  isVisible={showPickerIni}
+                  mode="date"
+                  format="YYYY-MM-DD"
+                  onConfirm={handleDateChangeIni}
+                  onCancel={() => setShowPickerIni(false)}
+              />
+              <Button title="Seleccionar fecha de fin" onPress={showDatePickerEnd} />
+              <DatePickerModal
+                  isVisible={showPickerEnd}
+                  mode="date"
+                  format="YYYY-MM-DD"
+                  onConfirm={handleDateChangeEnd}
+                  onCancel={() => setShowPickerEnd(false)}
               />
 
+              <Text>Precio máximo:</Text>
+              <TextInput
+                style={styles.input}
+                value={priceRangeMax}
+                onChangeText={setPriceRangeMax}
+                onSubmitEditing={() => handleSearch()}
+                placeholderTextColor="#aaa"
+              />
 
-              <TouchableOpacity onPress={handleApplyFilters}>
+              <TouchableOpacity onPress={handleSearch}>
                 <Text>Aplicar filtros</Text>
               </TouchableOpacity>
             </View>

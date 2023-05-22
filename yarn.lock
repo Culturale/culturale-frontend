@@ -2760,6 +2760,13 @@
     prompts "^2.4.0"
     semver "^6.3.0"
 
+"@react-native-community/datetimepicker@^7.1.0":
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-7.1.0.tgz#627c2be65256c87b25bef0ca373e0d2aae69ece5"
+  integrity sha512-bXK1/UnutKgJMbHKcbh6TQN3GmzOWROo6Hc9z6tfVG6KIwq5MrdvxZTFJA97PB6xwW8p3v9ddkaSfkFa1pelPA==
+  dependencies:
+    invariant "^2.2.4"
+
 "@react-native-community/netinfo@^5.9.10":
   version "5.9.10"
   resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-5.9.10.tgz#97d3a9fa62a3a4838ec7a6ec91cfec5a26e365b6"
@@ -2794,6 +2801,14 @@
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@react-native/polyfills/-/polyfills-2.0.0.tgz#4c40b74655c83982c8cf47530ee7dc13d957b6aa"
   integrity sha512-K0aGNn1TjalKj+65D7ycc1//H9roAQ51GJVk5ZJQFb2teECGmzd86bYDC0aYdbRf7gtovescq4Zt6FR0tgXiHQ==
+
+"@react-native/virtualized-lists@^0.72.4":
+  version "0.72.4"
+  resolved "https://registry.yarnpkg.com/@react-native/virtualized-lists/-/virtualized-lists-0.72.4.tgz#926ddb5eced27dc3975dad0915cb96d1f9c01c62"
+  integrity sha512-2t8WBVACkKEadtsiGYJaYTix575J/5VQJyqnyL7iDIsd3iG7ODjfMDsTGsVyAA2Av/xeVIuVQRUX0ZzV3cucug==
+  dependencies:
+    invariant "^2.2.4"
+    nullthrows "^1.1.1"
 
 "@react-navigation/bottom-tabs@^6.5.7":
   version "6.5.7"
@@ -3136,6 +3151,15 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-native-datepicker@^1.7.1":
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/@types/react-native-datepicker/-/react-native-datepicker-1.7.1.tgz#df1b6533cafd2bb0b3ad4647e391596ad90f7a73"
+  integrity sha512-VIqwhUTC0ij+d0TPJKEati89jOhk+Z714sBtFFb0AR9VZwPMmcGEtjoxKpQ7mYnD6MudnbU/6ssg34Rqj13aZw==
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "*"
+    moment ">=2.14.0"
+
 "@types/react-native-dotenv@^0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@types/react-native-dotenv/-/react-native-dotenv-0.2.0.tgz#32c58422a422c1adf68acce363ed791314d5a8e7"
@@ -3148,6 +3172,14 @@
   dependencies:
     "@types/react" "*"
     "@types/react-native" "^0.70"
+
+"@types/react-native@*":
+  version "0.72.0"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.72.0.tgz#d19f0115936129caca770618af82b16e15ea8bec"
+  integrity sha512-g1PJXUQ0SnYTimfTeN9dRqj8VfzvgJjt/eakEH7+tlm/ZiEPiL9xCool4iKmqalthwtM0/BkGhjwrKnJyg1JDA==
+  dependencies:
+    "@react-native/virtualized-lists" "^0.72.4"
+    "@types/react" "*"
 
 "@types/react-native@^0.70":
   version "0.70.13"
@@ -9465,7 +9497,7 @@ mock-socket@^9.2.1:
   resolved "https://registry.yarnpkg.com/mock-socket/-/mock-socket-9.2.1.tgz#cc9c0810aa4d0afe02d721dcb2b7e657c00e2282"
   integrity sha512-aw9F9T9G2zpGipLLhSNh6ZpgUyUl4frcVmRN08uE1NWPWg43Wx6+sGPDbQ7E5iFZZDJW5b5bypMeAEHqTbIFag==
 
-moment@^2.22.0:
+moment@>=2.14.0, moment@^2.22.0:
   version "2.29.4"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
   integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
@@ -10484,6 +10516,13 @@ react-native-location@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/react-native-location/-/react-native-location-2.5.0.tgz#b6d2f7e9c3dbe13fbe87587f9533b8bf943b6a35"
   integrity sha512-myT54tZuFmN6d5RruMVfoa8eY+voJWkSd73xUVhjzJDnQr5uu5MFoH7hMg3trHF1CAkaY/2gIneOspUdGxv59Q==
+
+react-native-modal-datetime-picker@^15.0.1:
+  version "15.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-15.0.1.tgz#68a540ba54d52aad48f68090d19925acc2950235"
+  integrity sha512-FmNFeGwYWH6TCUvAr8OX75tu0FSUDxeEOxCorq2PdeIqbRx9wt7y/5oKUCfbWBWM6y+gme4TzrA0xAtufHqgGg==
+  dependencies:
+    prop-types "^15.7.2"
 
 react-native-paper@^5.5.0:
   version "5.7.2"
