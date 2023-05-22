@@ -64,7 +64,7 @@ export default StyleSheet.create({
     width: 20
   },
   topbar: {
-    backgroundColor: '#76d7b8',
+    // backgroundColor: '#76d7b8',
     flexDirection: 'row',
     height: 90,
     paddingHorizontal: 5,
