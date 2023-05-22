@@ -32,5 +32,9 @@
         "pagos": "Mis pagos",
         "amigos": "Mis amigos",
         "miperfil": "Mi perfil"
+    },
+    "myEvents": {
+        "calendar": "+ Añadir calendario",
+        "valoration": "+ Añadir valoración"
     }
 }

@@ -8,6 +8,7 @@ import type {
   IAPI,
   LoginResponse,
   MessageDocument,
+  ReviewDocument,
   SignupResponse,
   UserDocument,
 } from './api.interface';
@@ -158,4 +159,15 @@ export class API implements IAPI {
       throw new Error('Error getting event chat messages');
     }
   }
+
+  public async addReview(eventId: string, authorId: string, puntuation: number,  comment?: string): Promise<ReviewDocument> {
+    const res = await this.post<ReviewDocument>('/events/addReview', {
+      authorId,
+      comment,
+      eventId,
+      puntuation
+    });
+    return res;
+  }
+
 }

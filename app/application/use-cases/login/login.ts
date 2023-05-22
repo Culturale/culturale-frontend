@@ -1,5 +1,5 @@
 import type { IUserController } from '~/application/controllers';
-import { Event, userFactory } from '~/domain';
+import { userFactory } from '~/domain';
 import type { IInfrastructure, LoginResponse } from '~/infrastructure';
 import type { IRequestSubject } from '~/observables';
 import { RequestSubject } from '~/observables';

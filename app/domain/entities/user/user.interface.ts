@@ -1,6 +1,7 @@
 import type { IEvent } from '../event';
 
 export interface IUser {
+  _id: string;
   username: string;
   name: string;
   email: string;

@@ -32,6 +32,10 @@
       "pagos": "My payments",
       "amigos": "My friends",
       "miperfil": "My profile"
-    }
+    },
+    "myEvents": {
+      "calendar": "+ Add to calendar ",
+      "valoration": "+ Make a review"
+  }
   }
   
