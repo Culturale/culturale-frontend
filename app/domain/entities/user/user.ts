@@ -58,4 +58,18 @@ export class User implements IUser {
   public addEventSub(event: IEvent): void{
     this.eventSub.push(event);
   }
+  
+  public get friends(): IUser[] {
+    const { followers, followeds } = this;
+    const amigos: IUser[] = followers.filter(user => {
+      const userString = JSON.stringify(user);
+      return followeds.some(followed => {
+        const followedString = JSON.stringify(followed);
+        return userString === followedString;
+      });
+    });
+    return amigos;
+  }
+  
+  
 }

@@ -58,7 +58,17 @@ export class UserController implements IUserController {
       { fireImmediately: true },
     );
   }
-
+  public async removeFriend(userUsername: string, friendUsername:string): Promise<void> {
+     await this.infrastructure.api.removeFriend(userUsername, friendUsername);
+    const index = this.userInfo.followeds.findIndex(user => user.username === friendUsername);
+    if (index !== -1) {
+      this.userInfo.followeds.splice(index, 1);
+    }
+    
+  }
+  public setUserFollowers(token: string): void {
+    this.token = token;
+  }
   public async modifyUser(
     username: string,
     name: string,

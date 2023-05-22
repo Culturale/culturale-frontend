@@ -2,13 +2,14 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { createStackNavigator } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import { RootParamList, TabParamList } from './root-params';
+import { ShowFriendsScreen } from '~/views/showFriends-screen';
 import { EditProfileScreen, ProfileScreen, HomeScreen, EventScreen, MyEventsScreen} from '~/views';
 
-import type { RootParamList, TabParamList } from './root-params';
 
 const ProfileStack = createStackNavigator<RootParamList>();
 const Tab = createMaterialBottomTabNavigator<TabParamList>();
+
 
 const ProfileStackNavigator: React.FC = observer(() => {
   return (
@@ -23,9 +24,11 @@ const ProfileStackNavigator: React.FC = observer(() => {
         name="EditProfile"
         options={{ headerShown: false }}
       />
+      <ProfileStack.Screen component={ShowFriendsScreen} name="ShowFriends" />
     </ProfileStack.Navigator>
   );
 });
+
 
 const HomeStackNavigator: React.FC = observer(() => {
   return (
@@ -76,3 +79,4 @@ export const TabNavigator: React.FC = observer(() => {
     </Tab.Navigator>
   );
 });
+

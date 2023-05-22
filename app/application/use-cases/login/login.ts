@@ -22,7 +22,6 @@ export function login(
   const [username, password] = args;
   const subject = new RequestSubject<void>('Login');
   subject.startRequest();
-
   infrastructure.api
     .login(username, password)
     .then((res: LoginResponse) => {

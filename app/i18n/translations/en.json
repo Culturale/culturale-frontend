@@ -1,4 +1,14 @@
-{
+{  
+    
+
+"showFriendsScreen":{
+    "myfriends":"My friends",
+    "vacio":" This is quite empty here",
+    "noFriends":" Add some friends to start this new adventure!",
+    "delete": "Delete"
+},
+
+    
     "editProfileScreen": {
       "buttonSave": "Save",
       "buttonCancel": "Cancel",
