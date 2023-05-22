@@ -58,11 +58,7 @@ export const MyEventsScreen = observer(() => {
 
         // Obtener el enlace para abrir la aplicación de Google Calendar con el evento
         const eventUrl = `https://www.google.com/calendar/event?eid=${eventId}`;
-
-        // Abrir la aplicación de Google Calendar
-        setTimeout(() => {
-          Linking.openURL(eventUrl);
-        }, 0);
+        Linking.openURL(eventUrl);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
