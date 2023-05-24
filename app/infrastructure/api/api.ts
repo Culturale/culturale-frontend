@@ -11,6 +11,7 @@ import type {
   RemoveFollowerResponse,
   SignupResponse,
   UserDocument,
+  RemoveFavouriteResponse
 } from './api.interface';
 
 export class API implements IAPI {
@@ -149,6 +150,22 @@ export class API implements IAPI {
 
     return res.followers;
   }
+
+  public async addFavourite(id: string, username: string): Promise<void> {
+    await this.post<MessageDocument>('/users/addFavourite', {
+      id,
+      username
+    });
+  }
+
+  public async removeFavourite(id: string, username: string): Promise<EventDocument[]> {
+    const res = await this.delete<RemoveFavouriteResponse>('/users/deleteFavourite', {
+      id,
+      username
+    });
+    return res.favourites;
+  }
+
   private async delete<T>(path: string, body: object): Promise<T> {
     console.log("URL", this.baseURL + path);
     console.log("body",body);

@@ -19,8 +19,11 @@ export type EditUserResponse =
 
 export type RemoveFollowerResponse =
   paths['/users/deleteFollower']['delete']['responses']['201']['schema'];
+
+export type RemoveFavouriteResponse =
+  paths['/users/deleteFavourite']['delete']['responses']['201']['schema'];
+
 export interface IAPI {
-  
   setup: (token: string) => void;
 
   login: (username: string, password: string) => Promise<LoginResponse>;
@@ -51,4 +54,8 @@ export interface IAPI {
   getChatMessages: (id: string) => Promise<MessageDocument[]>;
 
   removeFriend(userUsername: string, friendUsername:string): Promise<UserDocument[]>;
+
+  removeFavourite(id: string, username: string): Promise<EventDocument[]>;
+
+  addFavourite(id: string, username: string): unknown;
 }

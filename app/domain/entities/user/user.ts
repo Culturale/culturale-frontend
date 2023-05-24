@@ -13,6 +13,7 @@ export interface UserProps {
   usertype: string;
   followeds?: IUser[];
   followers?: IUser[];
+  preferits?: IEvent[];
   eventSub?: IEvent[];
 }
 
@@ -25,6 +26,7 @@ export class User implements IUser {
   public usertype: string;
   public followers: IUser[];
   public followeds: IUser[];
+  public preferits: IEvent[];
   public eventSub: IEvent[];
 
   constructor(props: UserProps) {
@@ -37,6 +39,7 @@ export class User implements IUser {
       usertype,
       followeds,
       followers,
+      preferits,
       eventSub,
     } = props;
     this.username = username;
@@ -47,6 +50,7 @@ export class User implements IUser {
     this.usertype = usertype;
     this.followeds = followeds || [];
     this.followers = followers || [];
+    this.preferits = preferits || [];
     this.eventSub = eventSub || [];
 
     makeObservable(this, {

@@ -59,6 +59,18 @@ export interface IUserController extends Controller {
   removeFriend(userUsername:string, friendUsername: string): Promise<void>;
 
   /**
+   * Modifies user favourites
+   * @public
+   */
+  addFavourite(id: string, username: string): Promise<void>;
+
+      /**
+   * Modifies user favourites
+   * @public
+   */
+  removeFavourite(id: string, username: string): Promise<void>;
+
+  /**
    * Sets user info
    * @public
    */

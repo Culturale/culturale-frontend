@@ -9,6 +9,7 @@ export interface IUser {
     usertype: string;
     followers: IUser[];
     followeds: IUser[];
+    preferits: IEvent[];
     eventSub: IEvent[];  
     readonly friends: IUser[];
   

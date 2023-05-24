@@ -64,8 +64,20 @@ export class UserController implements IUserController {
     if (index !== -1) {
       this.userInfo.followeds.splice(index, 1);
     }
-    
   }
+
+  public async addFavourite(id: string, username: string): Promise<void> {
+    await this.infrastructure.api.addFavourite(id, username);
+  }
+
+  public async removeFavourite(id: string, username: string): Promise<void> {
+    await this.infrastructure.api.removeFavourite(id, username);
+   const index = this.userInfo.preferits.findIndex(event => event.id === id);
+   if (index !== -1) {
+     this.userInfo.preferits.splice(index, 1);
+   }
+ }
+
   public setUserFollowers(token: string): void {
     this.token = token;
   }
