@@ -5,9 +5,13 @@ import { ShowFriendsStyles as styles } from './showFriends-screen.styles';
 import { IUser } from '~/domain';
 import { useApplicationLayer } from '~/hooks';
 import { Text } from '~/components/text';
-
-// Importa el componente de navegación que estás utilizando
 import { useNavigation } from '@react-navigation/native';
+import {  TabParamList } from '~/navigation';
+import { StackNavigationProp } from '@react-navigation/stack';
+
+
+
+type UserNavigation = StackNavigationProp<TabParamList, 'ShowUserScreen'>;
 
 export const ShowFriendsScreen = observer(() => {
   const {
@@ -15,7 +19,7 @@ export const ShowFriendsScreen = observer(() => {
   } = useApplicationLayer();
   
   // Obtiene el objeto de navegación
-  const navigationUser = useNavigation();
+  const navigationUser = useNavigation<UserNavigation>();
 
   const handleRemoveFriend = async (friendUsername: string) => {
       UserController.removeFriend(UserController.userInfo.username, friendUsername);
@@ -50,7 +54,7 @@ export const ShowFriendsScreen = observer(() => {
             <TouchableOpacity
               key={amigo.username}
               style={styles.userContainer}
-              onPress={() => navigationUser.navigate('ShowUser', { username: amigo.username })}
+              onPress={() => navigationUser.navigate('ShowUserScreen', { username: amigo.username })}
             >
               <View style={styles.mostraramigo}>
                 <Image src={amigo.profilePicture} style={styles.foto} />

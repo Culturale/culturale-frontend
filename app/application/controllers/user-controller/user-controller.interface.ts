@@ -3,17 +3,28 @@ import type { ImagePickerAsset } from 'expo-image-picker';
 
 import type { Controller } from '~/application/controllers/controller.interface';
 import type { IEvent, IUser } from '~/domain';
+import { IRequestSubject } from '~/observables';
 
 export interface IUserController extends Controller {
   isLoggedIn: boolean | null;
   token: string;
   userInfo: IUser;
+  readonly users: IUser[];
 
   /**
    * Get if login is needed
    * @public
    */
   readonly isLoginNeeded: boolean;
+
+
+  /**
+   *
+   * @public
+   * @description Fetches all events from API and saves them to events property
+   */
+  fetchAllUsers: () => IRequestSubject<void>;
+
 
   /**
    * Get if login is needed
@@ -57,6 +68,12 @@ export interface IUserController extends Controller {
    * @public
    */
   removeFriend(userUsername:string, friendUsername: string): Promise<void>;
+ 
+  /**
+     * Modifies user followers
+     * @public
+     */
+  addFriend(userUsername:string, friendUser: IUser): Promise<void>;
 
   /**
    * Sets user info

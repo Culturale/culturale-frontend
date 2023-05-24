@@ -5,8 +5,7 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 
 import { Event } from '~/components';
-import type { IEvent, EventProps } from '~/domain';
-import { Event as EventDomain } from '~/domain';
+import type { IEvent} from '~/domain';
 import { useApplicationLayer } from '~/hooks';
 
 import { MyEventsScreenStyles as styles} from './myEvents-screen.styles';

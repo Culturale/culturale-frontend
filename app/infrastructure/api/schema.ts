@@ -52,6 +52,33 @@ export interface paths {
       };
     };
   };
+  "/users": {
+    /** Returns all users from database */
+    get: {
+      responses: {
+        /** Ok */
+        200: {
+          schema: {
+            users?: definitions["user"][];
+          };
+        };
+        /** Unauthorized */
+        403: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+        /** Internal server error */
+        500: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+      };
+    };
+  };
   "/users/create": {
     /** Creates a user registered in in BE */
     post: {
@@ -135,6 +162,33 @@ export interface paths {
       };
     };
   };
+  "/events/newParticipant": {
+    /** It adds a participant into an event */
+    post: {
+      responses: {
+        /** Ok */
+        200: {
+          schema: {
+            message?: string;
+          };
+        };
+        /** Bad request */
+        404: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+        /** Internal server error */
+        500: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+      };
+    };
+  };
   "/users/deleteFollower": {
     /** Deletes de users follower */
     delete: {
@@ -147,27 +201,6 @@ export interface paths {
           };
         };
         /** Internal server error */
-        /** Internal server error */
-        500: {
-          schema: {
-            data?: { [key: string]: unknown };
-            error?: definitions["error"];
-          };
-        };
-      };
-    };
-  };
-  "/events/newParticipant": {
-    /** It adds a participant into an event */
-    post: {
-      responses: {
-        /** Ok */
-        200: {
-          schema: {
-            message?: string;
-          };
-        };
-        /** Bad request */
         404: {
           schema: {
             data?: { [key: string]: unknown };

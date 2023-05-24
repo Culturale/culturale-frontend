@@ -8,9 +8,10 @@ import { makePersistable } from 'mobx-persist-store';
 
 import type { IEvent, IUser} from '~/domain';
 import { userFactory } from '~/domain';
-import type { IInfrastructure } from '~/infrastructure';
+import type { IInfrastructure, UserDocument } from '~/infrastructure';
 
 import type { IUserController } from './user-controller.interface';
+import { IRequestSubject, RequestSubject } from '~/observables';
 
 export enum DriverRequests {
   Login = 'LOGIN',
@@ -24,6 +25,7 @@ export class UserController implements IUserController {
   public token: string;
   public userInfo: IUser;
   private infrastructure: IInfrastructure;
+  public users: IUser[];
 
   constructor(infrastructure: IInfrastructure) {
     this.infrastructure = infrastructure;
@@ -59,13 +61,43 @@ export class UserController implements IUserController {
     );
   }
   public async removeFriend(userUsername: string, friendUsername:string): Promise<void> {
+    // Se quita b de la lista de seguidos de a
      await this.infrastructure.api.removeFriend(userUsername, friendUsername);
     const index = this.userInfo.followeds.findIndex(user => user.username === friendUsername);
     if (index !== -1) {
       this.userInfo.followeds.splice(index, 1);
     }
+    // Se quita a de la lista de seguidores de b
+    const index2 = this.users.findIndex(user => user.username === friendUsername);
+    if (index2 !== -1) {
+      const newUsers = [...this.users];
+      const friend = newUsers[index2];
+      const newFollowers = friend.followers.filter(follower => follower.username !== userUsername);
+      friend.followers = newFollowers;
+      newUsers[index2] = friend;
+      this.setUsers(newUsers);
+    }
+
     
   }
+  public async addFriend(userUsername: string, friendUser: IUser): Promise<void> {
+    await this.infrastructure.api.addFriend(userUsername, friendUser.username);
+  // añadimos B a los seguidos de A
+    const index = this.userInfo.followeds.findIndex(user => user.username === friendUser.username);
+    if (index === -1) {
+      this.userInfo.followeds.push(friendUser);
+    }
+  // añadimos A a los seguidores de B
+    const friendIndex = this.users.findIndex(user => user.username === friendUser.username);
+    if (friendIndex !== -1) {
+      const newUsers = [...this.users];
+      const newFollowers = [...friendUser.followers, this.userInfo];
+      friendUser.followers = newFollowers;
+      newUsers[friendIndex] = friendUser;
+      this.setUsers(newUsers);
+    }
+  }
+  
   public setUserFollowers(token: string): void {
     this.token = token;
   }
@@ -143,4 +175,46 @@ export class UserController implements IUserController {
   public setUserInfo(user: IUser): void {
     this.userInfo = user;
   }
+  public fetchAllUsers(): IRequestSubject<void> {
+    const subject = new RequestSubject<void>();
+    subject.startRequest();
+
+    this.infrastructure.api
+      .getAllUsers()
+      .then((res: UserDocument[]) => {
+        const users: IUser[] = [];
+        for (const doc of res) {
+          const user = userFactory(doc);
+          users.push(user);
+        }
+
+        this.setUsers(users);
+
+        subject.completeRequest();
+      })
+      .catch((e: Error) => {
+        subject.failRequest(e);
+      });
+    console.log("DEVOLVEMOS EL SUBJECT", subject)
+    return subject;
+  }
+  
+  public setUsers(users: IUser[]): void {
+    this.users = users;
+  }
+  
 }
+
+
+
+
+// Si a y b son amigos 
+// a.followeds = b
+// a.followers = b
+// b.followeds = a
+// b.followers = a
+// si a deja de seguir a b
+// a.followeds = 
+// a.followers = b
+// b.followeds = a
+// b.followers = 

@@ -1,4 +1,3 @@
-import type { IEvent, IUser } from '~/domain';
 
 export type RootParamList = {
   Login: undefined;
@@ -9,7 +8,7 @@ export type RootParamList = {
   ProfileScreen: undefined;
   EditProfile: undefined;
   Home: undefined;
-  ShowUserScreen: { user: IUser };
+  ShowUserScreen: { username: string };
   MyEventsScreen: undefined;
   HomeScreen: undefined;
   EventScreen: { eventId: string };
@@ -19,6 +18,6 @@ export type TabParamList = {
   Home: undefined;
   Profile: undefined;
   ShowFriendsScreen: undefined;
-  ShowUserScreen: { user: IUser };
+  ShowUserScreen: { username: string };
 };
 

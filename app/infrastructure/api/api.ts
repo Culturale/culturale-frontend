@@ -5,6 +5,7 @@ import type {
   EditUserResponse,
   EventDocument,
   GetEventsResponse,
+  GetUsersResponse,
   IAPI,
   LoginResponse,
   MessageDocument,
@@ -34,7 +35,7 @@ export class API implements IAPI {
       body: JSON.stringify(body),
       headers: {
         Accept: 'application/json',
-        Authorization: this.token,
+        Authorization: `Bearer ${this.token}`,
         'Content-Type': 'application/json',
       },
       method: 'POST',
@@ -50,7 +51,7 @@ export class API implements IAPI {
     return fetch(this.baseURL + path, {
       headers: {
         Accept: 'application/json',
-        Authorization: this.token,
+        Authorization: `Bearer ${this.token}`,
         'Content-Type': 'application/json',
       },
       method: 'GET',
@@ -97,6 +98,11 @@ export class API implements IAPI {
     return res.events;
   }
 
+  public async getAllUsers(): Promise<UserDocument[]> {
+    const res = await this.get<GetUsersResponse>('/users');
+    console.log(res);
+    return res.users;
+  }
   public async signUp(
     username: string,
     name: string,
@@ -143,6 +149,14 @@ export class API implements IAPI {
 
   public async removeFriend(username: string, follower:string): Promise<UserDocument[]> {
     const res = await this.delete<RemoveFollowerResponse>('/users/deleteFollower', {
+      username,
+      follower
+    });
+
+    return res.followers;
+  }
+  public async addFriend(username: string, follower:string): Promise<UserDocument[]> {
+    const res = await this.post<RemoveFollowerResponse>('/users/newFollower', {
       username,
       follower
     });

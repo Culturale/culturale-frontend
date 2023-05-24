@@ -32,7 +32,7 @@ export const ShowUserStyles =  StyleSheet.create({
     justifyContent: 'flex-end',
     paddingLeft: 30,
   },
-  editButton: {
+  followButton: {
     backgroundColor: 'black',
     border: 5,
     borderRadius: 10,

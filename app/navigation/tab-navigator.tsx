@@ -5,6 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { RootParamList, TabParamList } from './root-params';
 import { ShowFriendsScreen } from '~/views/showFriends-screen';
 import { EditProfileScreen, ProfileScreen, HomeScreen, EventScreen, MyEventsScreen} from '~/views';
+import { ShowUserScreen } from '~/views/showUser-screen';
 
 
 const ProfileStack = createStackNavigator<RootParamList>();
@@ -27,6 +28,11 @@ const ProfileStackNavigator: React.FC = observer(() => {
       <ProfileStack.Screen 
       component={ShowFriendsScreen} 
       name="ShowFriends" 
+      />
+       <ProfileStack.Screen
+        component={ShowUserScreen}
+        name="ShowUserScreen"
+        options={{ headerShown: false }}
       />
     </ProfileStack.Navigator>
   );
@@ -82,4 +88,6 @@ export const TabNavigator: React.FC = observer(() => {
     </Tab.Navigator>
   );
 });
+
+
 
