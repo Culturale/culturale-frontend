@@ -1,12 +1,11 @@
 import * as GoogleCalendar from 'expo-calendar';
 import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, ScrollView, Button, TouchableOpacity , Linking } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 
 import { Event } from '~/components';
-import type { IEvent, EventProps } from '~/domain';
-import { Event as EventDomain } from '~/domain';
+import type { IEvent } from '~/domain';
 import { useApplicationLayer } from '~/hooks';
 
 import { MyEventsScreenStyles as styles} from './myEvents-screen.styles';
@@ -17,7 +16,6 @@ export const MyEventsScreen = observer(() => {
     controllers: { UserController },
   } = useApplicationLayer();
   const eventSub: IEvent[] = UserController.userInfo.eventSub;
-  console.log('eventSub', eventSub);
   const handleDayPress = (day) => {
     setSelectedDay(day.dateString);
   };
@@ -41,23 +39,27 @@ export const MyEventsScreen = observer(() => {
         if (!defaultCalendar) {
           return;
         }
-        const eventDetails: GoogleCalendar.Event = {
-          alarms: [],
-          allDay: false,
-          availability: '',
-          calendarId: defaultCalendar.id,
-          endDate: event.dataFi,
-          id: 'unique-event-id',
-          location: event.adress,
-          notes: 'Notas del evento',
-          recurrenceRule: null,
-          startDate: event.dataIni,
-          status: '',
-          timeZone: 'Europe/Madrid',
-          title: event.denominacio
+  
+        const eventDetails = {
+          endDate: event.dataIni.toISOString(),
+          notes: 'description22',
+          startDate: event.dataIni.toISOString(),
+          title: event.denominacio,
         };
-        await GoogleCalendar.createEventAsync(defaultCalendar.id, eventDetails);
-      } 
+  
+        const eventOptions = {
+          endDate: eventDetails.endDate,
+          notes: eventDetails.notes,
+          startDate: eventDetails.startDate,
+          title: eventDetails.title,
+        };
+  
+        const eventId = await GoogleCalendar.createEventAsync(defaultCalendar.id, eventOptions);
+
+        // Obtener el enlace para abrir la aplicación de Google Calendar con el evento
+        const eventUrl = `https://www.google.com/calendar/event?eid=${eventId}`;
+        Linking.openURL(eventUrl);
+      }
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log('Error al agregar el evento al calendario:', error);
@@ -79,19 +81,26 @@ export const MyEventsScreen = observer(() => {
         markingType="multi-dot"
         onDayPress={handleDayPress}
       />
-      {selectedDay ? (
-       <ScrollView>
+      {selectedDay && (
+        <ScrollView>
           {filteredEvents.length > 0 ? (
             filteredEvents.map((event) => (
-              <TouchableOpacity key={event.id} onPress={() => handleAddToCalendar(event)}>
-                <Event key={event.id} event={event} />
-              </TouchableOpacity>
+              <View key={event.id} style={styles.eventList}>
+                <TouchableOpacity style={styles.buttonAdd} onPress={() => handleAddToCalendar(event)}>
+                <View style={styles.buttonContent}>
+                  <Text style={styles.buttonText}>+</Text>
+                </View>
+                </TouchableOpacity>
+                <View style={styles.eventDetail}>
+                  <Event event={event} />
+                </View>
+              </View>
             ))
           ) : (
             <Text style={styles.noEvents}>No tienes eventos para el día seleccionado</Text>
           )}
         </ScrollView>
-      ) : null}
+      )}
     </View>
   );
 });
