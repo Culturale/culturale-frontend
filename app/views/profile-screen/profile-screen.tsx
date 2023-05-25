@@ -12,6 +12,8 @@ type ProfileNavigation = StackNavigationProp<RootParamList, 'Profile'>;
 
 type ShowFriendsNavigation = StackNavigationProp<TabParamList, 'ShowFriendsScreen'>;
 
+type FavouritesNavigation = StackNavigationProp<RootParamList, 'PreferitsScreen'>;
+
 export const ProfileScreen = observer(() => {
   const {
     controllers: { UserController },
@@ -21,8 +23,13 @@ export const ProfileScreen = observer(() => {
   const userInfo = UserController.userInfo;
   const navigationFriends = useNavigation<ShowFriendsNavigation>();
   const navigationProfile = useNavigation<ProfileNavigation>();
+  const navigationPreferits = useNavigation<FavouritesNavigation>();
   function mostrarViewAmigos() {
     navigationFriends.navigate('ShowFriends');
+  }
+
+  function mostrarFavoritos() {
+    navigationPreferits.navigate('PreferitsScreen');
   }
 
     return (
@@ -74,6 +81,10 @@ export const ProfileScreen = observer(() => {
         ></Button>
         </View>
         <View style={Styles.containerInfo}>
+          <TouchableOpacity  style={Styles.panelConfig} onPress={() => { mostrarFavoritos() }}>
+            <Image source={require('../../../assets/star-logo.png')} style={Styles.icon}/>
+            <TraductionText style={Styles.configText} tx="perfil.favoritos"/>
+          </TouchableOpacity>
           <View style={Styles.panelConfig}>
             <Image source={require('../../../assets/config-logo.png')} style={Styles.icon} />
             <TraductionText style={Styles.configText} tx="perfil.configuracion"/>

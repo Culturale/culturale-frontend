@@ -10,6 +10,7 @@ export type RootParamList = {
   MyEventsScreen: undefined;
   HomeScreen: undefined;
   EventScreen: { eventId: string };
+  PreferitsScreen: undefined;
 };
 
 export type TabParamList = {

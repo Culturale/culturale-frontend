@@ -29,18 +29,19 @@
         "email": "Correo electrónico:",
         "telephone": "Teléfono:",
         "configuracion": "Configuracion",
+        "favoritos": "Favoritos",
         "pagos": "Mis pagos",
         "amigos": "Mis amigos",
         "miperfil": "Mi perfil"
     },
-
-
-
     "showFriendsScreen":{
         "myfriends":"Mis amigos",
         "vacio":" ¡Esto está muy vacío!",
         "noFriends":" Añade a gente nueva para empezar esta aventura",
         "delete": "Eliminar"
 
+    },
+    "preferits": {
+      "titulo": "Favoritos"
     }
 }

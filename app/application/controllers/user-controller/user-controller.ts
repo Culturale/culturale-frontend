@@ -6,9 +6,11 @@ import type { ImagePickerAsset } from 'expo-image-picker';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
 
-import type { IEvent, IUser} from '~/domain';
+import { IEvent, IUser, User} from '~/domain';
 import { userFactory } from '~/domain';
-import type { IInfrastructure } from '~/infrastructure';
+import type { EventDocument, IInfrastructure } from '~/infrastructure';
+import type { IRequestSubject } from '~/observables';
+import { RequestSubject } from '~/observables';
 
 import type { IUserController } from './user-controller.interface';
 
@@ -46,6 +48,11 @@ export class UserController implements IUserController {
     });
   }
 
+  public fetchAllFavourites(): IEvent[] {
+    const favourites = this.userInfo.preferits;
+
+    return favourites;
+  }
 
   public async setup() {
     await makePersistable(
