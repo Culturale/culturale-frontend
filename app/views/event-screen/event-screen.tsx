@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
+import type { RouteProp } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import type React from 'react';
@@ -14,7 +15,7 @@ import type { RootParamList } from '~/navigation';
 import type { EventScreenProps as Props } from './event-screen.props';
 import { EventScreenStyles as styles } from './event-screen.styles';
 
-type EventScreenNavigation = StackNavigationProp<RootParamList, 'EditProfile'>;
+type EventScreenNavigation = StackNavigationProp<RootParamList, 'EventScreen'>;
 
 export const EventScreen: React.FC<Props> = observer(() => {
   const navigation = useNavigation<EventScreenNavigation>();

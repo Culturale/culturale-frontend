@@ -46,6 +46,10 @@
     },
     "preferits": {
       "titulo": "Favourites"
+    },
+    "myEvents": {
+      "calendar": "+ Add to calendar ",
+      "valoration": "+ Make a review"
     }
   }
   

@@ -31,4 +31,13 @@ export interface IEventController {
    * @description Adds participant into an event
    */
   addParticipant: (id: IEvent, username: IUser)=> Promise<void>;
+
+
+  /**
+   *
+   * @public
+   * @description Adds review into an event
+   */
+  addReview: (eventId: string, userId: string, puntuation: number,  comment?: string) => Promise<void>;
+
 }

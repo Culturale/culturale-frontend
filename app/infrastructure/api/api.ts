@@ -9,6 +9,7 @@ import type {
   LoginResponse,
   MessageDocument,
   RemoveFollowerResponse,
+  ReviewDocument,
   SignupResponse,
   UserDocument,
   RemoveFavouriteResponse
@@ -144,8 +145,8 @@ export class API implements IAPI {
 
   public async removeFriend(username: string, follower:string): Promise<UserDocument[]> {
     const res = await this.delete<RemoveFollowerResponse>('/users/deleteFollower', {
-      username,
-      follower
+      follower,
+      username
     });
 
     return res.followers;
@@ -167,15 +168,12 @@ export class API implements IAPI {
   }
 
   private async delete<T>(path: string, body: object): Promise<T> {
-    console.log("URL", this.baseURL + path);
-    console.log("body",body);
-    console.log("token", this.token + path);
     const response = await fetch(this.baseURL + path, {
       body: JSON.stringify(body),
       headers: {
         Accept: 'application/json',
         Authorization: this.token,
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       },
       method: 'DELETE',
     });
@@ -183,9 +181,7 @@ export class API implements IAPI {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
     const json = await response.json();
-    console.log(json);
     return json as T;
   }  
 
@@ -208,4 +204,15 @@ export class API implements IAPI {
       throw new Error('Error getting event chat messages');
     }
   }
+
+  public async addReview(eventId: string, authorId: string, puntuation: number,  comment?: string): Promise<ReviewDocument> {
+    const res = await this.post<ReviewDocument>('/events/addReview', {
+      authorId,
+      comment,
+      eventId,
+      puntuation
+    });
+    return res;
+  }
+
 }

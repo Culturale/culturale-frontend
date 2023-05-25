@@ -1,10 +1,10 @@
-import { IUser } from '~/domain';
 import type { definitions, paths } from './schema';
 
 export type EventDocument = definitions['event'];
 export type UserDocument = definitions['user'];
 export type MessageDocument = definitions['message'];
 export type ChatDocument = definitions['chat'];
+export type ReviewDocument = definitions['review'];
 export type GetEventsResponse =
   paths['/events']['get']['responses']['200']['schema'];
 
@@ -58,4 +58,7 @@ export interface IAPI {
   removeFavourite(id: string, username: string): Promise<EventDocument[]>;
 
   addFavourite(id: string, username: string): unknown;
+
+  addReview: (eventId: string, authorId: string, puntuation: number,  comment?: string) => Promise<ReviewDocument>;
+
 }

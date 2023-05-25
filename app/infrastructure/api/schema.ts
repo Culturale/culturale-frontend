@@ -135,6 +135,61 @@ export interface paths {
       };
     };
   };
+  "/events/newParticipant": {
+    /** It adds a participant into an event */
+    post: {
+      responses: {
+        /** Ok */
+        200: {
+          schema: {
+            message?: string;
+          };
+        };
+        /** Bad request */
+        404: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+        /** Internal server error */
+        500: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+      };
+    };
+  };
+  "/events/addReview": {
+    /** It adds a review into an event */
+    post: {
+      responses: {
+        /** Ok */
+        200: {
+          schema: {
+            review?: definitions["review"];
+            message?: string;
+          };
+        };
+        /** Bad request */
+        404: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+        /** Internal server error */
+        500: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+      };
+    };
+  };
   "/users/deleteFollower": {
     /** Deletes de users follower */
     delete: {
@@ -147,27 +202,6 @@ export interface paths {
           };
         };
         /** Internal server error */
-        /** Internal server error */
-        500: {
-          schema: {
-            data?: { [key: string]: unknown };
-            error?: definitions["error"];
-          };
-        };
-      };
-    };
-  };
-  "/events/newParticipant": {
-    /** It adds a participant into an event */
-    post: {
-      responses: {
-        /** Ok */
-        200: {
-          schema: {
-            message?: string;
-          };
-        };
-        /** Bad request */
         404: {
           schema: {
             data?: { [key: string]: unknown };
@@ -252,6 +286,12 @@ export interface definitions {
     /** Format: int */
     code?: number;
     message?: string;
+  };
+  review: {
+    puntuation: number;
+    comment?: string;
+    authorId: string;
+    eventId: string;
   };
 }
 
