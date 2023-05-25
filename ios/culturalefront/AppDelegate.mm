@@ -9,13 +9,14 @@
 {
   [GMSServices provideAPIKey:@"AIzaSyCj7cgW6zZL9aN1gEZtRXxjM3jcsDXIKTQ"]; // add this line using the api key obtained from Google Console
   self.moduleName = @"main";
-
+  [GMSServices provideAPIKey:@"AIzaSyCj7cgW6zZL9aN1gEZtRXxjM3jcsDXIKTQ"];
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
 
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
+
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {

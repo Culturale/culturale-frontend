@@ -1,5 +1,8 @@
+import type { ManagedUpload } from 'aws-sdk/clients/s3';
+import type { ImagePickerAsset } from 'expo-image-picker';
+
 import type { Controller } from '~/application/controllers/controller.interface';
-import type { IUser } from '~/domain';
+import type { IEvent, IUser } from '~/domain';
 
 export interface IUserController extends Controller {
   isLoggedIn: boolean | null;
@@ -50,16 +53,23 @@ export interface IUserController extends Controller {
   ) => Promise<void>;
 
   /**
+   * Modifies user followers
+   * @public
+   */
+  removeFriend(userUsername:string, friendUsername: string): Promise<void>;
+
+  /**
    * Sets user info
    * @public
    */
   setUserInfo: (userInfo: IUser) => void;
+  uploadPhoto: (asset: ImagePickerAsset) => Promise<ManagedUpload.SendData> ;
 
   setProfilePicture: (profilePicture: string) => void ;
 
   setUsername: (username: string) => void ;
   setName: (name: string) => void ;
+  addEventSub: (event: IEvent) => void;
   setEmail: (email: string) => void ;
   setPhoneNumber: (phoneNumber: string) => void ;
-
 }

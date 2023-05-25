@@ -6,7 +6,7 @@ import type { IUser } from '../user';
 import type { IEvent } from './event.interface';
 
 export type EventProps = {
-  id?: string;
+  _id?: string;
   codi: number;
   denominacio: string;
   descripcio: string;
@@ -23,7 +23,7 @@ export type EventProps = {
 };
 
 export class Event implements IEvent {
-  public id: string;
+  public _id: string;
   public codi: number;
   public denominacio: string;
   public descripcio: string;
@@ -40,7 +40,7 @@ export class Event implements IEvent {
 
   constructor(props: EventProps) {
     const {
-      id,
+      _id,
       codi,
       denominacio,
       descripcio,
@@ -55,7 +55,7 @@ export class Event implements IEvent {
       chat,
       participants,
     } = props;
-    this.id = id;
+    this._id = _id;
     this.codi = codi;
     this.denominacio = denominacio;
     this.descripcio = descripcio;
@@ -79,9 +79,16 @@ export class Event implements IEvent {
       denominacio: observable,
       descripcio: observable,
       horari: observable,
+      lat: observable,
+      long: observable,
       participants: observable,
+      photo: observable,
       url: observable,
     });
+  }
+
+  public get id(): string {
+    return this._id;
   }
 
   public updateParticipant(newParticipant: IUser): void {

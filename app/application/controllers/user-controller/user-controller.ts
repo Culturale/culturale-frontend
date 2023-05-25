@@ -1,8 +1,12 @@
+import { Buffer } from 'buffer';
+
 import AsyncStorage from '@react-native-community/async-storage';
+import type { ManagedUpload } from 'aws-sdk/clients/s3';
+import type { ImagePickerAsset } from 'expo-image-picker';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
 
-import type { IUser} from '~/domain';
+import type { IEvent, IUser} from '~/domain';
 import { userFactory } from '~/domain';
 import type { IInfrastructure } from '~/infrastructure';
 
@@ -37,9 +41,11 @@ export class UserController implements IUserController {
       setUserInfo: action,
       setUsername: action,
       token: observable,
+      uploadPhoto: action,
       userInfo: observable,
     });
   }
+
 
   public async setup() {
     await makePersistable(
@@ -52,7 +58,17 @@ export class UserController implements IUserController {
       { fireImmediately: true },
     );
   }
-
+  public async removeFriend(userUsername: string, friendUsername:string): Promise<void> {
+     await this.infrastructure.api.removeFriend(userUsername, friendUsername);
+    const index = this.userInfo.followeds.findIndex(user => user.username === friendUsername);
+    if (index !== -1) {
+      this.userInfo.followeds.splice(index, 1);
+    }
+    
+  }
+  public setUserFollowers(token: string): void {
+    this.token = token;
+  }
   public async modifyUser(
     username: string,
     name: string,
@@ -70,9 +86,9 @@ export class UserController implements IUserController {
       profilePicture,
     );
     const user = userFactory(res);
-
     this.setUserInfo(user);
   }
+
 
   public get isLoginNeeded(): boolean {
     return !this.token;
@@ -85,9 +101,23 @@ export class UserController implements IUserController {
   public removeToken(): void {
     this.token = null;
   }
+  
+  public async uploadPhoto (asset: ImagePickerAsset): Promise<ManagedUpload.SendData> {
+    const file = {
+      data: asset.base64,
+      name: this.userInfo.username,
+      type: 'image/png',
+    };
+    const buffer = Buffer.from(asset.base64, 'base64');
+    return await this.infrastructure.services.aws3.uploadFile(buffer,file);
+  }
 
   public setProfilePicture(profilePicture: string): void {
     this.userInfo.profilePicture = profilePicture;
+  }
+
+  public addEventSub(event: IEvent): void {
+    this.userInfo.addEventSub(event);
   }
 
   public setUsername(username: string): void {

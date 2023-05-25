@@ -1,8 +1,8 @@
-import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import type React from 'react';
+import { View, Text , StyleSheet, Image } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { IEvent } from '~/domain';
 
+import type { IEvent } from '~/domain';
 interface Props {
   event: IEvent;
 }
@@ -10,21 +10,17 @@ interface Props {
 export const Event: React.FC<Props> = ({ event }) => {
   return (
     <View style={styles.container}>
-      {/* <Image source={{ uri: event.image }} style={styles.image} /> */}
       <View style={styles.details}>
         <Text style={styles.title}>{event.denominacio}</Text>
         <View style={styles.subtitleContainer}>
-          <Ionicons color="#888" name="location-outline" size={16} />
           <Text style={styles.subtitle}>{event.adress}</Text>
         </View>
         <View style={styles.subtitleContainer}>
           <Ionicons color="#888" name="calendar-outline" size={16} />
-          <Text style={styles.subtitle}>{event.dataIni.toUTCString()}</Text>
+          <Text style={styles.subtitle}>{new Date(event.dataIni).toLocaleDateString()}</Text>
         </View>
       </View>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>¡Apúntate!</Text>
-      </TouchableOpacity>
+      <Image source={{ uri: event.photo ? event.photo : 'https://archive.org/download/no-photo-available/no-photo-available.png'}} style={{alignSelf: 'flex-end',height: 125, width: 106}}/>
     </View>
   );
 };
@@ -33,7 +29,7 @@ const styles = StyleSheet.create({
   button: {
     alignSelf: 'flex-end',
     backgroundColor: '#34b38a',
-    borderBottomRightRadius: 16,
+    borderBottomRightRadius: 10,
     bottom: 0,
     paddingHorizontal: 16,
     paddingVertical: 8,

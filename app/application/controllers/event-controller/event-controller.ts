@@ -1,6 +1,6 @@
 import { action, makeObservable, observable } from 'mobx';
 
-import type { IEvent } from '~/domain';
+import type { IEvent, IUser } from '~/domain';
 import { eventFactory } from '~/domain';
 import type { EventDocument, IInfrastructure } from '~/infrastructure';
 import type { IRequestSubject } from '~/observables';
@@ -16,6 +16,7 @@ export class EventController implements IEventController {
     this.infrastructure = infrastructure;
 
     makeObservable(this, {
+      addParticipant: action,
       events: observable,
       setEvents: action,
     });
@@ -49,6 +50,19 @@ export class EventController implements IEventController {
     return subject;
   }
 
+  public async addParticipant(event: IEvent, user: IUser): Promise<void> {
+    try{
+      await this.infrastructure.api.addParticipant(
+        event.id,
+        user.username,
+      );
+      event.updateParticipant(user);
+    }catch(error){
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
+  }
+
   public fetchEventMessages(eventId: string): IRequestSubject<void> {
     const subject = new RequestSubject<void>();
     subject.startRequest();
@@ -63,5 +77,20 @@ export class EventController implements IEventController {
       });
 
     return subject;
+  }
+
+  
+  public async addReview(eventId: string, userId: string, puntuation: number,  comment?: string):Promise<void>{
+    try{
+      await this.infrastructure.api.addReview(
+        eventId,
+        userId,
+        puntuation,
+        comment
+      );
+    }catch(error){
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
   }
 }
