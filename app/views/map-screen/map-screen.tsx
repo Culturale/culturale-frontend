@@ -1,15 +1,14 @@
+import * as Location from 'expo-location';
 import { observer } from 'mobx-react-lite';
 import React, { useState, useEffect } from 'react';
-import MapView, { Marker, Callout } from 'react-native-maps';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+import MapView, {Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { useApplicationLayer } from '~/hooks';
-import * as Location from 'expo-location';
-import { PROVIDER_GOOGLE } from 'react-native-maps';
 
-import { MapScreenStyles as styles } from './map-screen.styles';
 import type { MapScreenProps as Props } from './map-screen.props';
+import { MapScreenStyles as styles } from './map-screen.styles';
 
 export const MapScreen: React.FC<Props> = observer(() => {
   const {
@@ -18,12 +17,12 @@ export const MapScreen: React.FC<Props> = observer(() => {
   const events = EventController.events;
 
   const [showCallout, setShowCallout] = useState(false);
-  //Lloc a buscar:
+  // Lloc a buscar:
   const [searchTerm, setSearchTerm] = useState('');
   const [region, setRegion] = useState({
     latitude: 41.3851,
-    longitude: 2.1734,
     latitudeDelta: 0.09,
+    longitude: 2.1734,
     longitudeDelta: 0.09,
   });
 
@@ -31,18 +30,18 @@ export const MapScreen: React.FC<Props> = observer(() => {
       // Obtiene la ubicación actual del dispositivo y actualiza la región del mapa
       (async () => {
         await Location.requestForegroundPermissionsAsync();
-        let { status } = await Location.requestForegroundPermissionsAsync();
+        const { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
           return;
         }
   
-        let location = await Location.getCurrentPositionAsync({});
+        const location = await Location.getCurrentPositionAsync({});
 
-        //NO ENTRA, NO demana permis per la ubi...
+        // NO ENTRA, NO demana permis per la ubi...
         setRegion({
           latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
           latitudeDelta: 0.09,
+          longitude: location.coords.longitude,
           longitudeDelta: 0.09,
         });
       })();
@@ -53,16 +52,16 @@ export const MapScreen: React.FC<Props> = observer(() => {
     };
 
     const onPressLocation = async () => {
-        let { status } = await Location.requestForegroundPermissionsAsync();
+        const { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
           return;
         }
       
-        let location = await Location.getCurrentPositionAsync({});
+        const location = await Location.getCurrentPositionAsync({});
         setRegion({
           latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
           latitudeDelta: 0.09,
+          longitude: location.coords.longitude,
           longitudeDelta: 0.09,
         });
     };
@@ -75,8 +74,8 @@ export const MapScreen: React.FC<Props> = observer(() => {
             const location = data.results[0].geometry.location;
             setRegion({
               latitude: location.lat,
-              longitude: location.lng,
               latitudeDelta: 0.09,
+              longitude: location.lng,
               longitudeDelta: 0.09,
             });
             setSearchTerm('');
