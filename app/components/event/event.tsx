@@ -21,9 +21,6 @@ export const Event: React.FC<Props> = ({ event }) => {
         </View>
       </View>
       <Image source={{ uri: event.photo ? event.photo : 'https://archive.org/download/no-photo-available/no-photo-available.png'}} style={{alignSelf: 'flex-end',height: 125, width: 106}}/>
-      {/* {! enrolled && <TouchableOpacity style={styles.button}>
-        <TraductionText style={styles.buttonText} tx="event.join"/>
-      </TouchableOpacity>} */}
     </View>
   );
 };

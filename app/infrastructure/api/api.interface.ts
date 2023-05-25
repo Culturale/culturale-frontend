@@ -1,10 +1,10 @@
-import { IUser } from '~/domain';
 import type { definitions, paths } from './schema';
 
 export type EventDocument = definitions['event'];
 export type UserDocument = definitions['user'];
 export type MessageDocument = definitions['message'];
 export type ChatDocument = definitions['chat'];
+export type ReviewDocument = definitions['review'];
 export type GetEventsResponse =
   paths['/events']['get']['responses']['200']['schema'];
 
@@ -49,6 +49,4 @@ export interface IAPI {
   addParticipant: (id: string, username: string)=> Promise<void>;
 
   getChatMessages: (id: string) => Promise<MessageDocument[]>;
-
-  removeFriend(userUsername: string, friendUsername:string): Promise<UserDocument[]>;
 }

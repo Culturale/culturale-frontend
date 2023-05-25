@@ -1,16 +1,25 @@
+import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import * as GoogleCalendar from 'expo-calendar';
 import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
-import { View, Text, ScrollView, Button, TouchableOpacity , Linking } from 'react-native';
+import { View, Text, ScrollView, Image, TouchableOpacity , Linking } from 'react-native';
 import { Calendar } from 'react-native-calendars';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { Event } from '~/components';
+import { Text  as CustomText } from '~/components';
 import type { IEvent } from '~/domain';
 import { useApplicationLayer } from '~/hooks';
+import type { RootParamList } from '~/navigation';
 
 import { MyEventsScreenStyles as styles} from './myEvents-screen.styles';
 
+type MyEventsNavigation = StackNavigationProp<RootParamList, 'MyEventsScreen'>;
+
+
 export const MyEventsScreen = observer(() => {
+  const navigation = useNavigation<MyEventsNavigation>();
+  
   const [selectedDay, setSelectedDay] = useState('');
   const {
     controllers: { UserController },
@@ -20,16 +29,18 @@ export const MyEventsScreen = observer(() => {
     setSelectedDay(day.dateString);
   };
   
-  
   const getMarkedDates = (events: IEvent[]) => {
     const markedDates = {};
     events.forEach((event) => {
-      const eventDate = event.dataIni.toISOString().split('T')[0];
-      markedDates[eventDate] = { dots: [{ color: 'blue' }] };
+      // const eventDate = event.dataIni.toISOString().split('T')[0];
+      const eventDate = new Date(event.dataIni);
+      markedDates[eventDate.toISOString().split('T')[0]] = { dots: [{ color: 'blue' }] };
     });
   
     return markedDates;
   };
+  const actDate = new Date().toISOString().split('T')[0];
+
   async function handleAddToCalendar(event: IEvent) {
     try {
       const { status } = await GoogleCalendar.requestCalendarPermissionsAsync();
@@ -65,10 +76,16 @@ export const MyEventsScreen = observer(() => {
       console.log('Error al agregar el evento al calendario:', error);
     }
   }
+  function handleAddReview(event: IEvent){
+    // eslint-disable-next-line no-console
+    navigation.navigate('ValoracioScreen', { event : event });
+  }
   const filteredEvents = eventSub.filter((event) => { 
-    const eventDate = event?.dataIni.toISOString().split('T')[0];
-    return eventDate === selectedDay;
+    // const eventDate = event?.dataIni.toISOString().split('T')[0];
+    const eventDate = new Date(event.dataIni);
+    return eventDate.toISOString().split('T')[0] === selectedDay;
   });
+
 
   return (
     <View>
@@ -86,13 +103,34 @@ export const MyEventsScreen = observer(() => {
           {filteredEvents.length > 0 ? (
             filteredEvents.map((event) => (
               <View key={event.id} style={styles.eventList}>
-                <TouchableOpacity style={styles.buttonAdd} onPress={() => handleAddToCalendar(event)}>
-                <View style={styles.buttonContent}>
-                  <Text style={styles.buttonText}>+</Text>
-                </View>
-                </TouchableOpacity>
                 <View style={styles.eventDetail}>
-                  <Event event={event} />
+                <View style={styles.container}>
+                  <View style={styles.firstContent}>
+                    <View style={styles.details}>
+                      <Text style={styles.title}>{event.denominacio}</Text>
+                      <View style={styles.subtitleContainer}>
+                        <Text style={styles.subtitle}>{event.adress}</Text>
+                      </View>
+                      <View style={styles.subtitleContainer}>
+                        <Ionicons color="#888" name="calendar-outline" size={16} />
+                        <Text style={styles.subtitle}>{new Date(event.dataIni).toLocaleDateString()}</Text>
+                      </View>
+                    </View>
+                    <Image source={{ uri: event.photo ? event.photo : 'https://archive.org/download/no-photo-available/no-photo-available.png'}} style={{borderRadius: 5, alignSelf: 'flex-end',height: 100, marginBottom: 15, width: 100}}/>
+                  </View>
+                  {actDate <= new Date(event.dataIni).toISOString().split('T')[0] ? 
+                  <TouchableOpacity style={styles.buttonAdd} onPress={() => handleAddToCalendar(event)}>
+                      <View style={styles.buttonContent}>
+                          <CustomText style={styles.buttonText} tx="myEvents.calendar"/> 
+                      </View>
+                  </TouchableOpacity>:
+                  <TouchableOpacity style={styles.buttonAddVal} onPress={() => handleAddReview(event)}>
+                    <View style={styles.buttonContent}>
+                        <CustomText style={styles.buttonText} tx="myEvents.valoration"/>
+                    </View>
+                  </TouchableOpacity>
+                  }
+                  </View>
                 </View>
               </View>
             ))

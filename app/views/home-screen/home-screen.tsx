@@ -4,7 +4,7 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import type React from 'react';
 import { useEffect } from 'react';
-import { Text, View, FlatList, TouchableOpacity} from 'react-native';
+import { View, FlatList, TouchableOpacity} from 'react-native';
 
 import { Text as TraductionText , Event } from '~/components';
 import type { IEvent } from '~/domain';
@@ -19,7 +19,7 @@ type HomeNavigation = StackNavigationProp<RootParamList, 'Home'>;
 
 export const HomeScreen: React.FC<Props> = observer(() => {
   const {
-    controllers: { EventController, UserController },
+    controllers: { EventController },
   } = useApplicationLayer();
   const events = EventController.events;
   const navigation = useNavigation<HomeNavigation>();

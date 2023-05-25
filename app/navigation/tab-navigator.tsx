@@ -2,10 +2,11 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { createStackNavigator } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { RootParamList, TabParamList } from './root-params';
-import { ShowFriendsScreen } from '~/views/showFriends-screen';
-import { EditProfileScreen, ProfileScreen, HomeScreen, EventScreen, MyEventsScreen} from '~/views';
 
+import { EditProfileScreen, ProfileScreen, HomeScreen, EventScreen, MyEventsScreen, ValoracioScreen} from '~/views';
+import { ShowFriendsScreen } from '~/views/showFriends-screen';
+
+import type { RootParamList, TabParamList } from './root-params';
 
 const ProfileStack = createStackNavigator<RootParamList>();
 const Tab = createMaterialBottomTabNavigator<TabParamList>();
@@ -48,7 +49,24 @@ const HomeStackNavigator: React.FC = observer(() => {
         name="MyEventsScreen"
         options={{ headerShown: false }}
       />
+     
     </ProfileStack.Navigator>
+  );
+});
+const MyEventsScreenNavigator: React.FC = observer(() => {
+  return (
+  <ProfileStack.Navigator>
+    <ProfileStack.Screen
+    component={MyEventsScreen}
+    name="MyEventsScreen"
+    options={{ headerShown: false }}
+    />
+    <ProfileStack.Screen
+      component={ValoracioScreen}
+      name="ValoracioScreen"
+      options={{ headerShown: false }}
+    />
+  </ProfileStack.Navigator>
   );
 });
 
@@ -64,6 +82,8 @@ export const TabNavigator: React.FC = observer(() => {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Profile') {
             iconName = focused ? 'person' : 'person-outline';
+          } else if (route.name === 'MyEvents') {
+            iconName = focused ? 'person' : 'person-outline';
           }
           return <Ionicons name={iconName} size={17} />;
         },
@@ -74,7 +94,7 @@ export const TabNavigator: React.FC = observer(() => {
       })}
     >
       <Tab.Screen component={HomeStackNavigator} name="Home" />
-      <Tab.Screen component={MyEventsScreen} name="Mis Eventos" />
+      <Tab.Screen component={MyEventsScreenNavigator} name="MyEvents" />
       <Tab.Screen component={ProfileStackNavigator} name="Profile" />
     </Tab.Navigator>
   );

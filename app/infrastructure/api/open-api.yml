@@ -196,7 +196,40 @@ paths:
                 type: object
               error:
                 $ref: '#/definitions/error'
-
+  /events/addReview:
+    post:
+      description: 'It adds a review into an event'
+      security:
+        - bearerAuth: []
+      responses:
+        '200': 
+          description: Ok
+          schema:
+            type: object 
+            properties:
+              user:
+                $ref: '#/definitions/review'
+              message:
+                type: string
+        '404':
+          description: Bad request
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+              error:
+                $ref: '#/definitions/error'
+        '500':
+          description: Internal server error
+          schema:
+            type: object 
+            properties:
+              data:
+                type: object
+              error:
+                $ref: '#/definitions/error'
+                
   /users/deleteFollower:
     delete:
       description: 'Deletes de users follower'
@@ -352,3 +385,19 @@ definitions:
         format: int
       message:
         type: string
+  review:
+    type: object
+    required:
+      - puntuation
+      - authorId
+      - eventId
+    properties:
+      puntuation:
+        type: number
+      comment:
+        type: string
+      authorId:
+        type: string
+      eventId:
+        type: string
+    

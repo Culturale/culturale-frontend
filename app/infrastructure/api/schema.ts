@@ -184,6 +184,34 @@ export interface paths {
       };
     };
   };
+  "/events/addReview": {
+    /** It adds a review into an event */
+    post: {
+      responses: {
+        /** Ok */
+        200: {
+          schema: {
+            user?: definitions["review"];
+            message?: string;
+          };
+        };
+        /** Bad request */
+        404: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+        /** Internal server error */
+        500: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+      };
+    };
+  };
 }
 
 export interface definitions {
@@ -229,6 +257,12 @@ export interface definitions {
     /** Format: int */
     code?: number;
     message?: string;
+  };
+  review: {
+    puntuation: number;
+    comment?: string;
+    authorId: string;
+    eventId: string;
   };
 }
 

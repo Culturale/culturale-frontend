@@ -78,4 +78,19 @@ export class EventController implements IEventController {
 
     return subject;
   }
+
+  
+  public async addReview(eventId: string, userId: string, puntuation: number,  comment?: string):Promise<void>{
+    try{
+      await this.infrastructure.api.addReview(
+        eventId,
+        userId,
+        puntuation,
+        comment
+      );
+    }catch(error){
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
+  }
 }
