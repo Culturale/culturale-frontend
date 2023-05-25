@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { RootParamList, TabParamList } from './root-params';
 import { ShowFriendsScreen } from '~/views/showFriends-screen';
-import { EditProfileScreen, ProfileScreen, HomeScreen, EventScreen, MyEventsScreen} from '~/views';
+import { EditProfileScreen, ProfileScreen, HomeScreen, EventScreen, MyEventsScreen, PreferitsScreen} from '~/views';
 
 
 const ProfileStack = createStackNavigator<RootParamList>();
@@ -22,6 +22,11 @@ const ProfileStackNavigator: React.FC = observer(() => {
       <ProfileStack.Screen
         component={EditProfileScreen}
         name="EditProfile"
+        options={{ headerShown: false }}
+      />
+      <ProfileStack.Screen
+        component={PreferitsScreen}
+        name="PreferitsScreen"
         options={{ headerShown: false }}
       />
       <ProfileStack.Screen component={ShowFriendsScreen} name="ShowFriends" />

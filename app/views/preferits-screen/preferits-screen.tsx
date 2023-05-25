@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
@@ -40,6 +41,9 @@ export const PreferitsScreen: React.FC<Props> = observer(() => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen')}>
+        <Ionicons color="black" name="arrow-back" size={24} />
+      </TouchableOpacity>
       <View style={styles.titleContainer}>
         <TraductionText style={styles.title} tx="preferits.titulo"/>
       </View>

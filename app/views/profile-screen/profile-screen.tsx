@@ -12,8 +12,6 @@ type ProfileNavigation = StackNavigationProp<RootParamList, 'Profile'>;
 
 type ShowFriendsNavigation = StackNavigationProp<TabParamList, 'ShowFriendsScreen'>;
 
-type FavouritesNavigation = StackNavigationProp<RootParamList, 'PreferitsScreen'>;
-
 export const ProfileScreen = observer(() => {
   const {
     controllers: { UserController },
@@ -23,13 +21,12 @@ export const ProfileScreen = observer(() => {
   const userInfo = UserController.userInfo;
   const navigationFriends = useNavigation<ShowFriendsNavigation>();
   const navigationProfile = useNavigation<ProfileNavigation>();
-  const navigationPreferits = useNavigation<FavouritesNavigation>();
   function mostrarViewAmigos() {
     navigationFriends.navigate('ShowFriends');
   }
 
   function mostrarFavoritos() {
-    navigationPreferits.navigate('PreferitsScreen');
+    navigationProfile.navigate('PreferitsScreen');
   }
 
     return (
