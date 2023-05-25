@@ -207,7 +207,7 @@ paths:
           schema:
             type: object 
             properties:
-              user:
+              review:
                 $ref: '#/definitions/review'
               message:
                 type: string

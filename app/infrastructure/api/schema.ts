@@ -135,28 +135,6 @@ export interface paths {
       };
     };
   };
-  "/users/deleteFollower": {
-    /** Deletes de users follower */
-    delete: {
-      responses: {
-        /** Ok */
-        201: {
-          schema: {
-            followers?: definitions["user"][];
-            message?: string;
-          };
-        };
-        /** Internal server error */
-        /** Internal server error */
-        500: {
-          schema: {
-            data?: { [key: string]: unknown };
-            error?: definitions["error"];
-          };
-        };
-      };
-    };
-  };
   "/events/newParticipant": {
     /** It adds a participant into an event */
     post: {
@@ -191,11 +169,39 @@ export interface paths {
         /** Ok */
         200: {
           schema: {
-            user?: definitions["review"];
+            review?: definitions["review"];
             message?: string;
           };
         };
         /** Bad request */
+        404: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+        /** Internal server error */
+        500: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+      };
+    };
+  };
+  "/users/deleteFollower": {
+    /** Deletes de users follower */
+    delete: {
+      responses: {
+        /** Ok */
+        201: {
+          schema: {
+            followers?: definitions["user"][];
+            message?: string;
+          };
+        };
+        /** Internal server error */
         404: {
           schema: {
             data?: { [key: string]: unknown };

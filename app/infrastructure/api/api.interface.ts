@@ -49,4 +49,6 @@ export interface IAPI {
   addParticipant: (id: string, username: string)=> Promise<void>;
 
   getChatMessages: (id: string) => Promise<MessageDocument[]>;
+
+  addReview: (eventId: string, authorId: string, puntuation: number,  comment?: string) => Promise<ReviewDocument>;
 }
