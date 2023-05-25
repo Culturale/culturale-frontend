@@ -230,6 +230,42 @@ paths:
               error:
                 $ref: '#/definitions/error'
                 
+  /users/deleteFollower:
+    delete:
+      description: 'Deletes de users follower'
+      security:
+        - bearerAuth: []
+      responses:
+        '201': 
+          description: Ok
+          schema:
+            type: object
+            properties:
+              followers:
+                type: array
+                items:
+                  $ref: '#/definitions/user'
+              message:
+                type: string
+        '500':
+          description: Internal server error
+          schema:
+            type: object 
+            properties:
+              data:
+                type: object
+              error:
+                $ref: '#/definitions/error'
+        '404':
+          description: Internal server error
+          schema:
+            type: object 
+            properties:
+              data:
+                type: object
+              error:
+                $ref: '#/definitions/error'
+
 definitions:
   event:
     type: object

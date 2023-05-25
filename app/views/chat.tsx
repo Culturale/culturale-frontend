@@ -51,7 +51,6 @@ export const ChatScreen = ({ navigation }: {navigation: any}) => {
     axios.post(`${SERVER_URL}/events/newMessage`, messageData)
       .then((response: AxiosResponse) => {
         AsyncStorage.setItem('token', response.data.token);
-        console.log('Respuesta del servidor:', response.data.token);
         navigation.navigate('Main');
       })
       .catch((error: any) => {

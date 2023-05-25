@@ -4,4 +4,6 @@
  * @property requestsSubjectsMap A map of all the request subjects which relates to
  * all the possible requests a controller can do to any external service.
  */
-export abstract class Controller {}
+export abstract class Controller {
+    
+}

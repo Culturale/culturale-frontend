@@ -8,6 +8,7 @@ import type {
   IAPI,
   LoginResponse,
   MessageDocument,
+  RemoveFollowerResponse,
   ReviewDocument,
   SignupResponse,
   UserDocument,
@@ -141,6 +142,34 @@ export class API implements IAPI {
     return res.user;
   }
 
+  public async removeFriend(username: string, follower:string): Promise<UserDocument[]> {
+    const res = await this.delete<RemoveFollowerResponse>('/users/deleteFollower', {
+      follower,
+      username
+    });
+
+    return res.followers;
+  }
+
+  private async delete<T>(path: string, body: object): Promise<T> {
+    const response = await fetch(this.baseURL + path, {
+      body: JSON.stringify(body),
+      headers: {
+        Accept: 'application/json',
+        Authorization: this.token,
+        'Content-Type': 'application/json'
+      },
+      method: 'DELETE',
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const json = await response.json();
+    return json as T;
+  }  
+
+  
   public async addParticipant(id: string, username: string): Promise<void> {
     await this.post<MessageDocument>('/events/newParticipant', {
       id,

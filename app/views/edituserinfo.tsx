@@ -10,12 +10,10 @@ import {
   View,
   Image,
   TextInput,
-  Button,
   TouchableOpacity,
   Pressable
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { RadioButton } from 'react-native-paper';
 
 export const EditProfileScreen = () => {
   const [name, setNom] = useState('');
