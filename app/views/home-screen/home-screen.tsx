@@ -27,7 +27,6 @@ export const HomeScreen: React.FC<Props> = observer(() => {
   useEffect(() => {
     EventController.fetchAllEvents();
   }, []);
-
   const renderItem = ({ item }: { item: IEvent }) => {
     const handleEventClick = () => {
       navigation.navigate('EventScreen', { eventId : item.id });
