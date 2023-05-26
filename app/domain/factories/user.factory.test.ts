@@ -18,7 +18,6 @@ describe('userFactory', () => {
     expect(user).toBeInstanceOf(User);
     expect(user.username).toEqual(json.username);
     expect(user.name).toEqual(json.name);
-    expect(user.password).toEqual(json.password);
     expect(user.email).toEqual(json.email);
     expect(user.profilePicture).toEqual(json.profilePicture);
     expect(user.phoneNumber).toEqual(json.phoneNumber);

@@ -22,13 +22,11 @@ export function login(
   const [username, password] = args;
   const subject = new RequestSubject<void>('Login');
   subject.startRequest();
-
   infrastructure.api
     .login(username, password)
     .then((res: LoginResponse) => {
       const { token, user } = res;
       const userInfo = userFactory(user);
-
       infrastructure.api.setup(token);
       userController.setUserInfo(userInfo);
       userController.setToken(token);

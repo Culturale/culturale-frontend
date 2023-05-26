@@ -1,4 +1,4 @@
-import type { IEvent } from '~/domain';
+import type { IEvent, IUser } from '~/domain';
 import type { IRequestSubject } from '~/observables';
 
 export interface IEventController {
@@ -54,6 +54,22 @@ export interface IEventController {
    * @description Sets events property
    */
   setEvents: (events: IEvent[]) => void;
+
+   /**
+   *
+   * @public
+   * @description Adds participant into an event
+   */
+  addParticipant: (id: IEvent, username: IUser)=> Promise<void>;
+
+
+  /**
+   *
+   * @public
+   * @description Adds review into an event
+   */
+  addReview: (eventId: string, userId: string, puntuation: number,  comment?: string) => Promise<void>;
+
 
   /**
    *

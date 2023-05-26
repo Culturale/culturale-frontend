@@ -8,6 +8,8 @@ import type {
   IAPI,
   LoginResponse,
   MessageDocument,
+  RemoveFollowerResponse,
+  ReviewDocument,
   SignupResponse,
   UserDocument,
 } from './api.interface';
@@ -47,12 +49,9 @@ export class API implements IAPI {
 
   private async getEvents<T>(path: string, params: object): Promise<T> {
     const url = new URL(this.baseURL + path);
-  
-    // Agregar los parámetros a la URL
     Object.keys(params).forEach((key) => {
       url.searchParams.append(key, params[key]);
     });
-    console.log(url);
     return fetch(url.toString(), {
       headers: {
         Accept: 'application/json',
@@ -69,6 +68,7 @@ export class API implements IAPI {
   }
 
   private async get<T>(path: string): Promise<T> {
+    console.log(this.baseURL + path);
     return fetch(this.baseURL + path, {
       headers: {
         Accept: 'application/json',
@@ -106,6 +106,11 @@ export class API implements IAPI {
       password,
       username,
     });
+
+    if (!res?.user) {
+      throw Error('User not found');
+    }
+
     return res;
   }
 
@@ -116,7 +121,6 @@ export class API implements IAPI {
 
   public async getEventsByCategory(category: string): Promise<EventDocument[]> {
     const res = await this.get<GetEventsResponse>(`/events/categoria/${category}`);
-
     return res.events;
   }
 
@@ -130,20 +134,9 @@ export class API implements IAPI {
                                     dataIni?: Date,
                                     dataFi?: Date,
                                     horari?: string,
-                                    price?: string): Promise<EventDocument[]> {
-    const params = {
-      denominacio,
-      descripcio,
-      dataIni,
-      dataFi,
-      horari,
-      price,
-    };
-    console.log("HOLITAAAA");
-    console.log(denominacio);
-    console.log(price);
-    const res = await this.getEvents<GetEventsResponse>(`/events/filters/`, params);
-    console.log(res.events)
+                                    price?: string,     ): Promise<EventDocument[]> {
+
+    const res = await this.get<GetEventsResponse>(`/events/filters/?denominacio=${denominacio}&descripcio=${descripcio}&dataIni=${dataIni}&dataFi=${dataFi}&horari=${horari}&price=${price}`);
     return res.events;
   }
 
@@ -191,6 +184,40 @@ export class API implements IAPI {
     return res.user;
   }
 
+  public async removeFriend(username: string, follower:string): Promise<UserDocument[]> {
+    const res = await this.delete<RemoveFollowerResponse>('/users/deleteFollower', {
+      follower,
+      username
+    });
+
+    return res.followers;
+  }
+
+  private async delete<T>(path: string, body: object): Promise<T> {
+    const response = await fetch(this.baseURL + path, {
+      body: JSON.stringify(body),
+      headers: {
+        Accept: 'application/json',
+        Authorization: this.token,
+        'Content-Type': 'application/json'
+      },
+      method: 'DELETE',
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const json = await response.json();
+    return json as T;
+  }  
+
+  public async addParticipant(id: string, username: string): Promise<void> {
+    await this.post<MessageDocument>('/events/newParticipant', {
+      id,
+      username
+    });
+  }
+
   public async getChatMessages(id: string): Promise<MessageDocument[]> {
     const res = await this.axiosClient.get<MessageDocument[]>(
       `/events/${id}/messages`,
@@ -202,4 +229,15 @@ export class API implements IAPI {
       throw new Error('Error getting event chat messages');
     }
   }
+
+  public async addReview(eventId: string, authorId: string, puntuation: number,  comment?: string): Promise<ReviewDocument> {
+    const res = await this.post<ReviewDocument>('/events/addReview', {
+      authorId,
+      comment,
+      eventId,
+      puntuation
+    });
+    return res;
+  }
+
 }
