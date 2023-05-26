@@ -24,7 +24,11 @@ const ProfileStackNavigator: React.FC = observer(() => {
         name="EditProfile"
         options={{ headerShown: false }}
       />
-      <ProfileStack.Screen component={ShowFriendsScreen} name="ShowFriends" />
+      <ProfileStack.Screen
+        component={ShowFriendsScreen}
+        name="ShowFriends"
+        options={{ headerShown: false }}
+      />
     </ProfileStack.Navigator>
   );
 });
@@ -45,6 +49,11 @@ const HomeStackNavigator: React.FC = observer(() => {
       <ProfileStack.Screen
         component={MyEventsScreen}
         name="MyEventsScreen"
+        options={{ headerShown: false }}
+      />
+      <ProfileStack.Screen
+        component={MapScreen}
+        name="MapScreen"
         options={{ headerShown: false }}
       />
      

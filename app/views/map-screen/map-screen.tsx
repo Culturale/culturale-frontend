@@ -1,15 +1,20 @@
+import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import { useState, useEffect } from 'react';
-import { Text, TouchableOpacity, TextInput, View } from 'react-native';
+import { Text, TouchableOpacity, TextInput, View, Button } from 'react-native';
 import * as Location from 'react-native-location';
 import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { Text as TraductionText } from '~/components';
+// import { Text as TraductionText } from '~/components';
+import type { IEvent } from '~/domain/entities';
 import { useApplicationLayer } from '~/hooks';
+import type { RootParamList } from '~/navigation';
 
 import type { MapScreenProps as Props } from './map-screen.props';
 import { MapScreenStyles as styles } from './map-screen.styles';
+
 
 
 export const MapScreen: React.FC<Props> = observer(() => {
@@ -88,33 +93,51 @@ export const MapScreen: React.FC<Props> = observer(() => {
         }
     };
 
+    type MapNavigation = StackNavigationProp<RootParamList, 'MapScreen'>;
+
+    const navigation = useNavigation<MapNavigation>();
+
+    const handleEventClick = (event: IEvent) => {
+        navigation.navigate('EventScreen', { eventId : event.id });
+    };
+
     const markers = events.map((event) => (
         <Marker
           key={`${event.lat}-${event.long}`}
           coordinate={{ latitude: event.lat, longitude: event.long }}
           title={event.denominacio}
         >
-          <Callout style={styles.calloutContainer}>
-                                <View style={styles.container}>
-                                    <Text style={styles.subTitle}>{event.denominacio}</Text>
-                                    <Text style={styles.eventName}>{event.descripcio}</Text>
-                                    <View style={styles.infoContainer}>
-                                        <View style={styles.iconContainer}>
-                                            <Ionicons name="time" size={18} color="#888" />
-                                            <Text style={styles.infoText}>{event.horari}</Text>
-                                            <Ionicons name="calendar" size={18} color="#888" />
-                                            <Text style={styles.infoText}>{event.dataIni.toLocaleDateString()}</Text>
-                                            <Ionicons name="location" size={18} color="#888" />
-                                            <Text style={styles.infoText}>{event.adress}</Text>
-                                            <Ionicons name="card" size={18} color="#888" />
-                                            <Text>{event.price}</Text>
-                                            <TouchableOpacity>
-                                                <Text style={styles.buttonText}>Ver evento</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>
-                                </View>
-                            </Callout>
+          <Callout style={styles.calloutContainer} onPress={() => handleEventClick(event)}>
+                    <Text style={styles.subTitle}>{event.denominacio}</Text>
+                    <Text style={styles.subTitle}>{event.descripcio}</Text>
+                    <View style={styles.infoContainer}>
+                        <View style={styles.iconContainer}>
+                            <Ionicons color="#888" name="time" size={18} />
+                        </View>
+                        <Text style={styles.infoText}>{event.horari}</Text>
+                    </View>
+                    <View style={styles.infoContainer}>
+                        <View style={styles.iconContainer}>
+                            <Ionicons color="#888" name="calendar" size={18} />
+                        </View>
+                        <Text style={styles.infoText}>{event.dataIni.toLocaleDateString()}</Text>
+                    </View>
+                    <View style={styles.infoContainer}>
+                        <View style={styles.iconContainer}>
+                            <Ionicons color="#888" name="location" size={18} />
+                        </View>
+                        <Text style={styles.infoText}>{event.adress}</Text>
+                    </View>
+                    <View style={styles.infoContainer}>
+                        <View style={styles.iconContainer}>
+                            <Ionicons color="#888" name="card" size={18} />
+                        </View>
+                        <Text>{event.price}</Text>
+                    </View>
+                    <View style={styles.buttonText}>
+                        <Button title= 'Ver evento' onPress={() => handleEventClick(event)}/>
+                    </View>
+            </Callout>
         </Marker>
       ));
 
@@ -130,19 +153,21 @@ export const MapScreen: React.FC<Props> = observer(() => {
             </View>
             
             <View style={styles.map}>
-                <MapView style={styles.map} region={region} provider={PROVIDER_GOOGLE}/>
+                <MapView provider={PROVIDER_GOOGLE} region={region} style={styles.map}>
+                {markers}
+                </MapView>
+            
                     <View style={styles.searchContainer}>
-                        <TextInput style={styles.searchInput} placeholder="Introduce el lugar del evento"
-                                   placeholderTextColor="#000" value={searchTerm}
+                        <TextInput placeholder="Introduce el lugar del evento" placeholderTextColor="#000"
+                                   style={styles.searchInput} value={searchTerm}
                                    onChangeText={(text) => setSearchTerm(text)} onSubmitEditing={searchEvents}/>        
                         <TouchableOpacity style={styles.searchButton} onPress={searchEvents}>
-                            <Ionicons name="search" size={24} color="white" />
+                            <Ionicons color="white" name="search" size={24} />
                         </TouchableOpacity>
                     </View>
-                    {markers}
     
                 <TouchableOpacity style={styles.locationButton} onPress={onPressLocation}>
-                    <Ionicons name="md-locate" size={24} color="white" />
+                    <Ionicons color="white" name="md-locate" size={24} />
                 </TouchableOpacity>
     
                 {showCallout && (

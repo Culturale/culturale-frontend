@@ -1,2 +1,2 @@
 export * from './map-screen';
-export * from './map-screen.styles';
+export * from './map-screen.props';

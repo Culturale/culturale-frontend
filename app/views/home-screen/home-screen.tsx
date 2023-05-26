@@ -29,7 +29,7 @@ export const HomeScreen: React.FC<Props> = observer(() => {
   }, []);
   const renderItem = ({ item }: { item: IEvent }) => {
     const handleEventClick = () => {
-      navigation.navigate('EventScreen', { eventId : item.id });
+      navigation.navigate('EventScreen', { eventId : item.id});
     };
     return (
       <TouchableOpacity onPress={handleEventClick}>
