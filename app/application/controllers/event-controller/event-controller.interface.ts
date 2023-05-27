@@ -34,7 +34,7 @@ export interface IEventController {
    */
 
   fetchEventsByFilters: (denominacio?: string,
-                         descripcio?: string,
+                         categoria?: string,
                          dataIni?: Date,
                          dataFi?: Date,
                          horari?: string,

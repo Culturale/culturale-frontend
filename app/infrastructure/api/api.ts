@@ -130,13 +130,13 @@ export class API implements IAPI {
   }
 
   public async fetchEventsByFilters(denominacio?: string,
-                                    descripcio?: string,
+                                    categoria?: string,
                                     dataIni?: Date,
                                     dataFi?: Date,
                                     horari?: string,
                                     price?: string,     ): Promise<EventDocument[]> {
 
-    const res = await this.get<GetEventsResponse>(`/events/filters/?denominacio=${denominacio}&descripcio=${descripcio}&dataIni=${dataIni}&dataFi=${dataFi}&horari=${horari}&price=${price}`);
+    const res = await this.get<GetEventsResponse>(`/events/filters/?denominacio=${denominacio}&categoria=${categoria}&dataIni=${dataIni}&dataFi=${dataFi}&horari=${horari}&price=${price}`);
     return res.events;
   }
 

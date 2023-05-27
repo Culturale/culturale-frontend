@@ -263,6 +263,7 @@ export interface definitions {
     photo: string;
     participants?: definitions["user"][];
     chat?: definitions["chat"];
+    categoria?: string;
   };
   user: {
     _id: string;

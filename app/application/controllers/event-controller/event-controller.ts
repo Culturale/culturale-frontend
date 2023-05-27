@@ -117,7 +117,7 @@ export class EventController implements IEventController {
   }
 
   public fetchEventsByFilters(denominacio?: string,
-    descripcio?: string,
+    categoria?: string,
     dataIni?: Date,
     dataFi?: Date,
     horari?: string,
@@ -127,7 +127,7 @@ export class EventController implements IEventController {
     subject.startRequest();
   
     this.infrastructure.api
-      .fetchEventsByFilters(denominacio, descripcio, dataIni, dataFi, horari, price)
+      .fetchEventsByFilters(denominacio, categoria, dataIni, dataFi, horari, price)
       .then((res: EventDocument[]) => {
         const searchEvents: IEvent[] = res.map((doc: EventDocument) => eventFactory(doc));
   
