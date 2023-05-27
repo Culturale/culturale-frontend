@@ -39,9 +39,6 @@ export const ShowUserScreen: React.FC<Props> = observer(() => {
     }
     return false;
 }
-console.log("USUARIO QUE SE VERÁ", user)
-console.log("USUARIO Seguidos", user.followeds)
-console.log("USUARIO Seguidores", user.followers)
   return (
     <View style={Styles.container}>
       <View style={Styles.backArrow}>

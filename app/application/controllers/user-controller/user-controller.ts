@@ -67,6 +67,7 @@ export class UserController implements IUserController {
 
     // A deja de seguir a B
     // Se quita B de la lista de seguidos de A
+    
     const index = this.userInfo.followeds.findIndex(user => user.username === friendUsername);
     if (index !== -1) {
       const newFolloweds = this.userInfo.followeds.filter(user => user.username !== friendUsername);  
@@ -92,7 +93,7 @@ export class UserController implements IUserController {
 
   public async followUser(userUsername: string, friendUser: IUser): Promise<void> {
     try{
-       console.log(await this.infrastructure.api.addFriend(userUsername, friendUser.username));
+      await this.infrastructure.api.addFriend(userUsername, friendUser.username);
       
       // añadimos B a los seguidos de A
     const index = this.userInfo.followeds.findIndex(user => user.username === friendUser.username);

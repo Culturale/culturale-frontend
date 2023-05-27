@@ -100,7 +100,6 @@ export class API implements IAPI {
 
   public async getAllUsers(): Promise<UserDocument[]> {
     const res = await this.get<GetUsersResponse>('/users');
-    console.log(res);
     return res.users;
   }
   public async signUp(
@@ -160,18 +159,16 @@ export class API implements IAPI {
       username,
       follower
     });
+    console.log(res);
 
     return res.followers;
   }
   private async delete<T>(path: string, body: object): Promise<T> {
-    console.log("URL", this.baseURL + path);
-    console.log("body",body);
-    console.log("token", this.token + path);
     const response = await fetch(this.baseURL + path, {
       body: JSON.stringify(body),
       headers: {
         Accept: 'application/json',
-        Authorization: this.token,
+        Authorization: `Bearer ${this.token}`,
         "Content-Type": "application/json"
       },
       method: 'DELETE',
@@ -182,7 +179,6 @@ export class API implements IAPI {
     }
     
     const json = await response.json();
-    console.log(json);
     return json as T;
   }  
 

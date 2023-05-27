@@ -29,12 +29,11 @@ export const ShowFollowersScreen = observer(() => {
 
   // funciones 
 
-  function followUser(user: IUser): void {
+  function followUser(user: IUser): void { 
     UserController.followUser(UserController.userInfo.username, user);
   }     
   
   function unfollowUser(username: string): void {
-    console.log("unfollow user")
     UserController.removeFollowed(UserController.userInfo.username, username);
   }
 
@@ -46,8 +45,7 @@ export const ShowFollowersScreen = observer(() => {
         }
     }
     return false;
-}
-console.log(followers.length, "followers length")
+  }
   if (followers.length > 0) {
     return (
       <View style={styles.container}>

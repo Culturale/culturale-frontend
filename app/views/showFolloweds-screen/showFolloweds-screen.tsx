@@ -30,8 +30,6 @@ export const ShowFollowedsScreen = observer(() => {
   const filteredAmigos = seguidos.filter((amigo) => {
     return amigo.username.toLowerCase().includes(searchTerm.toLowerCase());
   });
-  console.log(UserController.userInfo.followeds.length, UserController.userInfo.followeds )
-  console.log(username, seguidos.length)
   if (seguidos.length > 0) {
     return (
       <View style={styles.container}>

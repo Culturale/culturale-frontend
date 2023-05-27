@@ -52,9 +52,9 @@ export interface IAPI {
 
   getChatMessages: (id: string) => Promise<MessageDocument[]>;
 
-  removeFriend(userUsername: string, friendUsername:string): Promise<UserDocument[]>;
+  removeFriend(username: string, follower:string): Promise<UserDocument[]>;
 
-  addFriend(userUsername: string, friendUsername: string): Promise<UserDocument[]>;
+  addFriend(username: string, follower: string): Promise<UserDocument[]>;
   
   getAllUsers: () => Promise<UserDocument[]>;
 }
