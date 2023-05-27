@@ -104,6 +104,9 @@ export const SearchScreen: React.FC<Props> = observer(() => {
   };
 
   const handleSearch = () => {
+    if (showFilters) {
+      setShowFilters(!showFilters);
+    }
     if (searchType === 'usuarios') {
       // Realizar búsqueda de usuarios
     } else if (searchType === 'eventos') {
@@ -148,11 +151,10 @@ export const SearchScreen: React.FC<Props> = observer(() => {
             onChangeText={setSearchText}
             onSubmitEditing={() => handleSearch()}
           />
+          <TouchableOpacity style={styles.buttonfilter} onPress={toggleFilters}>
+                <Ionicons color="black" name="filter-outline" size={24} />
+          </TouchableOpacity>
         </View>
-
-        <TouchableOpacity onPress={toggleFilters}>
-              <Ionicons color="black" name="filter-outline" size={24} />
-        </TouchableOpacity>
 
         <View style={styles.searchTypeContainer}>
               <EventSearchButton
@@ -178,8 +180,9 @@ export const SearchScreen: React.FC<Props> = observer(() => {
       {showFilters && (
         <View style={styles.filterContainer}>
         <View style={styles.filter}>
-          <Text>Categoría:</Text>
-          <Picker style={styles.filter} selectedValue={selectedCateg} onValueChange={setSelectedCateg}>
+          {selectedCateg && <Text>Categoría seleccionada: {selectedCateg.split(':')[0]}</Text>}
+          {!selectedCateg && <Text>Seleccione una categoría</Text>}
+          <Picker selectedValue={selectedCateg} style={styles.filter} onValueChange={setSelectedCateg}>
             <Picker.Item label="Todas las categorías" value="" />
             <Picker.Item label="Actividades virtuales" value="agenda:categories/activitats-virtuals" />
             <Picker.Item label="Exposiciones" value="agenda:categories/exposicions" />
@@ -196,7 +199,10 @@ export const SearchScreen: React.FC<Props> = observer(() => {
         </View>
       
         <View style={styles.filter}>
-          <Button title="Fecha de inicio" onPress={showDatePickerIni} />
+          <Button style={[styles.filterButtonText,
+          styles.searchButton,
+          styles.userSearchButton, styles.selectedButton,
+        ]} title="Fecha de inicio" onPress={showDatePickerIni} />
           <DatePickerModal
             isVisible={showPickerIni}
             mode="date"
@@ -205,8 +211,13 @@ export const SearchScreen: React.FC<Props> = observer(() => {
           />
         </View>
       
-        <View style={styles.filter}>
-          <Button title="Fecha de fin" onPress={showDatePickerEnd} />
+        <View style={styles.filter}> 
+          <TouchableOpacity onPress={showDatePickerEnd}>
+            <Text style={[styles.filterButtonText,
+          styles.searchButton,
+          styles.userSearchButton, styles.selectedButton,
+        ]}>Fecha fin</Text>
+          </TouchableOpacity>
           <DatePickerModal
             isVisible={showPickerEnd}
             mode="date"
@@ -227,8 +238,11 @@ export const SearchScreen: React.FC<Props> = observer(() => {
         </View>
       
         <View style={styles.filter}>
-          <TouchableOpacity onPress={handleSearch} style={styles.filterButton}>
-            <Text style={styles.filterButtonText}>Aplicar filtros</Text>
+          <TouchableOpacity onPress={handleSearch}>
+            <Text style={[styles.filterButtonText,
+          styles.searchButton,
+          styles.userSearchButton, styles.selectedButton,
+        ]}>Aplicar filtros</Text>
           </TouchableOpacity>
         </View>
       </View>

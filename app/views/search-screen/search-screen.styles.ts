@@ -27,12 +27,7 @@ export const SearchScreenStyles =  StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
   },
-  filterButton: {
-    backgroundColor: '#1678C2',
-    borderRadius: 4,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-  },
+
 
     filterButtonText: {
     color: '#FFFFFF',
@@ -40,15 +35,19 @@ export const SearchScreenStyles =  StyleSheet.create({
     fontWeight: 'bold',
   },
 
-  filterContainer: {
-        marginTop: 70,
+  buttonfilter: {
+        marginLeft:30,
+      },
 
+  filterContainer: {
         backgroundColor: '#FFFFFF',
 
-        borderRadius: 8,
         borderColor: '#34B38A',
+
+        borderRadius: 8,
         borderWidth: 2,
         elevation: 2,
+        marginTop: 70,
 
         marginVertical: 16,
         paddingHorizontal: 16,
@@ -70,7 +69,42 @@ export const SearchScreenStyles =  StyleSheet.create({
     fontSize: 16,
   },
 
-  filterTextInput: {
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+
+      filterTextInput: {
     backgroundColor: '#F2F2F2',
     borderColor: '#E5E5E5',
     borderRadius: 4,
@@ -83,41 +117,38 @@ export const SearchScreenStyles =  StyleSheet.create({
   },
 
       // filterContainer: {
-      //   alignItems: 'center',
-      //   backgroundColor: '#FFFFFF',
-      //   borderColor: '#34B38A',
-      //   borderRadius: 8,
-      //   borderWidth: 2,
-      //   elevation: 2,
-      //   marginVertical: 16,
-      //   paddingHorizontal: 16,
-      //   paddingVertical: 12,
-      //   shadowColor: '#000000',
-      //   shadowOffset: {
-      //     height: 2,
-      //     width: 0,
-      //   },
-      //   shadowOpacity: 0.1,
-      //   shadowRadius: 2,
-      // },
-
-      // filterprice: {
-      //   alignItems: 'center',
-      //   backgroundColor: '#F3F3F3',
-      //   color: '#333',
-      //   flexDirection: 'row',
-      //   fontSize: 12,
-      //   fontWeight: '500',
-      //   height: 20,
-      //   paddingVertical: 2
-      // },
-
-      // inputprice: {
-      //   borderColor: '#000',
-      //   paddingLeft: 2,
-      // },
-
-      noResultsContainer: {
+//   alignItems: 'center',
+//   backgroundColor: '#FFFFFF',
+//   borderColor: '#34B38A',
+//   borderRadius: 8,
+//   borderWidth: 2,
+//   elevation: 2,
+//   marginVertical: 16,
+//   paddingHorizontal: 16,
+//   paddingVertical: 12,
+//   shadowColor: '#000000',
+//   shadowOffset: {
+//     height: 2,
+//     width: 0,
+//   },
+//   shadowOpacity: 0.1,
+//   shadowRadius: 2,
+// },
+// filterprice: {
+//   alignItems: 'center',
+//   backgroundColor: '#F3F3F3',
+//   color: '#333',
+//   flexDirection: 'row',
+//   fontSize: 12,
+//   fontWeight: '500',
+//   height: 20,
+//   paddingVertical: 2
+// },
+// inputprice: {
+//   borderColor: '#000',
+//   paddingLeft: 2,
+// },
+noResultsContainer: {
         alignItems: 'center',
         flex: 1,
         justifyContent: 'center',
@@ -135,6 +166,7 @@ export const SearchScreenStyles =  StyleSheet.create({
         backgroundColor: '#000',
         flex: 1,
         width: '100%',
+        zIndex: -1,
       },
 
       searchButton: {
@@ -153,7 +185,7 @@ export const SearchScreenStyles =  StyleSheet.create({
         paddingHorizontal: 10,
         top: 55,
       },
-
+      
       searchIcon: {
         marginLeft: 10,
         marginRight: 10,
@@ -166,7 +198,7 @@ export const SearchScreenStyles =  StyleSheet.create({
         flexDirection: 'row',
         width: 330,
       },
-      
+
       searchTypeContainer: {
         flexDirection: 'row',
         marginTop: 10,
@@ -175,6 +207,7 @@ export const SearchScreenStyles =  StyleSheet.create({
       selectedButton: {
         backgroundColor: '#34b38a',
       },
+
       selectedText: {
         color: '#fff',
       },
