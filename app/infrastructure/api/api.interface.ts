@@ -5,6 +5,7 @@ export type EventDocument = definitions['event'];
 export type UserDocument = definitions['user'];
 export type MessageDocument = definitions['message'];
 export type ChatDocument = definitions['chat'];
+export type ReviewDocument = definitions['review'];
 export type GetEventsResponse =
   paths['/events']['get']['responses']['200']['schema'];
 export type GetUsersResponse =
@@ -57,4 +58,5 @@ export interface IAPI {
   addFriend(username: string, follower: string): Promise<UserDocument[]>;
   
   getAllUsers: () => Promise<UserDocument[]>;
+  addReview: (eventId: string, authorId: string, puntuation: number,  comment?: string) => Promise<ReviewDocument>;
 }

@@ -5,6 +5,7 @@ import type { IEvent } from '../event';
 import type { IUser } from './user.interface';
 
 export interface UserProps {
+  _id: string;
   username: string;
   name: string;
   email: string;
@@ -17,6 +18,7 @@ export interface UserProps {
 }
 
 export class User implements IUser {
+  public _id: string;
   public username: string;
   public name: string;
   public email: string;
@@ -29,6 +31,7 @@ export class User implements IUser {
 
   constructor(props: UserProps) {
     const {
+      _id,
       username,
       name,
       email,
@@ -39,6 +42,7 @@ export class User implements IUser {
       followers,
       eventSub,
     } = props;
+    this._id = _id;
     this.username = username;
     this.name = name;
     this.email = email;

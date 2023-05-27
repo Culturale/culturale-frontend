@@ -4,7 +4,7 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import type React from 'react';
 import { useEffect } from 'react';
-import { Text, View, FlatList, TouchableOpacity} from 'react-native';
+import { View, FlatList, TouchableOpacity} from 'react-native';
 
 import { Text as TraductionText , Event } from '~/components';
 import type { IEvent } from '~/domain';

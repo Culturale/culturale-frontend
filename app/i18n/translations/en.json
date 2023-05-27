@@ -59,7 +59,10 @@
   "noFriends": "Meet new people to start this adventure",
   "delete": "Delete"
 
-}
-
+},
+    "myEvents": {
+      "calendar": "+ Add to calendar ",
+      "valoration": "+ Make a review"
+  }
   }
   
