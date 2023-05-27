@@ -4,6 +4,8 @@ export type RootParamList = {
   Main: undefined;
   Signup: undefined;  
   ShowFriends:undefined;
+  ShowFolloweds: { username: string };
+  ShowFollowers: { username: string };
   Profile: undefined;
   ProfileScreen: undefined;
   EditProfile: undefined;

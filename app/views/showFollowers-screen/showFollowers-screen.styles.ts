@@ -4,7 +4,7 @@ export const ShowFriendsStyles =  StyleSheet.create({
     display: 'flex',
     paddingLeft: 10,
     paddingTop: 30,
-  },
+  },  
   container: {
       flex: 1,
       backgroundColor: '#fff',

@@ -1,5 +1,11 @@
 import {StyleSheet} from 'react-native';
 export const ShowUserStyles =  StyleSheet.create({
+  
+  backArrow: {
+    display: 'flex',
+    paddingLeft: 10,
+    paddingTop: 30,
+  },
   column: {
     alignItems: 'flex-start',
     flex: 1,

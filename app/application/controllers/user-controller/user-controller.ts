@@ -54,20 +54,28 @@ export class UserController implements IUserController {
       this,
       {
         name: 'UserController',
-        properties: ['isLoggedIn', 'token', 'userInfo'],
+        properties: ['isLoggedIn', 'token', 'userInfo', 'users'],
         storage: AsyncStorage,
       },
       { fireImmediately: true },
     );
   }
-  public async removeFriend(userUsername: string, friendUsername:string): Promise<void> {
-    // Se quita b de la lista de seguidos de a
-     await this.infrastructure.api.removeFriend(userUsername, friendUsername);
+  public async removeFollowed(userUsername: string, friendUsername:string): Promise<void> {
+    
+    try{
+    console.log(await this.infrastructure.api.removeFriend(friendUsername, userUsername));
+
+    // A deja de seguir a B
+    // Se quita B de la lista de seguidos de A
     const index = this.userInfo.followeds.findIndex(user => user.username === friendUsername);
     if (index !== -1) {
-      this.userInfo.followeds.splice(index, 1);
+      const newFolloweds = this.userInfo.followeds.filter(user => user.username !== friendUsername);  
+      this.userInfo.followeds = newFolloweds;
+      const newUsers = [...this.users];
+      newUsers[index] = this.userInfo;
+      this.setUsers(newUsers);
     }
-    // Se quita a de la lista de seguidores de b
+    // Se quita A de la lista de seguidores de B
     const index2 = this.users.findIndex(user => user.username === friendUsername);
     if (index2 !== -1) {
       const newUsers = [...this.users];
@@ -76,16 +84,26 @@ export class UserController implements IUserController {
       friend.followers = newFollowers;
       newUsers[index2] = friend;
       this.setUsers(newUsers);
+    }}
+    catch(error){
+      console.log(error);
     }
-
-    
   }
-  public async addFriend(userUsername: string, friendUser: IUser): Promise<void> {
-    await this.infrastructure.api.addFriend(userUsername, friendUser.username);
-  // añadimos B a los seguidos de A
+
+  public async followUser(userUsername: string, friendUser: IUser): Promise<void> {
+    try{
+       console.log(await this.infrastructure.api.addFriend(userUsername, friendUser.username));
+      
+      // añadimos B a los seguidos de A
     const index = this.userInfo.followeds.findIndex(user => user.username === friendUser.username);
     if (index === -1) {
       this.userInfo.followeds.push(friendUser);
+      const friendIndex = this.users.findIndex(user => user.username === userUsername);
+      if (friendIndex !== -1) {
+        const newUsers = [...this.users];
+        newUsers[friendIndex].followeds = this.userInfo.followeds;
+        this.setUsers(newUsers);
+      }
     }
   // añadimos A a los seguidores de B
     const friendIndex = this.users.findIndex(user => user.username === friendUser.username);
@@ -96,11 +114,16 @@ export class UserController implements IUserController {
       newUsers[friendIndex] = friendUser;
       this.setUsers(newUsers);
     }
+  } 
+  catch(error){
+    console.log(error);
   }
-  
+}
+
   public setUserFollowers(token: string): void {
     this.token = token;
   }
+  
   public async modifyUser(
     username: string,
     name: string,
@@ -175,6 +198,10 @@ export class UserController implements IUserController {
   public setUserInfo(user: IUser): void {
     this.userInfo = user;
   }
+  public findUser(username: string): IUser | undefined {
+    return this.users.find(user => user.username === username);
+  }
+  
   public fetchAllUsers(): IRequestSubject<void> {
     const subject = new RequestSubject<void>();
     subject.startRequest();
@@ -207,14 +234,3 @@ export class UserController implements IUserController {
 
 
 
-
-// Si a y b son amigos 
-// a.followeds = b
-// a.followers = b
-// b.followeds = a
-// b.followers = a
-// si a deja de seguir a b
-// a.followeds = 
-// a.followers = b
-// b.followeds = a
-// b.followers = 

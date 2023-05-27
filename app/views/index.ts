@@ -5,3 +5,6 @@ export * from './editProfile-screen';
 export * from './home-screen';
 export * from './event-screen';
 export * from './myEvents-screen';
+export * from './showUser-screen';
+export * from './showFolloweds-screen';
+export * from './showFollowers-screen';

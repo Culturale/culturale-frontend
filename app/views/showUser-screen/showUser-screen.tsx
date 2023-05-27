@@ -1,55 +1,72 @@
-import { RouteProp, useRoute } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { Text, View, Image, Button } from 'react-native';
+import { Text, View, Image, Button, TouchableOpacity } from 'react-native';
 import { Text as TraductionText } from '~/components';
 import { useApplicationLayer } from '~/hooks';
 import { ShowUserStyles as Styles } from './showUser-screen.styles';
-import {  TabParamList } from '~/navigation';
+import {  RootParamList, TabParamList } from '~/navigation';
 import type { ShowUserScreenProps as Props} from './showUser-screen.props';
+import { IUser } from '~/domain';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { Ionicons } from '@expo/vector-icons';
+
+type ShowUserNavigation = StackNavigationProp<RootParamList, 'ShowFollowers'>;
 
 export const ShowUserScreen: React.FC<Props> = observer(() => {
 
   const { params } = useRoute<RouteProp<TabParamList, 'ShowUserScreen'>>();
-  const {
-    controllers: { UserController },
-  } = useApplicationLayer();
   const username = params.username;
-
-  const user = UserController.users.filter((user)=> user?.username === username)[0];
+  const { controllers: { UserController }} = useApplicationLayer();
   
+  const user = UserController.users.filter((user)=> user?.username === username)[0];
+  const navigationUsr = useNavigation<ShowUserNavigation>();
+
   function followUser(): void {
-    UserController.addFriend(UserController.userInfo.username, user);
-  }
+    UserController.followUser(UserController.userInfo.username, user);
+  }     
   
   function unfollowUser(): void {
-    UserController.removeFriend(UserController.userInfo.username, username);
+    UserController.removeFollowed(UserController.userInfo.username, username);
   }
+
   function isFollowing(): boolean {
-  
-    UserController.userInfo.followeds.forEach((followed) => {
-      if (followed.username == user.username) {
-        return false;
-      }
-    });
-    return true;
-  }
+    const followeds: IUser[] = UserController.userInfo.followeds;
+    for (const followed of followeds) {
+        if (followed.username === username) {
+            return true;
+        }
+    }
+    return false;
+}
+console.log("USUARIO QUE SE VERÁ", user)
+console.log("USUARIO Seguidos", user.followeds)
+console.log("USUARIO Seguidores", user.followers)
   return (
     <View style={Styles.container}>
+      <View style={Styles.backArrow}>
+          <TouchableOpacity onPress={() => navigationUsr.navigate('ProfileScreen')}>
+              <Ionicons color="black" name="arrow-back" size={24} />
+            </TouchableOpacity>
+        </View>
        <View style={Styles.container}>
-        <TraductionText style={Styles.title} tx="perfil.miperfil"/>
+        <TraductionText style={Styles.title} tx="perfil.perfil"/>
         <View style={Styles.rowProfile}>
           <View style={Styles.titleData}>
             <Image src={user.profilePicture} style={Styles.foto}/>
             <View style={Styles.contentData}>
+            <TouchableOpacity onPress={() => { navigationUsr.navigate('ShowFollowers',{username: user.username}) }}>
               <Text style={Styles.number}>{user.followeds.length}</Text>
-              <TraductionText tx='perfil.seguidores'/>
+              <TraductionText tx='perfil.siguiendo'/>
+            </TouchableOpacity>
             </View>
             <View style={Styles.contentData}>
+            <TouchableOpacity onPress={() => { navigationUsr.navigate('ShowFolloweds', {username: user.username}) }}>
               <Text style={Styles.number}>{user.followers.length}</Text>
-              <TraductionText tx='perfil.siguiendo'/>
+              <TraductionText tx='perfil.seguidores'/>
+            </TouchableOpacity>
             </View>
-          </View>
+            </View>
         </View>
         <Text style={Styles.username}>{user.username}</Text>
         <View style={Styles.row}>
@@ -83,7 +100,7 @@ export const ShowUserScreen: React.FC<Props> = observer(() => {
           onPress={() => (isFollowing() ? unfollowUser() : followUser())}
         ></Button>
         </View>
-        
+
       </View>
     
 
