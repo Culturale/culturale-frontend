@@ -3,9 +3,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { EditProfileScreen, ProfileScreen, HomeScreen, EventScreen, MyEventsScreen, ValoracioScreen} from '~/views';
+import { EditProfileScreen, ProfileScreen, HomeScreen, EventScreen, MyEventsScreen, ValoracioScreen, PreferitsScreen} from '~/views';
 import { ShowFriendsScreen } from '~/views/showFriends-screen';
-import { EditProfileScreen, ProfileScreen, HomeScreen, EventScreen, MyEventsScreen, PreferitsScreen} from '~/views';
 
 
 import type { RootParamList, TabParamList } from './root-params';
