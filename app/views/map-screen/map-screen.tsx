@@ -7,7 +7,7 @@ import { Text, TouchableOpacity, TextInput, View, Button } from 'react-native';
 import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-// import { Text as TraductionText } from '~/components';
+import { Text as TraductionText } from '~/components';
 import type { IEvent } from '~/domain/entities';
 import { useApplicationLayer } from '~/hooks';
 import type { RootParamList } from '~/navigation';
@@ -144,11 +144,11 @@ export const MapScreen: React.FC<Props> = observer(() => {
         <View style={styles.container}>
     
             <View style={styles.titleContainer}>
-                <Text style={styles.title}>Mapa</Text>
+            <TraductionText style={styles.title} text="Mapa"/>
             </View>
     
             <View style={styles.bottomContainer}>
-                    <Text style={styles.subTitle}>Eventos interesantes cerca de mí...</Text>
+                    <TraductionText style={styles.subTitle} text="Eventos interesantes cerca de mí..."/>
             </View>
             
             <View style={styles.map}>
