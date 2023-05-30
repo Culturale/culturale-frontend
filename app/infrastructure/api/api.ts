@@ -49,6 +49,7 @@ export class API implements IAPI {
   }
 
   private async get<T>(path: string): Promise<T> {
+    console.log(this.baseURL + path);
     return fetch(this.baseURL + path, {
       headers: {
         Accept: 'application/json',
@@ -95,9 +96,12 @@ export class API implements IAPI {
   }
 
   public async getAllEvents(): Promise<EventDocument[]> {
-    const res = await this.get<GetEventsResponse>('/events');
+    console.log('/events/50?page=1');
+    const res = await this.get<GetEventsResponse>('/events/50?page=1');
+    console.log(res);
     return res.events;
   }
+  
 
   public async signUp(
     username: string,
