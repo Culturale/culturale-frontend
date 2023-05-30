@@ -2,9 +2,9 @@ import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import * as Location from 'expo-location';
 import { observer } from 'mobx-react-lite';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef} from 'react';
 import { Text, TouchableOpacity, TextInput, View, Button } from 'react-native';
-import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { LatLng, Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { Text as TraductionText } from '~/components';
@@ -17,11 +17,32 @@ import { MapScreenStyles as styles } from './map-screen.styles';
 
 
 
+
 export const MapScreen: React.FC<Props> = observer(() => {
+    const [mapBounds, setMapBounds] = useState<{
+        lowerLeft: LatLng | null;
+        topRight: LatLng | null;
+      }>({
+        lowerLeft: null,
+        topRight: null,
+      });
+      
     const {
         controllers: { EventController },
     } = useApplicationLayer();
-    const events = EventController.events;
+    
+    const events = EventController.eventsmap;
+
+    useEffect(() => {
+        if (mapBounds.lowerLeft && mapBounds.topRight) {
+          EventController.fetchMapEvents(
+            mapBounds.lowerLeft.latitude,
+            mapBounds.lowerLeft.longitude,
+            mapBounds.topRight.latitude,
+            mapBounds.topRight.longitude
+          );
+        }
+      }, [mapBounds]);
 
     const [showCallout, setShowCallout] = useState(false);
     
@@ -49,10 +70,9 @@ export const MapScreen: React.FC<Props> = observer(() => {
             longitude: location.coords.longitude,
             longitudeDelta: 0.09,
           });
-        };
-    
+        };    
         getLocationAsync();
-      }, []);
+    }, []);
 
     const closeCallout = () => {
         setShowCallout(false);
@@ -92,6 +112,8 @@ export const MapScreen: React.FC<Props> = observer(() => {
         }
     };
 
+    const mapRef = useRef<MapView | null>(null);
+
     type MapNavigation = StackNavigationProp<RootParamList, 'MapScreen'>;
 
     const navigation = useNavigation<MapNavigation>();
@@ -100,7 +122,9 @@ export const MapScreen: React.FC<Props> = observer(() => {
         navigation.navigate('EventScreen', { eventId : event.id });
     };
 
-    const markers = events.map((event) => (
+    let markers = null;
+    if (events) {
+      markers = events.map((event) => (
         <Marker
           key={`${event.lat}-${event.long}`}
           coordinate={{ latitude: event.lat, longitude: event.long }}
@@ -108,7 +132,6 @@ export const MapScreen: React.FC<Props> = observer(() => {
         >
           <Callout style={styles.calloutContainer} onPress={() => handleEventClick(event)}>
                     <Text style={styles.subTitle}>{event.denominacio}</Text>
-                    <Text style={styles.subTitle}>{event.descripcio}</Text>
                     <View style={styles.infoContainer}>
                         <View style={styles.iconContainer}>
                             <Ionicons color="#888" name="time" size={18} />
@@ -139,7 +162,7 @@ export const MapScreen: React.FC<Props> = observer(() => {
             </Callout>
         </Marker>
       ));
-
+    }
     return (
         <View style={styles.container}>
     
@@ -152,7 +175,30 @@ export const MapScreen: React.FC<Props> = observer(() => {
             </View>
             
             <View style={styles.map}>
-                <MapView provider={PROVIDER_GOOGLE} region={region} style={styles.map}>
+                <MapView provider={PROVIDER_GOOGLE} region={region} style={styles.map}
+                onLayout={({ nativeEvent }) => {
+                    const { width, height } = nativeEvent.layout;
+                    const corners = {
+                      lowerLeft: { x: 0, y: height },
+                      topRight: { x: width, y: 0 },
+                    };
+                    const lowerLeftPromise = mapRef.current?.coordinateForPoint(corners.lowerLeft);
+                    const topRightPromise = mapRef.current?.coordinateForPoint(corners.topRight);
+                
+                    Promise.all([lowerLeftPromise, topRightPromise]).then(([lowerLeft, topRight]) => {
+                      setMapBounds({ lowerLeft, topRight });
+                    });
+                    if (mapBounds.lowerLeft && mapBounds.topRight) {
+                        EventController.fetchMapEvents(
+                          mapBounds.lowerLeft.latitude,
+                          mapBounds.lowerLeft.longitude,
+                          mapBounds.topRight.latitude,
+                          mapBounds.topRight.longitude
+                        );
+                    }
+                  }}
+                  ref={mapRef}
+                >
                 {markers}
                 </MapView>
             
