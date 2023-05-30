@@ -1,9 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
+import * as Location from 'expo-location';
 import { observer } from 'mobx-react-lite';
 import { useState, useEffect } from 'react';
 import { Text, TouchableOpacity, TextInput, View, Button } from 'react-native';
-import * as Location from 'expo-location';
 import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
