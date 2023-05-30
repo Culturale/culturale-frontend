@@ -3,8 +3,8 @@ import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import type React from 'react';
-import { useEffect } from 'react';
-import { View, FlatList, TouchableOpacity} from 'react-native';
+import { useEffect, useState} from 'react';
+import { View, FlatList, TouchableOpacity, ActivityIndicator} from 'react-native';
 
 import { Text as TraductionText , Event } from '~/components';
 import type { IEvent } from '~/domain';
@@ -21,12 +21,27 @@ export const HomeScreen: React.FC<Props> = observer(() => {
   const {
     controllers: { EventController },
   } = useApplicationLayer();
+  const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(1);
   const events = EventController.events;
   const navigation = useNavigation<HomeNavigation>();
 
   useEffect(() => {
-    EventController.fetchAllEvents();
+    fetchEvents();
   }, []);
+
+  const fetchEvents = async () => {
+    setIsLoading(true);
+    await EventController.fetchAllEvents(page);
+    setIsLoading(false);
+  };
+
+  const handleEndReached = () => {
+    if (!isLoading) {
+      setPage(page + 1);
+      fetchEvents();
+    }
+  };
 
   const renderItem = ({ item }: { item: IEvent }) => {
     const handleEventClick = () => {
@@ -37,6 +52,10 @@ export const HomeScreen: React.FC<Props> = observer(() => {
         <Event key={item.id} event={item} />
       </TouchableOpacity>
     );
+  };
+
+  const renderFooter = () => {
+    return isLoading ? <ActivityIndicator style={styles.loadingIndicator} /> : null;
   };
 
   return (
@@ -55,9 +74,12 @@ export const HomeScreen: React.FC<Props> = observer(() => {
       </View>
       <View style={styles.eventContainer}>
         <FlatList
+          ListFooterComponent={renderFooter}
           data={events}
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
+          onEndReached={handleEndReached}
+          onEndReachedThreshold={0.5}
         />
       </View>
     </View>

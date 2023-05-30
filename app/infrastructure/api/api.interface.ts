@@ -38,7 +38,7 @@ export interface IAPI {
     profilePicture?: string,
   ) => Promise<UserDocument>;
 
-  getAllEvents: () => Promise<EventDocument[]>;
+  getAllEvents: (page: number) => Promise<EventDocument[]>;
 
   editUser: (
     username: string,

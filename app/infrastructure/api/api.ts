@@ -95,9 +95,9 @@ export class API implements IAPI {
     return res;
   }
 
-  public async getAllEvents(): Promise<EventDocument[]> {
-    console.log('/events/50?page=1');
-    const res = await this.get<GetEventsResponse>('/events/50?page=1');
+  public async getAllEvents(page: number): Promise<EventDocument[]> {
+    console.log('/events/50?page=${number}');
+    const res = await this.get<GetEventsResponse>('/events/50?page=${number}');
     console.log(res);
     return res.events;
   }

@@ -26,7 +26,7 @@ export class EventController implements IEventController {
     this.events = events;
   }
 
-  public fetchAllEvents(): IRequestSubject<void> {
+  public fetchAllEvents(page: number): IRequestSubject<void> {
     const subject = new RequestSubject<void>();
     subject.startRequest();
 
