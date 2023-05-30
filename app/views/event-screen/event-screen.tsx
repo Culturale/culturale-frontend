@@ -4,7 +4,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import type React from 'react';
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import { Image, Linking, Platform, Text, TouchableOpacity, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
@@ -27,7 +27,7 @@ export const EventScreen: React.FC<Props> = observer(() => {
   const event = EventController.events.filter((event) => event?.id === eventId)[0];
   const enrolled: boolean = UserController.userInfo.eventSub.some((eventUser) => eventUser?.id === event.id);
   const [showSuccess, setShowSuccess] = useState(enrolled);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const events = UserController.userInfo.preferits;
 
   const handleOpenMaps = () => {
     const { lat, long } = event;
@@ -36,6 +36,10 @@ export const EventScreen: React.FC<Props> = observer(() => {
     Linking.openURL(url);
   };
 
+  useEffect(() => {
+    UserController.fetchAllFavourites();
+  }, []);
+  const [isFavorite, setIsFavorite] = useState(events.some((item) => item._id === event._id));
   function addParticipantEvent() {
     UserController.addEventSub(event);
     EventController.addParticipant(event, UserController.userInfo);
@@ -81,7 +85,7 @@ export const EventScreen: React.FC<Props> = observer(() => {
               <Ionicons color="#888" name="calendar-outline" size={16} />
               <Text style={styles.subtitle}>{event.dataIni.toLocaleDateString()}</Text>
             </View>
-            <Text style={styles.description}>{event.descripcio}</Text>
+            {/* <Text style={styles.description}>{event.descripcio}</Text> */}
             <TouchableOpacity onPress={() => Linking.openURL(event.url)}>
               <TraductionText style={styles.goButton} tx="eventScreen.information" />
             </TouchableOpacity>

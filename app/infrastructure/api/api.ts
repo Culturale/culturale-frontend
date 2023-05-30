@@ -49,7 +49,7 @@ export class API implements IAPI {
   }
 
   private async get<T>(path: string): Promise<T> {
-    return fetch('http://192.168.1.34' + path, {
+    return fetch(this.baseURL + path, {
       headers: {
         Accept: 'application/json',
         Authorization: this.token,
@@ -95,8 +95,13 @@ export class API implements IAPI {
   }
 
   public async getAllEvents(): Promise<EventDocument[]> {
-    const res = await this.get<GetEventsResponse>('/events');
+    const res = await this.get<GetEventsResponse>('/events/50?page=1');
     return res.events;
+  }
+
+  public async getUserPreferits(username: string): Promise<EventDocument[]> {
+    const res = await this.get<UserDocument>(`/users/username/${username}`);
+    return res.user.preferits;
   }
 
   public async signUp(
