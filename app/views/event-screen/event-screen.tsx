@@ -64,7 +64,7 @@ export const EventScreen: React.FC<Props> = observer(() => {
           <Ionicons color="#888" name="calendar-outline" size={16} />
           <Text style={styles.subtitle}>{event.dataIni.toLocaleDateString()}</Text>
           </View>
-          <Text style={styles.description}>{event.descripcio}</Text>
+          {/* <Text style={styles.description}>{event.descripcio}</Text> */}
           <TouchableOpacity onPress={() => Linking.openURL(event.url)}>
             <TraductionText style={styles.goButton} tx='eventScreen.information'/>
           </TouchableOpacity>
