@@ -3,7 +3,7 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import { useState, useEffect } from 'react';
 import { Text, TouchableOpacity, TextInput, View, Button } from 'react-native';
-import * as Location from 'react-native-location';
+import * as Location from 'expo-location';
 import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -35,25 +35,24 @@ export const MapScreen: React.FC<Props> = observer(() => {
     });
     
     useEffect(() => {
-        // Obtiene la ubicación actual del dispositivo y actualiza la región del mapa
-        (async () => {
-          await Location.requestForegroundPermissionsAsync();
+        const getLocationAsync = async () => {
           const { status } = await Location.requestForegroundPermissionsAsync();
           if (status !== 'granted') {
+            // El usuario no ha concedido los permisos de ubicación
             return;
           }
     
           const location = await Location.getCurrentPositionAsync({});
-  
-          // NO ENTRA, NO demana permis per la ubi...
           setRegion({
             latitude: location.coords.latitude,
             latitudeDelta: 0.09,
             longitude: location.coords.longitude,
             longitudeDelta: 0.09,
           });
-        })();
-    }, []);
+        };
+    
+        getLocationAsync();
+      }, []);
 
     const closeCallout = () => {
         setShowCallout(false);
