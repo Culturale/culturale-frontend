@@ -8,10 +8,11 @@ export function userFactory(userDocument: UserDocument | string): IUser {
   if( typeof userDocument === 'string') return null;
   return new User({
     ...userDocument,
+
+    preferits: userDocument.preferits?.map(eventFactory),
+    eventSub: userDocument.eventSub?.map(eventFactory),
     followeds: userDocument.followeds?.map(userFactory),
     followers: userDocument.followers?.map(userFactory),
-    eventSub: userDocument.eventSub?.map(eventFactory),
-    preferits: userDocument.preferits?.map(eventFactory),
 
   });
 }

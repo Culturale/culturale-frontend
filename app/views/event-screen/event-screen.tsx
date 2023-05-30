@@ -63,23 +63,37 @@ export const EventScreen: React.FC<Props> = observer(() => {
           <Ionicons color="black" name="arrow-back" size={24} />
         </TouchableOpacity>
       </View>
-      <View style={styles.container}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>{event.denominacio}</Text>
-        </View>
-        <View style={{ flexDirection: 'row', gap: 10, marginTop: 10 }}>
-          <Image
-            source={{
-              uri: event.photo
-                ? event.photo
-                : 'https://archive.org/download/no-photo-available/no-photo-available.png',
-            }}
-            style={styles.photo}
-          />
-          <View style={{ flexDirection: 'column' }}>
-            <View style={styles.subtitleContainer}>
-              <Ionicons color="#888" name="location-outline" size={16} />
-              <Text style={styles.subtitle}>{event.adress}</Text>
+        <View style={styles.container}> 
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>{event.denominacio}</Text>
+          </View>
+          <View style={{flexDirection:'row', gap: 10, marginTop: 10}}>
+          <Image source={{ uri: event.photo ? event.photo : 'https://archive.org/download/no-photo-available/no-photo-available.png'}} style={styles.photo}/>
+          <View style={{flexDirection:'column'}}>
+          <View style={styles.subtitleContainer}>
+          <Ionicons color="#888" name="location-outline" size={16} />
+          <Text style={styles.subtitle}>{event.adress}</Text>
+          </View>
+          <View style={styles.subtitleContainer}>
+          <Ionicons color="#888" name="calendar-outline" size={16} />
+          <Text style={styles.subtitle}>{event.dataIni.toLocaleDateString()}</Text>
+          </View>
+          {/* <Text style={styles.description}>{event.descripcio}</Text> */}
+          <TouchableOpacity onPress={() => Linking.openURL(event.url)}>
+            <TraductionText style={styles.goButton} tx='eventScreen.information'/>
+          </TouchableOpacity>
+          </View>
+          </View>
+          <View style={styles.priceContainer}>
+            <View style={{flexDirection:'column', gap: 10, justifyContent: 'flex-end', marginTop: 10}}>
+              <Text style={styles.price}>22,10€</Text>
+              {!showSuccess ? (<TouchableOpacity style={styles.buyButton} onPress={addParticipantEvent}>
+                <TraductionText style={styles.buyButtonText} tx='eventScreen.BuyText'/>
+              </TouchableOpacity>): (
+              <View style={styles.successContainer}>
+                  <Ionicons color="green" name="checkmark-circle-outline" size={32} />
+                  <Text style={styles.successText}>Compra realizada correctamente</Text>
+              </View>)}
             </View>
             <View style={styles.subtitleContainer}>
               <Ionicons color="#888" name="calendar-outline" size={16} />

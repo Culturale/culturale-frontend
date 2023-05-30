@@ -42,6 +42,8 @@ export interface IAPI {
 
   getAllEvents: () => Promise<EventDocument[]>;
 
+  getMapEvents: (lat1: number, lon1: number, lat2: number, lon2: number) => Promise<EventDocument[]>;
+
   editUser: (
     username: string,
     name: string,

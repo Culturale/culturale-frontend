@@ -15,6 +15,7 @@ export interface IEvent {
   chat: IChat;
   lat: number;
   long: number;
+  price?: string;
   photo?: string;
   participants: IUser[];
 
