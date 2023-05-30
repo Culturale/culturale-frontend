@@ -49,7 +49,7 @@ export class API implements IAPI {
   }
 
   private async get<T>(path: string): Promise<T> {
-    return fetch(this.baseURL + path, {
+    return fetch('http://192.168.1.34' + path, {
       headers: {
         Accept: 'application/json',
         Authorization: this.token,
