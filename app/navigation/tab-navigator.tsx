@@ -3,8 +3,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { MapScreen, EditProfileScreen, ProfileScreen, HomeScreen, EventScreen, MyEventsScreen, ValoracioScreen} from '~/views';
+import { MapScreen, EditProfileScreen, ProfileScreen, HomeScreen, EventScreen, MyEventsScreen, ValoracioScreen, PreferitsScreen} from '~/views';
 import { ShowFriendsScreen } from '~/views/showFriends-screen';
+
 
 import type { RootParamList, TabParamList } from './root-params';
 
@@ -22,6 +23,11 @@ const ProfileStackNavigator: React.FC = observer(() => {
       <ProfileStack.Screen
         component={EditProfileScreen}
         name="EditProfile"
+        options={{ headerShown: false }}
+      />
+      <ProfileStack.Screen
+        component={PreferitsScreen}
+        name="PreferitsScreen"
         options={{ headerShown: false }}
       />
       <ProfileStack.Screen

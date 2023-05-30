@@ -25,6 +25,10 @@ export const ProfileScreen = observer(() => {
     navigationFriends.navigate('ShowFriends');
   }
 
+  function mostrarFavoritos() {
+    navigationProfile.navigate('PreferitsScreen');
+  }
+
     return (
       <View style={Styles.container}>
         <TraductionText style={Styles.title} tx="perfil.miperfil"/>
@@ -74,6 +78,10 @@ export const ProfileScreen = observer(() => {
         ></Button>
         </View>
         <View style={Styles.containerInfo}>
+          <TouchableOpacity  style={Styles.panelConfig} onPress={() => { mostrarFavoritos() }}>
+            <Image source={require('../../../assets/star-logo.png')} style={Styles.icon}/>
+            <TraductionText style={Styles.configText} tx="perfil.favoritos"/>
+          </TouchableOpacity>
           <View style={Styles.panelConfig}>
             <Image source={require('../../../assets/config-logo.png')} style={Styles.icon} />
             <TraductionText style={Styles.configText} tx="perfil.configuracion"/>

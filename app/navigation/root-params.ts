@@ -12,6 +12,7 @@ export type RootParamList = {
   MyEventsScreen: undefined;
   HomeScreen: undefined;
   EventScreen: { eventId: string};
+  PreferitsScreen: undefined;
   ValoracioScreen: { event: IEvent};
   MapScreen: undefined;
 };
