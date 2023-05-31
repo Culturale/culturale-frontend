@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 import { observer } from 'mobx-react-lite';
 import type React from 'react';
 import { useEffect, useState } from 'react';
-import { Text, View, FlatList, TextInput, TouchableOpacity, Button, StatusBar} from 'react-native';
+import { Text, View, FlatList, TextInput, TouchableOpacity, StatusBar} from 'react-native';
 import DatePickerModal from 'react-native-modal-datetime-picker';
 
 import { Event } from '~/components';
@@ -17,16 +17,16 @@ import { SearchScreenStyles as styles } from './search-screen.styles';
 export const SearchScreen: React.FC<Props> = observer(() => {
   const { controllers: { EventController } } = useApplicationLayer();
 
-  // Lista de resultados a mostrar:
+  // Llista de resultats a mostrar:
   const [searchResults, setSearchResults] = useState<IEvent[]>([]);
 
   // CERCA DE EVENTOS SEGÚN EL FILTRO:
   // Denominación:
   const [searchText, setSearchText] = useState('');
   // Fecha Inicio:
-  const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(null);
+  const [selectedStartDate, setSelectedStartDate] = useState('');
   // Fecha Fin:
-  const [selectedEndDate, setSelectedEndDate] = useState<Date | null>(null);
+  const [selectedEndDate, setSelectedEndDate] = useState('');
   // Precio:
   const [priceRangeMax, setPriceRangeMax] = useState('');
   // Categoria:
@@ -36,36 +36,45 @@ export const SearchScreen: React.FC<Props> = observer(() => {
 
   // Para saber si quieren buscar usuarios o eventos:
   const [searchType, setSearchType] = useState<'usuarios' | 'eventos'>('eventos');
+  
   // Para mostrar en el input, buscar usuario/evento:
   const [userSearch, setUserSearch] = useState(false);
 
   // Estado para controlar la visibilidad del menú de filtros
-  const [showFilters, setShowFilters] = useState(false);
+  const [showEventFilters, setEventShowFilters] = useState(false);
+  const [showUserFilters, setUserShowFilters] = useState(false);
   const toggleFilters = () => {
-    setShowFilters(!showFilters);
+    // de eventos:
+    if (searchType === 'eventos') {
+      setEventShowFilters(!showEventFilters);
+    }
+    // de usuarios:
+    else if (searchType === 'usuarios') {
+      setUserShowFilters(!showUserFilters);
+    }
   };
 
   // Estado para controlar la visibilidad del selector de fecha:
   const [showPickerIni, setShowPickerIni] = useState(false);
   const [showPickerEnd, setShowPickerEnd] = useState(false);
   
-  // Controladores del selector de fechas:
+  // Controladores del selector de fechas: --> FILTRO EVENTO:
   const showDatePickerIni = () => {
     setShowPickerIni(true);
   };
   const handleDateChangeIni = (date: Date) => {
-    setSelectedStartDate(date);
+    const formattedStartDate = date ? format(date, 'yyyy-MM-dd') : '';
+    setSelectedStartDate(formattedStartDate);
     setShowPickerIni(false);
   };
   const showDatePickerEnd = () => {
     setShowPickerEnd(true);
   };
-
   const handleDateChangeEnd = (date: Date) => {
-    setSelectedEndDate(date);
+    const formattedEndDate = date ? format(date, 'yyyy-MM-dd') : '';
+    setSelectedEndDate(formattedEndDate);
     setShowPickerEnd(false);
   };
-
 
   const UserSearchButton = ({ selected, onPress }: { selected: boolean; onPress: () => void }) => {
     return (
@@ -103,17 +112,27 @@ export const SearchScreen: React.FC<Props> = observer(() => {
     );
   };
 
+  // QUAN ES CLICA A BUSCAR
   const handleSearch = () => {
-    if (showFilters) {
-      setShowFilters(!showFilters);
+    // Si s'estan mostrant els filtres de events, es tanquen
+    if (showEventFilters) {
+      setEventShowFilters(!showEventFilters);
     }
+    // Si s'estan mostrant els filtres d'usuaris, es tanquen
+    if (showUserFilters) {
+      setUserShowFilters(!showUserFilters);
+    }
+
+    // Si es busquen usuaris....
     if (searchType === 'usuarios') {
       // Realizar búsqueda de usuarios
-    } else if (searchType === 'eventos') {
-
-      const formattedStartDate = selectedStartDate ? format(selectedStartDate, 'yyyy-MM-dd') : '';
-      const formattedEndDate = selectedEndDate ? format(selectedEndDate, 'yyyy-MM-dd') : '';
-      EventController.fetchEventsByFilters(searchText, selectedCateg, formattedStartDate, formattedEndDate, searchHorari, priceRangeMax);
+    }
+    
+    // Si es busquen events....
+    else if (searchType === 'eventos') {
+      // Crida api
+      EventController.fetchEventsByFilters(searchText, selectedCateg,new Date (selectedStartDate) , new Date (selectedEndDate), searchHorari, priceRangeMax);
+      // events = RESULTAT CRIDA
       const events = EventController.SearchEvents;
       setSearchResults(events);
     }
@@ -135,7 +154,7 @@ export const SearchScreen: React.FC<Props> = observer(() => {
   };
 
   return (
-    <View style={styles.container}>
+    <View>
       <StatusBar barStyle="dark-content" />
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Búsqueda</Text>
@@ -146,7 +165,6 @@ export const SearchScreen: React.FC<Props> = observer(() => {
           <TextInput
             placeholder={`Buscar ${userSearch ? 'usuarios por username' : 'eventos por denominación'}`}
             placeholderTextColor="#aaa"
-            style={styles.inputText}
             value={searchText}
             onChangeText={setSearchText}
             onSubmitEditing={() => handleSearch()}
@@ -163,26 +181,28 @@ export const SearchScreen: React.FC<Props> = observer(() => {
                   setSearchType('eventos');
                   setUserSearch(false);
                   setSearchResults([]);
+                  setUserShowFilters(false);
                 }}
               />
-
               <UserSearchButton
                 selected={searchType === 'usuarios'}
                 onPress={() => {
                   setSearchType('usuarios');
                   setUserSearch(true);
                   setSearchResults([]);
+                  setEventShowFilters(false);
                 }}
               />
-              
         </View>
       </View>
-      {showFilters && (
-        <View style={styles.filterContainer}>
-        <View style={styles.filter}>
-          {selectedCateg && <Text>Categoría seleccionada: {selectedCateg.split(':')[0]}</Text>}
-          {!selectedCateg && <Text>Seleccione una categoría</Text>}
-          <Picker selectedValue={selectedCateg} style={styles.filter} onValueChange={setSelectedCateg}>
+
+      {searchType === 'eventos' && showEventFilters && (
+      <View style={styles.filterContainer}>
+        <View style={styles.filterCategoria}>
+          <Picker
+          selectedValue={selectedCateg}
+          style={styles.picker}
+          onValueChange={(itemValue) => setSelectedCateg(itemValue)}>
             <Picker.Item label="Todas las categorías" value="" />
             <Picker.Item label="Actividades virtuales" value="agenda:categories/activitats-virtuals" />
             <Picker.Item label="Exposiciones" value="agenda:categories/exposicions" />
@@ -197,12 +217,13 @@ export const SearchScreen: React.FC<Props> = observer(() => {
             <Picker.Item label="Ciclos" value="agenda:categories/cicles" />
           </Picker>
         </View>
-      
-        <View style={styles.filter}>
-          <Button style={[styles.filterButtonText,
-          styles.searchButton,
-          styles.userSearchButton, styles.selectedButton,
-        ]} title="Fecha de inicio" onPress={showDatePickerIni} />
+    
+        <View style={[styles.filterData]}> 
+          <TouchableOpacity onPress={showDatePickerIni}>
+          <Text style={[styles.filterDataText]}>
+          {selectedStartDate ? `Fecha de inicio seleccionada: ${selectedStartDate}` : 'Seleccionar fecha de inicio'}
+        </Text>
+          </TouchableOpacity>
           <DatePickerModal
             isVisible={showPickerIni}
             mode="date"
@@ -211,12 +232,11 @@ export const SearchScreen: React.FC<Props> = observer(() => {
           />
         </View>
       
-        <View style={styles.filter}> 
+        <View style={[styles.filterData]}> 
           <TouchableOpacity onPress={showDatePickerEnd}>
-            <Text style={[styles.filterButtonText,
-          styles.searchButton,
-          styles.userSearchButton, styles.selectedButton,
-        ]}>Fecha fin</Text>
+          <Text style={[styles.filterDataText]}>
+          {selectedEndDate ? `Fecha de fin seleccionada: ${selectedEndDate}` : 'Seleccionar fecha de fin'}
+        </Text>
           </TouchableOpacity>
           <DatePickerModal
             isVisible={showPickerEnd}
@@ -226,7 +246,7 @@ export const SearchScreen: React.FC<Props> = observer(() => {
           />
         </View>
       
-        <View style={styles.filter}>
+        <View style={styles.filterpreu}>
           <Text>Precio máximo:</Text>
           <TextInput
             placeholderTextColor="#AAA"
@@ -237,12 +257,9 @@ export const SearchScreen: React.FC<Props> = observer(() => {
           />
         </View>
       
-        <View style={styles.filter}>
+        <View style={styles.filterButton}>
           <TouchableOpacity onPress={handleSearch}>
-            <Text style={[styles.filterButtonText,
-          styles.searchButton,
-          styles.userSearchButton, styles.selectedButton,
-        ]}>Aplicar filtros</Text>
+            <Text style={[styles.filterButtonText]}>Aplicar filtros</Text>
           </TouchableOpacity>
         </View>
       </View>
