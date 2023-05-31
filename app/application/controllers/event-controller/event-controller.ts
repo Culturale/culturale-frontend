@@ -31,7 +31,7 @@ export class EventController implements IEventController {
     subject.startRequest();
 
     this.infrastructure.api
-      .getAllEvents()
+      .getAllEvents(page)
       .then((res: EventDocument[]) => {
         const events: IEvent[] = [];
         for (const doc of res) {

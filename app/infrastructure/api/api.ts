@@ -49,7 +49,6 @@ export class API implements IAPI {
   }
 
   private async get<T>(path: string): Promise<T> {
-    console.log(this.baseURL + path);
     return fetch(this.baseURL + path, {
       headers: {
         Accept: 'application/json',
@@ -96,9 +95,7 @@ export class API implements IAPI {
   }
 
   public async getAllEvents(page: number): Promise<EventDocument[]> {
-    console.log('/events/50?page=${number}');
-    const res = await this.get<GetEventsResponse>('/events/50?page=${number}');
-    console.log(res);
+    const res = await this.get<GetEventsResponse>(`/events/50?page=${page}`);
     return res.events;
   }
   
