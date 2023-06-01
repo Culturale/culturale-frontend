@@ -25,24 +25,28 @@ export const HomeScreen: React.FC<Props> = observer(() => {
   const [page, setPage] = useState(1);
   const [allEvents, setAllEvents] = useState<IEvent[]>([]); // Updated state to store all fetched events
   const navigation = useNavigation<HomeNavigation>();
+  const eventsaux = EventController.events;
 
   useEffect(() => {
-    fetchEvents(); // Fetch events for the first page (page 1)
+    fetchEvents(page);
   }, []);
 
-  const fetchEvents = async () => {
-    setIsLoading(true);
-    await EventController.fetchAllEvents(page);
-    if (EventController.events) {
-      setAllEvents((prevEvents) => [...prevEvents, ...EventController.events]);
+  useEffect(() => {
+    if (eventsaux) {
+    setAllEvents([...allEvents, ...eventsaux])
+    setIsLoading(false)
     }
-    setIsLoading(false);
+  }, [eventsaux])
+
+  const fetchEvents = (p: number) => {
+    setIsLoading(true);
+    EventController.fetchAllEvents(p)
   };
 
   const handleEndReached = () => {
     if (!isLoading) {
       setPage(page + 1);
-      fetchEvents(); // Fetch events for the next page
+      fetchEvents(page + 1);
     }
   };
 
@@ -61,6 +65,11 @@ export const HomeScreen: React.FC<Props> = observer(() => {
   const renderFooter = () => {
     return isLoading ? <ActivityIndicator style={styles.loadingIndicator} /> : null;
   };
+  
+  if (!EventController.events)
+  {
+      return isLoading ? <ActivityIndicator style={styles.loadingIndicator} /> : null;
+  }
 
   return (
     <View style={styles.container}>
@@ -83,7 +92,7 @@ export const HomeScreen: React.FC<Props> = observer(() => {
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
           onEndReached={handleEndReached}
-          onEndReachedThreshold={0.5}
+          onEndReachedThreshold={0.9}
         />
       </View>
     </View>
