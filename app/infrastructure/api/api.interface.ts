@@ -6,6 +6,9 @@ export type UserDocument = definitions['user'];
 export type MessageDocument = definitions['message'];
 export type ChatDocument = definitions['chat'];
 export type ReviewDocument = definitions['review'];
+export type GetEventResponse =
+  paths['/events/code/:id']['get']['responses']['200']['schema'];
+
 export type GetEventsResponse =
   paths['/events']['get']['responses']['200']['schema'];
 export type GetUsersResponse =
@@ -47,6 +50,8 @@ export interface IAPI {
   getUserPreferits: (username: string) => Promise<EventDocument[]>;
 
   getAllEvents: () => Promise<EventDocument[]>;
+
+  getEvent: (id: string) => Promise<EventDocument>;
 
   getMapEvents: (lat1: number, lon1: number, lat2: number, lon2: number) => Promise<EventDocument[]>;
 

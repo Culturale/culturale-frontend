@@ -7,6 +7,7 @@ import type {
   EventDocument,
   GetEventsResponse,
   GetUsersResponse,
+  GetEventResponse,
   IAPI,
   LoginResponse,
   MessageDocument,
@@ -104,10 +105,15 @@ export class API implements IAPI {
   //   return res.events;
   // }
 
+  public async getEvent(id: string): Promise<EventDocument> {
+    const res = await this.get<GetEventResponse>(`/events/code/${id}`);
+    return res.event;
+  }
+
   public async getAllEvents(): Promise<EventDocument[]> {
-      const res = await this.get<GetEventsResponse>('/events/50?page=1');
-      return res.events;
-    }
+    const res = await this.get<GetEventsResponse>('/events/50?page=1');
+    return res.events;
+  }
   
   public async getMapEvents(lat1: number, lon1: number, lat2: number, lon2: number): Promise<EventDocument[]> {
       const url = `/events/mapa?lat1=${lat1}&lon1=${lon1}&lat2=${lat2}&lon2=${lon2}`;
