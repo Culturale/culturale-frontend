@@ -5,6 +5,7 @@ import type {
   EditUserResponse,
   EventDocument,
   GetEventsResponse,
+  GetEventResponse,
   IAPI,
   LoginResponse,
   MessageDocument,
@@ -49,7 +50,7 @@ export class API implements IAPI {
   }
 
   private async get<T>(path: string): Promise<T> {
-    return fetch('http://192.168.43.7:8080' + path, {
+    return fetch(this.baseURL + path, {
       headers: {
         Accept: 'application/json',
         Authorization: this.token,
@@ -100,8 +101,8 @@ export class API implements IAPI {
   // }
 
   public async getEvent(id: string): Promise<EventDocument> {
-    const res = await this.get<EventDocument>(`/events/${id}`);
-    return res;
+    const res = await this.get<GetEventResponse>(`/events/code/${id}`);
+    return res.event;
   }
 
   public async getAllEvents(): Promise<EventDocument[]> {

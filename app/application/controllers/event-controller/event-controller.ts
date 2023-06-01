@@ -19,8 +19,10 @@ export class EventController implements IEventController {
 
     makeObservable(this, {
       addParticipant: action,
+      event: observable,
       events: observable,
       eventsmap: observable,
+      setEvent: action,
       setEvents: action,
       setEventsMap: action,
     });
