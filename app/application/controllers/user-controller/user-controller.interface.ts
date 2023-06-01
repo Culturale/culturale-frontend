@@ -3,13 +3,13 @@ import type { ImagePickerAsset } from 'expo-image-picker';
 
 import type { Controller } from '~/application/controllers/controller.interface';
 import type { IEvent, IUser } from '~/domain';
-import { EventDocument } from '~/infrastructure';
 import type { IRequestSubject } from '~/observables';
 
 export interface IUserController extends Controller {
   isLoggedIn: boolean | null;
   token: string;
   userInfo: IUser;
+  readonly users: IUser[];
 
   /**
    * Get if login is needed
@@ -71,7 +71,9 @@ export interface IUserController extends Controller {
    * @public
    * @description Fetches all events from API and saves them to events property
    */
-    fetchAllFavourites: () => IRequestSubject<void>;
+  fetchAllFavourites: () => IRequestSubject<void>;
+
+  fetchAllUsers: (username: string) => IRequestSubject<void>;
 
   /**
    * Modifies user favourites

@@ -8,25 +8,31 @@ import { Text, View, FlatList, TextInput, TouchableOpacity, StatusBar} from 'rea
 import DatePickerModal from 'react-native-modal-datetime-picker';
 
 import { Event } from '~/components';
-import type { IEvent, IUser } from '~/domain';
+import { IEvent, IUser, User } from '~/domain';
 import { useApplicationLayer } from '~/hooks';
 
 import type { SearchScreenProps as Props } from './search-screen.props';
 import { SearchScreenStyles as styles } from './search-screen.styles';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootParamList } from '~/navigation';
+import { useNavigation } from '@react-navigation/native';
+
+type HomeNavigation = StackNavigationProp<RootParamList, 'Home'>;
 
 export const SearchScreen: React.FC<Props> = observer(() => {
-  const { controllers: { EventController } } = useApplicationLayer();
+  const { controllers: { EventController, UserController } } = useApplicationLayer();
 
-  // Llista de resultats a mostrar:
-  const [searchResults, setSearchResults] = useState<IEvent[]>([]);
+  // Llista de resultats a mostrar eventos/users:
+  const [searchResults, setSearchResults] = useState<(IEvent | IUser)[]>([]);
+  const navigation = useNavigation<HomeNavigation>();
 
   // CERCA DE EVENTOS SEGÚN EL FILTRO:
   // Denominación:
   const [searchText, setSearchText] = useState('');
   // Fecha Inicio:
-  const [selectedStartDate, setSelectedStartDate] = useState('');
+  const [selectedStartDate, setSelectedStartDate] = useState<any>();
   // Fecha Fin:
-  const [selectedEndDate, setSelectedEndDate] = useState('');
+  const [selectedEndDate, setSelectedEndDate] = useState<any>();
   // Precio:
   const [priceRangeMax, setPriceRangeMax] = useState('');
   // Categoria:
@@ -62,14 +68,15 @@ export const SearchScreen: React.FC<Props> = observer(() => {
   const showDatePickerIni = () => {
     setShowPickerIni(true);
   };
+  const showDatePickerEnd = () => {
+    setShowPickerEnd(true);
+  };
   const handleDateChangeIni = (date: Date) => {
     const formattedStartDate = date ? format(date, 'yyyy-MM-dd') : '';
     setSelectedStartDate(formattedStartDate);
     setShowPickerIni(false);
   };
-  const showDatePickerEnd = () => {
-    setShowPickerEnd(true);
-  };
+  
   const handleDateChangeEnd = (date: Date) => {
     const formattedEndDate = date ? format(date, 'yyyy-MM-dd') : '';
     setSelectedEndDate(formattedEndDate);
@@ -125,20 +132,32 @@ export const SearchScreen: React.FC<Props> = observer(() => {
 
     // Si es busquen usuaris....
     if (searchType === 'usuarios') {
-      // Realizar búsqueda de usuarios
+      UserController.fetchAllUsers(searchText);
+      const users = UserController.users;
+      setSearchResults(users);
     }
     
     // Si es busquen events....
     else if (searchType === 'eventos') {
       // Crida api
-      EventController.fetchEventsByFilters(searchText, selectedCateg,new Date (selectedStartDate) , new Date (selectedEndDate), searchHorari, priceRangeMax);
+      EventController.fetchEventsByFilters(
+        searchText,
+        selectedCateg,
+        selectedStartDate ? format(new Date(selectedStartDate), 'yyyy-MM-dd') : '1990-01-01',
+        selectedEndDate ? format(new Date(selectedEndDate), 'yyyy-MM-dd') : '2090-12-12',
+        searchHorari,
+        priceRangeMax
+      );
       // events = RESULTAT CRIDA
       const events = EventController.SearchEvents;
       setSearchResults(events);
     }
   };
 
-  const renderResult = ({ item }: { item: IEvent }) => {
+  const renderResult = ({ item }: { item: IEvent | IUser }) => {
+    const handleEventClick = () => {
+      navigation.navigate('EventScreen', { eventId : item._id});
+    };
     if (searchResults.length === 0) {
       return (
         <View style={styles.noResultsContainer}>
@@ -147,9 +166,17 @@ export const SearchScreen: React.FC<Props> = observer(() => {
       );
     }
     else if (searchType === 'eventos') {
-        return (
-            <Event key={item.id} event={item} />
-        );
+      return (
+        <TouchableOpacity onPress={() => handleEventClick()}>
+          <Event key={item._id} event={item} />
+        </TouchableOpacity>
+      );
+    }
+    else if (searchType === 'usuarios') {
+      console.log(item);
+      return (
+        <User key={item._id} user = {item} />
+      );
     }
   };
 
@@ -268,7 +295,7 @@ export const SearchScreen: React.FC<Props> = observer(() => {
       <View style={styles.resultContainer}>
         <FlatList
           data={searchResults}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item._id}
           renderItem={renderResult}
         />
       </View>

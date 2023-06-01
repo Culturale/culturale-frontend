@@ -8,6 +8,9 @@ export type ReviewDocument = definitions['review'];
 export type GetEventsResponse =
   paths['/events']['get']['responses']['200']['schema'];
 
+export type GetUsersResponse =
+  paths['/users/:username']['get']['responses']['200']['schema'];
+
 export type GetEventsByDenominacioResponse =
   paths['/events/denominacio/:denominacio']['get']['responses']['200']['schema'];
 
@@ -44,6 +47,8 @@ export interface IAPI {
   getUserPreferits: (username: string) => Promise<EventDocument[]>;
 
   getAllEvents: () => Promise<EventDocument[]>;
+
+  getAllUsers: (username: string) => Promise<UserDocument[]>;
 
   getMapEvents: (lat1: number, lon1: number, lat2: number, lon2: number) => Promise<EventDocument[]>;
 

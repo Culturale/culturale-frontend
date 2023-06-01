@@ -6,10 +6,8 @@ import type { ImagePickerAsset } from 'expo-image-picker';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
 
-import { IEvent, IUser, User} from '~/domain';
-import { userFactory } from '~/domain';
-import { eventFactory } from '~/domain';
-import type { EventDocument, IInfrastructure } from '~/infrastructure';
+import { IEvent, IUser, User, eventFactory, userFactory } from '~/domain';
+import type { EventDocument, IInfrastructure, UserDocument } from '~/infrastructure';
 import type { IRequestSubject } from '~/observables';
 import { RequestSubject } from '~/observables';
 
@@ -26,6 +24,7 @@ export class UserController implements IUserController {
   public isLoggedIn: boolean | null = null;
   public token: string;
   public userInfo: IUser;
+  public users: IUser[];
   private infrastructure: IInfrastructure;
 
   constructor(infrastructure: IInfrastructure) {
@@ -46,11 +45,17 @@ export class UserController implements IUserController {
       token: observable,
       uploadPhoto: action,
       userInfo: observable,
+      users: observable,
+      setUsers: action,
     });
   }
 
   public setPreferits(events: IEvent[]): void {
     this.userInfo.preferits = events;
+  }
+
+  public setUsers(users: IUser[]): void {
+    this.users = users;
   }
 
 
@@ -89,6 +94,7 @@ export class UserController implements IUserController {
       { fireImmediately: true },
     );
   }
+
   public async removeFriend(userUsername: string, friendUsername:string): Promise<void> {
      await this.infrastructure.api.removeFriend(userUsername, friendUsername);
     const index = this.userInfo.followeds.findIndex(user => user.username === friendUsername);
@@ -112,6 +118,7 @@ export class UserController implements IUserController {
   public setUserFollowers(token: string): void {
     this.token = token;
   }
+  
   public async modifyUser(
     username: string,
     name: string,
@@ -132,6 +139,29 @@ export class UserController implements IUserController {
     this.setUserInfo(user);
   }
 
+  public fetchAllUsers(username: string): IRequestSubject<void> {
+    const subject = new RequestSubject<void>();
+    subject.startRequest();
+
+    this.infrastructure.api
+    .getAllUsers(username)
+    .then((res: UserDocument[]) => {
+      const users: IUser[] = [];
+      for (const doc of res) {
+        const user = userFactory(doc);
+        users.push(user);
+      }
+
+      this.setUsers(users);
+
+      subject.completeRequest();
+    })
+    .catch((e: Error) => {
+      subject.failRequest(e);
+    });
+
+    return subject;
+  }
 
   public get isLoginNeeded(): boolean {
     return !this.token;

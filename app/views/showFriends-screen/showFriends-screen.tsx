@@ -34,7 +34,7 @@ export const ShowFriendsScreen = observer(() => {
         <Text style={styles.header} tx='showFriendsScreen.myfriends' />
         <TextInput
           style={styles.input}
-          placeholder="Uwqqsername"
+          placeholder="Username"
           value={searchTerm}
           onChangeText={value => setSearchTerm(value)}
         />

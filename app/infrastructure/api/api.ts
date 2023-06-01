@@ -12,7 +12,8 @@ import type {
   ReviewDocument,
   SignupResponse,
   UserDocument,
-  RemoveFavouriteResponse
+  RemoveFavouriteResponse,
+  GetUsersResponse
 } from './api.interface';
 
 export class API implements IAPI {
@@ -123,7 +124,12 @@ export class API implements IAPI {
   public async getAllEvents(): Promise<EventDocument[]> {
       const res = await this.get<GetEventsResponse>('/events/50?page=1');
       return res.events;
-    }
+  }
+
+  public async getAllUsers(username: string): Promise<UserDocument[]> {
+    const res = await this.get<GetUsersResponse>(`/users/?username=${username}`);
+    return res.users;
+}
   
   public async getMapEvents(lat1: number, lon1: number, lat2: number, lon2: number): Promise<EventDocument[]> {
       const url = `/events/mapa?lat1=${lat1}&lon1=${lon1}&lat2=${lat2}&lon2=${lon2}`;
