@@ -2,6 +2,7 @@ import type { AxiosInstance } from 'axios';
 import axios from 'axios';
 
 import type {
+  AddFollowerResponse,
   EditUserResponse,
   EventDocument,
   GetEventsResponse,
@@ -32,6 +33,9 @@ export class API implements IAPI {
   }
 
   private async post<T>(path: string, body: object): Promise<T> {
+   
+   console.log(body)
+   console.log(JSON.stringify(body))
     return fetch(this.baseURL + path, {
       body: JSON.stringify(body),
       headers: {
@@ -156,7 +160,7 @@ export class API implements IAPI {
     return res.followers;
   }
   public async addFriend(username: string, follower:string): Promise<UserDocument[]> {
-    const res = await this.post<RemoveFollowerResponse>('/users/newFollower', {
+    const res = await this.post<AddFollowerResponse>('/users/newFollower', {
       username,
       follower
     });

@@ -21,7 +21,10 @@ export type EditUserResponse =
   paths['/users/edit']['post']['responses']['200']['schema'];
 
 export type RemoveFollowerResponse =
-  paths['/users/deleteFollower']['delete']['responses']['201']['schema'];
+  paths['/users/deleteFollower']['delete']['responses']['200']['schema'];
+
+export type AddFollowerResponse =
+paths['/users/newFollower']['post']['responses']['200']['schema'];
 export interface IAPI {
   
   setup: (token: string) => void;
