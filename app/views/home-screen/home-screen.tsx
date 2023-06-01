@@ -23,29 +23,32 @@ export const HomeScreen: React.FC<Props> = observer(() => {
   } = useApplicationLayer();
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
-  const events = EventController.events;
+  const [allEvents, setAllEvents] = useState<IEvent[]>([]); // Updated state to store all fetched events
   const navigation = useNavigation<HomeNavigation>();
 
   useEffect(() => {
-    fetchEvents();
+    fetchEvents(); // Fetch events for the first page (page 1)
   }, []);
 
   const fetchEvents = async () => {
     setIsLoading(true);
     await EventController.fetchAllEvents(page);
+    if (EventController.events) {
+      setAllEvents((prevEvents) => [...prevEvents, ...EventController.events]);
+    }
     setIsLoading(false);
   };
 
   const handleEndReached = () => {
     if (!isLoading) {
       setPage(page + 1);
-      fetchEvents();
+      fetchEvents(); // Fetch events for the next page
     }
   };
 
   const renderItem = ({ item }: { item: IEvent }) => {
     const handleEventClick = () => {
-      navigation.navigate('EventScreen', { eventId : item.id });
+      navigation.navigate('EventScreen', { eventId: item.id });
     };
     return (
       <TouchableOpacity onPress={handleEventClick}>
@@ -75,7 +78,7 @@ export const HomeScreen: React.FC<Props> = observer(() => {
       <View style={styles.eventContainer}>
         <FlatList
           ListFooterComponent={renderFooter}
-          data={events}
+          data={allEvents}
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
           onEndReached={handleEndReached}
@@ -85,3 +88,4 @@ export const HomeScreen: React.FC<Props> = observer(() => {
     </View>
   );
 });
+
