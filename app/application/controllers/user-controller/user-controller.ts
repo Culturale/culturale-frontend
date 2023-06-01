@@ -142,7 +142,6 @@ export class UserController implements IUserController {
   public fetchAllUsers(username: string): IRequestSubject<void> {
     const subject = new RequestSubject<void>();
     subject.startRequest();
-
     this.infrastructure.api
     .getAllUsers(username)
     .then((res: UserDocument[]) => {
@@ -151,7 +150,6 @@ export class UserController implements IUserController {
         const user = userFactory(doc);
         users.push(user);
       }
-
       this.setUsers(users);
 
       subject.completeRequest();

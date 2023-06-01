@@ -1,21 +1,22 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
+import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import { format } from 'date-fns';
 import { observer } from 'mobx-react-lite';
 import type React from 'react';
-import { useEffect, useState } from 'react';
-import { Text, View, FlatList, TextInput, TouchableOpacity, StatusBar} from 'react-native';
+import {useState } from 'react';
+import { Text, View, FlatList, TextInput, TouchableOpacity, StatusBar, ScrollView} from 'react-native';
 import DatePickerModal from 'react-native-modal-datetime-picker';
 
-import { Event } from '~/components';
-import { IEvent, IUser, User } from '~/domain';
+import { Event, User } from '~/components';
+import type { IEvent, IUser} from '~/domain';
 import { useApplicationLayer } from '~/hooks';
+import type { RootParamList } from '~/navigation';
 
 import type { SearchScreenProps as Props } from './search-screen.props';
 import { SearchScreenStyles as styles } from './search-screen.styles';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootParamList } from '~/navigation';
-import { useNavigation } from '@react-navigation/native';
+
 
 type HomeNavigation = StackNavigationProp<RootParamList, 'Home'>;
 
@@ -120,7 +121,7 @@ export const SearchScreen: React.FC<Props> = observer(() => {
   };
 
   // QUAN ES CLICA A BUSCAR
-  const handleSearch = () => {
+  const handleSearch = async () => {
     // Si s'estan mostrant els filtres de events, es tanquen
     if (showEventFilters) {
       setEventShowFilters(!showEventFilters);
@@ -158,6 +159,7 @@ export const SearchScreen: React.FC<Props> = observer(() => {
     const handleEventClick = () => {
       navigation.navigate('EventScreen', { eventId : item._id});
     };
+
     if (searchResults.length === 0) {
       return (
         <View style={styles.noResultsContainer}>
@@ -173,9 +175,8 @@ export const SearchScreen: React.FC<Props> = observer(() => {
       );
     }
     else if (searchType === 'usuarios') {
-      console.log(item);
       return (
-        <User key={item._id} user = {item} />
+          <User key={item._id} user={item} />
       );
     }
   };
@@ -299,6 +300,9 @@ export const SearchScreen: React.FC<Props> = observer(() => {
           renderItem={renderResult}
         />
       </View>
+
+
+
     </View>
   );
 });

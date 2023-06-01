@@ -9,77 +9,54 @@ interface Props {
 
 export const User: React.FC<Props> = ({ user }) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.details}>
-        <Text style={styles.title}>{user.username}</Text>
-        <View style={styles.subtitleContainer}>
-          <Text style={styles.subtitle}>{user.email}</Text>
-        </View>
-        <View style={styles.subtitleContainer}>
-          <Ionicons color="#888" name="calendar-outline" size={16} />
-          {/* <Text style={styles.subtitle}>{user.followers}</Text> */}
-        </View>
+    <View style={styles.userCard}>
+      <View style={styles.avatarContainer}>
+      <Image src={user.profilePicture} style={styles.userAvatar} />
+        <View style={styles.onlineIndicator} />
       </View>
-      <Image source={{ uri: user.profilePicture ? user.profilePicture : 'https://archive.org/download/no-photo-available/no-photo-available.png'}} style={{alignSelf: 'flex-end',height: 125, width: 106}}/>
+      <View style={styles.userInfo}>
+        <Text style={styles.username}>{user.username}</Text>
+        <Text style={styles.name}>{user.name}</Text>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  button: {
-    alignSelf: 'flex-end',
-    backgroundColor: '#34b38a',
-    borderBottomRightRadius: 10,
-    bottom: 0,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+  userCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  avatarContainer: {
+    position: 'relative',
+  },
+  userAvatar: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+  },
+  onlineIndicator: {
     position: 'absolute',
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    backgroundColor: '#4CAF50',
+    bottom: 0,
     right: 0,
+    borderWidth: 2,
+    borderColor: '#FFFFFF',
   },
-  buttonText: {
-    color: '#fff',
+  userInfo: {
+    marginLeft: 12,
+  },
+  username: {
     fontSize: 16,
     fontWeight: 'bold',
+    marginBottom: 2,
   },
-  container: {
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    elevation: 5,
-    flexDirection: 'row',
-    height: 100,
-    margin: 10,
-    overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOffset: {
-      height: 2,
-      width: 0,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-  },
-
-  details: {
-    flex: 1,
-    padding: 10,
-  },
-
-  image: {
-    height: '100%',
-    width: 80,
-  },
-  subtitle: {
-    color: '#666',
+  name: {
     fontSize: 14,
-    marginLeft: 4,
-  },
-  subtitleContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginBottom: 4,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    color: '#888888',
   },
 });

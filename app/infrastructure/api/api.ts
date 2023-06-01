@@ -70,11 +70,10 @@ export class API implements IAPI {
   }
 
   private async get<T>(path: string): Promise<T> {
-    console.log(this.baseURL + path);
     return fetch(this.baseURL + path, {
       headers: {
         Accept: 'application/json',
-        Authorization: this.token,
+        Authorization: 'Token ' + this.token,
         'Content-Type': 'application/json',
       },
       method: 'GET',
@@ -115,11 +114,6 @@ export class API implements IAPI {
 
     return res;
   }
-
-  // public async getAllEvents(): Promise<EventDocument[]> {
-  //   const res = await this.get<GetEventsResponse>('/events');
-  //   return res.events;
-  // }
 
   public async getAllEvents(): Promise<EventDocument[]> {
       const res = await this.get<GetEventsResponse>('/events/50?page=1');
