@@ -49,7 +49,7 @@ export class API implements IAPI {
   }
 
   private async get<T>(path: string): Promise<T> {
-    return fetch(this.baseURL + path, {
+    return fetch('http://192.168.43.7:8080' + path, {
       headers: {
         Accept: 'application/json',
         Authorization: this.token,
@@ -99,10 +99,15 @@ export class API implements IAPI {
   //   return res.events;
   // }
 
+  public async getEvent(id: string): Promise<EventDocument> {
+    const res = await this.get<EventDocument>(`/events/${id}`);
+    return res;
+  }
+
   public async getAllEvents(): Promise<EventDocument[]> {
-      const res = await this.get<GetEventsResponse>('/events/50?page=1');
-      return res.events;
-    }
+    const res = await this.get<GetEventsResponse>('/events/50?page=1');
+    return res.events;
+  }
   
   public async getMapEvents(lat1: number, lon1: number, lat2: number, lon2: number): Promise<EventDocument[]> {
       const url = `/events/mapa?lat1=${lat1}&lon1=${lon1}&lat2=${lat2}&lon2=${lon2}`;

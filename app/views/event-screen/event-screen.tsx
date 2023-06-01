@@ -24,7 +24,7 @@ export const EventScreen: React.FC<Props> = observer(() => {
     controllers: { UserController, EventController },
   } = useApplicationLayer();
   const eventId = params.eventId;
-  const event = EventController.events.filter((event) => event?.id === eventId)[0];
+  const event = EventController.event;
   const enrolled: boolean = UserController.userInfo.eventSub.some((eventUser) => eventUser?.id === event.id);
   const [showSuccess, setShowSuccess] = useState(enrolled);
   const events = UserController.userInfo.preferits;
@@ -38,6 +38,7 @@ export const EventScreen: React.FC<Props> = observer(() => {
 
   useEffect(() => {
     UserController.fetchAllFavourites();
+    EventController.fetchEvent(eventId);
   }, []);
   const [isFavorite, setIsFavorite] = useState(events.some((item) => item._id === event._id));
   function addParticipantEvent() {
