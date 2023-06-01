@@ -9,7 +9,9 @@ import { RequestSubject } from '~/observables';
 import type { IEventController } from './event-controller.interface';
 
 export class EventController implements IEventController {
+  public event: IEvent;
   public events: IEvent[];
+  public eventsmap: IEvent[];
   private readonly infrastructure: IInfrastructure;
 
   constructor(infrastructure: IInfrastructure) {
@@ -17,13 +19,25 @@ export class EventController implements IEventController {
 
     makeObservable(this, {
       addParticipant: action,
+      event: observable,
       events: observable,
+      eventsmap: observable,
+      setEvent: action,
       setEvents: action,
+      setEventsMap: action,
     });
   }
 
   public setEvents(events: IEvent[]): void {
     this.events = events;
+  }
+
+  public setEvent(event: IEvent): void {
+    this.event = event;
+  }
+
+  public setEventsMap(events: IEvent[]): void {
+    this.eventsmap = events;
   }
 
   public fetchAllEvents(page: number): IRequestSubject<void> {
@@ -40,6 +54,50 @@ export class EventController implements IEventController {
         }
 
         this.setEvents(events);
+
+        subject.completeRequest();
+      })
+      .catch((e: Error) => {
+        subject.failRequest(e);
+      });
+
+    return subject;
+  }
+
+  public fetchEvent(id: string): IRequestSubject<void> {
+    const subject = new RequestSubject<void>();
+    subject.startRequest();
+
+    this.infrastructure.api
+      .getEvent(id)
+      .then((res: EventDocument) => {
+        const event = eventFactory(res);
+
+        this.setEvent(event);
+
+        subject.completeRequest();
+      })
+      .catch((e: Error) => {
+        subject.failRequest(e);
+      });
+
+    return subject;
+  }
+
+  public fetchMapEvents(lat1: number, lon1: number, lat2: number, lon2: number): IRequestSubject<void> {
+    const subject = new RequestSubject<void>();
+    subject.startRequest();
+
+    this.infrastructure.api
+      .getMapEvents(lat1, lon1, lat2, lon2)
+      .then((res: EventDocument[]) => {
+        const events: IEvent[] = [];
+        for (const doc of res) {
+          const event = eventFactory(doc);
+          events.push(event);
+        }
+
+        this.setEventsMap(events);
 
         subject.completeRequest();
       })

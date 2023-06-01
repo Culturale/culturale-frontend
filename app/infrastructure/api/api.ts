@@ -5,6 +5,7 @@ import type {
   EditUserResponse,
   EventDocument,
   GetEventsResponse,
+  GetEventResponse,
   IAPI,
   LoginResponse,
   MessageDocument,
@@ -94,12 +95,31 @@ export class API implements IAPI {
 
     return res;
   }
+  // public async getAllEvents(): Promise<EventDocument[]> {
+  //   const res = await this.get<GetEventsResponse>('/events');
+  //   return res.events;
+  // }
+
+  public async getEvent(id: string): Promise<EventDocument> {
+    const res = await this.get<GetEventResponse>(`/events/code/${id}`);
+    return res.event;
+  }
 
   public async getAllEvents(page: number): Promise<EventDocument[]> {
     const res = await this.get<GetEventsResponse>(`/events/50?page=${page}`);
     return res.events;
   }
   
+  public async getMapEvents(lat1: number, lon1: number, lat2: number, lon2: number): Promise<EventDocument[]> {
+      const url = `/events/mapa?lat1=${lat1}&lon1=${lon1}&lat2=${lat2}&lon2=${lon2}`;
+      const res = await this.get<GetEventsResponse>(url);
+      return res.events;
+  }
+
+  public async getUserPreferits(username: string): Promise<EventDocument[]> {
+    const res = await this.get<UserDocument>(`/users/username/${username}`);
+    return res.user.preferits;
+  }
 
   public async signUp(
     username: string,

@@ -71,7 +71,7 @@ export interface IUserController extends Controller {
    * @public
    * @description Fetches all events from API and saves them to events property
    */
-    fetchAllFavourites: () => IEvent[];
+    fetchAllFavourites: () => IRequestSubject<void>;
 
   /**
    * Modifies user favourites

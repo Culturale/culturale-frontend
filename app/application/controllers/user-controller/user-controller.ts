@@ -8,6 +8,7 @@ import { makePersistable } from 'mobx-persist-store';
 
 import { IEvent, IUser, User} from '~/domain';
 import { userFactory } from '~/domain';
+import { eventFactory } from '~/domain';
 import type { EventDocument, IInfrastructure } from '~/infrastructure';
 import type { IRequestSubject } from '~/observables';
 import { RequestSubject } from '~/observables';
@@ -48,10 +49,33 @@ export class UserController implements IUserController {
     });
   }
 
-  public fetchAllFavourites(): IEvent[] {
-    const favourites = this.userInfo.preferits;
+  public setPreferits(events: IEvent[]): void {
+    this.userInfo.preferits = events;
+  }
 
-    return favourites;
+
+  public fetchAllFavourites(): IRequestSubject<void> {
+    const username = this.userInfo.username;
+    const subject = new RequestSubject<void>();
+    subject.startRequest();
+
+    this.infrastructure.api
+      .getUserPreferits(username)
+      .then((res: EventDocument[]) => {
+        const events: IEvent[] = [];
+        for (const doc of res) {
+          const event = eventFactory(doc);
+          events.push(event);
+        }
+        this.setPreferits(events);
+
+        subject.completeRequest();
+      })
+      .catch((e: Error) => {
+        subject.failRequest(e);
+      });
+
+    return subject;
   }
 
   public async setup() {

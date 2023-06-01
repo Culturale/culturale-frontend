@@ -2,7 +2,9 @@ import type { IEvent, IUser } from '~/domain';
 import type { IRequestSubject } from '~/observables';
 
 export interface IEventController {
+  readonly event: IEvent;
   readonly events: IEvent[];
+  readonly eventsmap: IEvent[];
 
   /**
    *
@@ -10,6 +12,20 @@ export interface IEventController {
    * @description Fetches all events from API and saves them to events property
    */
   fetchAllEvents: (page: number) => IRequestSubject<void>;
+
+  /**
+   *
+   * @public
+   * @description Fetches an specific event from API and saves it to event property
+   */
+  fetchEvent: (id: string) => IRequestSubject<void>;
+
+  /**
+   *
+   * @public
+   * @description Fetches all map events from API and saves them to eventsmap property
+   */
+  fetchMapEvents: (lat1: number, Lon1: number, lat2: number, Lon2: number) => IRequestSubject<void>;
 
   /**
    *
