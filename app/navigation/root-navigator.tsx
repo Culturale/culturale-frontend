@@ -16,7 +16,6 @@ export const RootNavigator: React.FC = observer(() => {
     controllers: { UserController },
   } = useApplicationLayer();
   const userIsLoggedIn = UserController.isLoggedIn;
-
   if (userIsLoggedIn) {
     return (
       <NavigationContainer>

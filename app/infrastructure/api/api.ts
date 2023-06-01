@@ -2,9 +2,11 @@ import type { AxiosInstance } from 'axios';
 import axios from 'axios';
 
 import type {
+  AddFollowerResponse,
   EditUserResponse,
   EventDocument,
   GetEventsResponse,
+  GetUsersResponse,
   IAPI,
   LoginResponse,
   MessageDocument,
@@ -13,7 +15,6 @@ import type {
   SignupResponse,
   UserDocument,
   RemoveFavouriteResponse,
-  GetUsersResponse
 } from './api.interface';
 
 export class API implements IAPI {
@@ -37,7 +38,7 @@ export class API implements IAPI {
       body: JSON.stringify(body),
       headers: {
         Accept: 'application/json',
-        Authorization: this.token,
+        Authorization: `Bearer ${this.token}`,
         'Content-Type': 'application/json',
       },
       method: 'POST',
@@ -57,7 +58,7 @@ export class API implements IAPI {
     return fetch(url.toString(), {
       headers: {
         Accept: 'application/json',
-        Authorization: this.token,
+        Authorization: `Bearer ${this.token}`,
         'Content-Type': 'application/json',
       },
       method: 'GET',
@@ -209,6 +210,15 @@ export class API implements IAPI {
 
     return res.followers;
   }
+  public async addFriend(username: string, follower:string): Promise<UserDocument[]> {
+    const res = await this.post<AddFollowerResponse>('/users/newFollower', {
+      username,
+      follower
+    });
+    console.log(res);
+
+    return res.followers;
+  }
 
   public async addFavourite(id: string, username: string): Promise<void> {
     await this.post<MessageDocument>('/users/addFavourite', {
@@ -230,8 +240,8 @@ export class API implements IAPI {
       body: JSON.stringify(body),
       headers: {
         Accept: 'application/json',
-        Authorization: this.token,
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${this.token}`,
+        "Content-Type": "application/json"
       },
       method: 'DELETE',
     });
@@ -242,6 +252,7 @@ export class API implements IAPI {
     const json = await response.json();
     return json as T;
   }  
+
 
   public async addParticipant(id: string, username: string): Promise<void> {
     await this.post<MessageDocument>('/events/newParticipant', {

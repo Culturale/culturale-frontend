@@ -2,12 +2,12 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { createStackNavigator } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
-import { MapScreen, EditProfileScreen, SearchScreen, ProfileScreen, HomeScreen, EventScreen, MyEventsScreen, ValoracioScreen, PreferitsScreen} from '~/views';
+import { RootParamList, TabParamList } from './root-params';
+import { MapScreen, EditProfileScreen, SearchScreen, ProfileScreen, HomeScreen, EventScreen, MyEventsScreen, ShowFollowedsScreen, ShowFollowersScreen, PreferitsScreen} from '~/views';
+import { ShowUserScreen } from '~/views/showUser-screen';
+import { ValoracioScreen } from '~/views/valoracio-screen';
 import { ShowFriendsScreen} from '~/views/showFriends-screen';
 
-
-import type { RootParamList, TabParamList } from './root-params';
 
 const ProfileStack = createStackNavigator<RootParamList>();
 const Tab = createMaterialBottomTabNavigator<TabParamList>();
@@ -25,7 +25,27 @@ const ProfileStackNavigator: React.FC = observer(() => {
         name="EditProfile"
         options={{ headerShown: false }}
       />
-      <ProfileStack.Screen
+      <ProfileStack.Screen 
+      component={ShowFollowedsScreen} 
+      name="ShowFollowers" 
+      options={{ headerShown: false }}
+      />
+      <ProfileStack.Screen 
+      component={ShowFollowersScreen} 
+      name="ShowFolloweds" 
+      options={{ headerShown: false }}
+      />
+      <ProfileStack.Screen 
+      component={ShowFriendsScreen} 
+      name="ShowFriends" 
+      options={{ headerShown: false }}
+      />
+       <ProfileStack.Screen
+        component={ShowUserScreen}
+        name="ShowUserScreen"
+        options={{ headerShown: false }}
+        />
+        <ProfileStack.Screen
         component={PreferitsScreen}
         name="PreferitsScreen"
         options={{ headerShown: false }}
@@ -144,4 +164,6 @@ export const TabNavigator: React.FC = observer(() => {
     </Tab.Navigator>
   );
 });
+
+
 

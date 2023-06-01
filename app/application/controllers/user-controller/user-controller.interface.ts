@@ -17,6 +17,20 @@ export interface IUserController extends Controller {
    */
   readonly isLoginNeeded: boolean;
 
+
+  /**
+   *
+   * @public
+   * @description Fetches all users from API and saves them to events property
+   */
+  fetchAllUsers: () => IRequestSubject<void>;
+
+  /**
+   *
+   * @public
+   * @description Fetches a user from API and saves them to events property
+   */
+  findUser(username: string): IUser;
   /**
    * Get if login is needed
    * @public
@@ -58,7 +72,13 @@ export interface IUserController extends Controller {
    * Modifies user followers
    * @public
    */
-  removeFriend(userUsername:string, friendUsername: string): Promise<void>;
+  removeFollowed(userUsername:string, friendUsername: string): Promise<void>;
+ 
+  /**
+     * Modifies user followers
+     * @public
+     */
+  followUser(userUsername:string, friendUser: IUser): Promise<void>;
 
   /**
    * Modifies user favourites
