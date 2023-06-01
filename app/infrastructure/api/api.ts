@@ -14,6 +14,7 @@ import type {
   ReviewDocument,
   SignupResponse,
   UserDocument,
+  RemoveFavouriteResponse
 } from './api.interface';
 
 export class API implements IAPI {
@@ -98,9 +99,25 @@ export class API implements IAPI {
     return res;
   }
 
+  // public async getAllEvents(): Promise<EventDocument[]> {
+  //   const res = await this.get<GetEventsResponse>('/events');
+  //   return res.events;
+  // }
+
   public async getAllEvents(): Promise<EventDocument[]> {
-    const res = await this.get<GetEventsResponse>('/events');
-    return res.events;
+      const res = await this.get<GetEventsResponse>('/events/50?page=1');
+      return res.events;
+    }
+  
+  public async getMapEvents(lat1: number, lon1: number, lat2: number, lon2: number): Promise<EventDocument[]> {
+      const url = `/events/mapa?lat1=${lat1}&lon1=${lon1}&lat2=${lat2}&lon2=${lon2}`;
+      const res = await this.get<GetEventsResponse>(url);
+      return res.events;
+  }
+
+  public async getUserPreferits(username: string): Promise<EventDocument[]> {
+    const res = await this.get<UserDocument>(`/users/username/${username}`);
+    return res.user.preferits;
   }
 
   public async getAllUsers(): Promise<UserDocument[]> {
@@ -167,6 +184,21 @@ export class API implements IAPI {
     console.log(res);
 
     return res.followers;
+  }
+
+  public async addFavourite(id: string, username: string): Promise<void> {
+    await this.post<MessageDocument>('/users/addFavourite', {
+      id,
+      username
+    });
+  }
+
+  public async removeFavourite(id: string, username: string): Promise<EventDocument[]> {
+    const res = await this.delete<RemoveFavouriteResponse>('/users/deleteFavourite', {
+      id,
+      username
+    });
+    return res.favourites;
   }
 
   private async delete<T>(path: string, body: object): Promise<T> {

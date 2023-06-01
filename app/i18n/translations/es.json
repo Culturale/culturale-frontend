@@ -30,16 +30,16 @@
         "email": "Correo electrónico:",
         "telephone": "Teléfono:",
         "configuracion": "Configuracion",
+        "favoritos": "Favoritos",
         "pagos": "Mis pagos",
         "amigos": "Mis amigos",
         "miperfil": "Mi perfil"
     },
+
     "myEvents": {
         "calendar": "+ Añadir calendario",
         "valoration": "+ Añadir valoración"
     },
-
-
 
     "showFriendsScreen":{
         "myfriends":"Mis amigos",
@@ -60,6 +60,8 @@
         "vacio":" ¡Esto está muy vacío!",
         "noFriends":" Sigue a gente nueva para empezar esta aventura",
         "delete": "Eliminar"
-
+    },
+    "preferits": {
+      "titulo": "Favoritos"
     }
 }

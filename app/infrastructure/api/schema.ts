@@ -273,6 +273,28 @@ export interface paths {
       };
     };
   };
+  "/users/deleteFavourite": {
+    /** Deletes an event from favourites */
+    delete: {
+      responses: {
+        /** Ok */
+        201: {
+          schema: {
+            favourites?: definitions["event"][];
+            message?: string;
+          };
+        };
+        /** Internal server error */
+        /** Internal server error */
+        500: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+      };
+    };
+  };
 }
 
 export interface definitions {
@@ -303,6 +325,7 @@ export interface definitions {
     followers?: definitions["user"][];
     followeds?: definitions["user"][];
     eventSub?: definitions["event"][];
+    preferits?: definitions["event"][];
   };
   chat: {
     _id: string;

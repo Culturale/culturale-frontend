@@ -3,7 +3,7 @@ import type { ImagePickerAsset } from 'expo-image-picker';
 
 import type { Controller } from '~/application/controllers/controller.interface';
 import type { IEvent, IUser } from '~/domain';
-import { IRequestSubject } from '~/observables';
+import type { IRequestSubject } from '~/observables';
 
 export interface IUserController extends Controller {
   isLoggedIn: boolean | null;
@@ -79,6 +79,25 @@ export interface IUserController extends Controller {
      * @public
      */
   followUser(userUsername:string, friendUser: IUser): Promise<void>;
+
+  /**
+   * Modifies user favourites
+   * @public
+   */
+  addFavourite(id: string, username: string): Promise<void>;
+
+  /**
+   *
+   * @public
+   * @description Fetches all events from API and saves them to events property
+   */
+    fetchAllFavourites: () => IRequestSubject<void>;
+
+  /**
+   * Modifies user favourites
+   * @public
+   */
+  removeFavourite(id: string, username: string): Promise<void>;
 
   /**
    * Sets user info

@@ -21,12 +21,15 @@ export type EditUserResponse =
   paths['/users/edit']['post']['responses']['200']['schema'];
 
 export type RemoveFollowerResponse =
-  paths['/users/deleteFollower']['delete']['responses']['200']['schema'];
+paths['/users/deleteFollower']['delete']['responses']['200']['schema'];
 
 export type AddFollowerResponse =
 paths['/users/newFollower']['post']['responses']['200']['schema'];
+
+export type RemoveFavouriteResponse =
+  paths['/users/deleteFavourite']['delete']['responses']['201']['schema'];
+
 export interface IAPI {
-  
   setup: (token: string) => void;
 
   login: (username: string, password: string) => Promise<LoginResponse>;
@@ -41,7 +44,11 @@ export interface IAPI {
     profilePicture?: string,
   ) => Promise<UserDocument>;
 
+  getUserPreferits: (username: string) => Promise<EventDocument[]>;
+
   getAllEvents: () => Promise<EventDocument[]>;
+
+  getMapEvents: (lat1: number, lon1: number, lat2: number, lon2: number) => Promise<EventDocument[]>;
 
   editUser: (
     username: string,
@@ -61,5 +68,11 @@ export interface IAPI {
   addFriend(username: string, follower: string): Promise<UserDocument[]>;
   
   getAllUsers: () => Promise<UserDocument[]>;
+  
+  removeFavourite(id: string, username: string): Promise<EventDocument[]>;
+
+  addFavourite(id: string, username: string): unknown;
+
   addReview: (eventId: string, authorId: string, puntuation: number,  comment?: string) => Promise<ReviewDocument>;
+
 }

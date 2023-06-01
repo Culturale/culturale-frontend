@@ -3,6 +3,7 @@ import type { IRequestSubject } from '~/observables';
 
 export interface IEventController {
   readonly events: IEvent[];
+  readonly eventsmap: IEvent[];
 
   /**
    *
@@ -10,6 +11,13 @@ export interface IEventController {
    * @description Fetches all events from API and saves them to events property
    */
   fetchAllEvents: () => IRequestSubject<void>;
+
+  /**
+   *
+   * @public
+   * @description Fetches all events from API and saves them to events property
+   */
+  fetchMapEvents: (lat1: number, Lon1: number, lat2: number, Lon2: number) => IRequestSubject<void>;
 
   /**
    *

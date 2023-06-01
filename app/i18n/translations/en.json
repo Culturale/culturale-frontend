@@ -40,6 +40,7 @@
       "email": "Email:",
       "telephone": "Phone:",
       "configuracion": "Settings",
+      "favoritos": "Favourites",
       "pagos": "My payments",
       "amigos": "My friends",
       "miperfil": "My profile"
@@ -58,11 +59,13 @@
   "vacio": "This is very empty!",
   "noFriends": "Meet new people to start this adventure",
   "delete": "Delete"
-
-},
+    },
+    "preferits": {
+      "titulo": "Favourites"
+    },
     "myEvents": {
       "calendar": "+ Add to calendar ",
       "valoration": "+ Make a review"
-  }
+    }
   }
   

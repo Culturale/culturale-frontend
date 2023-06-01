@@ -3,14 +3,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { RootParamList, TabParamList } from './root-params';
-import { EditProfileScreen, ProfileScreen, HomeScreen, EventScreen, MyEventsScreen, ShowFollowedsScreen, ShowFollowersScreen} from '~/views';
+import { MapScreen, EditProfileScreen, ProfileScreen, HomeScreen, EventScreen, MyEventsScreen, ShowFollowedsScreen, ShowFollowersScreen, PreferitsScreen} from '~/views';
 import { ShowUserScreen } from '~/views/showUser-screen';
-import { ShowFriendsScreen } from '~/views/showFriends-screen';
 import { ValoracioScreen } from '~/views/valoracio-screen';
+import { ShowFriendsScreen } from '~/views/showFriends-screen';
+
 
 const ProfileStack = createStackNavigator<RootParamList>();
 const Tab = createMaterialBottomTabNavigator<TabParamList>();
-
 
 const ProfileStackNavigator: React.FC = observer(() => {
   return (
@@ -44,11 +44,20 @@ const ProfileStackNavigator: React.FC = observer(() => {
         component={ShowUserScreen}
         name="ShowUserScreen"
         options={{ headerShown: false }}
+        />
+        <ProfileStack.Screen
+        component={PreferitsScreen}
+        name="PreferitsScreen"
+        options={{ headerShown: false }}
+      />
+      <ProfileStack.Screen
+        component={ShowFriendsScreen}
+        name="ShowFriends"
+        options={{ headerShown: false }}
       />
     </ProfileStack.Navigator>
   );
 });
-
 
 const HomeStackNavigator: React.FC = observer(() => {
   return (
@@ -68,10 +77,16 @@ const HomeStackNavigator: React.FC = observer(() => {
         name="MyEventsScreen"
         options={{ headerShown: false }}
       />
+      <ProfileStack.Screen
+        component={MapScreen}
+        name="MapScreen"
+        options={{ headerShown: false }}
+      />
      
     </ProfileStack.Navigator>
   );
 });
+
 const MyEventsScreenNavigator: React.FC = observer(() => {
   return (
   <ProfileStack.Navigator>
@@ -84,6 +99,18 @@ const MyEventsScreenNavigator: React.FC = observer(() => {
       component={ValoracioScreen}
       name="ValoracioScreen"
       options={{ headerShown: false }}
+    />
+  </ProfileStack.Navigator>
+  );
+});
+
+const MapScreenNavigator: React.FC = observer(() => {
+  return (
+  <ProfileStack.Navigator>
+    <ProfileStack.Screen
+    component={MapScreen}
+    name="MapScreen"
+    options={{ headerShown: false }}
     />
   </ProfileStack.Navigator>
   );
@@ -104,6 +131,9 @@ export const TabNavigator: React.FC = observer(() => {
           } else if (route.name === 'MyEvents') {
             iconName = focused ? 'person' : 'person-outline';
           }
+          else if (route.name === 'Map') {
+            iconName = focused ? 'map' : 'map-outline';
+          }
           return <Ionicons name={iconName} size={17} />;
         },
         tabBarInactiveTintColor: 'gray',
@@ -114,6 +144,7 @@ export const TabNavigator: React.FC = observer(() => {
     >
       <Tab.Screen component={HomeStackNavigator} name="Home" />
       <Tab.Screen component={MyEventsScreenNavigator} name="MyEvents" />
+      <Tab.Screen component={MapScreenNavigator} name="Map" />
       <Tab.Screen component={ProfileStackNavigator} name="Profile" />
     </Tab.Navigator>
   );
