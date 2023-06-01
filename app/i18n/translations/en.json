@@ -39,13 +39,17 @@
       "email": "Email:",
       "telephone": "Phone:",
       "configuracion": "Settings",
+      "favoritos": "Favourites",
       "pagos": "My payments",
       "amigos": "My friends",
       "miperfil": "My profile"
     },
+    "preferits": {
+      "titulo": "Favourites"
+    },
     "myEvents": {
       "calendar": "+ Add to calendar ",
       "valoration": "+ Make a review"
-  }
+    }
   }
   

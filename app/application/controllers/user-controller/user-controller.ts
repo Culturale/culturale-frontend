@@ -6,9 +6,12 @@ import type { ImagePickerAsset } from 'expo-image-picker';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
 
-import type { IEvent, IUser} from '~/domain';
+import { IEvent, IUser, User} from '~/domain';
 import { userFactory } from '~/domain';
-import type { IInfrastructure } from '~/infrastructure';
+import { eventFactory } from '~/domain';
+import type { EventDocument, IInfrastructure } from '~/infrastructure';
+import type { IRequestSubject } from '~/observables';
+import { RequestSubject } from '~/observables';
 
 import type { IUserController } from './user-controller.interface';
 
@@ -46,6 +49,34 @@ export class UserController implements IUserController {
     });
   }
 
+  public setPreferits(events: IEvent[]): void {
+    this.userInfo.preferits = events;
+  }
+
+
+  public fetchAllFavourites(): IRequestSubject<void> {
+    const username = this.userInfo.username;
+    const subject = new RequestSubject<void>();
+    subject.startRequest();
+
+    this.infrastructure.api
+      .getUserPreferits(username)
+      .then((res: EventDocument[]) => {
+        const events: IEvent[] = [];
+        for (const doc of res) {
+          const event = eventFactory(doc);
+          events.push(event);
+        }
+        this.setPreferits(events);
+
+        subject.completeRequest();
+      })
+      .catch((e: Error) => {
+        subject.failRequest(e);
+      });
+
+    return subject;
+  }
 
   public async setup() {
     await makePersistable(
@@ -64,8 +95,20 @@ export class UserController implements IUserController {
     if (index !== -1) {
       this.userInfo.followeds.splice(index, 1);
     }
-    
   }
+
+  public async addFavourite(id: string, username: string): Promise<void> {
+    await this.infrastructure.api.addFavourite(id, username);
+  }
+
+  public async removeFavourite(id: string, username: string): Promise<void> {
+    await this.infrastructure.api.removeFavourite(id, username);
+   const index = this.userInfo.preferits.findIndex(event => event.id === id);
+   if (index !== -1) {
+     this.userInfo.preferits.splice(index, 1);
+   }
+ }
+
   public setUserFollowers(token: string): void {
     this.token = token;
   }

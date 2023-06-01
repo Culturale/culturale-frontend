@@ -11,25 +11,26 @@ import type { IEvent } from '~/domain';
 import {  useApplicationLayer } from '~/hooks';
 import type { RootParamList } from '~/navigation';
 
-import type { HomeScreenProps as Props } from './home-screen.props';
-import { HomeScreenStyles as styles } from './home-screen.styles';
+import type { PreferitsScreenProps as Props } from './preferits-screen.props';
+import { PreferitsScreenStyles as styles } from './preferits-screen.styles';
 
-type HomeNavigation = StackNavigationProp<RootParamList, 'Home'>;
+type PreferitsNavigation = StackNavigationProp<RootParamList, 'PreferitsScreen'>;
 
 
-export const HomeScreen: React.FC<Props> = observer(() => {
+export const PreferitsScreen: React.FC<Props> = observer(() => {
   const {
-    controllers: { EventController },
+    controllers: { EventController, UserController },
   } = useApplicationLayer();
-  const events = EventController.events;
-  const navigation = useNavigation<HomeNavigation>();
+  const events = UserController.userInfo.preferits;
+  const navigation = useNavigation<PreferitsNavigation>();
 
   useEffect(() => {
-    EventController.fetchAllEvents();
+    UserController.fetchAllFavourites();
   }, []);
+
   const renderItem = ({ item }: { item: IEvent }) => {
     const handleEventClick = () => {
-      navigation.navigate('EventScreen', { eventId : item.id});
+      navigation.navigate('EventScreen', { eventId : item.id });
     };
     return (
       <TouchableOpacity onPress={handleEventClick}>
@@ -40,17 +41,11 @@ export const HomeScreen: React.FC<Props> = observer(() => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen')}>
+        <Ionicons color="black" name="arrow-back" size={24} />
+      </TouchableOpacity>
       <View style={styles.titleContainer}>
-        <TraductionText style={styles.title} tx="home.inicio"/>
-      </View>
-      <View style={styles.bottomContainer}>
-        <View>
-          <TraductionText style={styles.subTitle} tx="home.near"/>
-        </View>
-        <View style={styles.hoyContainer}>
-          <TraductionText style={styles.subTitle} tx="home.today"/>
-          <Ionicons color="black" name="filter-outline" size={24} />
-        </View>
+        <TraductionText style={styles.title} tx="preferits.titulo"/>
       </View>
       <View style={styles.eventContainer}>
         <FlatList
@@ -62,3 +57,4 @@ export const HomeScreen: React.FC<Props> = observer(() => {
     </View>
   );
 });
+

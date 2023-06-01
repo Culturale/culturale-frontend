@@ -346,6 +346,10 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/user'
+      preferits:
+        type: array
+        items:
+          $ref: '#/definitions/event'
       eventSub:
         type: array
         items:

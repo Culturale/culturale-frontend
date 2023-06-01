@@ -11,5 +11,6 @@ export function userFactory(userDocument: UserDocument | string): IUser {
     eventSub: userDocument.eventSub?.map(eventFactory),
     followeds: userDocument.followeds?.map(userFactory),
     followers: userDocument.followers?.map(userFactory),
+    preferits: userDocument.preferits?.map(eventFactory),
   });
 }

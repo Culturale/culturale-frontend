@@ -10,6 +10,7 @@ import type { IEventController } from './event-controller.interface';
 
 export class EventController implements IEventController {
   public events: IEvent[];
+  public eventsmap: IEvent[];
   public SearchEvents: IEvent[];
   private readonly infrastructure: IInfrastructure;
 
@@ -19,12 +20,18 @@ export class EventController implements IEventController {
     makeObservable(this, {
       addParticipant: action,
       events: observable,
+      eventsmap: observable,
       setEvents: action,
+      setEventsMap: action,
     });
   }
 
   public setEvents(events: IEvent[]): void {
     this.events = events;
+  }
+
+  public setEventsMap(events: IEvent[]): void {
+    this.eventsmap = events;
   }
 
   public setEventsSearch(events: IEvent[]): void {
@@ -45,6 +52,30 @@ export class EventController implements IEventController {
         }
 
         this.setEvents(events);
+
+        subject.completeRequest();
+      })
+      .catch((e: Error) => {
+        subject.failRequest(e);
+      });
+
+    return subject;
+  }
+
+  public fetchMapEvents(lat1: number, lon1: number, lat2: number, lon2: number): IRequestSubject<void> {
+    const subject = new RequestSubject<void>();
+    subject.startRequest();
+
+    this.infrastructure.api
+      .getMapEvents(lat1, lon1, lat2, lon2)
+      .then((res: EventDocument[]) => {
+        const events: IEvent[] = [];
+        for (const doc of res) {
+          const event = eventFactory(doc);
+          events.push(event);
+        }
+
+        this.setEventsMap(events);
 
         subject.completeRequest();
       })
