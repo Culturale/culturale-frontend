@@ -21,13 +21,6 @@ export interface IUserController extends Controller {
   /**
    *
    * @public
-   * @description Fetches all users from API and saves them to events property
-   */
-  fetchAllUsers: () => IRequestSubject<void>;
-
-  /**
-   *
-   * @public
    * @description Fetches a user from API and saves them to events property
    */
   findUser(username: string): IUser;

@@ -27,12 +27,12 @@ const ProfileStackNavigator: React.FC = observer(() => {
       />
       <ProfileStack.Screen 
       component={ShowFollowedsScreen} 
-      name="ShowFollowers" 
+      name="ShowFolloweds" 
       options={{ headerShown: false }}
       />
       <ProfileStack.Screen 
       component={ShowFollowersScreen} 
-      name="ShowFolloweds" 
+      name="ShowFollowers" 
       options={{ headerShown: false }}
       />
       <ProfileStack.Screen 
@@ -51,11 +51,12 @@ const ProfileStackNavigator: React.FC = observer(() => {
         options={{ headerShown: false }}
       />
       <ProfileStack.Screen
-        component={ShowFriendsScreen}
-        name="ShowFriends"
-        options={{ headerShown: false }}
-      />
+    component={SearchScreen}
+    name="Search"
+    options={{ headerShown: false }}
+    />
     </ProfileStack.Navigator>
+    
   );
 });
 

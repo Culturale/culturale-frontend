@@ -6,7 +6,7 @@ import { format } from 'date-fns';
 import { observer } from 'mobx-react-lite';
 import type React from 'react';
 import {useState } from 'react';
-import { Text, View, FlatList, TextInput, TouchableOpacity, StatusBar, ScrollView} from 'react-native';
+import { Text, View, FlatList, TextInput, TouchableOpacity, StatusBar} from 'react-native';
 import DatePickerModal from 'react-native-modal-datetime-picker';
 
 import { Event, User } from '~/components';
@@ -20,12 +20,15 @@ import { SearchScreenStyles as styles } from './search-screen.styles';
 
 type HomeNavigation = StackNavigationProp<RootParamList, 'Home'>;
 
+type ShowUserNavigation = StackNavigationProp<RootParamList, 'ShowFollowers'>;
+
 export const SearchScreen: React.FC<Props> = observer(() => {
   const { controllers: { EventController, UserController } } = useApplicationLayer();
 
   // Llista de resultats a mostrar eventos/users:
   const [searchResults, setSearchResults] = useState<(IEvent | IUser)[]>([]);
   const navigation = useNavigation<HomeNavigation>();
+  const navigationUser = useNavigation<ShowUserNavigation>();
 
   // CERCA DE EVENTOS SEGÚN EL FILTRO:
   // Denominación:
@@ -126,11 +129,6 @@ export const SearchScreen: React.FC<Props> = observer(() => {
     if (showEventFilters) {
       setEventShowFilters(!showEventFilters);
     }
-    // Si s'estan mostrant els filtres d'usuaris, es tanquen
-    if (showUserFilters) {
-      setUserShowFilters(!showUserFilters);
-    }
-
     // Si es busquen usuaris....
     if (searchType === 'usuarios') {
       UserController.fetchAllUsers(searchText);
@@ -159,6 +157,9 @@ export const SearchScreen: React.FC<Props> = observer(() => {
     const handleEventClick = () => {
       navigation.navigate('EventScreen', { eventId : item._id});
     };
+    const handleUserClick = () => {
+      navigationUser.navigate('ShowUserScreen', { username: item.username })
+    };
 
     if (searchResults.length === 0) {
       return (
@@ -176,7 +177,9 @@ export const SearchScreen: React.FC<Props> = observer(() => {
     }
     else if (searchType === 'usuarios') {
       return (
+        <TouchableOpacity onPress={() => handleUserClick()}>
           <User key={item._id} user={item} />
+        </TouchableOpacity>
       );
     }
   };

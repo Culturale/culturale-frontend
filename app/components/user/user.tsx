@@ -11,8 +11,8 @@ export const User: React.FC<Props> = ({ user }) => {
   return (
     <View style={styles.userCard}>
       <View style={styles.avatarContainer}>
-      <Image src={user.profilePicture} style={styles.userAvatar} />
-        <View style={styles.onlineIndicator} />
+        <Image src={user.profilePicture} style={styles.userAvatar} />
+          <View style={styles.onlineIndicator} />
       </View>
       <View style={styles.userInfo}>
         <Text style={styles.username}>{user.username}</Text>
