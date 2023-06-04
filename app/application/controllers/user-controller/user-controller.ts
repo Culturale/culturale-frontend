@@ -22,7 +22,6 @@ export class UserController implements IUserController {
   public isLoggedIn: boolean | null = null;
   public token: string;
   public userInfo: IUser;
-  public users: IUser[];
   private infrastructure: IInfrastructure;
   public users: IUser[];
 
@@ -56,7 +55,6 @@ export class UserController implements IUserController {
   public setUsers(users: IUser[]): void {
     this.users = users;
   }
-
 
   public fetchAllFavourites(): IRequestSubject<void> {
     const username = this.userInfo.username;
@@ -189,11 +187,35 @@ export class UserController implements IUserController {
     this.setUserInfo(user);
   }
 
-  public fetchAllUsers(username: string): IRequestSubject<void> {
+  public fetchAllUsers(): IRequestSubject<void> {
+    const subject = new RequestSubject<void>();
+    subject.startRequest();
+
+    this.infrastructure.api
+      .getAllUsers()
+      .then((res: UserDocument[]) => {
+        const users: IUser[] = [];
+        for (const doc of res) {
+          const user = userFactory(doc);
+          users.push(user);
+        }
+
+        this.setUsers(users);
+
+        subject.completeRequest();
+      })
+      .catch((e: Error) => {
+        subject.failRequest(e);
+      });
+    console.log("DEVOLVEMOS EL SUBJECT", subject)
+    return subject;
+  }
+  
+  public fetchUsers(username: string): IRequestSubject<void> {
     const subject = new RequestSubject<void>();
     subject.startRequest();
     this.infrastructure.api
-    .getAllUsers(username)
+    .getUsers(username)
     .then((res: UserDocument[]) => {
       const users: IUser[] = [];
       for (const doc of res) {
@@ -274,33 +296,9 @@ export class UserController implements IUserController {
     return this.users.find(user => user._id === userId);
   }
   
-  public fetchAllUsers(): IRequestSubject<void> {
-    const subject = new RequestSubject<void>();
-    subject.startRequest();
 
-    this.infrastructure.api
-      .getAllUsers()
-      .then((res: UserDocument[]) => {
-        const users: IUser[] = [];
-        for (const doc of res) {
-          const user = userFactory(doc);
-          users.push(user);
-        }
-
-        this.setUsers(users);
-
-        subject.completeRequest();
-      })
-      .catch((e: Error) => {
-        subject.failRequest(e);
-      });
-    console.log("DEVOLVEMOS EL SUBJECT", subject)
-    return subject;
-  }
   
-  public setUsers(users: IUser[]): void {
-    this.users = users;
-  }
+
 }
 
 

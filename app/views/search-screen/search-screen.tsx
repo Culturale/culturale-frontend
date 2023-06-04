@@ -134,7 +134,7 @@ export const SearchScreen: React.FC<Props> = observer(() => {
     }
     // Si es busquen usuaris....
     if (searchType === 'usuarios') {
-      UserController.fetchAllUsers(searchText);
+      UserController.fetchUsers(searchText);
     }
     
     // Si es busquen events....

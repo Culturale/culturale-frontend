@@ -92,7 +92,9 @@ export interface IUserController extends Controller {
    */
   fetchAllFavourites: () => IRequestSubject<void>;
 
-  fetchAllUsers: (username?: string) => IRequestSubject<void>;
+  fetchAllUsers: () => IRequestSubject<void>;
+
+  fetchUsers: (username?: string) => IRequestSubject<void>;
 
   /**
    * Modifies user favourites

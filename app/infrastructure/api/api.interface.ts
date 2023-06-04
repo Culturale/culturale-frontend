@@ -57,7 +57,9 @@ export interface IAPI {
 
   getEvent: (id: string) => Promise<EventDocument>;
 
-  getAllUsers: (username: string) => Promise<UserDocument[]>;
+  getAllUsers: () => Promise<UserDocument[]>;
+
+  getUsers: (username: string) => Promise<UserDocument[]>;
 
   getMapEvents: (lat1: number, lon1: number, lat2: number, lon2: number) => Promise<EventDocument[]>;
 
@@ -89,8 +91,6 @@ export interface IAPI {
   removeFriend(username: string, follower:string): Promise<UserDocument[]>;
 
   addFriend(username: string, follower: string): Promise<UserDocument[]>;
-  
-  getAllUsers: () => Promise<UserDocument[]>;
   
   removeFavourite(id: string, username: string): Promise<EventDocument[]>;
 
