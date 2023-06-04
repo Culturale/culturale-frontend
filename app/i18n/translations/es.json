@@ -4,7 +4,7 @@
         "buttonCancel": "Cancelar",
         "name": "Nombre:",
         "username": "Nombre Usuario:",
-        "changePhoto": "Cambiar foro de perfil",
+        "changePhoto": "Cambiar foto de perfil",
         "email": "Correo electrónico",
         "telephone": "Teléfono:",
         "editProfile": "Editar perfil"
@@ -12,6 +12,7 @@
     "eventScreen": {
         "ComoLlegar": "¿Cómo llegar?",
         "BuyText": "Comprar",
+        "Enroll": "Apuntáte",
         "information": "+ Información"
     },
     "event": {
@@ -63,5 +64,16 @@
     },
     "preferits": {
       "titulo": "Favoritos"
+    },
+    "settings": {
+        "changeLanguage": "Cambiar de idioma "
+    },
+    "mapa": {
+        "title": "Mapa",
+        "near": "Eventos interesantes cerca de mí...",
+    },
+    "valoracio": {
+        "new": "Nueva valoración",
+        "send": "Enviar"
     }
 }

@@ -161,33 +161,6 @@ export interface paths {
       };
     };
   };
-  "/events/code/:id": {
-    /** Returns an specific event */
-    get: {
-      responses: {
-        /** Ok */
-        200: {
-          schema: {
-            event?: definitions["event"];
-          };
-        };
-        /** Bad request */
-        404: {
-          schema: {
-            data?: { [key: string]: unknown };
-            error?: definitions["error"];
-          };
-        };
-        /** Internal server error */
-        500: {
-          schema: {
-            data?: { [key: string]: unknown };
-            error?: definitions["error"];
-          };
-        };
-      };
-    };
-  };
   "/users/edit": {
     /** Returns the edited user */
     post: {
@@ -327,28 +300,6 @@ export interface paths {
       };
     };
   };
-  "/users/deleteFavourite": {
-    /** Deletes an event from favourites */
-    delete: {
-      responses: {
-        /** Ok */
-        201: {
-          schema: {
-            favourites?: definitions["event"][];
-            message?: string;
-          };
-        };
-        /** Internal server error */
-        /** Internal server error */
-        500: {
-          schema: {
-            data?: { [key: string]: unknown };
-            error?: definitions["error"];
-          };
-        };
-      };
-    };
-  };
 }
 
 export interface definitions {
@@ -365,6 +316,7 @@ export interface definitions {
     lat: number;
     long: number;
     photo: string;
+    price: string;
     participants?: definitions["user"][];
     chat?: definitions["chat"];
     categoria?: string;
@@ -379,8 +331,8 @@ export interface definitions {
     usertype: string;
     followers?: definitions["user"][];
     followeds?: definitions["user"][];
-    eventSub?: definitions["event"][];
     preferits?: definitions["event"][];
+    eventSub?: definitions["event"][];
   };
   chat: {
     _id: string;

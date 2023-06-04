@@ -1,55 +1,64 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
-import { Text, View, Image, Button, TouchableOpacity } from 'react-native';
-import { Text as TraductionText } from '~/components';
+import { useEffect } from 'react';
+import { Text, View, Image, Button, TouchableOpacity, ScrollView } from 'react-native';
+
+
+import { Text as TraductionText } from '~/components/text';
 import { useApplicationLayer } from '~/hooks';
+import { useLanguageContext } from '~/hooks/use-language/use-language';
+import type { RootParamList } from '~/navigation';
+
 import { ProfileScreenStyles as Styles } from './profile-screen.styles';
-import { RootParamList, TabParamList } from '~/navigation';
-import { Ionicons } from '@expo/vector-icons';
 
 type ProfileNavigation = StackNavigationProp<RootParamList, 'Profile'>;
-type EventScreenNavigation = StackNavigationProp<RootParamList, 'EditProfile'>;
-type ShowFriendsNavigation = StackNavigationProp<TabParamList, 'ShowFriendsScreen'>;
+// type EventScreenNavigation = StackNavigationProp<RootParamList, 'EditProfile'>;
+// type ShowFriendsNavigation = StackNavigationProp<TabParamList, 'ShowFriendsScreen'>;
 
-type ShowFollowersNavigation = StackNavigationProp<RootParamList, 'ShowFollowers'>;
+// type ShowFollowersNavigation = StackNavigationProp<RootParamList, 'ShowFollowers'>;
 
 export const ProfileScreen = observer(() => {
   const {
     controllers: { UserController },
   } = useApplicationLayer();
-  
+  const { language } = useLanguageContext();  
+
+  useEffect((() => {}), [language]);
+ 
 
   const userInfo = UserController.userInfo;
-  const navigationFriends = useNavigation<ShowFriendsNavigation>();
+  // const navigationFriends = useNavigation<ShowFriendsNavigation>();
   const navigationProfile = useNavigation<ProfileNavigation>();
-  const navigationfllwrs = useNavigation<ShowFollowersNavigation>();
-  const navigationBack = useNavigation<EventScreenNavigation>();
+  // const navigationfllwrs = useNavigation<ShowFollowersNavigation>();
+  // const navigationBack = useNavigation<EventScreenNavigation>();
+
+
+  function mostrarConfig() {
+    navigationProfile.navigate('Config');
+  }
 
   function mostrarFavoritos() {
     navigationProfile.navigate('PreferitsScreen');
   }
 
+
+  
     return (
-      <View style={Styles.container}>
-        <View style={Styles.backArrow}>
-          <TouchableOpacity onPress={() => navigationBack.navigate('HomeScreen')}>
-              <Ionicons color="black" name="arrow-back" size={24} />
-            </TouchableOpacity>
-        </View>
+      <ScrollView style={Styles.container}>
         <TraductionText style={Styles.title} tx="perfil.miperfil"/>
         <View style={Styles.rowProfile}>
           <View style={Styles.titleData}>
             <Image src={userInfo.profilePicture} style={Styles.foto}/>
             <View style={Styles.contentData}>
-              <TouchableOpacity onPress={() => { navigationfllwrs.navigate('ShowFolloweds',{username: userInfo.username}) }}>
+              <TouchableOpacity onPress={() => { navigationProfile.navigate('ShowFolloweds',{username: userInfo.username}); }}>
               <Text style={Styles.number}>{userInfo.followers.length}</Text>
               <TraductionText tx='perfil.seguidores'/>
               </TouchableOpacity>
             </View>
             <View style={Styles.contentData}>
-              <TouchableOpacity onPress={() => { navigationfllwrs.navigate('ShowFollowers',{username: userInfo.username}) }}>
+              <TouchableOpacity onPress={() => { navigationProfile.navigate('ShowFollowers',{username: userInfo.username}); }}>
               <Text style={Styles.number}>{userInfo.followeds.length}</Text>
               <TraductionText tx='perfil.siguiendo'/>
               </TouchableOpacity>
@@ -59,7 +68,7 @@ export const ProfileScreen = observer(() => {
         <Text style={Styles.username}>{userInfo.username}</Text>
         <View style={Styles.row}>
           <View style={Styles.column}>
-            <TraductionText tx='perfil.nombre' style={Styles.titleRow}/>
+            <TraductionText style={Styles.titleRow} tx='perfil.nombre'/>
           </View>
           <View style={Styles.column}>
             <Text>{userInfo.name}</Text>
@@ -89,24 +98,24 @@ export const ProfileScreen = observer(() => {
         ></Button>
         </View>
         <View style={Styles.containerInfo}>
-          <TouchableOpacity  style={Styles.panelConfig} onPress={() => { mostrarFavoritos() }}>
+          <TouchableOpacity  style={Styles.panelConfig} onPress={() => { mostrarFavoritos(); }}>
             <Image source={require('../../../assets/star-logo.png')} style={Styles.icon}/>
             <TraductionText style={Styles.configText} tx="perfil.favoritos"/>
           </TouchableOpacity>
-          <View style={Styles.panelConfig}>
+          <TouchableOpacity style={Styles.panelConfig}onPress={() => { mostrarConfig(); }}>
             <Image source={require('../../../assets/config-logo.png')} style={Styles.icon} />
             <TraductionText style={Styles.configText} tx="perfil.configuracion"/>
-          </View>
+          </TouchableOpacity>
           <View style={Styles.panelConfig}>
             <Image source={require('../../../assets/card-logo.png')} style={Styles.icon}/>
             <TraductionText style={Styles.configText} tx="perfil.pagos"/>
           </View>
-          <TouchableOpacity  style={Styles.panelConfig} onPress={() => { navigationFriends.navigate('ShowFriends') }}>
+          <TouchableOpacity  style={Styles.panelConfig} onPress={() => { navigationProfile.navigate('ShowFriends'); }}>
             <Image source={require('../../../assets/friend-logo.png')} style={Styles.icon}/>
             <TraductionText style={Styles.configText} tx="perfil.amigos"/>
           </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
     
   );
 });
