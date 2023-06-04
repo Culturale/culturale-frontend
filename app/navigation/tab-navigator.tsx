@@ -2,11 +2,13 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { createStackNavigator } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { RootParamList, TabParamList } from './root-params';
-import { MapScreen, EditProfileScreen, ProfileScreen, HomeScreen, EventScreen, MyEventsScreen, ShowFollowedsScreen, ShowFollowersScreen, PreferitsScreen} from '~/views';
+
+import { MapScreen, EditProfileScreen, ProfileScreen, HomeScreen, EventScreen, MyEventsScreen, ShowFollowedsScreen, ShowFollowersScreen, PreferitsScreen, SettingsScreen} from '~/views';
+import { ShowFriendsScreen } from '~/views/showFriends-screen';
 import { ShowUserScreen } from '~/views/showUser-screen';
 import { ValoracioScreen } from '~/views/valoracio-screen';
-import { ShowFriendsScreen } from '~/views/showFriends-screen';
+
+import type { RootParamList, TabParamList } from './root-params';
 
 
 const ProfileStack = createStackNavigator<RootParamList>();
@@ -48,6 +50,11 @@ const ProfileStackNavigator: React.FC = observer(() => {
         <ProfileStack.Screen
         component={PreferitsScreen}
         name="PreferitsScreen"
+        options={{ headerShown: false }}
+      />
+       <ProfileStack.Screen
+        component={SettingsScreen}
+        name="Config"
         options={{ headerShown: false }}
       />
     </ProfileStack.Navigator>
