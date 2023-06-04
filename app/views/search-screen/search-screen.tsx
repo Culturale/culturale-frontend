@@ -5,7 +5,7 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 import { format } from 'date-fns';
 import { observer } from 'mobx-react-lite';
 import type React from 'react';
-import {useState } from 'react';
+import {useState, useEffect } from 'react';
 import { Text, View, FlatList, TextInput, TouchableOpacity, StatusBar} from 'react-native';
 import DatePickerModal from 'react-native-modal-datetime-picker';
 
@@ -20,7 +20,7 @@ import { SearchScreenStyles as styles } from './search-screen.styles';
 
 type HomeNavigation = StackNavigationProp<RootParamList, 'Home'>;
 
-type ShowUserNavigation = StackNavigationProp<RootParamList, 'ShowFollowers'>;
+type ShowUserNavigation = StackNavigationProp<RootParamList, 'SearchScreen'>;
 
 export const SearchScreen: React.FC<Props> = observer(() => {
   const { controllers: { EventController, UserController } } = useApplicationLayer();
@@ -29,6 +29,9 @@ export const SearchScreen: React.FC<Props> = observer(() => {
   const [searchResults, setSearchResults] = useState<(IEvent | IUser)[]>([]);
   const navigation = useNavigation<HomeNavigation>();
   const navigationUser = useNavigation<ShowUserNavigation>();
+
+  const events = EventController.SearchEvents;
+  const users = UserController.users;
 
   // CERCA DE EVENTOS SEGÚN EL FILTRO:
   // Denominación:
@@ -132,8 +135,6 @@ export const SearchScreen: React.FC<Props> = observer(() => {
     // Si es busquen usuaris....
     if (searchType === 'usuarios') {
       UserController.fetchAllUsers(searchText);
-      const users = UserController.users;
-      setSearchResults(users);
     }
     
     // Si es busquen events....
@@ -147,11 +148,16 @@ export const SearchScreen: React.FC<Props> = observer(() => {
         searchHorari,
         priceRangeMax
       );
-      // events = RESULTAT CRIDA
-      const events = EventController.SearchEvents;
-      setSearchResults(events);
     }
   };
+
+  useEffect(() => {
+    setSearchResults(events);
+  }, [events])
+
+  useEffect(() => {
+    setSearchResults(users);
+  }, [users])
 
   const renderResult = ({ item }: { item: IEvent | IUser }) => {
     const handleEventClick = () => {

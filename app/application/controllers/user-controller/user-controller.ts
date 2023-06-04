@@ -200,6 +200,7 @@ export class UserController implements IUserController {
         const user = userFactory(doc);
         users.push(user);
       }
+      console.log(users);
       this.setUsers(users);
 
       subject.completeRequest();

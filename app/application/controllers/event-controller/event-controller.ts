@@ -23,9 +23,11 @@ export class EventController implements IEventController {
       event: observable,
       events: observable,
       eventsmap: observable,
+      SearchEvents: observable,
       setEvent: action,
       setEvents: action,
       setEventsMap: action,
+      setEventsSearch: action,
     });
   }
 
@@ -188,15 +190,12 @@ export class EventController implements IEventController {
       .fetchEventsByFilters(denominacio, categoria, dataIni, dataFi, horari, price)
       .then((res: EventDocument[]) => {
         const searchEvents: IEvent[] = res.map((doc: EventDocument) => eventFactory(doc));
-  
         this.setEventsSearch(searchEvents);
-  
         subject.completeRequest();
       })
       .catch((e: Error) => {
         subject.failRequest(e);
       });
-  
     return subject;
   }
 

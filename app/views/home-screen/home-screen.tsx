@@ -19,7 +19,7 @@ type HomeNavigation = StackNavigationProp<RootParamList, 'Home'>;
 
 export const HomeScreen: React.FC<Props> = observer(() => {
   const {
-    controllers: { EventController, UserController },
+    controllers: { EventController },
   } = useApplicationLayer();
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
