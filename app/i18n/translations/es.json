@@ -65,7 +65,8 @@
         "delete": "Eliminar"
     },
     "preferits": {
-      "titulo": "Favoritos"
+      "titulo": "Favoritos",
+      "error": "Aún no tienes eventos favoritos"
     },
     "settings": {
         "changeLanguage": "Cambiar de idioma "
