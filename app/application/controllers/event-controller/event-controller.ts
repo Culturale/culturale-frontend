@@ -1,6 +1,6 @@
 import { action, makeObservable, observable } from 'mobx';
 
-import type { IEvent, IUser } from '~/domain';
+import { IEvent, IReview, IUser, Review } from '~/domain';
 import { eventFactory } from '~/domain';
 import type { EventDocument, IInfrastructure } from '~/infrastructure';
 import type { IRequestSubject } from '~/observables';
@@ -216,14 +216,21 @@ export class EventController implements IEventController {
   }
 
   
-  public async addReview(eventId: string, userId: string, puntuation: number,  comment?: string):Promise<void>{
+  public async addReview(eventId: string, authorId: string, puntuation: number,  comment?: string):Promise<void>{
     try{
       await this.infrastructure.api.addReview(
         eventId,
-        userId,
+        authorId,
         puntuation,
         comment
       );
+
+    const index = this.events.findIndex(e => e._id == eventId);
+    const newEvent = this.events[index];
+    const newReview: IReview =  new Review({puntuation, comment, authorId, eventId})
+    newEvent.updateValoracions(newReview)
+    this.events[index] = newEvent;
+      
     }catch(error){
       // eslint-disable-next-line no-console
       console.error(error);

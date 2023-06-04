@@ -33,7 +33,6 @@ export const ShowUserScreen: React.FC<Props> = observer(() => {
     setFollowers(Nfollowers - 1)
   }
   const [Nfollowers, setFollowers] = useState(user.followers.length);
-  const [Nfolloweds, setFolloweds] = useState(user.followeds.length);
 
   function isFollowing(): boolean {
     const followeds: IUser[] = UserController.userInfo.followeds;

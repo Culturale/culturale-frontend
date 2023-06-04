@@ -25,6 +25,12 @@ export interface IUserController extends Controller {
    */
   findUser(username: string): IUser;
   /**
+   *
+   * @public
+   * @description Fetches a user from API and saves them to events property
+   */
+  findUserId(userId: string): IUser;
+  /**
    * Get if login is needed
    * @public
    */

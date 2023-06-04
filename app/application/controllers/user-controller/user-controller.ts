@@ -269,6 +269,38 @@ export class UserController implements IUserController {
   public findUser(username: string): IUser | undefined {
     return this.users.find(user => user.username === username);
   }
+  
+  public findUserId(userId: string): IUser | undefined {
+    return this.users.find(user => user._id === userId);
+  }
+  
+  public fetchAllUsers(): IRequestSubject<void> {
+    const subject = new RequestSubject<void>();
+    subject.startRequest();
+
+    this.infrastructure.api
+      .getAllUsers()
+      .then((res: UserDocument[]) => {
+        const users: IUser[] = [];
+        for (const doc of res) {
+          const user = userFactory(doc);
+          users.push(user);
+        }
+
+        this.setUsers(users);
+
+        subject.completeRequest();
+      })
+      .catch((e: Error) => {
+        subject.failRequest(e);
+      });
+    console.log("DEVOLVEMOS EL SUBJECT", subject)
+    return subject;
+  }
+  
+  public setUsers(users: IUser[]): void {
+    this.users = users;
+  }
 }
 
 
