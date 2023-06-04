@@ -1,14 +1,18 @@
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
+import { locale } from 'i18n-js';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import { useContext, useEffect } from 'react';
 import { Text, View, Image, Button, TouchableOpacity } from 'react-native';
 
-import { Text as TraductionText } from '~/components';
+
+import { Text as TraductionText } from '~/components/text';
 import { useApplicationLayer } from '~/hooks';
+import { useLanguageContext } from '~/hooks/use-language/use-language';
 import type { RootParamList, TabParamList } from '~/navigation';
 
 import { ProfileScreenStyles as Styles } from './profile-screen.styles';
+
 
 type ProfileNavigation = StackNavigationProp<RootParamList, 'Profile'>;
 
@@ -18,7 +22,10 @@ export const ProfileScreen = observer(() => {
   const {
     controllers: { UserController },
   } = useApplicationLayer();
-  
+  const { language } = useLanguageContext();  
+
+  useEffect((() => {}), [language]);
+ 
 
   const userInfo = UserController.userInfo;
   const navigationFriends = useNavigation<ShowFriendsNavigation>();
@@ -26,6 +33,7 @@ export const ProfileScreen = observer(() => {
   function mostrarViewAmigos() {
     navigationFriends.navigate('ShowFriends');
   }
+
 
   function mostrarConfig() {
     navigationProfile.navigate('Config');
@@ -35,6 +43,8 @@ export const ProfileScreen = observer(() => {
     navigationProfile.navigate('PreferitsScreen');
   }
 
+
+  
     return (
       <View style={Styles.container}>
         <TraductionText style={Styles.title} tx="perfil.miperfil"/>

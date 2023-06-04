@@ -22,8 +22,11 @@ const changeLanguage = (language: string): void => {
     }
 };
 
+const idioma = i18n.locale;
+
+
 const getCurrentLanguage = () => { 
   return i18n.locale;
 };
   
-export { changeLanguage, getCurrentLanguage };
+export { changeLanguage, getCurrentLanguage, idioma };

@@ -1,8 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 
 import { Application } from './app/application/application';
 import type { IApplication } from './app/application/application.interface';
 import { ApplicationLayerProvider } from './app/hooks/use-application-layer';
+import { LanguageProvider } from './app/hooks/use-language';
 import { RootNavigator } from './app/navigation';
 
 export default function App() {
@@ -24,7 +25,9 @@ export default function App() {
 
   return (
     <ApplicationLayerProvider value={applicationLayer}>
+    <LanguageProvider>
       <RootNavigator />
-    </ApplicationLayerProvider>
+    </LanguageProvider>
+  </ApplicationLayerProvider>
   );
 }

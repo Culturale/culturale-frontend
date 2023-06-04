@@ -2,10 +2,14 @@ import { Ionicons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
+import I18n, { locale } from 'i18n-js';
 import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
+
+import { Text as TraductionText } from '~/components/text';
+import { useLanguageContext } from '~/hooks/use-language/use-language';
 import type { RootParamList } from '~/navigation';
 
 import { changeLanguage, getCurrentLanguage } from '../../../app/i18n/i18n';
@@ -17,11 +21,14 @@ type SettingsNavigation = StackNavigationProp<RootParamList, 'EditProfile'>;
 export const SettingsScreen = observer(() => {
   const navigation = useNavigation<SettingsNavigation>();
   const [selectedLanguage, setSelectedLanguage] = useState(getCurrentLanguage);
+  const { setLanguage } = useLanguageContext();  
 
 
   const changeLanguageState = (language: string) => {
-    changeLanguage(language);
+    I18n.locale= language;
+    setLanguage(language);
     setSelectedLanguage(language);
+    changeLanguage(language);
   };
 
   return (
@@ -32,7 +39,7 @@ export const SettingsScreen = observer(() => {
         </TouchableOpacity>
       </View>
       <View style={styles.container}>
-        <Text style={styles.title}>Cambiar de idioma</Text>
+        <TraductionText style={styles.title} tx='settings.changeLanguage' />
         <Picker
           selectedValue={selectedLanguage}
           style={styles.picker}

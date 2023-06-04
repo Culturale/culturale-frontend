@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { View , Image, ScrollView, TextInput, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react-lite';
+import { Text } from '~/components/text';
 import { ShowFriendsStyles as styles } from './showFriends-screen.styles';
 import { IUser } from '~/domain';
 import { useApplicationLayer } from '~/hooks';
-import { Text } from '~/components/text';
 
 export const ShowFriendsScreen = observer(() => {
   const {
@@ -15,6 +15,7 @@ export const ShowFriendsScreen = observer(() => {
       UserController.removeFriend(UserController.userInfo.username, friendUsername);
     
   }
+  
   const [searchTerm, setSearchTerm] = useState('');
 
   const amigos: IUser[] = UserController.userInfo.followers.filter(user => {

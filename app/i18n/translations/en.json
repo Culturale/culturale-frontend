@@ -50,6 +50,18 @@
     "myEvents": {
       "calendar": "+ Add to calendar ",
       "valoration": "+ Make a review"
+    },
+    "settings": {
+      "changeLanguage": "Change Language "
+    },
+    "mapa": {
+      "title": "Map",
+      "near": "Interesting events near me..."
+    },
+    "valoracio": {
+      "new": "New rating",
+      "send": "Submit"
     }
+    
   }
   

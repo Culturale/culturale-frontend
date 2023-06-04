@@ -49,5 +49,16 @@
     },
     "preferits": {
       "titulo": "Favoritos"
+    },
+    "settings": {
+        "changeLanguage": "Cambiar de idioma "
+    },
+    "mapa": {
+        "title": "Mapa",
+        "near": "Eventos interesantes cerca de mí...",
+    },
+    "valoracio": {
+        "new": "Nueva valoración",
+        "send": "Enviar"
     }
 }
