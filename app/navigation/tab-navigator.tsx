@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { MapScreen, EditProfileScreen, ProfileScreen, HomeScreen, EventScreen, MyEventsScreen, ShowFollowedsScreen, ShowFollowersScreen, PreferitsScreen, SettingsScreen} from '~/views';
+import { DescriptionScreen } from '~/views/description-screen';
 import { ShowFriendsScreen } from '~/views/showFriends-screen';
 import { ShowUserScreen } from '~/views/showUser-screen';
 import { ValoracioScreen } from '~/views/valoracio-screen';
@@ -69,6 +70,11 @@ const HomeStackNavigator: React.FC = observer(() => {
         name="HomeScreen"
         options={{ headerShown: false }}
       />
+       <ProfileStack.Screen
+        component={DescriptionScreen}
+        name="DescriptionScreen"
+        options={{ headerShown: false }}
+    />
       <ProfileStack.Screen
         component={EventScreen}
         name="EventScreen"

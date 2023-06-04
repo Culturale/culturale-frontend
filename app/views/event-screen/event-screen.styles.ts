@@ -20,9 +20,10 @@ export const EventScreenStyles =StyleSheet.create({
       textAlign: 'center',
     },
     buyButton: {
-      alignSelf: 'flex-end',
-      backgroundColor: '#8A2BE2',
+      // alignSelf: 'flex-end',
+      backgroundColor: '#34b38a',
       borderRadius: 5,
+      marginBottom: 10,
       marginTop: 5,
       paddingHorizontal: 10,
       paddingVertical: 5,
@@ -35,22 +36,32 @@ export const EventScreenStyles =StyleSheet.create({
     container: {
       display: 'flex',
       marginTop: 0,
-      padding: 20,
+      padding: 20
     },
     description: {
       fontSize: 16,
       lineHeight: 24,
+      overflow: 'hidden',
       textAlign: 'justify',
     },
     descriptionContainer: {
-      height: 120,
-      width: '100%',
+      alignItems: 'center',
+      display: 'flex',
+      flexDirection: 'row',
+      maxWidth: 250,
     },
     goButton: {
-      color: 'blue',
+      alignSelf: 'flex-start',
+      color: '#34b38a',
       fontSize: 16,
-      lineHeight: 24,
-      textAlign: 'justify' ,
+      fontWeight: 'bold',
+      paddingBottom: 1,
+      paddingTop: 3,
+      textAlign: 'justify',
+    },
+    heart: {
+      alignSelf: 'flex-end',
+      marginLeft: 5,
     },
     image: {
       height: 50,
@@ -71,26 +82,30 @@ export const EventScreenStyles =StyleSheet.create({
       marginTop: 50,
     },
     photo: {
-      alignSelf: 'flex-end', 
+      alignSelf: 'flex-start', 
       flexDirection: 'column', 
       height: 125,
       width: 125,
     },
     price: {
-      alignSelf: 'flex-end',
-      color: '#8A2BE2',
+      // alignSelf: 'flex-end',
+      color: 'black',
       fontSize: 26,
       fontWeight: 'bold',
       marginRight: 10,
     },
-  
     priceContainer: {
       flexDirection: 'column',
-      justifyContent: 'flex-end',
+      // justifyContent: 'flex-start',
       marginTop: 10,
       paddingHorizontal: 10,
       paddingVertical: 5,
       width: '100%',
+    },
+  
+    readMore: {
+      alignSelf: 'flex-end',
+      color: '#34b38a',
     },
     reviewCont: {
       backgroundColor: '#cdcdcd',
@@ -164,10 +179,14 @@ export const EventScreenStyles =StyleSheet.create({
     title: {
       fontSize: 24,
       fontWeight: 'bold',
-      textAlign: 'left',
     },
     titleContainer: {
-      alignSelf: 'center',
-      marginBottom: 10,
+      alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    maxWidth: 400,
+    paddingBottom: 10,
+    paddingHorizontal: 10,
+    width: '100%',
     },
 });

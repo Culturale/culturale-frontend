@@ -22,6 +22,7 @@
     "eventScreen": {
       "ComoLlegar": "How to get there?",
       "BuyText": "Buy",
+      "Enroll": "Enroll",
       "information": "+ Information"
     },
     "event": {

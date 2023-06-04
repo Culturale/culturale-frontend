@@ -14,6 +14,7 @@ export type EventProps = {
   dataFi: Date;
   horari: string;
   adress: string;
+  price: string;
   url: string;
   chat?: IChat;
   lat: number;
@@ -37,6 +38,7 @@ export class Event implements IEvent {
   public photo: string;
   public chat: IChat;
   public participants: IUser[];
+  public price: string;
 
   constructor(props: EventProps) {
     const {
@@ -54,6 +56,7 @@ export class Event implements IEvent {
       url,
       chat,
       participants,
+      price
     } = props;
     this._id = _id;
     this.codi = codi;
@@ -69,6 +72,7 @@ export class Event implements IEvent {
     this.long = long;
     this.chat = chat;
     this.participants = participants || [];
+    this.price = price;
 
     makeObservable(this, {
       adress: observable,
@@ -83,6 +87,7 @@ export class Event implements IEvent {
       long: observable,
       participants: observable,
       photo: observable,
+      price: observable,
       url: observable,
     });
   }

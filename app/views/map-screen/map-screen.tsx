@@ -161,7 +161,7 @@ export const MapScreen: React.FC<Props> = observer(() => {
                         <Text>{event.price}</Text>
                     </View>
                     <View style={styles.buttonText}>
-                        <Button title= 'Ver evento' onPress={() => handleEventClick(event)}/>
+                        <Button title= 'Ver evento' onPress={() => handleEventClick(event)} color='#34b38a'/>
                     </View>
             </Callout>
         </Marker>

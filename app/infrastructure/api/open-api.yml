@@ -350,6 +350,7 @@ definitions:
       - lat
       - long
       - photo
+      - price
     properties:
       _id:
         type: string
@@ -374,6 +375,8 @@ definitions:
       long:
         type: number
       photo:
+        type: string
+      price:
         type: string
       participants:
         type: array
