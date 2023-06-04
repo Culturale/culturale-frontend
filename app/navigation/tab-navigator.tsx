@@ -6,7 +6,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ShowUserScreen, MapScreen, EditProfileScreen, SearchScreen, ProfileScreen, HomeScreen, EventScreen, MyEventsScreen, ShowFollowedsScreen, ShowFollowersScreen, PreferitsScreen, SettingsScreen} from '~/views';
 import { DescriptionScreen } from '~/views/description-screen';
 import { ShowFriendsScreen } from '~/views/showFriends-screen';
-import { ShowUserScreen } from '~/views/showUser-screen';
 import { ValoracioScreen } from '~/views/valoracio-screen';
 
 import type { RootParamList, TabParamList } from './root-params';
