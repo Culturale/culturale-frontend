@@ -10,10 +10,10 @@ import { RootParamList, TabParamList } from '~/navigation';
 import { Ionicons } from '@expo/vector-icons';
 
 type ProfileNavigation = StackNavigationProp<RootParamList, 'Profile'>;
-type EventScreenNavigation = StackNavigationProp<RootParamList, 'EditProfile'>;
-type ShowFriendsNavigation = StackNavigationProp<TabParamList, 'ShowFriendsScreen'>;
+// type EventScreenNavigation = StackNavigationProp<RootParamList, 'EditProfile'>;
+// type ShowFriendsNavigation = StackNavigationProp<TabParamList, 'ShowFriendsScreen'>;
 
-type ShowFollowersNavigation = StackNavigationProp<RootParamList, 'ShowFollowers'>;
+// type ShowFollowersNavigation = StackNavigationProp<RootParamList, 'ShowFollowers'>;
 
 export const ProfileScreen = observer(() => {
   const {
@@ -22,10 +22,10 @@ export const ProfileScreen = observer(() => {
   
 
   const userInfo = UserController.userInfo;
-  const navigationFriends = useNavigation<ShowFriendsNavigation>();
+  // const navigationFriends = useNavigation<ShowFriendsNavigation>();
   const navigationProfile = useNavigation<ProfileNavigation>();
-  const navigationfllwrs = useNavigation<ShowFollowersNavigation>();
-  const navigationBack = useNavigation<EventScreenNavigation>();
+  // const navigationfllwrs = useNavigation<ShowFollowersNavigation>();
+  // const navigationBack = useNavigation<EventScreenNavigation>();
 
   function mostrarFavoritos() {
     navigationProfile.navigate('PreferitsScreen');
@@ -34,7 +34,7 @@ export const ProfileScreen = observer(() => {
     return (
       <View style={Styles.container}>
         <View style={Styles.backArrow}>
-          <TouchableOpacity onPress={() => navigationBack.navigate('HomeScreen')}>
+          <TouchableOpacity onPress={() => navigationProfile.navigate('HomeScreen')}>
               <Ionicons color="black" name="arrow-back" size={24} />
             </TouchableOpacity>
         </View>
@@ -43,13 +43,13 @@ export const ProfileScreen = observer(() => {
           <View style={Styles.titleData}>
             <Image src={userInfo.profilePicture} style={Styles.foto}/>
             <View style={Styles.contentData}>
-              <TouchableOpacity onPress={() => { navigationfllwrs.navigate('ShowFolloweds',{username: userInfo.username}) }}>
+              <TouchableOpacity onPress={() => { navigationProfile.navigate('ShowFolloweds',{username: userInfo.username}) }}>
               <Text style={Styles.number}>{userInfo.followers.length}</Text>
               <TraductionText tx='perfil.seguidores'/>
               </TouchableOpacity>
             </View>
             <View style={Styles.contentData}>
-              <TouchableOpacity onPress={() => { navigationfllwrs.navigate('ShowFollowers',{username: userInfo.username}) }}>
+              <TouchableOpacity onPress={() => { navigationProfile.navigate('ShowFollowers',{username: userInfo.username}) }}>
               <Text style={Styles.number}>{userInfo.followeds.length}</Text>
               <TraductionText tx='perfil.siguiendo'/>
               </TouchableOpacity>
@@ -101,7 +101,7 @@ export const ProfileScreen = observer(() => {
             <Image source={require('../../../assets/card-logo.png')} style={Styles.icon}/>
             <TraductionText style={Styles.configText} tx="perfil.pagos"/>
           </View>
-          <TouchableOpacity  style={Styles.panelConfig} onPress={() => { navigationFriends.navigate('ShowFriends') }}>
+          <TouchableOpacity  style={Styles.panelConfig} onPress={() => { navigationProfile.navigate('ShowFriends') }}>
             <Image source={require('../../../assets/friend-logo.png')} style={Styles.icon}/>
             <TraductionText style={Styles.configText} tx="perfil.amigos"/>
           </TouchableOpacity>

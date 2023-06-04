@@ -50,11 +50,6 @@ const ProfileStackNavigator: React.FC = observer(() => {
         name="PreferitsScreen"
         options={{ headerShown: false }}
       />
-      <ProfileStack.Screen
-        component={ShowFriendsScreen}
-        name="ShowFriends"
-        options={{ headerShown: false }}
-      />
     </ProfileStack.Navigator>
   );
 });

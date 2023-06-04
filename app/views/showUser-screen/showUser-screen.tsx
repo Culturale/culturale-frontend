@@ -1,6 +1,6 @@
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, View, Image, Button, TouchableOpacity } from 'react-native';
 import { Text as TraductionText } from '~/components';
 import { useApplicationLayer } from '~/hooks';
@@ -19,16 +19,21 @@ export const ShowUserScreen: React.FC<Props> = observer(() => {
   const username = params.username;
   const { controllers: { UserController }} = useApplicationLayer();
   
+
   const user = UserController.users.filter((user)=> user?.username === username)[0];
   const navigationUsr = useNavigation<ShowUserNavigation>();
 
   function followUser(): void {
     UserController.followUser(UserController.userInfo.username, user);
+    setFollowers(Nfollowers + 1)
   }     
   
   function unfollowUser(): void {
     UserController.removeFollowed(UserController.userInfo.username, username);
+    setFollowers(Nfollowers - 1)
   }
+  const [Nfollowers, setFollowers] = useState(user.followers.length);
+  const [Nfolloweds, setFolloweds] = useState(user.followeds.length);
 
   function isFollowing(): boolean {
     const followeds: IUser[] = UserController.userInfo.followeds;
@@ -53,14 +58,14 @@ export const ShowUserScreen: React.FC<Props> = observer(() => {
             <Image src={user.profilePicture} style={Styles.foto}/>
             <View style={Styles.contentData}>
             <TouchableOpacity onPress={() => { navigationUsr.navigate('ShowFollowers',{username: user.username}) }}>
-              <Text style={Styles.number}>{user.followeds.length}</Text>
-              <TraductionText tx='perfil.siguiendo'/>
+              <Text style={Styles.number}>{Nfollowers}</Text>
+              <TraductionText tx='perfil.seguidores'/>
             </TouchableOpacity>
             </View>
             <View style={Styles.contentData}>
             <TouchableOpacity onPress={() => { navigationUsr.navigate('ShowFolloweds', {username: user.username}) }}>
-              <Text style={Styles.number}>{user.followers.length}</Text>
-              <TraductionText tx='perfil.seguidores'/>
+              <Text style={Styles.number}>{Nfolloweds}</Text>
+              <TraductionText tx='perfil.siguiendo'/>
             </TouchableOpacity>
             </View>
             </View>
