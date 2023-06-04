@@ -23,6 +23,7 @@
         "today": "Hoy"
     },
     "perfil": {
+        "perfil": "Perfil",
         "seguidores": "Seguidores",
         "siguiendo": "Siguiendo",
         "nombre": "Nombre:",
@@ -46,6 +47,19 @@
         "noFriends":" Añade a gente nueva para empezar esta aventura",
         "delete": "Eliminar"
 
+    },
+    "ShowFollowersScreen":{
+        "followers":"Seguidores",
+        "vacio":" ¡Esto está muy vacío!",
+        "noFriends":" Conoce a gente nueva para empezar esta aventura",
+        "delete": "Eliminar"
+
+    },
+    "ShowFollowedsScreen":{
+        "followeds":"Seguidos",
+        "vacio":" ¡Esto está muy vacío!",
+        "noFriends":" Sigue a gente nueva para empezar esta aventura",
+        "delete": "Eliminar"
     },
     "preferits": {
       "titulo": "Favoritos"

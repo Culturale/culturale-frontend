@@ -4,5 +4,6 @@
     "Persistable",
     "Signup",
     "usertype"
-  ]
+  ],
+  "java.configuration.updateBuildConfiguration": "interactive"
 }

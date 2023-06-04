@@ -52,6 +52,33 @@ export interface paths {
       };
     };
   };
+  "/users": {
+    /** Returns all users from database */
+    get: {
+      responses: {
+        /** Ok */
+        200: {
+          schema: {
+            users?: definitions["user"][];
+          };
+        };
+        /** Unauthorized */
+        403: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+        /** Internal server error */
+        500: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+      };
+    };
+  };
   "/users/create": {
     /** Creates a user registered in in BE */
     post: {
@@ -222,7 +249,35 @@ export interface paths {
     delete: {
       responses: {
         /** Ok */
-        201: {
+        200: {
+          schema: {
+            followers?: definitions["user"][];
+            message?: string;
+          };
+        };
+        /** Internal server error */
+        404: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+        /** Internal server error */
+        500: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+      };
+    };
+  };
+  "/users/newFollower": {
+    /** Adds a new  follower */
+    post: {
+      responses: {
+        /** Ok */
+        200: {
           schema: {
             followers?: definitions["user"][];
             message?: string;

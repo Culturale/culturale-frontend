@@ -1,3 +1,4 @@
+
 import type { definitions, paths } from './schema';
 
 export type EventDocument = definitions['event'];
@@ -10,6 +11,8 @@ export type GetEventResponse =
 
 export type GetEventsResponse =
   paths['/events']['get']['responses']['200']['schema'];
+export type GetUsersResponse =
+  paths['/users']['get']['responses']['200']['schema'];
 
 export type LoginResponse =
   paths['/login']['post']['responses']['200']['schema'];
@@ -21,7 +24,10 @@ export type EditUserResponse =
   paths['/users/edit']['post']['responses']['200']['schema'];
 
 export type RemoveFollowerResponse =
-  paths['/users/deleteFollower']['delete']['responses']['201']['schema'];
+paths['/users/deleteFollower']['delete']['responses']['200']['schema'];
+
+export type AddFollowerResponse =
+paths['/users/newFollower']['post']['responses']['200']['schema'];
 
 export type RemoveFavouriteResponse =
   paths['/users/deleteFavourite']['delete']['responses']['201']['schema'];
@@ -62,8 +68,12 @@ export interface IAPI {
 
   getChatMessages: (id: string) => Promise<MessageDocument[]>;
 
-  removeFriend(userUsername: string, friendUsername:string): Promise<UserDocument[]>;
+  removeFriend(username: string, follower:string): Promise<UserDocument[]>;
 
+  addFriend(username: string, follower: string): Promise<UserDocument[]>;
+  
+  getAllUsers: () => Promise<UserDocument[]>;
+  
   removeFavourite(id: string, username: string): Promise<EventDocument[]>;
 
   addFavourite(id: string, username: string): unknown;
