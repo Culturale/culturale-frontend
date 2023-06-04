@@ -1,15 +1,16 @@
 import {StyleSheet} from 'react-native';
-export const ProfileScreenStyles =  StyleSheet.create({
+export const ShowUserStyles =  StyleSheet.create({
+  
+  backArrow: {
+    display: 'flex',
+    paddingLeft: 10,
+    paddingTop: 30,
+  },
   column: {
     alignItems: 'flex-start',
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-  },
-  backArrow: {
-    display: 'flex',
-    paddingLeft: 10,
-    paddingTop: 30,
   },
   configText: {
     color: 'black',
@@ -37,7 +38,7 @@ export const ProfileScreenStyles =  StyleSheet.create({
     justifyContent: 'flex-end',
     paddingLeft: 30,
   },
-  editButton: {
+  followButton: {
     backgroundColor: 'black',
     border: 5,
     borderRadius: 10,

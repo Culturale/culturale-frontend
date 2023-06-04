@@ -1,11 +1,10 @@
 import {StyleSheet} from 'react-native';
 export const ShowFriendsStyles =  StyleSheet.create({
   backArrow: {
-    alignSelf: 'flex-start',
     display: 'flex',
     paddingLeft: 10,
     paddingTop: 30,
-  },
+  },  
   container: {
       backgroundColor: '#fff',
       flex: 1,
@@ -32,7 +31,6 @@ export const ShowFriendsStyles =  StyleSheet.create({
       fontWeight: 'bold',
     },
     header: {
-      alignSelf: 'center',
       fontSize: 24,
       fontWeight: 'bold',
       marginBottom: 20,
@@ -80,24 +78,34 @@ export const ShowFriendsStyles =  StyleSheet.create({
   },
  
   userContainer: {
-  alignItems: 'center',
-  backgroundColor: '#FFF',
-  borderBottomColor: 'lightgray',
-  borderBottomWidth: 1,
-  borderRadius: 8,
-  elevation: 2,
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  marginBottom: 16,
-  marginRight: 10,
-  padding: 16,
-  paddingVertical: 10,
-  shadowColor: '#000',
-  shadowOffset: {
-    height: 1,
-    width: 0,
-  },
-  shadowOpacity: 0.2, 
+    alignItems: 'center',
+    backgroundColor: '#FFF',
+    borderBottomColor: 'lightgray',
+    borderBottomWidth: 1,
+    borderRadius: 8,
+    // ajusta el margen a la derecha
+elevation: 2,
+    
+flexDirection: 'row',
+    
+justifyContent: 'space-between',
+    
+marginBottom: 16,
+    
+marginRight: 10,
+    
+padding: 16,
+    
+paddingVertical: 10,
+    
+shadowColor: '#000',
+    
+shadowOffset: {
+      height: 1,
+      width: 0,
+    },
+    
+shadowOpacity: 0.2, 
     shadowRadius: 1.41,
   },
   username: {

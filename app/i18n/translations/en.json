@@ -33,6 +33,7 @@
       "today": "Today"
     },
     "perfil": {
+      "perfil": "Profile",
       "seguidores": "Followers",
       "siguiendo": "Following",
       "nombre": "Name:",
@@ -43,6 +44,21 @@
       "pagos": "My payments",
       "amigos": "My friends",
       "miperfil": "My profile"
+    } ,
+
+"ShowFollowersScreen":{
+  "followers": "Followers",
+  "vacio": "This is very empty!",
+  "noFriends": "Meet new people to start this adventure",
+  "delete": "Delete"
+
+}, 
+
+  "ShowFollowedsScreen":{
+  "followers":"Followeds",
+  "vacio": "This is very empty!",
+  "noFriends": "Meet new people to start this adventure",
+  "delete": "Delete"
     },
     "preferits": {
       "titulo": "Favourites"

@@ -2,9 +2,11 @@ import type { AxiosInstance } from 'axios';
 import axios from 'axios';
 
 import type {
+  AddFollowerResponse,
   EditUserResponse,
   EventDocument,
   GetEventsResponse,
+  GetUsersResponse,
   GetEventResponse,
   IAPI,
   LoginResponse,
@@ -33,11 +35,14 @@ export class API implements IAPI {
   }
 
   private async post<T>(path: string, body: object): Promise<T> {
+   
+   console.log(body)
+   console.log(JSON.stringify(body))
     return fetch(this.baseURL + path, {
       body: JSON.stringify(body),
       headers: {
         Accept: 'application/json',
-        Authorization: this.token,
+        Authorization: `Bearer ${this.token}`,
         'Content-Type': 'application/json',
       },
       method: 'POST',
@@ -53,7 +58,7 @@ export class API implements IAPI {
     return fetch(this.baseURL + path, {
       headers: {
         Accept: 'application/json',
-        Authorization: this.token,
+        Authorization: `Bearer ${this.token}`,
         'Content-Type': 'application/json',
       },
       method: 'GET',
@@ -120,6 +125,10 @@ export class API implements IAPI {
     return res.user.preferits;
   }
 
+  public async getAllUsers(): Promise<UserDocument[]> {
+    const res = await this.get<GetUsersResponse>('/users');
+    return res.users;
+  }
   public async signUp(
     username: string,
     name: string,
@@ -172,6 +181,15 @@ export class API implements IAPI {
 
     return res.followers;
   }
+  public async addFriend(username: string, follower:string): Promise<UserDocument[]> {
+    const res = await this.post<AddFollowerResponse>('/users/newFollower', {
+      username,
+      follower
+    });
+    console.log(res);
+
+    return res.followers;
+  }
 
   public async addFavourite(id: string, username: string): Promise<void> {
     await this.post<MessageDocument>('/users/addFavourite', {
@@ -193,8 +211,8 @@ export class API implements IAPI {
       body: JSON.stringify(body),
       headers: {
         Accept: 'application/json',
-        Authorization: this.token,
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${this.token}`,
+        "Content-Type": "application/json"
       },
       method: 'DELETE',
     });
