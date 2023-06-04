@@ -99,7 +99,6 @@ export class API implements IAPI {
 
     return res;
   }
-
   // public async getAllEvents(): Promise<EventDocument[]> {
   //   const res = await this.get<GetEventsResponse>('/events');
   //   return res.events;
@@ -110,8 +109,8 @@ export class API implements IAPI {
     return res.event;
   }
 
-  public async getAllEvents(): Promise<EventDocument[]> {
-    const res = await this.get<GetEventsResponse>('/events/50?page=1');
+  public async getAllEvents(page: number): Promise<EventDocument[]> {
+    const res = await this.get<GetEventsResponse>(`/events/50?page=${page}`);
     return res.events;
   }
   

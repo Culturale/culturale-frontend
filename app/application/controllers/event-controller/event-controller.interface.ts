@@ -11,7 +11,7 @@ export interface IEventController {
    * @public
    * @description Fetches all events from API and saves them to events property
    */
-  fetchAllEvents: () => IRequestSubject<void>;
+  fetchAllEvents: (page: number) => IRequestSubject<void>;
 
   /**
    *

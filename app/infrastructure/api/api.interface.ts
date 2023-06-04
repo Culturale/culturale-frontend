@@ -49,7 +49,7 @@ export interface IAPI {
 
   getUserPreferits: (username: string) => Promise<EventDocument[]>;
 
-  getAllEvents: () => Promise<EventDocument[]>;
+  getAllEvents: (page: number) => Promise<EventDocument[]>;
 
   getEvent: (id: string) => Promise<EventDocument>;
 

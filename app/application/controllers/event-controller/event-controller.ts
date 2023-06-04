@@ -40,12 +40,12 @@ export class EventController implements IEventController {
     this.eventsmap = events;
   }
 
-  public fetchAllEvents(): IRequestSubject<void> {
+  public fetchAllEvents(page: number): IRequestSubject<void> {
     const subject = new RequestSubject<void>();
     subject.startRequest();
 
     this.infrastructure.api
-      .getAllEvents()
+      .getAllEvents(page)
       .then((res: EventDocument[]) => {
         const events: IEvent[] = [];
         for (const doc of res) {
