@@ -15,7 +15,7 @@ import type {
   ReviewDocument,
   SignupResponse,
   UserDocument,
-  RemoveFavouriteResponse
+  RemoveFavouriteResponse,
 } from './api.interface';
 
 export class API implements IAPI {
@@ -35,9 +35,6 @@ export class API implements IAPI {
   }
 
   private async post<T>(path: string, body: object): Promise<T> {
-   
-   console.log(body)
-   console.log(JSON.stringify(body))
     return fetch(this.baseURL + path, {
       body: JSON.stringify(body),
       headers: {
@@ -54,11 +51,31 @@ export class API implements IAPI {
       });
   }
 
+  private async getEvents<T>(path: string, params: object): Promise<T> {
+    const url = new URL(this.baseURL + path);
+    Object.keys(params).forEach((key) => {
+      url.searchParams.append(key, params[key]);
+    });
+    return fetch(url.toString(), {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${this.token}`,
+        'Content-Type': 'application/json',
+      },
+      method: 'GET',
+    })
+      .then((res) => res.json())
+      .then((data: T) => data)
+      .catch((err: Error) => {
+        throw err;
+      });
+  }
+
   private async get<T>(path: string): Promise<T> {
     return fetch(this.baseURL + path, {
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${this.token}`,
+        Authorization: 'Token ' + this.token,
         'Content-Type': 'application/json',
       },
       method: 'GET',
@@ -99,10 +116,11 @@ export class API implements IAPI {
 
     return res;
   }
-  // public async getAllEvents(): Promise<EventDocument[]> {
-  //   const res = await this.get<GetEventsResponse>('/events');
-  //   return res.events;
-  // }
+
+  public async getAllUsers(username: string): Promise<UserDocument[]> {
+    const res = await this.get<GetUsersResponse>(`/users/?username=${username}`);
+    return res.users;
+}
 
   public async getEvent(id: string): Promise<EventDocument> {
     const res = await this.get<GetEventResponse>(`/events/code/${id}`);
@@ -125,10 +143,27 @@ export class API implements IAPI {
     return res.user.preferits;
   }
 
-  public async getAllUsers(): Promise<UserDocument[]> {
-    const res = await this.get<GetUsersResponse>('/users');
-    return res.users;
+  public async getEventsByCategory(category: string): Promise<EventDocument[]> {
+    const res = await this.get<GetEventsResponse>(`/events/categoria/${category}`);
+    return res.events;
   }
+
+  public async getEventsByDenominacio(denominacio: string): Promise<EventDocument[]> {
+    const res = await this.get<GetEventsResponse>(`/events/denominacio/${denominacio}`);
+    return res.events;
+  }
+
+  public async fetchEventsByFilters(denominacio?: string,
+                                    categoria?: string,
+                                    dataIni?: Date,
+                                    dataFi?: Date,
+                                    horari?: string,
+                                    price?: string,     ): Promise<EventDocument[]> {
+
+    const res = await this.get<GetEventsResponse>(`/events/filters/?denominacio=${denominacio}&categoria=${categoria}&dataIni=${dataIni}&dataFi=${dataFi}&horari=${horari}&price=${price}`);
+    return res.events;
+  }
+
   public async signUp(
     username: string,
     name: string,
@@ -224,7 +259,7 @@ export class API implements IAPI {
     return json as T;
   }  
 
-  
+
   public async addParticipant(id: string, username: string): Promise<void> {
     await this.post<MessageDocument>('/events/newParticipant', {
       id,

@@ -7,6 +7,7 @@ export type RootParamList = {
   ShowFriends:undefined;
   ShowFolloweds: { username: string };
   ShowFollowers: { username: string };
+  SearchScreen: undefined;
   Profile: undefined;
   ProfileScreen: undefined;
   EditProfile: undefined;
@@ -16,8 +17,9 @@ export type RootParamList = {
   HomeScreen: undefined;
   EventScreen: { eventId: string};
   PreferitsScreen: undefined;
-  ValoracioScreen: { event: IEvent};
+  ValoracioScreen: { event: IEvent };
   MapScreen: undefined;
+  Search: undefined;
   Config: undefined;
   DescriptionScreen: { description: string, eventId: string};
 };
@@ -29,5 +31,6 @@ export type TabParamList = {
   ShowUserScreen: { username: string };
   MyEvents: undefined;
   Map: undefined;
+  Search: undefined;
 };
 

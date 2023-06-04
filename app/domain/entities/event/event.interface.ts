@@ -19,6 +19,7 @@ export interface IEvent {
   price?: string;
   photo?: string;
   participants: IUser[];
+  preu: string;
   valoracions?: Review[];
 
   updateParticipant: (newParticipant: IUser) => void;

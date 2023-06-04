@@ -21,13 +21,6 @@ export interface IUserController extends Controller {
   /**
    *
    * @public
-   * @description Fetches all users from API and saves them to events property
-   */
-  fetchAllUsers: () => IRequestSubject<void>;
-
-  /**
-   *
-   * @public
    * @description Fetches a user from API and saves them to events property
    */
   findUser(username: string): IUser;
@@ -97,7 +90,9 @@ export interface IUserController extends Controller {
    * @public
    * @description Fetches all events from API and saves them to events property
    */
-    fetchAllFavourites: () => IRequestSubject<void>;
+  fetchAllFavourites: () => IRequestSubject<void>;
+
+  fetchAllUsers: (username?: string) => IRequestSubject<void>;
 
   /**
    * Modifies user favourites

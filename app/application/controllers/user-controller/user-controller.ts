@@ -6,11 +6,8 @@ import type { ImagePickerAsset } from 'expo-image-picker';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
 
-import { IEvent, IUser, User} from '~/domain';
-import { userFactory } from '~/domain';
-import type { IInfrastructure, UserDocument } from '~/infrastructure';
-import { eventFactory } from '~/domain';
-import type { EventDocument } from '~/infrastructure';
+import { IEvent, IUser, User, eventFactory, userFactory } from '~/domain';
+import type { EventDocument, IInfrastructure, UserDocument } from '~/infrastructure';
 import type { IUserController } from './user-controller.interface';
 import { IRequestSubject, RequestSubject } from '~/observables';
 
@@ -25,6 +22,7 @@ export class UserController implements IUserController {
   public isLoggedIn: boolean | null = null;
   public token: string;
   public userInfo: IUser;
+  public users: IUser[];
   private infrastructure: IInfrastructure;
   public users: IUser[];
 
@@ -46,11 +44,17 @@ export class UserController implements IUserController {
       token: observable,
       uploadPhoto: action,
       userInfo: observable,
+      users: observable,
+      setUsers: action,
     });
   }
 
   public setPreferits(events: IEvent[]): void {
     this.userInfo.preferits = events;
+  }
+
+  public setUsers(users: IUser[]): void {
+    this.users = users;
   }
 
 
@@ -185,6 +189,28 @@ export class UserController implements IUserController {
     this.setUserInfo(user);
   }
 
+  public fetchAllUsers(username: string): IRequestSubject<void> {
+    const subject = new RequestSubject<void>();
+    subject.startRequest();
+    this.infrastructure.api
+    .getAllUsers(username)
+    .then((res: UserDocument[]) => {
+      const users: IUser[] = [];
+      for (const doc of res) {
+        const user = userFactory(doc);
+        users.push(user);
+      }
+      console.log(users);
+      this.setUsers(users);
+
+      subject.completeRequest();
+    })
+    .catch((e: Error) => {
+      subject.failRequest(e);
+    });
+
+    return subject;
+  }
 
   public get isLoginNeeded(): boolean {
     return !this.token;
@@ -239,9 +265,11 @@ export class UserController implements IUserController {
   public setUserInfo(user: IUser): void {
     this.userInfo = user;
   }
+  
   public findUser(username: string): IUser | undefined {
     return this.users.find(user => user.username === username);
   }
+  
   public findUserId(userId: string): IUser | undefined {
     return this.users.find(user => user._id === userId);
   }
@@ -273,7 +301,6 @@ export class UserController implements IUserController {
   public setUsers(users: IUser[]): void {
     this.users = users;
   }
-  
 }
 
 
