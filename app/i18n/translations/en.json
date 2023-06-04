@@ -24,7 +24,8 @@
       "BuyText": "Buy",
       "information": "+ Information",
       "succces": "Compra realizada correctamente",
-      "LoadingEvent": "Loading Events ..."
+      "LoadingEvent": "Loading Events ...",
+      "Enroll": "Enroll"
     },
     "event": {
       "join": "Join now!"
@@ -68,6 +69,18 @@
     "myEvents": {
       "calendar": "+ Add to calendar ",
       "valoration": "+ Make a review"
+    },
+    "settings": {
+      "changeLanguage": "Change Language "
+    },
+    "mapa": {
+      "title": "Map",
+      "near": "Interesting events near me..."
+    },
+    "valoracio": {
+      "new": "New rating",
+      "send": "Submit"
     }
+    
   }
   

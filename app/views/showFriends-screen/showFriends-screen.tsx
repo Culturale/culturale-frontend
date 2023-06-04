@@ -1,14 +1,17 @@
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
+import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
 import { View, Image, ScrollView, TextInput, TouchableOpacity } from 'react-native';
-import { observer } from 'mobx-react-lite';
-import { ShowFriendsStyles as styles } from './showFriends-screen.styles';
-import { IUser } from '~/domain';
+
+import { Text  } from '~/components/text';
+import type { IUser } from '~/domain';
 import { useApplicationLayer } from '~/hooks';
-import { Text } from '~/components/text';
-import { useNavigation } from '@react-navigation/native';
-import {  RootParamList } from '~/navigation';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { Ionicons } from '@expo/vector-icons';
+import type {  RootParamList } from '~/navigation';
+
+import { ShowFriendsStyles as styles } from './showFriends-screen.styles';
+
 
 
 
@@ -26,7 +29,8 @@ export const ShowFriendsScreen = observer(() => {
   const handleRemoveFriend = async (friendUsername: string) => {
       UserController.removeFollowed(UserController.userInfo.username, friendUsername);
     
-  }
+  };
+  
   const [searchTerm, setSearchTerm] = useState('');
 
   const amigos: IUser[] = UserController.userInfo.followers.filter((user) => {
@@ -51,8 +55,8 @@ export const ShowFriendsScreen = observer(() => {
         </View>
         <Text style={styles.header} tx="showFriendsScreen.myfriends" />
         <TextInput
-          style={styles.input}
           placeholder="Username"
+          style={styles.input}
           value={searchTerm}
           onChangeText={(value) => setSearchTerm(value)}
         />

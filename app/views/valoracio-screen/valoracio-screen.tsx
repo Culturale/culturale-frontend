@@ -6,6 +6,7 @@ import { observer } from 'mobx-react-lite';
 import  React, {useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 
+import { Text as TraductionText } from '~/components/text';
 import type { IEvent } from '~/domain';
 import { useApplicationLayer } from '~/hooks';
 import type { RootParamList } from '~/navigation';
@@ -56,7 +57,7 @@ export const ValoracioScreen = observer(() => {
             </TouchableOpacity>
         </View>
     <View style={styles.ratingPage}>
-      <Text style={styles.heading}>Nueva valoración</Text>
+      <TraductionText style={styles.heading} tx="valoracio.new"/>
       <Text style={styles.subtitle}>{event.denominacio}</Text>
 
       <View style={styles.ratingStars}>
@@ -81,7 +82,7 @@ export const ValoracioScreen = observer(() => {
     styles.submitButton,
     (rating === 0) && styles.disabledButton
     ]} onPress={handleSubmit}>
-        <Text  style={styles.buttonText}>Enviar</Text>
+        <TraductionText  style={styles.buttonText} tx="valoracio.send"/>
       </TouchableOpacity>
     </View>
     </>
