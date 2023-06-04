@@ -87,7 +87,11 @@ const HomeStackNavigator: React.FC = observer(() => {
         name="ShowUserScreen"
         options={{ headerShown: false }}
       />
-     
+     <ProfileStack.Screen
+        component={ProfileScreen}
+        name="ProfileScreen"
+        options={{ headerShown: false }}
+      />
     </ProfileStack.Navigator>
   );
 });
