@@ -8,4 +8,6 @@ export * from './myEvents-screen';
 export * from './preferits-screen';
 export * from './valoracio-screen';
 export * from './map-screen';
+export * from './settings-screen';
+
 

@@ -15,6 +15,7 @@ export type RootParamList = {
   PreferitsScreen: undefined;
   ValoracioScreen: { event: IEvent};
   MapScreen: undefined;
+  Config: undefined;
 };
 
 export type TabParamList = {

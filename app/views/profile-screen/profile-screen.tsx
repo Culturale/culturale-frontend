@@ -3,10 +3,12 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Text, View, Image, Button, TouchableOpacity } from 'react-native';
+
 import { Text as TraductionText } from '~/components';
 import { useApplicationLayer } from '~/hooks';
+import type { RootParamList, TabParamList } from '~/navigation';
+
 import { ProfileScreenStyles as Styles } from './profile-screen.styles';
-import { RootParamList, TabParamList } from '~/navigation';
 
 type ProfileNavigation = StackNavigationProp<RootParamList, 'Profile'>;
 
@@ -23,6 +25,10 @@ export const ProfileScreen = observer(() => {
   const navigationProfile = useNavigation<ProfileNavigation>();
   function mostrarViewAmigos() {
     navigationFriends.navigate('ShowFriends');
+  }
+
+  function mostrarConfig() {
+    navigationProfile.navigate('Config');
   }
 
   function mostrarFavoritos() {
@@ -48,7 +54,7 @@ export const ProfileScreen = observer(() => {
         <Text style={Styles.username}>{userInfo.username}</Text>
         <View style={Styles.row}>
           <View style={Styles.column}>
-            <TraductionText tx='perfil.nombre' style={Styles.titleRow}/>
+            <TraductionText style={Styles.titleRow} tx='perfil.nombre'/>
           </View>
           <View style={Styles.column}>
             <Text>{userInfo.name}</Text>
@@ -78,19 +84,19 @@ export const ProfileScreen = observer(() => {
         ></Button>
         </View>
         <View style={Styles.containerInfo}>
-          <TouchableOpacity  style={Styles.panelConfig} onPress={() => { mostrarFavoritos() }}>
+          <TouchableOpacity  style={Styles.panelConfig} onPress={() => { mostrarFavoritos(); }}>
             <Image source={require('../../../assets/star-logo.png')} style={Styles.icon}/>
             <TraductionText style={Styles.configText} tx="perfil.favoritos"/>
           </TouchableOpacity>
-          <View style={Styles.panelConfig}>
+          <TouchableOpacity style={Styles.panelConfig}onPress={() => { mostrarConfig(); }}>
             <Image source={require('../../../assets/config-logo.png')} style={Styles.icon} />
             <TraductionText style={Styles.configText} tx="perfil.configuracion"/>
-          </View>
+          </TouchableOpacity>
           <View style={Styles.panelConfig}>
             <Image source={require('../../../assets/card-logo.png')} style={Styles.icon}/>
             <TraductionText style={Styles.configText} tx="perfil.pagos"/>
           </View>
-          <TouchableOpacity  style={Styles.panelConfig} onPress={() => { mostrarViewAmigos() }}>
+          <TouchableOpacity  style={Styles.panelConfig} onPress={() => { mostrarViewAmigos(); }}>
             <Image source={require('../../../assets/friend-logo.png')} style={Styles.icon}/>
             <TraductionText style={Styles.configText} tx="perfil.amigos"/>
           </TouchableOpacity>
