@@ -9,6 +9,7 @@ import { RequestSubject } from '~/observables';
 import type { IEventController } from './event-controller.interface';
 
 export class EventController implements IEventController {
+  public event: IEvent;
   public events: IEvent[];
   public eventsmap: IEvent[];
   public SearchEvents: IEvent[];
@@ -19,8 +20,10 @@ export class EventController implements IEventController {
 
     makeObservable(this, {
       addParticipant: action,
+      event: observable,
       events: observable,
       eventsmap: observable,
+      setEvent: action,
       setEvents: action,
       setEventsMap: action,
     });
@@ -28,6 +31,10 @@ export class EventController implements IEventController {
 
   public setEvents(events: IEvent[]): void {
     this.events = events;
+  }
+
+  public setEvent(event: IEvent): void {
+    this.event = event;
   }
 
   public setEventsMap(events: IEvent[]): void {
@@ -38,12 +45,12 @@ export class EventController implements IEventController {
     this.SearchEvents = events;
   }
 
-  public fetchAllEvents(): IRequestSubject<void> {
+  public fetchAllEvents(page: number): IRequestSubject<void> {
     const subject = new RequestSubject<void>();
     subject.startRequest();
 
     this.infrastructure.api
-      .getAllEvents()
+      .getAllEvents(page)
       .then((res: EventDocument[]) => {
         const events: IEvent[] = [];
         for (const doc of res) {
@@ -52,6 +59,26 @@ export class EventController implements IEventController {
         }
 
         this.setEvents(events);
+
+        subject.completeRequest();
+      })
+      .catch((e: Error) => {
+        subject.failRequest(e);
+      });
+
+    return subject;
+  }
+
+  public fetchEvent(id: string): IRequestSubject<void> {
+    const subject = new RequestSubject<void>();
+    subject.startRequest();
+
+    this.infrastructure.api
+      .getEvent(id)
+      .then((res: EventDocument) => {
+        const event = eventFactory(res);
+
+        this.setEvent(event);
 
         subject.completeRequest();
       })

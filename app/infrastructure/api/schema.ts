@@ -161,6 +161,33 @@ export interface paths {
       };
     };
   };
+  "/events/code/:id": {
+    /** Returns an specific event */
+    get: {
+      responses: {
+        /** Ok */
+        200: {
+          schema: {
+            event?: definitions["event"];
+          };
+        };
+        /** Bad request */
+        404: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+        /** Internal server error */
+        500: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+      };
+    };
+  };
   "/users/edit": {
     /** Returns the edited user */
     post: {

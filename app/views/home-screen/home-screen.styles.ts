@@ -7,6 +7,9 @@ export const HomeScreenStyles = StyleSheet.create({
     padding: 16,
     width: '100%',
   },
+  loadingIndicator: {
+    marginVertical: 10,
+  },
   container: {
     alignItems: 'center',
     flex: 1,
