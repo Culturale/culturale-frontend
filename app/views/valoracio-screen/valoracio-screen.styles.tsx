@@ -41,7 +41,7 @@ export const ValoracioScreenStyles = StyleSheet.create({
     },
     ratingStars: {
         flexDirection: 'row',
-        marginBottom: 20,
+        marginLeft: 20
     },
     star: {
         color: 'gray',
@@ -59,4 +59,5 @@ export const ValoracioScreenStyles = StyleSheet.create({
         color: 'grey',
         fontSize: 20,
     },
+    
 });

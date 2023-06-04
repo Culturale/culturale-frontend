@@ -242,6 +242,9 @@ export class UserController implements IUserController {
   public findUser(username: string): IUser | undefined {
     return this.users.find(user => user.username === username);
   }
+  public findUserId(userId: string): IUser | undefined {
+    return this.users.find(user => user._id === userId);
+  }
   
   public fetchAllUsers(): IRequestSubject<void> {
     const subject = new RequestSubject<void>();

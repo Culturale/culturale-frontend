@@ -75,11 +75,13 @@ export const EventScreenStyles =StyleSheet.create({
       width: '100%',
     },
     mapContainer: {
+
       alignItems: 'center',
       flex: 1,
       height: 5,
       justifyContent: 'center',
       marginTop: 50,
+      marginBottom: 70,
     },
     photo: {
       alignSelf: 'flex-start', 
@@ -116,7 +118,11 @@ export const EventScreenStyles =StyleSheet.create({
   
     reviewContainer: {
       alignItems: 'flex-start',
-      marginTop: 20,
+      backgroundColor: '#cdebe2',
+      marginBottom: 10,
+      borderRadius:30,
+      paddingBottom:10,
+     
     },
     reviewDetailsAuthor: {
       color: 'gray',
@@ -146,9 +152,10 @@ export const EventScreenStyles =StyleSheet.create({
       fontWeight: 'bold',
     },
     star: {
-      height: 20,
-      marginRight: 5,
+      height: 30,
+      marginRight: 2,
       width: 20,
+      fontSize: 25,
     },
     starContainer: {
       flexDirection: 'row',
@@ -189,4 +196,35 @@ export const EventScreenStyles =StyleSheet.create({
     paddingHorizontal: 10,
     width: '100%',
     },
+    userContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    profilePicture: {
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+      marginRight: 10,
+      marginLeft:20,
+    },
+    username: {
+      fontWeight: 'bold',
+      fontSize: 16,
+      paddingTop: 7,
+    },
+    ratingContainer: {
+      flexDirection: 'row',
+    },
+    filledStar: {
+      color: 'gold',
+    },
+    comment: {
+      marginLeft:20,
+      marginRight:10,
+      
+    },
+    listContainer:{
+      flex: 0,
+      maxHeight: 230,
+  }
 });

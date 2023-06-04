@@ -12,6 +12,8 @@
     "eventScreen": {
         "ComoLlegar": "¿Cómo llegar?",
         "BuyText": "Comprar",
+        "succes": "Compra realizada correctamente ",
+        "LoadingEvent": "Cargando Eventos ...",
         "Enroll": "Apuntáte",
         "information": "+ Información"
     },
@@ -70,7 +72,7 @@
     },
     "mapa": {
         "title": "Mapa",
-        "near": "Eventos interesantes cerca de mí...",
+        "near": "Eventos interesantes cerca de mí..."
     },
     "valoracio": {
         "new": "Nueva valoración",

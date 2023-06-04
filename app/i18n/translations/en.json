@@ -22,8 +22,10 @@
     "eventScreen": {
       "ComoLlegar": "How to get there?",
       "BuyText": "Buy",
-      "Enroll": "Enroll",
-      "information": "+ Information"
+      "information": "+ Information",
+      "succces": "Compra realizada correctamente",
+      "LoadingEvent": "Loading Events ...",
+      "Enroll": "Enroll"
     },
     "event": {
       "join": "Join now!"
