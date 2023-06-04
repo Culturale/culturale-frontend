@@ -5,7 +5,7 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 import type React from 'react';
 import { useState, useEffect} from 'react';
-import { Image, Linking, Platform, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Linking, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
 import { Text as TraductionText } from '~/components';
@@ -14,6 +14,8 @@ import type { RootParamList } from '~/navigation';
 
 import type { EventScreenProps as Props } from './event-screen.props';
 import { EventScreenStyles as styles } from './event-screen.styles';
+
+import {ValoracioScreenStyles as valStyles} from '../valoracio-screen/valoracio-screen.styles';
 
 type EventScreenNavigation = StackNavigationProp<RootParamList, 'EventScreen'>;
 
@@ -122,7 +124,7 @@ export const EventScreen: React.FC<Props> = observer(() => {
                 ) : (
                   <View style={styles.successContainer}>
                     <Ionicons color="green" name="checkmark-circle-outline" size={32} />
-                    <Text style={styles.successText}>Compra realizada correctamente</Text>
+                    <TraductionText style={styles.successText} tx="eventScreen.succes"/>
                   </View>
                 )}
               </View>
@@ -148,11 +150,43 @@ export const EventScreen: React.FC<Props> = observer(() => {
                 />
               </MapView>
             </View>
+  <ScrollView style={styles.listContainer}>
+  {event.valoracions.map((valoracio) => (
+    <View style={styles.reviewContainer} key={valoracio.authorId}>
+      <View style={styles.userContainer}>
+        <Image
+          source={{ uri: UserController.findUserId(valoracio.authorId).profilePicture }}
+          style={styles.profilePicture}
+        />
+        <Text style={styles.username}>{UserController.findUserId(valoracio.authorId).username}</Text>
+
+        <View style={valStyles.ratingStars}>
+          {[1, 2, 3, 4, 5].map((value) => (
+            <Text
+              key={value}
+              style={[
+                styles.star,
+                value <= valoracio.puntuation ? valStyles.filledStar : null,
+              ]}
+            >
+              &#9733;
+            </Text>
+          ))}
+        </View>
+      </View>
+      {valoracio.comment && (
+        <Text style={styles.comment}>{valoracio.comment}</Text>
+      )}
+    </View>
+  ))}
+</ScrollView>
+
+
           </>
         ) : (
-          <Text>Loading event...</Text>
+          <TraductionText style={styles.goButton} tx="eventScreen.LoadingEvent" />
         )}
-      </View>
+     </View>
     </>
   );
 });

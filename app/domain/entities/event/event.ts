@@ -4,6 +4,7 @@ import type { IChat } from '../chat';
 import type { IUser } from '../user';
 
 import type { IEvent } from './event.interface';
+import { Review } from '../review';
 
 export type EventProps = {
   _id?: string;
@@ -20,6 +21,7 @@ export type EventProps = {
   long: number;
   photo: string;
   participants?: IUser[];
+  valoracions?: Review[];
 };
 
 export class Event implements IEvent {
@@ -37,6 +39,7 @@ export class Event implements IEvent {
   public photo: string;
   public chat: IChat;
   public participants: IUser[];
+  public valoracions: Review[];
 
   constructor(props: EventProps) {
     const {
@@ -54,6 +57,7 @@ export class Event implements IEvent {
       url,
       chat,
       participants,
+      valoracions
     } = props;
     this._id = _id;
     this.codi = codi;
@@ -69,6 +73,7 @@ export class Event implements IEvent {
     this.long = long;
     this.chat = chat;
     this.participants = participants || [];
+    this.valoracions = valoracions || [];
 
     makeObservable(this, {
       adress: observable,
@@ -84,6 +89,7 @@ export class Event implements IEvent {
       participants: observable,
       photo: observable,
       url: observable,
+      valoracions: observable
     });
   }
 
@@ -94,6 +100,10 @@ export class Event implements IEvent {
   public updateParticipant(newParticipant: IUser): void {
     const newParticipants = [...this.participants, newParticipant];
     this.participants = newParticipants;
+  }
+  public updateValoracions(newValoracio: Review): void {
+    const newParticipants = [...this.valoracions, newValoracio];
+    this.valoracions = newParticipants;
   }
 
   public get participantsUsernames(): string[] {

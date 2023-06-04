@@ -12,7 +12,10 @@
     "eventScreen": {
         "ComoLlegar": "¿Cómo llegar?",
         "BuyText": "Comprar",
-        "information": "+ Información"
+        "information": "+ Información",
+        "succes": "Compra realizada correctamente ",
+        "LoadingEvent": "Cargando Eventos ..."
+
     },
     "event": {
         "join": "¡Apúntate!"

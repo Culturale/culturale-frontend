@@ -22,7 +22,9 @@
     "eventScreen": {
       "ComoLlegar": "How to get there?",
       "BuyText": "Buy",
-      "information": "+ Information"
+      "information": "+ Information",
+      "succces": "Compra realizada correctamente",
+      "LoadingEvent": "Loading Events ..."
     },
     "event": {
       "join": "Join now!"
