@@ -6,6 +6,11 @@ export const ProfileScreenStyles =  StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
   },
+  backArrow: {
+    display: 'flex',
+    paddingLeft: 10,
+    paddingTop: 30,
+  },
   configText: {
     color: 'black',
     marginRight: 10,

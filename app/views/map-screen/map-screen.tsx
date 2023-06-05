@@ -4,21 +4,25 @@ import * as Location from 'expo-location';
 import { observer } from 'mobx-react-lite';
 import { useState, useEffect, useRef} from 'react';
 import { Text, TouchableOpacity, TextInput, View, Button } from 'react-native';
-import MapView, { LatLng, Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import type { LatLng} from 'react-native-maps';
+import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
+import { Ionicons } from '@expo/vector-icons';
+
 
 import { Text as TraductionText } from '~/components';
 import type { IEvent } from '~/domain/entities';
 import { useApplicationLayer } from '~/hooks';
+import { useLanguageContext } from '~/hooks/use-language/use-language';
 import type { RootParamList } from '~/navigation';
 
 import type { MapScreenProps as Props } from './map-screen.props';
 import { MapScreenStyles as styles } from './map-screen.styles';
 
-
-
-
 export const MapScreen: React.FC<Props> = observer(() => {
+  const { language } = useLanguageContext();  
+
+  useEffect((() => {}), [language]);
+
     const [mapBounds, setMapBounds] = useState<{
         lowerLeft: LatLng | null;
         topRight: LatLng | null;
@@ -157,7 +161,7 @@ export const MapScreen: React.FC<Props> = observer(() => {
                         <Text>{event.price}</Text>
                     </View>
                     <View style={styles.buttonText}>
-                        <Button title= 'Ver evento' onPress={() => handleEventClick(event)}/>
+                        <Button title= 'Ver evento' onPress={() => handleEventClick(event)} color='#34b38a'/>
                     </View>
             </Callout>
         </Marker>
@@ -167,16 +171,17 @@ export const MapScreen: React.FC<Props> = observer(() => {
         <View style={styles.container}>
     
             <View style={styles.titleContainer}>
-            <TraductionText style={styles.title} text="Mapa"/>
+            <TraductionText style={styles.title} tx="mapa.title"/>
             </View>
     
             <View style={styles.bottomContainer}>
-                    <TraductionText style={styles.subTitle} text="Eventos interesantes cerca de mí..."/>
+                    <TraductionText style={styles.subTitle} tx="mapa.near"/>
             </View>
             
             <View style={styles.map}>
-                <MapView provider={PROVIDER_GOOGLE} region={region} style={styles.map}
-                onLayout={({ nativeEvent }) => {
+                <MapView ref={mapRef} provider={PROVIDER_GOOGLE} region={region}
+                style={styles.map}
+                  onLayout={({ nativeEvent }) => {
                     const { width, height } = nativeEvent.layout;
                     const corners = {
                       lowerLeft: { x: 0, y: height },
@@ -197,7 +202,6 @@ export const MapScreen: React.FC<Props> = observer(() => {
                         );
                     }
                   }}
-                  ref={mapRef}
                 >
                 {markers}
                 </MapView>

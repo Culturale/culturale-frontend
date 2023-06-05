@@ -5,22 +5,33 @@ export type RootParamList = {
   Main: undefined;
   Signup: undefined;  
   ShowFriends:undefined;
+  ShowFolloweds: { username: string };
+  ShowFollowers: { username: string };
+  SearchScreen: undefined;
   Profile: undefined;
   ProfileScreen: undefined;
   EditProfile: undefined;
   Home: undefined;
+  ShowUserScreen: { username: string };
   MyEventsScreen: undefined;
   HomeScreen: undefined;
   EventScreen: { eventId: string};
   PreferitsScreen: undefined;
-  ValoracioScreen: { event: IEvent};
+  ValoracioScreen: { event: IEvent };
   MapScreen: undefined;
+  Search: undefined;
+  Config: undefined;
+  DescriptionScreen: { description: string, eventId: string};
+  ChatScreen: { event: IEvent };
 };
 
 export type TabParamList = {
   Home: undefined;
   Profile: undefined;
   ShowFriendsScreen: undefined;
+  ShowUserScreen: { username: string };
   MyEvents: undefined;
   Map: undefined;
+  Search: undefined;
 };
+

@@ -1,13 +1,14 @@
+import { Ionicons } from '@expo/vector-icons';
 import type React from 'react';
 import { View, Text , StyleSheet, Image } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import type { IEvent } from '~/domain';
 interface Props {
   event: IEvent;
+  onPress?: () => void
 }
 
-export const Event: React.FC<Props> = ({ event }) => {
+export const Event: React.FC<Props> = ({ event, onPress }) => {
   return (
     <View style={styles.container}>
       <View style={styles.details}>

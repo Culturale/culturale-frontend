@@ -3,13 +3,14 @@ import type { ImagePickerAsset } from 'expo-image-picker';
 
 import type { Controller } from '~/application/controllers/controller.interface';
 import type { IEvent, IUser } from '~/domain';
-import { EventDocument } from '~/infrastructure';
 import type { IRequestSubject } from '~/observables';
 
 export interface IUserController extends Controller {
   isLoggedIn: boolean | null;
   token: string;
   userInfo: IUser;
+  readonly users: IUser[];
+  msguser: IUser;
 
   /**
    * Get if login is needed
@@ -17,6 +18,19 @@ export interface IUserController extends Controller {
    */
   readonly isLoginNeeded: boolean;
 
+
+  /**
+   *
+   * @public
+   * @description Fetches a user from API and saves them to events property
+   */
+  findUser(username: string): IUser;
+  /**
+   *
+   * @public
+   * @description Fetches a user from API and saves them to events property
+   */
+  findUserId(userId: string): IUser;
   /**
    * Get if login is needed
    * @public
@@ -58,7 +72,13 @@ export interface IUserController extends Controller {
    * Modifies user followers
    * @public
    */
-  removeFriend(userUsername:string, friendUsername: string): Promise<void>;
+  removeFollowed(userUsername:string, friendUsername: string): Promise<void>;
+ 
+  /**
+     * Modifies user followers
+     * @public
+     */
+  followUser(userUsername:string, friendUser: IUser): Promise<void>;
 
   /**
    * Modifies user favourites
@@ -71,7 +91,13 @@ export interface IUserController extends Controller {
    * @public
    * @description Fetches all events from API and saves them to events property
    */
-    fetchAllFavourites: () => IRequestSubject<void>;
+  fetchAllFavourites: () => IRequestSubject<void>;
+
+  fetchAllUsers: () => IRequestSubject<void>;
+
+  fetchUsers: (username?: string) => IRequestSubject<void>;
+
+  fetchUser: (id: string) => IUser;
 
   /**
    * Modifies user favourites

@@ -1,40 +1,37 @@
 import { StyleSheet } from 'react-native';
 
 export const PreferitsScreenStyles = StyleSheet.create({
-  bottomContainer: {
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    padding: 16,
-    width: '100%',
-  },
   container: {
-    alignItems: 'center',
     flex: 1,
-    justifyContent: 'center',
     marginTop: 44,
   },
-  eventContainer: {
-    flex: 1,
-    width: '100%',
-  },
-  hoyContainer: {
-    display: 'flex',
+  header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 16,
   },
-
-  subTitle: {
-    fontFamily: 'Helvetica',
-    fontSize: 18,
-    fontWeight: 'bold',
+  titleContainer: {
+    flex: 1,
+    alignItems: 'center',
   },
   title: {
     fontFamily: 'Helvetica',
     fontSize: 24,
     fontWeight: 'bold',
   },
-
-  titleContainer: {
+  messageContainer: {
+    flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  messageText: {
+    fontFamily: 'Helvetica',
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'gray',
+  },
+  eventContainer: {
+    flex: 1,
+    width: '100%',
   },
 });

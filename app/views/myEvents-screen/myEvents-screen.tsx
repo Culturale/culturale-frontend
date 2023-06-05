@@ -2,14 +2,15 @@ import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import * as GoogleCalendar from 'expo-calendar';
 import { observer } from 'mobx-react-lite';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, Image, TouchableOpacity , Linking } from 'react-native';
 import { Calendar } from 'react-native-calendars';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 
 import { Text  as CustomText } from '~/components';
 import type { IEvent } from '~/domain';
 import { useApplicationLayer } from '~/hooks';
+import { useLanguageContext } from '~/hooks/use-language/use-language';
 import type { RootParamList } from '~/navigation';
 
 import { MyEventsScreenStyles as styles} from './myEvents-screen.styles';
@@ -28,6 +29,10 @@ export const MyEventsScreen = observer(() => {
   const handleDayPress = (day) => {
     setSelectedDay(day.dateString);
   };
+  const { language } = useLanguageContext();  
+
+  useEffect((() => {}), [language]);
+  
   
   const getMarkedDates = (events: IEvent[]) => {
     const markedDates = {};
@@ -116,7 +121,7 @@ export const MyEventsScreen = observer(() => {
                         <Text style={styles.subtitle}>{new Date(event.dataIni).toLocaleDateString()}</Text>
                       </View>
                     </View>
-                    <Image source={{ uri: event.photo ? event.photo : 'https://archive.org/download/no-photo-available/no-photo-available.png'}} style={{borderRadius: 5, alignSelf: 'flex-end',height: 100, marginBottom: 15, width: 100}}/>
+                    <Image source={{ uri: event.photo ? event.photo : 'https://archive.org/download/no-photo-available/no-photo-available.png'}} style={{alignSelf: 'flex-end', borderRadius: 5,height: 100, marginBottom: 15, width: 100}}/>
                   </View>
                   {actDate <= new Date(event.dataIni).toISOString().split('T')[0] ? 
                   <TouchableOpacity style={styles.buttonAdd} onPress={() => handleAddToCalendar(event)}>

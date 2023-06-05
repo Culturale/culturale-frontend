@@ -2,9 +2,13 @@ import type { AxiosInstance } from 'axios';
 import axios from 'axios';
 
 import type {
+  AddFollowerResponse,
   EditUserResponse,
   EventDocument,
   GetEventsResponse,
+  GetUsersResponse,
+  GetUserResponse,
+  GetEventResponse,
   IAPI,
   LoginResponse,
   MessageDocument,
@@ -12,7 +16,8 @@ import type {
   ReviewDocument,
   SignupResponse,
   UserDocument,
-  RemoveFavouriteResponse
+  RemoveFavouriteResponse,
+  MessageResponse,
 } from './api.interface';
 
 export class API implements IAPI {
@@ -32,14 +37,35 @@ export class API implements IAPI {
   }
 
   private async post<T>(path: string, body: object): Promise<T> {
+    console.log(this.baseURL + path + JSON.stringify(body));
     return fetch(this.baseURL + path, {
       body: JSON.stringify(body),
       headers: {
         Accept: 'application/json',
-        Authorization: this.token,
+        Authorization: `Bearer ${this.token}`,
         'Content-Type': 'application/json',
       },
       method: 'POST',
+    })
+      .then((res) => res.json())
+      .then((data: T) => data)
+      .catch((err: Error) => {
+        throw err;
+      });
+  }
+
+  private async getEvents<T>(path: string, params: object): Promise<T> {
+    const url = new URL(this.baseURL + path);
+    Object.keys(params).forEach((key) => {
+      url.searchParams.append(key, params[key]);
+    });
+    return fetch(url.toString(), {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${this.token}`,
+        'Content-Type': 'application/json',
+      },
+      method: 'GET',
     })
       .then((res) => res.json())
       .then((data: T) => data)
@@ -52,7 +78,7 @@ export class API implements IAPI {
     return fetch(this.baseURL + path, {
       headers: {
         Accept: 'application/json',
-        Authorization: this.token,
+        Authorization: 'Token ' + this.token,
         'Content-Type': 'application/json',
       },
       method: 'GET',
@@ -94,15 +120,30 @@ export class API implements IAPI {
     return res;
   }
 
-  // public async getAllEvents(): Promise<EventDocument[]> {
-  //   const res = await this.get<GetEventsResponse>('/events');
-  //   return res.events;
-  // }
+  public async getAllUsers(): Promise<UserDocument[]> {
+    const res = await this.get<GetUsersResponse>(`/users`);
+    return res.users;
+  }
 
-  public async getAllEvents(): Promise<EventDocument[]> {
-      const res = await this.get<GetEventsResponse>('/events/50?page=1');
-      return res.events;
-    }
+  public async getUser(id: string): Promise<UserDocument> {
+    const res = await this.get<GetUserResponse>(`/users/id/${id}`);
+    return res.user;
+  }
+
+  public async getUsers(username: string): Promise<UserDocument[]> {
+    const res = await this.get<GetUsersResponse>(`/users/?username=${username}`);
+    return res.users;
+  }
+
+  public async getEvent(id: string): Promise<EventDocument> {
+    const res = await this.get<GetEventResponse>(`/events/code/${id}`);
+    return res.event;
+  }
+
+  public async getAllEvents(page: number): Promise<EventDocument[]> {
+    const res = await this.get<GetEventsResponse>(`/events/50?page=${page}`);
+    return res.events;
+  }
   
   public async getMapEvents(lat1: number, lon1: number, lat2: number, lon2: number): Promise<EventDocument[]> {
       const url = `/events/mapa?lat1=${lat1}&lon1=${lon1}&lat2=${lat2}&lon2=${lon2}`;
@@ -113,6 +154,27 @@ export class API implements IAPI {
   public async getUserPreferits(username: string): Promise<EventDocument[]> {
     const res = await this.get<UserDocument>(`/users/username/${username}`);
     return res.user.preferits;
+  }
+
+  public async getEventsByCategory(category: string): Promise<EventDocument[]> {
+    const res = await this.get<GetEventsResponse>(`/events/categoria/${category}`);
+    return res.events;
+  }
+
+  public async getEventsByDenominacio(denominacio: string): Promise<EventDocument[]> {
+    const res = await this.get<GetEventsResponse>(`/events/denominacio/${denominacio}`);
+    return res.events;
+  }
+
+  public async fetchEventsByFilters(denominacio?: string,
+                                    categoria?: string,
+                                    dataIni?: Date,
+                                    dataFi?: Date,
+                                    horari?: string,
+                                    price?: string,     ): Promise<EventDocument[]> {
+
+    const res = await this.get<GetEventsResponse>(`/events/filters/?denominacio=${denominacio}&categoria=${categoria}&dataIni=${dataIni}&dataFi=${dataFi}&horari=${horari}&price=${price}`);
+    return res.events;
   }
 
   public async signUp(
@@ -155,8 +217,18 @@ export class API implements IAPI {
       username,
       usertype,
     });
-
     return res.user;
+  }
+
+  public async newMessage( id: string, content: string, userId: string): Promise<MessageDocument>{
+    const date = new Date();
+    const res = await this.post<MessageDocument> ('/events/newMessage', {
+      id,
+      content,
+      userId,
+      date,
+    });
+    return res;
   }
 
   public async removeFriend(username: string, follower:string): Promise<UserDocument[]> {
@@ -164,6 +236,16 @@ export class API implements IAPI {
       follower,
       username
     });
+
+    return res.followers;
+  }
+
+  public async addFriend(username: string, follower:string): Promise<UserDocument[]> {
+    const res = await this.post<AddFollowerResponse>('/users/newFollower', {
+      username,
+      follower
+    });
+    console.log(res);
 
     return res.followers;
   }
@@ -188,8 +270,8 @@ export class API implements IAPI {
       body: JSON.stringify(body),
       headers: {
         Accept: 'application/json',
-        Authorization: this.token,
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${this.token}`,
+        "Content-Type": "application/json"
       },
       method: 'DELETE',
     });
@@ -201,7 +283,7 @@ export class API implements IAPI {
     return json as T;
   }  
 
-  
+
   public async addParticipant(id: string, username: string): Promise<void> {
     await this.post<MessageDocument>('/events/newParticipant', {
       id,
@@ -210,15 +292,8 @@ export class API implements IAPI {
   }
 
   public async getChatMessages(id: string): Promise<MessageDocument[]> {
-    const res = await this.axiosClient.get<MessageDocument[]>(
-      `/events/${id}/messages`,
-    );
-
-    if (res.status === 200) {
-      return res.data;
-    } else {
-      throw new Error('Error getting event chat messages');
-    }
+    const res = await this.get<MessageResponse>(`/events/${id}/messages`);
+    return res.messages;
   }
 
   public async addReview(eventId: string, authorId: string, puntuation: number,  comment?: string): Promise<ReviewDocument> {

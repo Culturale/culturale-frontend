@@ -22,7 +22,11 @@
     "eventScreen": {
       "ComoLlegar": "How to get there?",
       "BuyText": "Buy",
-      "information": "+ Information"
+      "information": "+ Information",
+      "succces": "Compra realizada correctamente",
+      "LoadingEvent": "Loading Events ...",
+      "Enroll": "Enroll",
+      "share": "Share"
     },
     "event": {
       "join": "Join now!"
@@ -33,6 +37,7 @@
       "today": "Today"
     },
     "perfil": {
+      "perfil": "Profile",
       "seguidores": "Followers",
       "siguiendo": "Following",
       "nombre": "Name:",
@@ -43,13 +48,39 @@
       "pagos": "My payments",
       "amigos": "My friends",
       "miperfil": "My profile"
+    } ,
+    "ShowFollowersScreen":{
+      "followers": "Followers",
+      "vacio": "This is very empty!",
+      "noFriends": "Meet new people to start this adventure",
+      "delete": "Delete"
+
+    }, 
+    "ShowFollowedsScreen":{
+      "followers":"Followeds",
+      "vacio": "This is very empty!",
+      "noFriends": "Meet new people to start this adventure",
+      "delete": "Delete"
     },
     "preferits": {
-      "titulo": "Favourites"
+      "titulo": "Favourites",
+      "error": "No favourite events yet"
     },
     "myEvents": {
       "calendar": "+ Add to calendar ",
       "valoration": "+ Make a review"
+    },
+    "settings": {
+      "changeLanguage": "Change Language "
+    },
+    "mapa": {
+      "title": "Map",
+      "near": "Interesting events near me..."
+    },
+    "valoracio": {
+      "new": "New rating",
+      "send": "Submit"
     }
+    
   }
   

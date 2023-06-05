@@ -1,8 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 
 import { Application } from './app/application/application';
 import type { IApplication } from './app/application/application.interface';
 import { ApplicationLayerProvider } from './app/hooks/use-application-layer';
+import { LanguageProvider } from './app/hooks/use-language';
 import { RootNavigator } from './app/navigation';
 import { StripeProvider } from '@stripe/stripe-react-native';
 
@@ -29,7 +30,9 @@ export default function App() {
         publishableKey="pk_test_51NATp9IdIcZ9qhZBJTgkQxqerAysKhRFXH4B7FYG0P5zW6SaBgCVXRiALMs5i9ZGeYV0WxZlFoSFGSdbC7lUwzOy00AHnoBtlG"
         merchantIdentifier="merchant.com.{{YOUR_APP_NAME}}"
       >
-        <RootNavigator />
+        <LanguageProvider>
+          <RootNavigator />
+        </LanguageProvider>
       </StripeProvider>
     </ApplicationLayerProvider>
   );
