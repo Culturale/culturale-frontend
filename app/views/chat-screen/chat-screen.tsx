@@ -32,7 +32,7 @@ export const ChatScreen: React.FC<Props> = observer((props: Props) => {
   const [opacity] = useState(new Animated.Value(0));
   const {
     useCases: { NewMessage },
-    controllers: { EventController, UserController},
+    controllers: { EventController, UserController },
   } = useApplicationLayer();
 
   const userInfo = UserController.userInfo;
@@ -42,21 +42,29 @@ export const ChatScreen: React.FC<Props> = observer((props: Props) => {
   const messages = EventController.messages;
 
   useEffect(() => {
-    EventController.fetchEventMessages(event.id);
-    UserController.fetchUsers(userInfo.username);
-    console.log("Loading chat screen")
+    const fetchMessagesInterval = setInterval(() => {
+      EventController.fetchEventMessages(event.id);
+    }, 5000); // Fetch messages every 5 seconds
+
+    return () => {
+      clearInterval(fetchMessagesInterval);
+    };
   }, []);
 
   useEffect(() => {
-    if (messages)
-    {
+    EventController.fetchEventMessages(event.id);
+    UserController.fetchUsers(userInfo.username);
+  }, [event]);
+
+  useEffect(() => {
+    if (messages) {
       setMsgDisplay(messages);
     }
   }, [messages]);
 
   const renderItem = ({ item }: { item: any }) => {
     const user = UserController.fetchUser(item.userId);
-  
+
     return (
       <View style={styles.messageContainer}>
         <View style={styles.messageBox}>
@@ -66,8 +74,6 @@ export const ChatScreen: React.FC<Props> = observer((props: Props) => {
       </View>
     );
   };
-  
-  
 
   useEffect(() => {
     if (error) {
@@ -89,25 +95,24 @@ export const ChatScreen: React.FC<Props> = observer((props: Props) => {
   }, [error, opacity]);
 
   async function handleMessage() {
-    console.log("Button");
+    console.log('Button');
     const date = new Date();
     console.log(date);
-  
-    try {
-      await NewMessage(event.id, content, user._id).subscribeToRequest({
-        onCompleteRequest: async () => {
-          await EventController.fetchEventMessages(event.id);
-          navigation.navigate('ChatScreen', { event: event });
-        },
-      });
-    } catch (error) {
-      setError(error.message);
-    }
-  }
-  
-  
+    NewMessage(event.id, content, user._id);
 
-  console.log('render')
+    // try {
+    //   await NewMessage(event.id, content, user._id).subscribeToRequest({
+    //     onCompleteRequest: async () => {
+    //       await EventController.fetchEventMessages(event.id);
+    //       setContent('');
+    //     },
+    //   });
+    // } catch (error) {
+    //   setError(error.message);
+    // }
+  }
+
+  console.log('render');
 
   return (
     <View style={styles.container}>
@@ -135,19 +140,21 @@ export const ChatScreen: React.FC<Props> = observer((props: Props) => {
             placeholderTextColor="#003f5c"
             style={styles.TextInput}
             onChangeText={(content) => setContent(content)}
+            value={content}
           />
         </View>
         <View style={styles.send}>
           <TouchableOpacity onPress={handleMessage}>
-            <Image onPress={handleMessage} source={require('../../../assets/send.png')} style={styles.sendpic} />
+            <Image
+              onPress={handleMessage}
+              source={require('../../../assets/send.png')}
+              style={styles.sendpic}
+            />
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     </View>
   );
 });
-
-const flexdata1 = { width: '20%' };
-const flexdata2 = { width: '60%' };
 
 export default ChatScreen;
