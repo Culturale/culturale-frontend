@@ -7,12 +7,12 @@ import { observer } from 'mobx-react-lite';
 import type React from 'react';
 import {useState, useEffect } from 'react';
 import {View, FlatList, TextInput, TouchableOpacity, StatusBar} from 'react-native';
-import {useLanguageContext} from '~hooks/use-language/use-language';
 import DatePickerModal from 'react-native-modal-datetime-picker';
 
 import { Text as TraductionText , Event, User } from '~/components';
 import type { IEvent, IUser} from '~/domain';
 import { useApplicationLayer } from '~/hooks';
+import { useLanguageContext } from '~/hooks/use-language/use-language';
 import type { RootParamList } from '~/navigation';
 
 import type { SearchScreenProps as Props } from './search-screen.props';
@@ -136,7 +136,7 @@ export const SearchScreen: React.FC<Props> = observer(() => {
     }
     // Si es busquen usuaris....
     if (searchType === 'usuarios') {
-      UserController.fetchAllUsers(searchText);
+      UserController.fetchUsers(searchText);
     }
     
     // Si es busquen events....
@@ -203,13 +203,23 @@ export const SearchScreen: React.FC<Props> = observer(() => {
       <View style={styles.searchContainer}>
         <View style={styles.searchTextContainer}>
           <Ionicons color="#aaa" name="search" size={24} style={styles.searchIcon} />
-          <TextInput
+          {language === 'es' && ( <TextInput
             placeholder={`Buscar ${userSearch ? 'usuarios por username' : 'eventos por denominación'}`}
             placeholderTextColor="#aaa"
             value={searchText}
             onChangeText={setSearchText}
             onSubmitEditing={() => handleSearch()}
           />
+          )}
+          {language === 'en' && (
+          <TextInput
+            placeholder={`Search ${userSearch ? 'users by username' : 'events by name'}`}
+            placeholderTextColor="#aaa"
+            value={searchText}
+            onChangeText={setSearchText}
+            onSubmitEditing={() => handleSearch()}
+          />
+          )}
           <TouchableOpacity style={styles.buttonfilter} onPress={toggleFilters}>
                 <Ionicons color="black" name="filter-outline" size={24} />
           </TouchableOpacity>
@@ -264,18 +274,18 @@ export const SearchScreen: React.FC<Props> = observer(() => {
             selectedValue={selectedCateg}
             style={styles.picker}
             onValueChange={(itemValue) => setSelectedCateg(itemValue)}>
-              <Picker.Item label="Todas las categorías" value="" />
-              <Picker.Item label="Actividades virtuales" value="agenda:categories/activitats-virtuals" />
-              <Picker.Item label="Exposiciones" value="agenda:categories/exposicions" />
-              <Picker.Item label="Teatro" value="agenda:categories/teatre" />
-              <Picker.Item label="Festivales y muestras" value="agenda:categories/festivals-i-mostres" />
-              <Picker.Item label="Rutas y visitas" value="agenda:categories/rutes-i-visites" />
-              <Picker.Item label="Infantil" value="agenda:categories/infantil" />
-              <Picker.Item label="Fiestas" value="agenda:categories/festes" />
-              <Picker.Item label="Conferencias" value="agenda:categories/conferencies" />
-              <Picker.Item label="Ferias y mercados" value="agenda:categories/fires-i-mercats" />
-              <Picker.Item label="Danza y baile" value="agenda:categories/dansa" />
-              <Picker.Item label="Ciclos" value="agenda:categories/cicles" />
+              <Picker.Item label="All categories" value="" />
+              <Picker.Item label="Virtual activities" value="agenda:categories/activitats-virtuals" />
+              <Picker.Item label="Exhibitions" value="agenda:categories/exposicions" />
+              <Picker.Item label="Theater" value="agenda:categories/teatre" />
+              <Picker.Item label="Festivals and shows" value="agenda:categories/festivals-i-mostres" />
+              <Picker.Item label="Routes and visits" value="agenda:categories/rutes-i-visites" />
+              <Picker.Item label="Children's" value="agenda:categories/infantil" />
+              <Picker.Item label="Party" value="agenda:categories/festes" />
+              <Picker.Item label="Conferences" value="agenda:categories/conferencies" />
+              <Picker.Item label="Fairs and markets" value="agenda:categories/fires-i-mercats" />
+              <Picker.Item label="Dance and dance" value="agenda:categories/dansa" />
+              <Picker.Item label="Cycles" value="agenda:categories/cicles" />
             </Picker>
           )}
         </View>

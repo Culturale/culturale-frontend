@@ -117,10 +117,15 @@ export class API implements IAPI {
     return res;
   }
 
-  public async getAllUsers(username: string): Promise<UserDocument[]> {
+  public async getAllUsers(): Promise<UserDocument[]> {
+    const res = await this.get<GetUsersResponse>(`/users`);
+    return res.users;
+  }
+
+  public async getUsers(username: string): Promise<UserDocument[]> {
     const res = await this.get<GetUsersResponse>(`/users/?username=${username}`);
     return res.users;
-}
+  }
 
   public async getEvent(id: string): Promise<EventDocument> {
     const res = await this.get<GetEventResponse>(`/events/code/${id}`);

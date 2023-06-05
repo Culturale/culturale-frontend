@@ -6,9 +6,11 @@ import type React from 'react';
 import { useEffect, useState} from 'react';
 import { View, FlatList, TouchableOpacity, ActivityIndicator} from 'react-native';
 
+
 import { Text as TraductionText , Event } from '~/components';
 import type { IEvent } from '~/domain';
 import {  useApplicationLayer } from '~/hooks';
+import { useLanguageContext } from '~/hooks/use-language/use-language';
 import type { RootParamList } from '~/navigation';
 
 import type { HomeScreenProps as Props } from './home-screen.props';
@@ -19,28 +21,33 @@ type HomeNavigation = StackNavigationProp<RootParamList, 'Home'>;
 
 export const HomeScreen: React.FC<Props> = observer(() => {
   const {
-    controllers: { EventController },
+    controllers: { EventController, UserController},
   } = useApplicationLayer();
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [allEvents, setAllEvents] = useState<IEvent[]>([]); // Updated state to store all fetched events
   const navigation = useNavigation<HomeNavigation>();
   const eventsaux = EventController.events;
+  const { language } = useLanguageContext();  
+
+  useEffect((() => {}), [language]);
+
 
   useEffect(() => {
+    UserController.fetchAllUsers();
     fetchEvents(page);
   }, []);
 
   useEffect(() => {
     if (eventsaux) {
-    setAllEvents([...allEvents, ...eventsaux])
-    setIsLoading(false)
+    setAllEvents([...allEvents, ...eventsaux]);
+    setIsLoading(false);
     }
-  }, [eventsaux])
+  }, [eventsaux]);
 
   const fetchEvents = (p: number) => {
     setIsLoading(true);
-    EventController.fetchAllEvents(p)
+    EventController.fetchAllEvents(p);
   };
 
   const handleEndReached = () => {

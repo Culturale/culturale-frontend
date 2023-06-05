@@ -17,9 +17,11 @@ export type RootParamList = {
   HomeScreen: undefined;
   EventScreen: { eventId: string};
   PreferitsScreen: undefined;
-  ValoracioScreen: { event: IEvent};
+  ValoracioScreen: { event: IEvent };
   MapScreen: undefined;
   Search: undefined;
+  Config: undefined;
+  DescriptionScreen: { description: string, eventId: string};
 };
 
 export type TabParamList = {
