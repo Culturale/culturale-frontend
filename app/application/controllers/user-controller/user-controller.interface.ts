@@ -60,6 +60,7 @@ export interface IUserController extends Controller {
    * @public
    */
   modifyUser: (
+    id: string,
     username: string,
     name: string,
     email: string,

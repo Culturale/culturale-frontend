@@ -78,6 +78,7 @@ export interface IAPI {
   newMessage: (id: string, content: string, userId: string) => Promise<MessageDocument>;
 
   editUser: (
+    id: string,
     username: string,
     name: string,
     email: string,

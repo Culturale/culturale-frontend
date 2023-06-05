@@ -78,19 +78,11 @@ export const HomeScreen: React.FC<Props> = observer(() => {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.titleContainer}>
+    <>
+     <View style={styles.titleContainer}>
         <TraductionText style={styles.title} tx="home.inicio"/>
       </View>
-      <View style={styles.bottomContainer}>
-        <View>
-          <TraductionText style={styles.subTitle} tx="home.near"/>
-        </View>
-        <View style={styles.hoyContainer}>
-          <TraductionText style={styles.subTitle} tx="home.today"/>
-          <Ionicons color="black" name="filter-outline" size={24} />
-        </View>
-      </View>
+    <View style={styles.container}>
       <View style={styles.eventContainer}>
         <FlatList
           ListFooterComponent={renderFooter}
@@ -102,6 +94,7 @@ export const HomeScreen: React.FC<Props> = observer(() => {
         />
       </View>
     </View>
+    </>
   );
 });
 

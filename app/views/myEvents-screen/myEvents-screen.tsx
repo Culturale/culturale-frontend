@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import * as GoogleCalendar from 'expo-calendar';
@@ -5,12 +6,11 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, Image, TouchableOpacity , Linking } from 'react-native';
 import { Calendar } from 'react-native-calendars';
-import { Ionicons } from '@expo/vector-icons';
 
 import { Text  as CustomText } from '~/components';
 import type { IEvent } from '~/domain';
 import { useApplicationLayer } from '~/hooks';
-import { useLanguageContext } from '~/hooks/use-language/use-language';
+import { useLanguageContext  } from '~/hooks/use-language/use-language';
 import type { RootParamList } from '~/navigation';
 
 import { MyEventsScreenStyles as styles} from './myEvents-screen.styles';
@@ -20,6 +20,7 @@ type MyEventsNavigation = StackNavigationProp<RootParamList, 'MyEventsScreen'>;
 
 export const MyEventsScreen = observer(() => {
   const navigation = useNavigation<MyEventsNavigation>();
+
   
   const [selectedDay, setSelectedDay] = useState('');
   const {
@@ -94,6 +95,9 @@ export const MyEventsScreen = observer(() => {
 
   return (
     <View>
+      <View style={styles.titleContainer}>
+        <CustomText style={styles.titleMyEvents} tx="myEvents.inicio"/>
+      </View>
       <Calendar
         current={selectedDay}
         markedDates={{
@@ -140,7 +144,7 @@ export const MyEventsScreen = observer(() => {
               </View>
             ))
           ) : (
-            <Text style={styles.noEvents}>No tienes eventos para el día seleccionado</Text>
+            <CustomText style={styles.noEvents} tx="myEvents.noEvents"/>
           )}
         </ScrollView>
       )}

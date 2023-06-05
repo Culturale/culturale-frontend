@@ -36,9 +36,11 @@ export class UserController implements IUserController {
       isLoggedIn: observable,
       isLoginNeeded: computed,
       modifyUser: action,
+      msguser: observable,
       removeToken: action,
       setEmail: action,
       setIsLoggedIn: action,
+      setMsgUser: action,
       setName: action,
       setPhoneNumber: action,
       setProfilePicture: action,
@@ -49,9 +51,7 @@ export class UserController implements IUserController {
       token: observable,
       uploadPhoto: action,
       userInfo: observable,
-      users: observable,
-      msguser: observable,
-      setMsgUser: action
+      users: observable
     });
   }
 
@@ -184,6 +184,7 @@ export class UserController implements IUserController {
   }
   
   public async modifyUser(
+    id: string,
     username: string,
     name: string,
     email: string,
@@ -191,16 +192,23 @@ export class UserController implements IUserController {
     usertype: string,
     profilePicture?: string,
   ): Promise<void> {
-    const res = await this.infrastructure.api.editUser(
-      username,
-      name,
-      email,
-      phoneNumber,
-      usertype,
-      profilePicture,
-    );
-    const user = userFactory(res);
-    this.setUserInfo(user);
+    try{
+      const res = await this.infrastructure.api.editUser(
+        id,
+        username,
+        name,
+        email,
+        phoneNumber,
+        usertype,
+        profilePicture,
+      );
+      const user = userFactory(res);
+      this.setUserInfo(user);
+
+    } catch(e){
+      // eslint-disable-next-line no-console
+      console.error(e);
+    }
   }
 
   public fetchAllUsers(): IRequestSubject<void> {
