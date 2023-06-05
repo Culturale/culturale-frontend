@@ -8,6 +8,7 @@ import type React from 'react';
 import {useState, useEffect } from 'react';
 import { Text, View, FlatList, TextInput, TouchableOpacity, StatusBar} from 'react-native';
 import DatePickerModal from 'react-native-modal-datetime-picker';
+import { Text as TraductionText } from '~/components';
 
 import { Event, User } from '~/components';
 import type { IEvent, IUser} from '~/domain';

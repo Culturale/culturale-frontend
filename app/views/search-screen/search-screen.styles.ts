@@ -1,13 +1,16 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
+
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 
 export const SearchScreenStyles =  StyleSheet.create({
   // CONTENIDOR DEL TITOL PRINCIPAL:
   titleContainer: {
     justifyContent: 'center',
     backgroundColor: '#34b38a',
-    position:'absolute',
-    width: '100%', // --> AMPLADA 
-    height: 70, // --> ALTURA
+    position: 'absolute',
+    width: screenWidth,
+    height: screenHeight * 0.1,
   },
   // TITOL PRINCIPAL:
   title: {
@@ -19,8 +22,8 @@ export const SearchScreenStyles =  StyleSheet.create({
   searchContainer: {
     alignItems: 'center',
     backgroundColor: '#FFF',
-    top: 70,
-    height: 90, // --> ALTURA
+    top: screenHeight * 0.1,
+    height: screenHeight * 0.15,
   },
   // CONTENIDOR TEXT CERCA 
   searchTextContainer: {
@@ -28,24 +31,24 @@ export const SearchScreenStyles =  StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: 'rgba(128, 128, 128, 0.1)',
     borderRadius: 18,
-    top: 10,
+    top: screenHeight * 0.02,
   },
   // BOTO DE CERCA (LUPA)
   searchIcon: {
-    marginRight: 10,
+    marginRight: screenWidth * 0.02,
     color: '#000',
   },
   // BOTO DE FILTRE:
   buttonfilter: {
-    marginLeft:10,
+    marginLeft: screenWidth * 0.02,
     color: '#000',
   },
   // CONTENIDOR BOTONS EVENTOS, USUARIOS:
   searchTypeContainer: {
     flexDirection: 'row',
-    marginTop: 10,
+    marginTop: screenHeight * 0.02,
     zIndex: 1,
-    top: 10,
+    top: screenHeight * 0.02,
   },
   // CONTENIDOR FILTRE EVENTOS:
   filterContainer: {
@@ -54,22 +57,20 @@ export const SearchScreenStyles =  StyleSheet.create({
     borderRadius: 8,
     borderWidth: 2,
     elevation: 2,
-    top: 160,
-    
+    top: screenHeight * 0.32,
     zIndex: 1,
-    height: 375, // --> ALTURA
+    height: screenHeight * 0.5,
     position: 'absolute',
-    width: '100%', // --> AMPLADA 
-    
+    width: screenWidth,
   },
   // BOTO FILTRE DATA:
   filterData: {
     borderColor: '#34B38A',
     borderRadius: 8,
     borderWidth: 2,
-    marginHorizontal: 9,
-    marginBottom: 20,
-    top: 23,
+    marginHorizontal: screenWidth * 0.02,
+    marginBottom: screenHeight * 0.04,
+    top: screenHeight * 0.04,
   },
   // TEXT BOTO FILTRE DATA:
   filterDataText: {
@@ -81,10 +82,10 @@ export const SearchScreenStyles =  StyleSheet.create({
     backgroundColor: '#34B38A',
     alignItems: 'center',
     borderRadius: 20,
-    marginRight: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    top: 100,
+    marginRight: screenWidth * 0.02,
+    paddingHorizontal: screenWidth * 0.02,
+    paddingVertical: screenHeight * 0.01,
+    top: screenHeight * 0.1,
   },
   // TEXT BOTO APLICA ELS FILTRES:
   filterButtonText: {
@@ -100,18 +101,17 @@ export const SearchScreenStyles =  StyleSheet.create({
     borderRadius: 8,
     borderWidth: 2,
     backgroundColor: '#FFFFFF',
-    top: 8,
-    height: 65, // --> ALTURA
-    marginHorizontal: 9,
+    top: screenHeight * 0.01,
+    height: screenHeight * 0.1,
+    marginHorizontal: screenWidth * 0.02,
     zIndex: 1,
-    
   },
   // PICKER
   picker: {
     fontSize: 12,
     backgroundColor: '#FFFF',
     top: 0,
-    marginHorizontal: 9,
+    marginHorizontal: screenWidth * 0.02,
     marginBottom: 0,
   },
   // FILTRE DE CADA EVENTOS:
@@ -119,8 +119,8 @@ export const SearchScreenStyles =  StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingLeft: 5,
-    marginBottom: 20,
+    paddingLeft: screenWidth * 0.01,
+    marginBottom: screenHeight * 0.04,
   },
   // POSAR PREU FILTRE
   filterTextInput: {
@@ -128,24 +128,24 @@ export const SearchScreenStyles =  StyleSheet.create({
     borderRadius: 8,
     borderWidth: 2,
     flex: 1,
-    paddingHorizontal: 7,
-    marginRight: 9,
+    paddingHorizontal: screenWidth * 0.01,
+    marginRight: screenWidth * 0.02,
   },
   // CONTAINER FILTRE PREU:
   filterpreu: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingLeft: 9,
-    top: 20,
+    paddingLeft: screenWidth * 0.02,
+    top: screenHeight * 0.04,
   },
   // CONTENIDOR DE RESULTATS:
   resultContainer: {
-    position:'relative',
+    position: 'relative',
     backgroundColor: '#fff',
-    top: 70,
-    width: '100%', // --> AMPLADA 
-    height: 380, // --> ALTURA
+    top: screenHeight * 0.1,
+    width: screenWidth,
+    height: screenHeight * 0.6,
   },
   // BOTO USUARIS:
   userSearchButton: {
@@ -153,7 +153,7 @@ export const SearchScreenStyles =  StyleSheet.create({
     backgroundColor: '#fff',
     borderColor: '#34b38a',
     borderWidth: 1,
-    marginHorizontal: 10,
+    marginHorizontal: screenWidth * 0.02,
   },
   // BOTO EVENTS:
   eventSearchButton: {
@@ -171,9 +171,9 @@ export const SearchScreenStyles =  StyleSheet.create({
     alignItems: 'center',
     borderRadius: 20,
     flexDirection: 'row',
-    marginRight: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
+    marginRight: screenWidth * 0.02,
+    paddingHorizontal: screenWidth * 0.02,
+    paddingVertical: screenHeight * 0.01,
   },
   // TEXT BOTO CERCA SELECCIONAT:
   selectedText: {
@@ -195,7 +195,7 @@ export const SearchScreenStyles =  StyleSheet.create({
     color: '#333',
     fontSize: 18,
     fontWeight: 'bold',
-    marginTop: 20,
+    marginTop: screenHeight * 0.04,
     textAlign: 'center',
   },
 });
