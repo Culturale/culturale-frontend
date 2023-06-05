@@ -66,12 +66,14 @@ export class Application implements IApplication {
         this.useCasesRequests.set('Signup', subject);
         return subject;
       },
-      NewMessage: (content: string, userId: string, date: Date) => {
+      NewMessage: (id: string, content: string, userId: string) => {
+        const date= new Date();
         const subject = newmessage(
           this.infrastructure,
+          id,
           content,
           userId,
-          date
+          date,
         );
         this.useCasesRequests.set('NewMessage', subject);
         return subject;

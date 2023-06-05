@@ -1,12 +1,49 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+  messageContainer: {
+    paddingHorizontal: 10,
+    marginBottom: 10,
+  },
+  messageBox: {
+    backgroundColor: '#F2F2F2',
+    borderRadius: 10,
+    padding: 10,
+  },
+  messageUsername: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  messageContent: {
+    fontSize: 16,
+    color: '#000',
+  },
+  container: {
+    flex: 1,
+  },
+  chatbody: {
+    flex: 1,
+    backgroundColor: '#FFF',
+    paddingTop: 10,
+  },
+  chatinput: {
+    backgroundColor: '#76D7B8',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 10,
+  },
   TextInput: {
     flex: 1,
     height: 50,
     padding: 10,
     width: '100%'
   },
+  messageText: {
+    fontSize: 16,
+    color: '#000',
+  },  
   backArrow: {
         display: 'flex',
         paddingTop: 30,
@@ -21,23 +58,6 @@ export default StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#76d7b8',
     justifyContent: 'center'
-  },
-  chatbody: {
-    backgroundColor: '#fff',
-    flexGrow: 1,
-    width: '100%'
-  },
-  chatinput: {
-    backgroundColor: '#76d7b8',
-    flexDirection: 'row',
-    gap: 10,
-    height: 90,
-    padding: 10,
-    width: '100%'
-  },
-  container: {
-    backgroundColor: '#fff',
-    flex: 1
   },
   image: {
     height: 40,

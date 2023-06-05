@@ -20,6 +20,7 @@ import { useApplicationLayer } from '~/hooks';
 import type { RootParamList } from '~/navigation';
 import type { ChatScreenProps as Props } from './chat-screen.props';
 import styles from './chat-styles';
+import { IMessage } from '~/domain';
 
 type ChatScreenNavigation = StackNavigationProp<RootParamList, 'ChatScreen'>;
 
@@ -31,24 +32,42 @@ export const ChatScreen: React.FC<Props> = observer((props: Props) => {
   const [opacity] = useState(new Animated.Value(0));
   const {
     useCases: { NewMessage },
-    controllers: { EventController },
-    controllers: { UserController },
+    controllers: { EventController, UserController},
   } = useApplicationLayer();
 
+  const userInfo = UserController.userInfo;
+  const user = UserController.users[0];
   const navigation = useNavigation<ChatScreenNavigation>();
-
-  const [messages] = useState([]);
+  const [msgdisplay, setMsgDisplay] = useState<IMessage[]>([]);
+  const messages = EventController.messages;
 
   useEffect(() => {
     EventController.fetchEventMessages(event.id);
+    UserController.fetchUsers(userInfo.username);
     console.log("Loading chat screen")
   }, []);
 
-  const renderItem = ({ item }: { item: any }) => (
-    <View style={styles.messageContainer}>
-      <Text style={styles.messageText}>{item.message}</Text>
-    </View>
-  );
+  useEffect(() => {
+    if (messages)
+    {
+      setMsgDisplay(messages);
+    }
+  }, [messages]);
+
+  const renderItem = ({ item }: { item: any }) => {
+    const user = UserController.fetchUser(item.userId);
+  
+    return (
+      <View style={styles.messageContainer}>
+        <View style={styles.messageBox}>
+          <Text style={styles.messageUsername}>{user?.username}</Text>
+          <Text style={styles.messageContent}>{item.content}</Text>
+        </View>
+      </View>
+    );
+  };
+  
+  
 
   useEffect(() => {
     if (error) {
@@ -69,12 +88,24 @@ export const ChatScreen: React.FC<Props> = observer((props: Props) => {
     }
   }, [error, opacity]);
 
-  function handleMessage() {
+  async function handleMessage() {
     console.log("Button");
-    NewMessage(content, UserController.token, new Date()).subscribeToRequest({
-      onCompleteRequest: () => navigation.navigate('ChatScreen', { event: event }),
-    });
+    const date = new Date();
+    console.log(date);
+  
+    try {
+      await NewMessage(event.id, content, user._id).subscribeToRequest({
+        onCompleteRequest: async () => {
+          await EventController.fetchEventMessages(event.id);
+          navigation.navigate('ChatScreen', { event: event });
+        },
+      });
+    } catch (error) {
+      setError(error.message);
+    }
   }
+  
+  
 
   console.log('render')
 
@@ -82,7 +113,7 @@ export const ChatScreen: React.FC<Props> = observer((props: Props) => {
     <View style={styles.container}>
       <KeyboardAvoidingView style={styles.topbar}>
         <View style={styles.backArrow}>
-          <TouchableOpacity onPress={() => navigation.navigate('EventScreen', { event: event })}>
+          <TouchableOpacity onPress={() => navigation.navigate('EventScreen', { eventId: event.id })}>
             <Ionicons color="black" name="arrow-back" size={24} />
           </TouchableOpacity>
         </View>
@@ -90,7 +121,12 @@ export const ChatScreen: React.FC<Props> = observer((props: Props) => {
         <View style={styles.backArrow} />
       </KeyboardAvoidingView>
       <View style={styles.chatbody}>
-        <FlatList data={messages} keyExtractor={(item) => item.id} renderItem={renderItem} />
+        <FlatList
+          data={msgdisplay}
+          keyExtractor={(item) => item.id}
+          renderItem={renderItem}
+          contentContainerStyle={styles.messageContainer}
+        />
       </View>
       <KeyboardAvoidingView style={styles.chatinput}>
         <View style={styles.inputChat}>

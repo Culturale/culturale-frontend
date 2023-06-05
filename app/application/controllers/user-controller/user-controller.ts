@@ -24,6 +24,7 @@ export class UserController implements IUserController {
   public userInfo: IUser;
   private infrastructure: IInfrastructure;
   public users: IUser[];
+  public msguser: IUser;
 
   constructor(infrastructure: IInfrastructure) {
     this.infrastructure = infrastructure;
@@ -45,11 +46,17 @@ export class UserController implements IUserController {
       userInfo: observable,
       users: observable,
       setUsers: action,
+      msguser: observable,
+      setMsgUser: action
     });
   }
 
   public setPreferits(events: IEvent[]): void {
     this.userInfo.preferits = events;
+  }
+
+  public setMsgUser(user: IUser): void {
+    this.msguser = user;
   }
 
   public setUsers(users: IUser[]): void {
@@ -222,7 +229,6 @@ export class UserController implements IUserController {
         const user = userFactory(doc);
         users.push(user);
       }
-      console.log(users);
       this.setUsers(users);
 
       subject.completeRequest();
@@ -232,6 +238,22 @@ export class UserController implements IUserController {
     });
 
     return subject;
+  }
+
+  public fetchUser(id: string): IUser {
+    const subject = new RequestSubject<void>();
+    subject.startRequest();
+    this.infrastructure.api
+    .getUser(id)
+    .then((res: UserDocument) => {
+      const user = userFactory(res);
+      this.setMsgUser(user);
+      subject.completeRequest();
+    })
+    .catch((e: Error) => {
+      subject.failRequest(e);
+    });
+    return this.msguser;
   }
 
   public get isLoginNeeded(): boolean {
