@@ -10,6 +10,7 @@ export interface IUserController extends Controller {
   token: string;
   userInfo: IUser;
   readonly users: IUser[];
+  msguser: IUser;
 
   /**
    * Get if login is needed
@@ -95,6 +96,8 @@ export interface IUserController extends Controller {
   fetchAllUsers: () => IRequestSubject<void>;
 
   fetchUsers: (username?: string) => IRequestSubject<void>;
+
+  fetchUser: (id: string) => IUser;
 
   /**
    * Modifies user favourites

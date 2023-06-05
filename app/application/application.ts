@@ -10,6 +10,7 @@ import { EventController, UserController } from './controllers';
 import { login } from './use-cases';
 import { signup } from './use-cases/signup';
 import type { UseCasesMap } from './use-cases/use-cases';
+import { newmessage } from './use-cases/newmessage';
 
 export class Application implements IApplication {
   public readonly controllers: Controllers;
@@ -63,6 +64,18 @@ export class Application implements IApplication {
           profilePicture
         );
         this.useCasesRequests.set('Signup', subject);
+        return subject;
+      },
+      NewMessage: (id: string, content: string, userId: string) => {
+        const date= new Date();
+        const subject = newmessage(
+          this.infrastructure,
+          id,
+          content,
+          userId,
+          date,
+        );
+        this.useCasesRequests.set('NewMessage', subject);
         return subject;
       },
     };

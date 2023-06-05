@@ -134,6 +134,14 @@ export const EventScreen: React.FC<Props> = observer(() => {
                   <Ionicons color="#888" name="calendar-outline" size={16} />
                   <Text style={styles.subtitle}>{event.dataIni.toLocaleDateString()}</Text>
                 </View>
+                {showSuccess && (
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('ChatScreen', { event: event })}
+                  style={styles.subtitleContainer}
+                >
+                  <Ionicons color="#888" name="chatbox-outline" size={16} />
+                  <Text style={styles.subtitle}>Chat</Text>
+                </TouchableOpacity> )}
                 <View style={styles.descriptionContainer}>
                   <Text numberOfLines={2} style={styles.description}>{event.descripcio}
                   </Text>
@@ -190,38 +198,36 @@ export const EventScreen: React.FC<Props> = observer(() => {
                 />
               </MapView>
             </View>
-  {/* <ScrollView style={styles.listContainer}> */}
-  {event.valoracions.map((valoracio) => (
-    <View key={valoracio.authorId} style={styles.reviewContainer}>
-      <View style={styles.userContainer}>
-        <Image
-          source={{ uri: UserController.findUserId(valoracio.authorId).profilePicture }}
-          style={styles.profilePicture}
-        />
-        <Text style={styles.username}>{UserController.findUserId(valoracio.authorId).username}</Text>
 
-        <View style={valStyles.ratingStars}>
-          {[1, 2, 3, 4, 5].map((value) => (
-            <Text
-              key={value}
-              style={[
-                styles.star,
-                value <= valoracio.puntuation ? valStyles.filledStar : null,
-              ]}
-            >
-              &#9733;
-            </Text>
-          ))}
-        </View>
-      </View>
-      {valoracio.comment && (
-        <Text style={styles.comment}>{valoracio.comment}</Text>
-      )}
-    </View>
-  ))}
+              {/* <ScrollView style={styles.listContainer}> */}
+              {event.valoracions.map((valoracio) => (
+                <View key={valoracio.authorId} style={styles.reviewContainer}>
+                  <View style={styles.userContainer}>
+                    <Image
+                      source={{ uri: UserController.findUserId(valoracio.authorId).profilePicture }}
+                      style={styles.profilePicture}
+                    />
+                    <Text style={styles.username}>{UserController.findUserId(valoracio.authorId).username}</Text>
 
-
-
+                    <View style={valStyles.ratingStars}>
+                      {[1, 2, 3, 4, 5].map((value) => (
+                        <Text
+                          key={value}
+                          style={[
+                            styles.star,
+                            value <= valoracio.puntuation ? valStyles.filledStar : null,
+                          ]}
+                        >
+                          &#9733;
+                        </Text>
+                      ))}
+                    </View>
+                  </View>
+                  {valoracio.comment && (
+                    <Text style={styles.comment}>{valoracio.comment}</Text>
+                  )}
+                </View>
+              ))}
           </>
         ) : (
           <TraductionText style={styles.goButton} tx="eventScreen.LoadingEvent" />
