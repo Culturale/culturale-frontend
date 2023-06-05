@@ -6,10 +6,13 @@ import type { ImagePickerAsset } from 'expo-image-picker';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
 
-import { IEvent, IUser, User, eventFactory, userFactory } from '~/domain';
+import type { IEvent, IUser} from '~/domain';
+import { eventFactory, userFactory } from '~/domain';
 import type { EventDocument, IInfrastructure, UserDocument } from '~/infrastructure';
+import type { IRequestSubject} from '~/observables';
+import { RequestSubject } from '~/observables';
+
 import type { IUserController } from './user-controller.interface';
-import { IRequestSubject, RequestSubject } from '~/observables';
 
 export enum DriverRequests {
   Login = 'LOGIN',
@@ -29,6 +32,7 @@ export class UserController implements IUserController {
   constructor(infrastructure: IInfrastructure) {
     this.infrastructure = infrastructure;
     makeObservable(this, {
+      addEventSub: action,
       isLoggedIn: observable,
       isLoginNeeded: computed,
       modifyUser: action,
@@ -41,11 +45,11 @@ export class UserController implements IUserController {
       setToken: action,
       setUserInfo: action,
       setUsername: action,
+      setUsers: action,
       token: observable,
       uploadPhoto: action,
       userInfo: observable,
       users: observable,
-      setUsers: action,
       msguser: observable,
       setMsgUser: action
     });
@@ -98,9 +102,11 @@ export class UserController implements IUserController {
       { fireImmediately: true },
     );
   }
+
   public async removeFollowed(userUsername: string, friendUsername:string): Promise<void> {
     
     try{
+    // eslint-disable-next-line no-console
     console.log(await this.infrastructure.api.removeFriend(friendUsername, userUsername));
 
     // A deja de seguir a B
@@ -125,6 +131,7 @@ export class UserController implements IUserController {
       this.setUsers(newUsers);
     }}
     catch(error){
+      // eslint-disable-next-line no-console
       console.log(error);
     }
   }
@@ -155,9 +162,11 @@ export class UserController implements IUserController {
     }
   } 
   catch(error){
+    // eslint-disable-next-line no-console
     console.log(error);
   }
 }
+
   public async addFavourite(id: string, username: string): Promise<void> {
     await this.infrastructure.api.addFavourite(id, username);
   }
@@ -214,7 +223,6 @@ export class UserController implements IUserController {
       .catch((e: Error) => {
         subject.failRequest(e);
       });
-    console.log("DEVOLVEMOS EL SUBJECT", subject)
     return subject;
   }
   
@@ -283,7 +291,7 @@ export class UserController implements IUserController {
   }
 
   public addEventSub(event: IEvent): void {
-    this.userInfo.addEventSub(event);
+    this.userInfo.eventSub.push(event);
   }
 
   public setUsername(username: string): void {
@@ -317,10 +325,6 @@ export class UserController implements IUserController {
   public findUserId(userId: string): IUser | undefined {
     return this.users.find(user => user._id === userId);
   }
-  
-
-  
-
 }
 
 
