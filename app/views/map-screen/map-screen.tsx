@@ -6,7 +6,7 @@ import { useState, useEffect, useRef} from 'react';
 import { Text, TouchableOpacity, TextInput, View, Button } from 'react-native';
 import type { LatLng} from 'react-native-maps';
 import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 
 
 import { Text as TraductionText } from '~/components';
@@ -205,7 +205,7 @@ export const MapScreen: React.FC<Props> = observer(() => {
                 >
                 {markers}
                 </MapView>
-            
+                    {language === 'es' && (
                     <View style={styles.searchContainer}>
                         <TextInput placeholder="Introduce el lugar del evento" placeholderTextColor="#000"
                                    style={styles.searchInput} value={searchTerm}
@@ -214,6 +214,17 @@ export const MapScreen: React.FC<Props> = observer(() => {
                             <Ionicons color="white" name="search" size={24} />
                         </TouchableOpacity>
                     </View>
+                    )}
+                    {language === 'en' && (
+                    <View style={styles.searchContainer}>
+                        <TextInput placeholder="Enter the location of the event" placeholderTextColor="#000"
+                                   style={styles.searchInput} value={searchTerm}
+                                   onChangeText={(text) => setSearchTerm(text)} onSubmitEditing={searchEvents}/>        
+                        <TouchableOpacity style={styles.searchButton} onPress={searchEvents}>
+                            <Ionicons color="white" name="search" size={24} />
+                        </TouchableOpacity>
+                    </View>
+                    )}
     
                 <TouchableOpacity style={styles.locationButton} onPress={onPressLocation}>
                     <Ionicons color="white" name="md-locate" size={24} />

@@ -1,7 +1,7 @@
+import { Ionicons } from '@expo/vector-icons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { ShowUserScreen, MapScreen, EditProfileScreen, SearchScreen, ProfileScreen, HomeScreen, EventScreen, MyEventsScreen, ShowFollowedsScreen, ShowFollowersScreen, PreferitsScreen, SettingsScreen} from '~/views';
 import { DescriptionScreen } from '~/views/description-screen';
@@ -164,7 +164,7 @@ export const TabNavigator: React.FC = observer(() => {
           } else if (route.name === 'Profile') {
             iconName = focused ? 'person' : 'person-outline';
           } else if (route.name === 'MyEvents') {
-            iconName = focused ? 'person' : 'person-outline';
+            iconName = focused ? 'calendar' : 'calendar-outline';
           }
           else if (route.name === 'Map') {
             iconName = focused ? 'map' : 'map-outline';

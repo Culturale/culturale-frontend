@@ -53,19 +53,6 @@ export const RegisterScreen: React.FC<Props> = observer(() => {
   const [emailError, setEmailError] = useState('');
   const [phoneError, setPhoneError] = useState('');
 
-  const pickImage = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      aspect: [4, 3],
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-    }
-  };
-
   const validateEmail = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
@@ -85,21 +72,13 @@ export const RegisterScreen: React.FC<Props> = observer(() => {
   };
 
   return (
-    <KeyboardAvoidingView behavior='padding' style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <Image
         source={require('../../../assets/logo.png')}
         style={styles.image}
       />
       <StatusBar style='auto' />
-      <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
-        <Pressable style={styles.button} onPress={pickImage}>
-          <Text style={styles.textButton}>Selecciona una imagen</Text>
-        </Pressable>
-        {image && (
-          <Image source={{ uri: image }} style={{ height: 125, width: 125 }} />
-        )}
-      </View>
-      <View style={styles.inputView}>
+      <View style={styles.inputView2}>
         <TextInput
           placeholder='Nombre'
           placeholderTextColor='#003f5c'
@@ -145,6 +124,19 @@ export const RegisterScreen: React.FC<Props> = observer(() => {
       </View>
       {phoneError ? <Text style={{ color: 'red' }}>{phoneError}</Text> : null}
       <DropDownPicker
+        dropDownContainerStyle={{
+          alignSelf: 'center',
+          backgroundColor: '#D2FFE6',
+          marginBottom: 20,
+          width: '70%',
+        }}
+        dropDownDirection="BOTTOM"
+        dropDownStyle={{
+          backgroundColor: '#D2FFE6',
+        }}
+        itemStyle={{
+          justifyContent: 'flex-start',
+        }}
         items={items}
         open={open}
         setItems={setItems}
@@ -159,7 +151,7 @@ export const RegisterScreen: React.FC<Props> = observer(() => {
         value={value}
       />
       <TouchableOpacity
-        style={styles.registerBtn}
+        style={[styles.registerBtn, open && styles.registerBtnOpen]}
         onPress={() => handleRegister()}
       >
         <Text style={styles.registerText}>CONFIRMAR</Text>

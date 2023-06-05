@@ -25,7 +25,8 @@
       "information": "+ Information",
       "succces": "Compra realizada correctamente",
       "LoadingEvent": "Loading Events ...",
-      "Enroll": "Enroll"
+      "Enroll": "Enroll",
+      "share": "Share"
     },
     "event": {
       "join": "Join now!"
@@ -67,19 +68,36 @@
     },
     "myEvents": {
       "calendar": "+ Add to calendar ",
-      "valoration": "+ Make a review"
+      "valoration": "+ Make a review",
+      "inicio": "My events",
+      "noEvents": "You have no events for the selected day"
     },
     "settings": {
       "changeLanguage": "Change Language "
     },
-    "mapa": {
-      "title": "Map",
-      "near": "Interesting events near me..."
-    },
     "valoracio": {
       "new": "New rating",
       "send": "Submit"
-    }
-    
+    },
+    "MapScreen":{
+      "titol":"Map",
+      "subtitol":"Interesting events near me...",
+
+  },
+  "SearchScreen":{
+      "botofiltres":"Apply filters",
+      "botousuaris":"Users",
+      "botoeventos": "Events",
+      "noresult":"No results were found.",
+      "cerca": "Search",
+      "placeholderCercaEventos": "Search event by name",
+      "placeholderCercaUsuaris": "Search user by username",
+      "DataInici": "Select start date",
+      "DataIniciSelect": "Selected start date",
+      "DataFi": "Select end date",
+      "DataFiSelect": "Selected end date",
+      "Preu": "Maximum price: ",
+      "allCategories": "All categories",
+  }
   }
   

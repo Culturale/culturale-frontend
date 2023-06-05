@@ -12,8 +12,14 @@ export type GetEventResponse =
 export type GetEventsResponse =
   paths['/events']['get']['responses']['200']['schema'];
 
+export type MessageResponse =
+  paths['/events/:id/messages']['get']['responses']['200']['schema'];
+
 export type GetUsersResponse =
   paths['/users/:username']['get']['responses']['200']['schema'];
+
+export type GetUserResponse =
+  paths['/users/id/:id']['get']['responses']['200']['schema'];
 
 export type GetEventsByDenominacioResponse =
   paths['/events/denominacio/:denominacio']['get']['responses']['200']['schema'];
@@ -61,13 +67,18 @@ export interface IAPI {
 
   getUsers: (username: string) => Promise<UserDocument[]>;
 
+  getUser: (id: string) => Promise<UserDocument>;
+
   getMapEvents: (lat1: number, lon1: number, lat2: number, lon2: number) => Promise<EventDocument[]>;
 
   getEventsByCategory: (category: string) => Promise<EventDocument[]>;
 
   getEventsByDenominacio: (denominacio: string) => Promise<EventDocument[]>;
 
+  newMessage: (id: string, content: string, userId: string) => Promise<MessageDocument>;
+
   editUser: (
+    id: string,
     username: string,
     name: string,
     email: string,

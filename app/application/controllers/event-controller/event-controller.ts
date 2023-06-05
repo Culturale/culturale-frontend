@@ -1,8 +1,8 @@
 import { action, makeObservable, observable } from 'mobx';
 
-import { IEvent, IReview, IUser, Review } from '~/domain';
-import { eventFactory } from '~/domain';
-import type { EventDocument, IInfrastructure } from '~/infrastructure';
+import { IEvent, IReview, IUser, Review, IMessage } from '~/domain';
+import { eventFactory, messageFactory} from '~/domain';
+import type { EventDocument, IInfrastructure, MessageDocument } from '~/infrastructure';
 import type { IRequestSubject } from '~/observables';
 import { RequestSubject } from '~/observables';
 
@@ -13,6 +13,8 @@ export class EventController implements IEventController {
   public events: IEvent[];
   public eventsmap: IEvent[];
   public SearchEvents: IEvent[];
+  public messages: IMessage[];
+  public
   private readonly infrastructure: IInfrastructure;
 
   constructor(infrastructure: IInfrastructure) {
@@ -24,15 +26,21 @@ export class EventController implements IEventController {
       events: observable,
       eventsmap: observable,
       SearchEvents: observable,
+      messages: observable,
       setEvent: action,
       setEvents: action,
       setEventsMap: action,
       setEventsSearch: action,
+      setMessages: action,
     });
   }
 
   public setEvents(events: IEvent[]): void {
     this.events = events;
+  }
+
+  public setMessages(messages: IMessage[]): void {
+    this.messages = messages;
   }
 
   public setEvent(event: IEvent): void {
@@ -202,11 +210,17 @@ export class EventController implements IEventController {
   public fetchEventMessages(eventId: string): IRequestSubject<void> {
     const subject = new RequestSubject<void>();
     subject.startRequest();
-
     this.infrastructure.api
       .getChatMessages(eventId)
-      .then((_res) => {
+      .then((res: MessageDocument[]) => {
+        const Messages: IMessage[] = [];
+        for (const msg of res) {
+          const message = messageFactory(msg);
+          Messages.push(message);
+        }
+        this.setMessages(Messages);
         subject.completeRequest();
+        
       })
       .catch((e: Error) => {
         subject.failRequest(e);

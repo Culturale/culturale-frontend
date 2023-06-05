@@ -15,7 +15,8 @@
         "succes": "Compra realizada correctamente ",
         "LoadingEvent": "Cargando Eventos ...",
         "Enroll": "Apuntáte",
-        "information": "+ Información"
+        "information": "+ Información",
+        "share": "Compartir"
     },
     "event": {
         "join": "¡Apúntate!"
@@ -41,7 +42,9 @@
 
     "myEvents": {
         "calendar": "+ Añadir calendario",
-        "valoration": "+ Añadir valoración"
+        "valoration": "+ Añadir valoración",
+        "inicio": "Mis eventos",
+        "noEvents": "No tienes eventos para el dia seleccionado"
     },
 
     "showFriendsScreen":{
@@ -82,8 +85,6 @@
     "MapScreen":{
         "titol":"Mapa",
         "subtitol":"Eventos interesantes cerca de mí...",
-        "noFriends":" Sigue a gente nueva para empezar esta aventura",
-        "delete": "Eliminar"
     },
     "SearchScreen":{
         "botofiltres":"Aplicar filtros",

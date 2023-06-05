@@ -113,6 +113,18 @@ export const ProfileScreenStyles =  StyleSheet.create({
     fontWeight: 'bold',
     paddingBottom: 20,
   },
+  titleProfile: {
+    color: '#fff',
+    fontSize: 32,
+    fontWeight: 'bold',
+  },
+  titleContainer: {
+    backgroundColor: '#34b38a',
+    justifyContent: 'center',
+    paddingBottom: 5,
+    paddingHorizontal: 32,
+    paddingTop: 20,
+  },  
 });
 
   
