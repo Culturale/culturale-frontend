@@ -1,4 +1,3 @@
-
 import type { definitions, paths } from './schema';
 
 export type EventDocument = definitions['event'];
@@ -34,10 +33,10 @@ export type EditUserResponse =
   paths['/users/edit']['post']['responses']['200']['schema'];
 
 export type RemoveFollowerResponse =
-paths['/users/deleteFollower']['delete']['responses']['200']['schema'];
+  paths['/users/deleteFollower']['delete']['responses']['200']['schema'];
 
 export type AddFollowerResponse =
-paths['/users/newFollower']['post']['responses']['200']['schema'];
+  paths['/users/newFollower']['post']['responses']['200']['schema'];
 
 export type RemoveFavouriteResponse =
   paths['/users/deleteFavourite']['delete']['responses']['201']['schema'];
@@ -69,13 +68,22 @@ export interface IAPI {
 
   getUser: (id: string) => Promise<UserDocument>;
 
-  getMapEvents: (lat1: number, lon1: number, lat2: number, lon2: number) => Promise<EventDocument[]>;
+  getMapEvents: (
+    lat1: number,
+    lon1: number,
+    lat2: number,
+    lon2: number,
+  ) => Promise<EventDocument[]>;
 
   getEventsByCategory: (category: string) => Promise<EventDocument[]>;
 
   getEventsByDenominacio: (denominacio: string) => Promise<EventDocument[]>;
 
-  newMessage: (id: string, content: string, userId: string) => Promise<MessageDocument>;
+  newMessage: (
+    id: string,
+    content: string,
+    userId: string,
+  ) => Promise<MessageDocument>;
 
   editUser: (
     username: string,
@@ -86,26 +94,33 @@ export interface IAPI {
     profilePicture?: string,
   ) => Promise<UserDocument>;
 
-  addParticipant: (id: string, username: string)=> Promise<void>;
+  addParticipant: (id: string, username: string) => Promise<void>;
 
-  fetchEventsByFilters: (denominacio?: string,
+  fetchEventsByFilters: (
+    denominacio?: string,
     categoria?: string,
     dataIni?: Date,
     dataFi?: Date,
     horari?: string,
     price?: string,
-   ) => Promise<EventDocument[]>;
+  ) => Promise<EventDocument[]>;
 
   getChatMessages: (id: string) => Promise<MessageDocument[]>;
 
-  removeFriend(username: string, follower:string): Promise<UserDocument[]>;
+  removeFriend(username: string, follower: string): Promise<UserDocument[]>;
 
   addFriend(username: string, follower: string): Promise<UserDocument[]>;
-  
+
   removeFavourite(id: string, username: string): Promise<EventDocument[]>;
 
   addFavourite(id: string, username: string): unknown;
 
-  addReview: (eventId: string, authorId: string, puntuation: number,  comment?: string) => Promise<ReviewDocument>;
+  addReview: (
+    eventId: string,
+    authorId: string,
+    puntuation: number,
+    comment?: string,
+  ) => Promise<ReviewDocument>;
 
+  fetchPaymentSheetParams: (eventId: string) => Promise<any>;
 }
