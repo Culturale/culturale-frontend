@@ -67,6 +67,8 @@ export interface IAPI {
 
   getEventsByDenominacio: (denominacio: string) => Promise<EventDocument[]>;
 
+  newMessage: (content: string, userId: string, date: Date) => Promise<MessageDocument>;
+
   editUser: (
     username: string,
     name: string,

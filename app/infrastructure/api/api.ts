@@ -209,8 +209,20 @@ export class API implements IAPI {
       username,
       usertype,
     });
-
     return res.user;
+  }
+
+  public async newMessage(
+    content: string,
+    userId: string,
+    date: Date,
+  ): Promise<MessageDocument>{
+    const res = await this.post<MessageDocument> ('/events/newMessage', {
+      content,
+      userId,
+      date,
+    });
+    return res;
   }
 
   public async removeFriend(username: string, follower:string): Promise<UserDocument[]> {
@@ -221,6 +233,7 @@ export class API implements IAPI {
 
     return res.followers;
   }
+
   public async addFriend(username: string, follower:string): Promise<UserDocument[]> {
     const res = await this.post<AddFollowerResponse>('/users/newFollower', {
       username,

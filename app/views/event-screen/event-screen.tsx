@@ -113,6 +113,13 @@ export const EventScreen: React.FC<Props> = observer(() => {
                   <Ionicons color="#888" name="calendar-outline" size={16} />
                   <Text style={styles.subtitle}>{event.dataIni.toLocaleDateString()}</Text>
                 </View>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('ChatScreen', { event: event })}
+                style={styles.subtitleContainer}
+              >
+                <Ionicons color="#888" name="chatbox-outline" size={16} />
+                <Text style={styles.subtitle}>Chat</Text>
+              </TouchableOpacity>
                 <View style={styles.descriptionContainer}>
                   <Text numberOfLines={2} style={styles.description}>{event.descripcio}
                   </Text>
@@ -199,9 +206,6 @@ export const EventScreen: React.FC<Props> = observer(() => {
       )}
     </View>
   ))}
-
-
-
           </>
         ) : (
           <TraductionText style={styles.goButton} tx="eventScreen.LoadingEvent" />
