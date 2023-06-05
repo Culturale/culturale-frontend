@@ -3,8 +3,7 @@ import type { RouteProp } from '@react-navigation/native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
-import type React from 'react';
-import { useState, useEffect} from 'react';
+import React, { useState, useEffect} from 'react';
 import { Image, Linking, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
@@ -17,6 +16,7 @@ import type { EventScreenProps as Props } from './event-screen.props';
 import { EventScreenStyles as styles } from './event-screen.styles';
 
 import {ValoracioScreenStyles as valStyles} from '../valoracio-screen/valoracio-screen.styles';
+
 
 type EventScreenNavigation = StackNavigationProp<RootParamList, 'EventScreen'>;
 
@@ -65,6 +65,11 @@ export const EventScreen: React.FC<Props> = observer(() => {
       UserController.addFavourite(event.id, UserController.userInfo.username);
     }
     setIsFavorite(!isFavorite);
+  };
+
+  function handleReport(reviewId: string) {
+      EventController.reportReview(reviewId);
+      alert('Evento reportado correctamente');
   };
 
   return (
@@ -172,6 +177,7 @@ export const EventScreen: React.FC<Props> = observer(() => {
             </View>
   {/* <ScrollView style={styles.listContainer}> */}
   {event.valoracions.map((valoracio) => (
+    
     <View style={styles.reviewContainer} key={valoracio.authorId}>
       <View style={styles.userContainer}>
         <Image
@@ -179,7 +185,8 @@ export const EventScreen: React.FC<Props> = observer(() => {
           style={styles.profilePicture}
         />
         <Text style={styles.username}>{UserController.findUserId(valoracio.authorId).username}</Text>
-
+      </View>
+      <View style={styles.ratingContainer}>
         <View style={valStyles.ratingStars}>
           {[1, 2, 3, 4, 5].map((value) => (
             <Text
@@ -193,11 +200,14 @@ export const EventScreen: React.FC<Props> = observer(() => {
             </Text>
           ))}
         </View>
+        <TouchableOpacity onPress={() => handleReport(valoracio._id)} style={styles.reportContainer}>
+          <Ionicons name="warning-outline" style={styles.report} />
+        </TouchableOpacity>
       </View>
       {valoracio.comment && (
         <Text style={styles.comment}>{valoracio.comment}</Text>
       )}
-    </View>
+       </View>
   ))}
 
 

@@ -55,5 +55,12 @@ export interface IEventController {
    * @description Adds review into an event
    */
   addReview: (eventId: string, userId: string, puntuation: number,  comment?: string) => Promise<void>;
-
+  
+  /**
+   *
+   * @public
+   * @description   Adds review into an event
+   */
+  reportReview:(reviewId: string) => Promise<void>;
+  
 }

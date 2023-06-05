@@ -226,5 +226,14 @@ export const EventScreenStyles =StyleSheet.create({
     listContainer:{
       flex: 0,
       maxHeight: 230,
+  },
+  report:{
+    fontSize: 24,
+    color: 'red',
+    alignContent: 'flex-end',
+
+  },
+  reportContainer:{
+    marginLeft: 180,
   }
 });
