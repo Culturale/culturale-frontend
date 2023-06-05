@@ -63,7 +63,7 @@ export const ShowUserScreen: React.FC<Props> = observer(() => {
             </View>
             <View style={Styles.contentData}>
             <TouchableOpacity onPress={() => { navigationUsr.navigate('ShowFolloweds', {username: user.username}) }}>
-              <Text style={Styles.number}>{Nfolloweds}</Text>
+              <Text style={Styles.number}>{user.followeds.length}</Text>
               <TraductionText tx='perfil.siguiendo'/>
             </TouchableOpacity>
             </View>

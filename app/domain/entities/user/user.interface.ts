@@ -13,6 +13,7 @@ export interface IUser {
     preferits: IEvent[];
     eventSub: IEvent[];  
     readonly friends: IUser[];
+    contacts: IUser[];
   
   addEventSub: (event: IEvent) => void;
 }

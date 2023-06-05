@@ -22,6 +22,7 @@ export type RootParamList = {
   Search: undefined;
   Config: undefined;
   DescriptionScreen: { description: string, eventId: string};
+  ShowContacts: undefined;
 };
 
 export type TabParamList = {

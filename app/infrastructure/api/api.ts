@@ -16,6 +16,7 @@ import type {
   SignupResponse,
   UserDocument,
   RemoveFavouriteResponse,
+  GetContactsFromNumbersResponse,
 } from './api.interface';
 
 export class API implements IAPI {
@@ -294,4 +295,16 @@ export class API implements IAPI {
     return res;
   }
 
+  public async getContactsFromNumbers(contacts: any, id: string): Promise<void>  {
+     contacts = contacts.map((phoneNumber) => {
+      return {
+        phoneNumber: phoneNumber.replace(/[^0-9]/g, '') // Eliminar caracteres no numéricos
+      };
+    });
+     await this.post<GetContactsFromNumbersResponse>(`/users/${id}/syncContacts`, {
+      contacts
+  });
+
 }
+}
+

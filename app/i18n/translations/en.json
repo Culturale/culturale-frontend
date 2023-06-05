@@ -70,7 +70,8 @@
       "valoration": "+ Make a review"
     },
     "settings": {
-      "changeLanguage": "Change Language "
+      "changeLanguage": "Change Language ",
+      "contacts": "Contacts"
     },
     "mapa": {
       "title": "Map",
@@ -79,6 +80,12 @@
     "valoracio": {
       "new": "New rating",
       "send": "Submit"
+    },
+    "contacts":{
+      "title": "Add your contacts",
+      "noContacts": "No contacts yet",
+      "add": "Add contact"
+    }
     }
     
   }

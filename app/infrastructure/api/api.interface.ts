@@ -36,6 +36,9 @@ paths['/users/newFollower']['post']['responses']['200']['schema'];
 export type RemoveFavouriteResponse =
   paths['/users/deleteFavourite']['delete']['responses']['201']['schema'];
 
+  export type GetContactsFromNumbersResponse =
+  paths['/users/:id/syncContacts']['post']['responses']['200']['schema'];
+
 export interface IAPI {
   setup: (token: string) => void;
 
@@ -97,5 +100,5 @@ export interface IAPI {
   addFavourite(id: string, username: string): unknown;
 
   addReview: (eventId: string, authorId: string, puntuation: number,  comment?: string) => Promise<ReviewDocument>;
-
+  getContactsFromNumbers: (contacts: any, id: string)=> void;
 }

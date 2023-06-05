@@ -298,9 +298,9 @@ paths:
                 type: object
               error:
                 $ref: '#/definitions/error'
-  /users/newFollower:
+  /users/:id/syncContacts:
     post:
-      description: 'Adds a new  follower'
+      description: 'Gets contacts from user and returns the ones that are registered in BE'
       security:
         - bearerAuth: []
       responses:
@@ -309,10 +309,6 @@ paths:
           schema:
             type: object
             properties:
-              followers:
-                type: array
-                items:
-                  $ref: '#/definitions/user'
               message:
                 type: string
         '500':
@@ -324,15 +320,41 @@ paths:
                 type: object
               error:
                 $ref: '#/definitions/error'
-        '404':
-          description: Internal server error
-          schema:
-            type: object 
-            properties:
-              data:
+    /users/newFollower:
+        post:
+          description: 'Adds a new  follower'
+          security:
+            - bearerAuth: []
+          responses:
+            '200': 
+              description: Ok
+              schema:
                 type: object
-              error:
-                $ref: '#/definitions/error'
+                properties:
+                  followers:
+                    type: array
+                    items:
+                      $ref: '#/definitions/user'
+                  message:
+                    type: string
+            '500':
+              description: Internal server error
+              schema:
+                type: object 
+                properties:
+                  data:
+                    type: object
+                  error:
+                    $ref: '#/definitions/error'
+            '404':
+              description: Internal server error
+              schema:
+                type: object 
+                properties:
+                  data:
+                    type: object
+                  error:
+                    $ref: '#/definitions/error'
 
 definitions:
   event:

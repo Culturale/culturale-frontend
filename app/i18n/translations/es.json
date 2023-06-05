@@ -69,7 +69,8 @@
       "error": "Aún no tienes eventos favoritos"
     },
     "settings": {
-        "changeLanguage": "Cambiar de idioma "
+        "changeLanguage": "Cambiar de idioma ",
+        "contacts": "Contactos"
     },
     "mapa": {
         "title": "Mapa",
@@ -78,5 +79,9 @@
     "valoracio": {
         "new": "Nueva valoración",
         "send": "Enviar"
+    },
+    "contacts":{
+        "title": "Añade a tus contactos",
+        "noContacts": "No tienes contactos"
     }
 }
