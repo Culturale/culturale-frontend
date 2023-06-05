@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, Image, TouchableOpacity , Linking } from 'react-native';
 import { Calendar } from 'react-native-calendars';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 
 import { Text  as CustomText } from '~/components';
 import type { IEvent } from '~/domain';

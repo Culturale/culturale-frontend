@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
@@ -12,7 +13,6 @@ import {
   Button,
   TouchableOpacity
 } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import EventsScreen from '../../views/EventsScreen';
 import HomeScreen from '../../views/HomeScreen';
