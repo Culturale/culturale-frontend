@@ -25,12 +25,12 @@ export const ShowUserScreen: React.FC<Props> = observer(() => {
 
   function followUser(): void {
     UserController.followUser(UserController.userInfo.username, user);
-    setFollowers(Nfollowers + 1)
+    setFollowers(Nfollowers + 1);
   }     
   
   function unfollowUser(): void {
     UserController.removeFollowed(UserController.userInfo.username, username);
-    setFollowers(Nfollowers - 1)
+    setFollowers(Nfollowers - 1);
   }
   const [Nfollowers, setFollowers] = useState(user.followers.length);
   
