@@ -154,14 +154,10 @@ export const SearchScreen: React.FC<Props> = observer(() => {
   };
 
   useEffect(() => {
-    setSearchResults(events);
-  }, [events]);
+    EventController.fetchAllEvents(1);
+    setSearchResults(EventController.events);
+  }, [language, users, events]);
 
-  useEffect(() => {}, [language]);
-
-  useEffect(() => {
-    setSearchResults(users);
-  }, [users]);
 
   const renderResult = ({ item }: { item: IEvent | IUser }) => {
     const handleEventClick = () => {
@@ -231,7 +227,7 @@ export const SearchScreen: React.FC<Props> = observer(() => {
                 onPress={() => {
                   setSearchType('eventos');
                   setUserSearch(false);
-                  setSearchResults([]);
+                  setSearchResults(EventController.events);
                   setUserShowFilters(false);
                 }}
               />
@@ -240,7 +236,7 @@ export const SearchScreen: React.FC<Props> = observer(() => {
                 onPress={() => {
                   setSearchType('usuarios');
                   setUserSearch(true);
-                  setSearchResults([]);
+                  setSearchResults(UserController.users);
                   setEventShowFilters(false);
                 }}
               />
