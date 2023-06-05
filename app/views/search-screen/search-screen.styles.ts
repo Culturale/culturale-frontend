@@ -8,11 +8,14 @@ export const SearchScreenStyles =  StyleSheet.create({
     position:'absolute',
     width: '100%', // --> AMPLADA 
     height: 70, // --> ALTURA
+    paddingHorizontal: 32,
+
   },
   // TITOL PRINCIPAL:
   title: {
     fontFamily: 'Helvetica',
-    fontSize: 24,
+    fontSize: 32,
+    color: 'white',
     fontWeight: 'bold',
   },
   // CONTENIDOR DE CERCA: (BARA DE CERCA, BOTO FILTRES I BOTONS EVENTS I USERS)

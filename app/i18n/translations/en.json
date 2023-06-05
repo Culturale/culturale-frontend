@@ -68,7 +68,9 @@
     },
     "myEvents": {
       "calendar": "+ Add to calendar ",
-      "valoration": "+ Make a review"
+      "valoration": "+ Make a review",
+      "inicio": "My events",
+      "noEvents": "You have no events for the selected day"
     },
     "settings": {
       "changeLanguage": "Change Language "

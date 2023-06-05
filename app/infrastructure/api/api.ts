@@ -202,6 +202,7 @@ export class API implements IAPI {
   }
 
   public async editUser(
+    id: string,
     username: string,
     name: string,
     email: string,
@@ -210,6 +211,7 @@ export class API implements IAPI {
     profilePicture?: string,
   ): Promise<UserDocument> {
     const res = await this.post<EditUserResponse>('/users/edit', {
+      id,
       email,
       name,
       phoneNumber,
@@ -217,6 +219,7 @@ export class API implements IAPI {
       username,
       usertype,
     });
+    console.log(res);
     return res.user;
   }
 
