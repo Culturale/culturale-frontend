@@ -95,24 +95,17 @@ export const ChatScreen: React.FC<Props> = observer((props: Props) => {
   }, [error, opacity]);
 
   async function handleMessage() {
-    console.log('Button');
-    const date = new Date();
-    console.log(date);
-    NewMessage(event.id, content, user._id);
-
-    // try {
-    //   await NewMessage(event.id, content, user._id).subscribeToRequest({
-    //     onCompleteRequest: async () => {
-    //       await EventController.fetchEventMessages(event.id);
-    //       setContent('');
-    //     },
-    //   });
-    // } catch (error) {
-    //   setError(error.message);
-    // }
+    try {
+      await NewMessage(event.id, content, user._id).subscribeToRequest({
+        onCompleteRequest: async () => {
+          await EventController.fetchEventMessages(event.id);
+          navigation.navigate('ChatScreen', { event: event });
+        },
+      });
+    } catch (error) {
+      setError(error.message);
+    }
   }
-
-  console.log('render');
 
   return (
     <View style={styles.container}>

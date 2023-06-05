@@ -210,7 +210,6 @@ export class EventController implements IEventController {
   public fetchEventMessages(eventId: string): IRequestSubject<void> {
     const subject = new RequestSubject<void>();
     subject.startRequest();
-    console.log("fetching");
     this.infrastructure.api
       .getChatMessages(eventId)
       .then((res: MessageDocument[]) => {
@@ -219,14 +218,11 @@ export class EventController implements IEventController {
           const message = messageFactory(msg);
           Messages.push(message);
         }
-        console.log(Messages);
         this.setMessages(Messages);
-        console.log(this.messages);
         subject.completeRequest();
         
       })
       .catch((e: Error) => {
-        console.log(e);
         subject.failRequest(e);
       });
 

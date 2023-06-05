@@ -23,7 +23,6 @@ export function newmessage(
   infrastructure.api
     .newMessage(id, content, userId)
     .then((res: MessageDocument) => {
-      console.log("CompleteUsecase");
       subject.completeRequest();
     })
     .catch((e) => {

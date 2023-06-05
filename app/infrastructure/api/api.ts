@@ -222,7 +222,6 @@ export class API implements IAPI {
 
   public async newMessage( id: string, content: string, userId: string): Promise<MessageDocument>{
     const date = new Date();
-    console.log(id, content, userId, date);
     const res = await this.post<MessageDocument> ('/events/newMessage', {
       id,
       content,
