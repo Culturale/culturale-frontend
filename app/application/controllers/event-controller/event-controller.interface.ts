@@ -5,6 +5,7 @@ export interface IEventController {
   readonly event: IEvent;
   readonly events: IEvent[];
   readonly eventsmap: IEvent[];
+  readonly SearchEvents: IEvent[];
 
   /**
    *
@@ -26,6 +27,35 @@ export interface IEventController {
    * @description Fetches all map events from API and saves them to eventsmap property
    */
   fetchMapEvents: (lat1: number, Lon1: number, lat2: number, Lon2: number) => IRequestSubject<void>;
+
+  /**
+   *
+   * @public
+   * @description Fetches SearchEvents by denominacio from API and saves them to events property
+   */
+  fetchEventsByCategory: (category: string) => IRequestSubject<void>;
+
+  /**
+   *
+   * @public
+   * @description Fetches SearchEvents by denominacio from API and saves them to events property
+   */
+  fetchEventsByDenominacio: (denominacio: string) => IRequestSubject<void>;
+
+  /**
+   *
+   * @public
+   * @description Fetches SearchEvents by denominacio, decripcio, dataIni, dataFi, horari, price
+   *              from API and saves them to events property
+   */
+
+  fetchEventsByFilters: (denominacio?: string,
+                         categoria?: string,
+                         dataIni?: Date,
+                         dataFi?: Date,
+                         horari?: string,
+                         price?: string
+                        ) => IRequestSubject<void>;
 
   /**
    *
@@ -63,4 +93,12 @@ export interface IEventController {
    */
   reportReview:(reviewId: string) => Promise<void>;
   
+
+
+  /**
+   *
+   * @public
+   * @description Sets SearchEvents property
+   */
+  setEventsSearch: (SearchEvents: IEvent[]) => void;
 }

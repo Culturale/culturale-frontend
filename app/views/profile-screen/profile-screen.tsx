@@ -52,13 +52,13 @@ export const ProfileScreen = observer(() => {
           <View style={Styles.titleData}>
             <Image src={userInfo.profilePicture} style={Styles.foto}/>
             <View style={Styles.contentData}>
-              <TouchableOpacity onPress={() => { navigationProfile.navigate('ShowFolloweds',{username: userInfo.username}); }}>
+              <TouchableOpacity onPress={() => { navigationProfile.navigate('ShowFollowers',{username: userInfo.username}); }}>
               <Text style={Styles.number}>{userInfo.followers.length}</Text>
               <TraductionText tx='perfil.seguidores'/>
               </TouchableOpacity>
             </View>
             <View style={Styles.contentData}>
-              <TouchableOpacity onPress={() => { navigationProfile.navigate('ShowFollowers',{username: userInfo.username}); }}>
+              <TouchableOpacity onPress={() => { navigationProfile.navigate('ShowFolloweds',{username: userInfo.username}); }}>
               <Text style={Styles.number}>{userInfo.followeds.length}</Text>
               <TraductionText tx='perfil.siguiendo'/>
               </TouchableOpacity>

@@ -12,6 +12,7 @@ export class EventController implements IEventController {
   public event: IEvent;
   public events: IEvent[];
   public eventsmap: IEvent[];
+  public SearchEvents: IEvent[];
   private readonly infrastructure: IInfrastructure;
 
   constructor(infrastructure: IInfrastructure) {
@@ -22,9 +23,11 @@ export class EventController implements IEventController {
       event: observable,
       events: observable,
       eventsmap: observable,
+      SearchEvents: observable,
       setEvent: action,
       setEvents: action,
       setEventsMap: action,
+      setEventsSearch: action,
     });
   }
 
@@ -38,6 +41,10 @@ export class EventController implements IEventController {
 
   public setEventsMap(events: IEvent[]): void {
     this.eventsmap = events;
+  }
+
+  public setEventsSearch(events: IEvent[]): void {
+    this.SearchEvents = events;
   }
 
   public fetchAllEvents(page: number): IRequestSubject<void> {
@@ -119,6 +126,77 @@ export class EventController implements IEventController {
       // eslint-disable-next-line no-console
       console.error(error);
     }
+  }
+
+  public fetchEventsByCategory(category: string): IRequestSubject<void> {
+    const subject = new RequestSubject<void>();
+    subject.startRequest();
+
+    this.infrastructure.api
+      .getEventsByCategory(category)
+      .then((res: EventDocument[]) => {
+        const SearchEvents: IEvent[] = [];
+        for (const doc of res) {
+          const event = eventFactory(doc);
+          SearchEvents.push(event);
+        }
+
+        this.setEventsSearch(SearchEvents);
+
+        subject.completeRequest();
+      })
+      .catch((e: Error) => {
+        subject.failRequest(e);
+      });
+
+    return subject;
+  }
+
+  public fetchEventsByDenominacio(denominacio: string): IRequestSubject<void> {
+    const subject = new RequestSubject<void>();
+    subject.startRequest();
+
+    this.infrastructure.api
+      .getEventsByDenominacio(denominacio)
+      .then((res: EventDocument[]) => {
+        const SearchEvents: IEvent[] = [];
+        for (const doc of res) {
+          const event = eventFactory(doc);
+          SearchEvents.push(event);
+        }
+
+        this.setEventsSearch(SearchEvents);
+
+        subject.completeRequest();
+      })
+      .catch((e: Error) => {
+        subject.failRequest(e);
+      });
+
+    return subject;
+  }
+
+  public fetchEventsByFilters(denominacio?: string,
+    categoria?: string,
+    dataIni?: Date,
+    dataFi?: Date,
+    horari?: string,
+    price?: string
+  ): IRequestSubject<void> {
+    const subject = new RequestSubject<void>();
+    subject.startRequest();
+  
+    this.infrastructure.api
+      .fetchEventsByFilters(denominacio, categoria, dataIni, dataFi, horari, price)
+      .then((res: EventDocument[]) => {
+        const searchEvents: IEvent[] = res.map((doc: EventDocument) => eventFactory(doc));
+        this.setEventsSearch(searchEvents);
+        subject.completeRequest();
+      })
+      .catch((e: Error) => {
+        subject.failRequest(e);
+      });
+    return subject;
   }
 
   public fetchEventMessages(eventId: string): IRequestSubject<void> {
