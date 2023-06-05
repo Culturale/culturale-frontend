@@ -56,11 +56,13 @@ export const MyEventsScreen = observer(() => {
         if (!defaultCalendar) {
           return;
         }
-  
+
+        console.log(event);
+        
         const eventDetails = {
-          endDate: event.dataIni.toISOString(),
+          endDate: new Date(event.dataFi).toISOString(),
           notes: 'description22',
-          startDate: event.dataIni.toISOString(),
+          startDate: new Date(event.dataFi).toISOString(),
           title: event.denominacio,
         };
   
