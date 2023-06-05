@@ -17,6 +17,7 @@ import type {
   SignupResponse,
   UserDocument,
   RemoveFavouriteResponse,
+  ReportResponse,
   MessageResponse,
 } from './api.interface';
 
@@ -37,6 +38,8 @@ export class API implements IAPI {
   }
 
   private async post<T>(path: string, body: object): Promise<T> {
+   
+   console.log(JSON.stringify(body))
     console.log(this.baseURL + path + JSON.stringify(body));
     return fetch(this.baseURL + path, {
       body: JSON.stringify(body),
@@ -73,6 +76,23 @@ export class API implements IAPI {
         throw err;
       });
   }
+  private async put<T>(path: string, body: object): Promise<T> {
+    console.log(JSON.stringify(body))
+     return fetch(this.baseURL + path, {
+       body: JSON.stringify(body),
+       headers: {
+         Accept: 'application/json',
+         Authorization: `Bearer ${this.token}`,
+         'Content-Type': 'application/json',
+       },
+       method: 'PUT',
+     })
+       .then((res) => res.json())
+       .then((data: T) => data)
+       .catch((err: Error) => {
+         throw err;
+       });
+   }
 
   private async get<T>(path: string): Promise<T> {
     return fetch(this.baseURL + path, {
@@ -89,6 +109,23 @@ export class API implements IAPI {
         throw err;
       });
   }
+  private async put<T>(path: string, body: object): Promise<T> {
+    console.log(JSON.stringify(body))
+     return fetch(this.baseURL + path, {
+       body: JSON.stringify(body),
+       headers: {
+         Accept: 'application/json',
+         Authorization: `Bearer ${this.token}`,
+         'Content-Type': 'application/json',
+       },
+       method: 'PUT',
+     })
+       .then((res) => res.json())
+       .then((data: T) => data)
+       .catch((err: Error) => {
+         throw err;
+       });
+   }
 
   public setup(token: string) {
     this.token = token;
@@ -307,6 +344,12 @@ export class API implements IAPI {
       puntuation
     });
     return res;
+  }
+
+  public async reportReview(reviewId: string): Promise<void> {
+   await this.put<ReportResponse>('/events/reportReview', {
+    reviewId,
+    });
   }
 
 }
