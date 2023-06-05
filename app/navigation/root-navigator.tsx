@@ -5,8 +5,11 @@ import type React from 'react';
 
 import { useApplicationLayer } from '~/hooks';
 import { LoginScreen, RegisterScreen, ChatScreen } from '~/views';
+
 import type { RootParamList } from './root-params';
 import { TabNavigator } from './tab-navigator';
+import { TabNavigatorEmpresa } from './tab-navigator-empresa';
+
 
 const Stack = createStackNavigator<RootParamList>();
 
@@ -15,7 +18,9 @@ export const RootNavigator: React.FC = observer(() => {
     controllers: { UserController },
   } = useApplicationLayer();
   const userIsLoggedIn = UserController.isLoggedIn;
-  if (userIsLoggedIn) {
+  const type = userIsLoggedIn ? UserController.userInfo.usertype : undefined;
+  console.log(type);
+  if (userIsLoggedIn && type === 'usuario') {
     return (
       <NavigationContainer>
         <Stack.Navigator>
@@ -36,6 +41,20 @@ export const RootNavigator: React.FC = observer(() => {
         </Stack.Navigator>
       </NavigationContainer>
     );
+  } else if (userIsLoggedIn) {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            component={TabNavigatorEmpresa}
+            name="Empresa"
+            options={{
+              headerShown: false,
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    )
   } else {
     return (
       <NavigationContainer>
