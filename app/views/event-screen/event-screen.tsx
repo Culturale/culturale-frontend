@@ -7,6 +7,7 @@ import type React from 'react';
 import { useState, useEffect} from 'react';
 import { Image, Linking, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import Share from 'react-native-share';
 
 
 import { Text as TraductionText } from '~/components';
@@ -28,11 +29,9 @@ export const EventScreen: React.FC<Props> = observer(() => {
     controllers: { UserController, EventController },
   } = useApplicationLayer();
   const eventId = params.eventId;
-  const enrolled: boolean = UserController?.userInfo?.eventSub?.some((eventUser) => eventUser?._id === event?._id);
   const events = UserController.userInfo.preferits;
   const event = EventController.event;
   const enrolled2 = event?.participants.some((event) => event._id === UserController.userInfo._id);
-  console.log(enrolled2);
 
   const [showSuccess, setShowSuccess] = useState(enrolled2);
 
@@ -61,6 +60,19 @@ export const EventScreen: React.FC<Props> = observer(() => {
     EventController.addParticipant(event, UserController.userInfo);
     setShowSuccess(true);
   }
+  const handleShare = async () => {
+    try {
+      const shareOptions = {
+        message: `¡Echa un vistazo a este evento!\n\n${event.denominacio}\n\nFecha: ${event.dataIni.toLocaleDateString()}\nDirección: ${event.adress}\n\n${event.descripcio}\n\nObten aquí más información ${event.url}`,
+        title: 'Compartir evento',
+      };
+  
+      await Share.open(shareOptions);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(error);
+    }
+  };
 
   const toggleFavorite = () => {
     if (isFavorite) {
@@ -107,6 +119,10 @@ export const EventScreen: React.FC<Props> = observer(() => {
               />
               <TouchableOpacity onPress={() => Linking.openURL(event.url)}>
                   <TraductionText style={styles.goButton} tx="eventScreen.information" />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleShare} style={styles.shareContainer}>
+                  <Ionicons color="black" name="share-outline" size={24} />
+                  <TraductionText tx='eventScreen.share'/>
                 </TouchableOpacity>
               </View>
               <View style={{ flexDirection: 'column' }}>
@@ -125,7 +141,6 @@ export const EventScreen: React.FC<Props> = observer(() => {
                 <TouchableOpacity onPress={handleReadMore}>
                 <Text style={styles.readMore}>Leer más</Text>
                 </TouchableOpacity>
-
                 {/* <TouchableOpacity onPress={() => Linking.openURL(event.url)}>
                   <TraductionText style={styles.goButton} tx="eventScreen.information" />
                 </TouchableOpacity> */}

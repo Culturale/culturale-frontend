@@ -6,6 +6,11 @@ export const EventScreenStyles =StyleSheet.create({
       paddingLeft: 10,
       paddingTop: 30,
     },
+    shareContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
     backButton: {
       backgroundColor: '#007AFF',
       borderRadius: 8,

@@ -15,7 +15,8 @@
         "succes": "Compra realizada correctamente ",
         "LoadingEvent": "Cargando Eventos ...",
         "Enroll": "Apuntáte",
-        "information": "+ Información"
+        "information": "+ Información",
+        "share": "Compartir"
     },
     "event": {
         "join": "¡Apúntate!"
