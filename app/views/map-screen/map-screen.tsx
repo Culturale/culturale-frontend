@@ -167,11 +167,11 @@ export const MapScreen: React.FC<Props> = observer(() => {
         <View style={styles.container}>
     
             <View style={styles.titleContainer}>
-            <TraductionText style={styles.title} text="Mapa"/>
+            <TraductionText style={styles.title} tx = 'MapScreen.titol'/>
             </View>
     
             <View style={styles.bottomContainer}>
-                    <TraductionText style={styles.subTitle} text="Eventos interesantes cerca de mí..."/>
+                    <TraductionText style={styles.subTitle} tx = 'MapScreen.subtitol'/>
             </View>
             
             <View style={styles.map}>

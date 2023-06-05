@@ -76,6 +76,8 @@ export const SearchScreenStyles =  StyleSheet.create({
   filterDataText: {
     fontFamily: 'Arial',
     paddingLeft: 3,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   // BOTO APLICA ELS FILTRES:
   filterButton: {

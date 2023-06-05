@@ -6,11 +6,11 @@ import { format } from 'date-fns';
 import { observer } from 'mobx-react-lite';
 import type React from 'react';
 import {useState, useEffect } from 'react';
-import { Text, View, FlatList, TextInput, TouchableOpacity, StatusBar} from 'react-native';
+import {View, FlatList, TextInput, TouchableOpacity, StatusBar} from 'react-native';
+import {useLanguageContext} from '~hooks/use-language/use-language';
 import DatePickerModal from 'react-native-modal-datetime-picker';
-import { Text as TraductionText } from '~/components';
 
-import { Event, User } from '~/components';
+import { Text as TraductionText , Event, User } from '~/components';
 import type { IEvent, IUser} from '~/domain';
 import { useApplicationLayer } from '~/hooks';
 import type { RootParamList } from '~/navigation';
@@ -25,6 +25,7 @@ type ShowUserNavigation = StackNavigationProp<RootParamList, 'SearchScreen'>;
 
 export const SearchScreen: React.FC<Props> = observer(() => {
   const { controllers: { EventController, UserController } } = useApplicationLayer();
+  const { language } = useLanguageContext();
 
   // Llista de resultats a mostrar eventos/users:
   const [searchResults, setSearchResults] = useState<(IEvent | IUser)[]>([]);
@@ -104,7 +105,7 @@ export const SearchScreen: React.FC<Props> = observer(() => {
         }}
       >
         <Ionicons color={selected ? '#fff' : '#333'} name="person-outline" size={24} />
-        <Text style={[styles.buttonText, selected && styles.selectedText]}> Usuarios</Text>
+        <TraductionText style={[styles.buttonText, selected && styles.selectedText]} tx="SearchScreen.botousuaris"/>
       </TouchableOpacity>
     );
   };
@@ -122,7 +123,7 @@ export const SearchScreen: React.FC<Props> = observer(() => {
         }}
       >
         <Ionicons color={selected ? '#fff' : '#333'} name="calendar-outline" size={24} />
-        <Text style={[styles.buttonText, selected && styles.selectedText]}> Eventos</Text>
+        <TraductionText style={[styles.buttonText, selected && styles.selectedText]} tx="SearchScreen.botoeventos"/>
       </TouchableOpacity>
     );
   };
@@ -154,11 +155,13 @@ export const SearchScreen: React.FC<Props> = observer(() => {
 
   useEffect(() => {
     setSearchResults(events);
-  }, [events])
+  }, [events]);
+
+  useEffect(() => {}, [language]);
 
   useEffect(() => {
     setSearchResults(users);
-  }, [users])
+  }, [users]);
 
   const renderResult = ({ item }: { item: IEvent | IUser }) => {
     const handleEventClick = () => {
@@ -171,7 +174,7 @@ export const SearchScreen: React.FC<Props> = observer(() => {
     if (searchResults.length === 0) {
       return (
         <View style={styles.noResultsContainer}>
-          <Text style={styles.noResultsText}>No se encontraron resultados.</Text>
+          <TraductionText style={styles.noResultsText} tx="SearchScreen.noresult"/>
         </View>
       );
     }
@@ -195,7 +198,7 @@ export const SearchScreen: React.FC<Props> = observer(() => {
     <View>
       <StatusBar barStyle="dark-content" />
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>Búsqueda</Text>
+        <TraductionText style={styles.title} tx="SearchScreen.cerca"/>
       </View>
       <View style={styles.searchContainer}>
         <View style={styles.searchTextContainer}>
@@ -237,30 +240,52 @@ export const SearchScreen: React.FC<Props> = observer(() => {
       {searchType === 'eventos' && showEventFilters && (
       <View style={styles.filterContainer}>
         <View style={styles.filterCategoria}>
-          <Picker
-          selectedValue={selectedCateg}
-          style={styles.picker}
-          onValueChange={(itemValue) => setSelectedCateg(itemValue)}>
-            <Picker.Item label="Todas las categorías" value="" />
-            <Picker.Item label="Actividades virtuales" value="agenda:categories/activitats-virtuals" />
-            <Picker.Item label="Exposiciones" value="agenda:categories/exposicions" />
-            <Picker.Item label="Teatro" value="agenda:categories/teatre" />
-            <Picker.Item label="Festivales y muestras" value="agenda:categories/festivals-i-mostres" />
-            <Picker.Item label="Rutas y visitas" value="agenda:categories/rutes-i-visites" />
-            <Picker.Item label="Infantil" value="agenda:categories/infantil" />
-            <Picker.Item label="Fiestas" value="agenda:categories/festes" />
-            <Picker.Item label="Conferencias" value="agenda:categories/conferencies" />
-            <Picker.Item label="Ferias y mercados" value="agenda:categories/fires-i-mercats" />
-            <Picker.Item label="Danza y baile" value="agenda:categories/dansa" />
-            <Picker.Item label="Ciclos" value="agenda:categories/cicles" />
-          </Picker>
+          {language === 'es' && (
+            <Picker
+            selectedValue={selectedCateg}
+            style={styles.picker}
+            onValueChange={(itemValue) => setSelectedCateg(itemValue)}>
+              <Picker.Item label="Todas las categorías" value="" />
+              <Picker.Item label="Actividades virtuales" value="agenda:categories/activitats-virtuals" />
+              <Picker.Item label="Exposiciones" value="agenda:categories/exposicions" />
+              <Picker.Item label="Teatro" value="agenda:categories/teatre" />
+              <Picker.Item label="Festivales y muestras" value="agenda:categories/festivals-i-mostres" />
+              <Picker.Item label="Rutas y visitas" value="agenda:categories/rutes-i-visites" />
+              <Picker.Item label="Infantil" value="agenda:categories/infantil" />
+              <Picker.Item label="Fiestas" value="agenda:categories/festes" />
+              <Picker.Item label="Conferencias" value="agenda:categories/conferencies" />
+              <Picker.Item label="Ferias y mercados" value="agenda:categories/fires-i-mercats" />
+              <Picker.Item label="Danza y baile" value="agenda:categories/dansa" />
+              <Picker.Item label="Ciclos" value="agenda:categories/cicles" />
+            </Picker>
+          )}
+          {language === 'en' && (
+            <Picker
+            selectedValue={selectedCateg}
+            style={styles.picker}
+            onValueChange={(itemValue) => setSelectedCateg(itemValue)}>
+              <Picker.Item label="Todas las categorías" value="" />
+              <Picker.Item label="Actividades virtuales" value="agenda:categories/activitats-virtuals" />
+              <Picker.Item label="Exposiciones" value="agenda:categories/exposicions" />
+              <Picker.Item label="Teatro" value="agenda:categories/teatre" />
+              <Picker.Item label="Festivales y muestras" value="agenda:categories/festivals-i-mostres" />
+              <Picker.Item label="Rutas y visitas" value="agenda:categories/rutes-i-visites" />
+              <Picker.Item label="Infantil" value="agenda:categories/infantil" />
+              <Picker.Item label="Fiestas" value="agenda:categories/festes" />
+              <Picker.Item label="Conferencias" value="agenda:categories/conferencies" />
+              <Picker.Item label="Ferias y mercados" value="agenda:categories/fires-i-mercats" />
+              <Picker.Item label="Danza y baile" value="agenda:categories/dansa" />
+              <Picker.Item label="Ciclos" value="agenda:categories/cicles" />
+            </Picker>
+          )}
         </View>
     
         <View style={[styles.filterData]}> 
           <TouchableOpacity onPress={showDatePickerIni}>
-          <Text style={[styles.filterDataText]}>
-          {selectedStartDate ? `Fecha de inicio seleccionada: ${selectedStartDate}` : 'Seleccionar fecha de inicio'}
-        </Text>
+          <TraductionText
+            style={[styles.filterDataText]}
+            tx={selectedStartDate ? 'SearchScreen.DataIniciSelect' : 'SearchScreen.DataInici'}
+          />
           </TouchableOpacity>
           <DatePickerModal
             isVisible={showPickerIni}
@@ -272,9 +297,10 @@ export const SearchScreen: React.FC<Props> = observer(() => {
       
         <View style={[styles.filterData]}> 
           <TouchableOpacity onPress={showDatePickerEnd}>
-          <Text style={[styles.filterDataText]}>
-          {selectedEndDate ? `Fecha de fin seleccionada: ${selectedEndDate}` : 'Seleccionar fecha de fin'}
-        </Text>
+          <TraductionText
+            style={[styles.filterDataText]}
+            tx={selectedEndDate ? 'SearchScreen.DataFiSelect' : 'SearchScreen.DataFi'}
+          />
           </TouchableOpacity>
           <DatePickerModal
             isVisible={showPickerEnd}
@@ -285,7 +311,9 @@ export const SearchScreen: React.FC<Props> = observer(() => {
         </View>
       
         <View style={styles.filterpreu}>
-          <Text>Precio máximo:</Text>
+        <TraductionText
+            tx='SearchScreen.Preu'
+          />
           <TextInput
             placeholderTextColor="#AAA"
             style={styles.filterTextInput}
@@ -297,7 +325,7 @@ export const SearchScreen: React.FC<Props> = observer(() => {
       
         <View style={styles.filterButton}>
           <TouchableOpacity onPress={handleSearch}>
-            <Text style={[styles.filterButtonText]}>Aplicar filtros</Text>
+          <TraductionText style={styles.filterButtonText} tx="SearchScreen.botofiltres"/>
           </TouchableOpacity>
         </View>
       </View>
@@ -310,8 +338,6 @@ export const SearchScreen: React.FC<Props> = observer(() => {
           renderItem={renderResult}
         />
       </View>
-
-
 
     </View>
   );
