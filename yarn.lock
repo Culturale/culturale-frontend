@@ -3915,6 +3915,14 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-lines-ellipsis@^0.15.1":
+  version "0.15.1"
+  resolved "https://registry.yarnpkg.com/@types/react-lines-ellipsis/-/react-lines-ellipsis-0.15.1.tgz#7bc47dbe12e7fe16de2ecb33134b270fbb88802a"
+  integrity sha512-j0lZ5UyO1ShIs2Fk2OfvmUBc1s5gUP3/5n6pHnRCVKLvSfensCBJVqXNa1Tzlcgf6BE31wfEfmn22QrSlnSBnw==
+  dependencies:
+    "@types/lodash" "*"
+    "@types/react" "*"
+
 "@types/react-native-datepicker@^1.7.1":
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/@types/react-native-datepicker/-/react-native-datepicker-1.7.1.tgz#df1b6533cafd2bb0b3ad4647e391596ad90f7a73"
@@ -3923,14 +3931,6 @@
     "@types/react" "*"
     "@types/react-native" "*"
     moment ">=2.14.0"
-
-"@types/react-lines-ellipsis@^0.15.1":
-  version "0.15.1"
-  resolved "https://registry.yarnpkg.com/@types/react-lines-ellipsis/-/react-lines-ellipsis-0.15.1.tgz#7bc47dbe12e7fe16de2ecb33134b270fbb88802a"
-  integrity sha512-j0lZ5UyO1ShIs2Fk2OfvmUBc1s5gUP3/5n6pHnRCVKLvSfensCBJVqXNa1Tzlcgf6BE31wfEfmn22QrSlnSBnw==
-  dependencies:
-    "@types/lodash" "*"
-    "@types/react" "*"
 
 "@types/react-native-dotenv@^0.2.0":
   version "0.2.0"
@@ -11778,6 +11778,11 @@ react-native-screens@~3.20.0:
   dependencies:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
+
+react-native-share@^8.2.2:
+  version "8.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-8.2.2.tgz#987d6f164afe57b089950dca42e0555f19045d27"
+  integrity sha512-kVCI/cT0GnuYUTXe6mAimrjrnt4VWoRfrWqJZjFeoYFqAyOEfos84RC4eZlZnOT5eVtmTXRIkor5vgSkKOlZhw==
 
 react-native-slider@^0.11.0:
   version "0.11.0"

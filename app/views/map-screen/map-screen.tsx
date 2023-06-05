@@ -6,7 +6,7 @@ import { useState, useEffect, useRef} from 'react';
 import { Text, TouchableOpacity, TextInput, View, Button } from 'react-native';
 import type { LatLng} from 'react-native-maps';
 import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 
 
 import { Text as TraductionText } from '~/components';

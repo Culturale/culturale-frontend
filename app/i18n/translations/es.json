@@ -15,7 +15,8 @@
         "succes": "Compra realizada correctamente ",
         "LoadingEvent": "Cargando Eventos ...",
         "Enroll": "Apuntáte",
-        "information": "+ Información"
+        "information": "+ Información",
+        "share": "Compartir"
     },
     "event": {
         "join": "¡Apúntate!"
@@ -41,7 +42,9 @@
 
     "myEvents": {
         "calendar": "+ Añadir calendario",
-        "valoration": "+ Añadir valoración"
+        "valoration": "+ Añadir valoración",
+        "inicio": "Mis eventos",
+        "noEvents": "No tienes eventos para el dia seleccionado"
     },
 
     "showFriendsScreen":{

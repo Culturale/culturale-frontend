@@ -79,6 +79,33 @@ export interface paths {
       };
     };
   };
+  "/users/id/:id": {
+    /** Returns user of id from database */
+    get: {
+      responses: {
+        /** Ok */
+        200: {
+          schema: {
+            user?: definitions["user"];
+          };
+        };
+        /** Unauthorized */
+        403: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+        /** Internal server error */
+        500: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+      };
+    };
+  };
   "/events/denominacio/:denominacio": {
     /** Returns events by denominacio from database */
     get: {

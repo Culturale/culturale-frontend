@@ -1,4 +1,3 @@
-import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
@@ -14,10 +13,6 @@ import type { RootParamList } from '~/navigation';
 import { ProfileScreenStyles as Styles } from './profile-screen.styles';
 
 type ProfileNavigation = StackNavigationProp<RootParamList, 'Profile'>;
-// type EventScreenNavigation = StackNavigationProp<RootParamList, 'EditProfile'>;
-// type ShowFriendsNavigation = StackNavigationProp<TabParamList, 'ShowFriendsScreen'>;
-
-// type ShowFollowersNavigation = StackNavigationProp<RootParamList, 'ShowFollowers'>;
 
 export const ProfileScreen = observer(() => {
   const {
@@ -29,10 +24,7 @@ export const ProfileScreen = observer(() => {
  
 
   const userInfo = UserController.userInfo;
-  // const navigationFriends = useNavigation<ShowFriendsNavigation>();
   const navigationProfile = useNavigation<ProfileNavigation>();
-  // const navigationfllwrs = useNavigation<ShowFollowersNavigation>();
-  // const navigationBack = useNavigation<EventScreenNavigation>();
 
 
   function mostrarConfig() {
@@ -46,8 +38,11 @@ export const ProfileScreen = observer(() => {
 
   
     return (
+      <>
+      <View style={Styles.titleContainer}>
+        <TraductionText style={Styles.titleProfile} tx="perfil.miperfil"/>
+        </View>
       <ScrollView style={Styles.container}>
-        <TraductionText style={Styles.title} tx="perfil.miperfil"/>
         <View style={Styles.rowProfile}>
           <View style={Styles.titleData}>
             <Image src={userInfo.profilePicture} style={Styles.foto}/>
@@ -116,6 +111,7 @@ export const ProfileScreen = observer(() => {
           </TouchableOpacity>
         </View>
       </ScrollView>
+      </>
     
   );
 });

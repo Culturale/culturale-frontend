@@ -14,7 +14,7 @@ export const HomeScreenStyles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
-    marginTop: 44,
+    // marginTop: 44,
   },
   eventContainer: {
     flex: 1,
@@ -32,12 +32,16 @@ export const HomeScreenStyles = StyleSheet.create({
     fontWeight: 'bold',
   },
   title: {
-    fontFamily: 'Helvetica',
-    fontSize: 24,
+    color: '#fff',
+    fontSize: 32,
     fontWeight: 'bold',
   },
 
   titleContainer: {
+    backgroundColor: '#34b38a',
     justifyContent: 'center',
+    paddingBottom: 5,
+    paddingHorizontal: 32,
+    paddingTop: 20,
   },
 });
