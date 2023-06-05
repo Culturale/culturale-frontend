@@ -151,11 +151,34 @@ export const SearchScreen: React.FC<Props> = observer(() => {
         priceRangeMax
       );
     }
+    setSearchResults(EventController.SearchEvents);
+  };
+
+  const handleSearchClean = async () => {
+    setSearchText('');
+    setSelectedCateg(null);
+    setSelectedEndDate(null);
+    setSelectedStartDate(null);
+    setPriceRangeMax ('');
+    
+    // Si s'estan mostrant els filtres de events, es tanquen
+    if (showEventFilters) {
+      setEventShowFilters(!showEventFilters);
+    }
+    // Si es busquen usuaris....
+    if (searchType === 'usuarios') {
+      UserController.fetchUsers(searchText);
+    }
+    
+    // Si es busquen events....
+    else if (searchType === 'eventos') {
+      // Crida api
+      EventController.fetchAllEvents(1);
+      setSearchResults(EventController.events);
+    }
   };
 
   useEffect(() => {
-    EventController.fetchAllEvents(1);
-    setSearchResults(EventController.events);
   }, [language, users, events]);
 
 
@@ -333,7 +356,13 @@ export const SearchScreen: React.FC<Props> = observer(() => {
           <TouchableOpacity onPress={handleSearch}>
           <TraductionText style={styles.filterButtonText} tx="SearchScreen.botofiltres"/>
           </TouchableOpacity>
+          </View>
+        <View style={styles.filterButtonClean}>
+          <TouchableOpacity onPress={handleSearchClean}>
+          <TraductionText style={styles.filterButtonText} tx="SearchScreen.botofiltresclean"/>
+          </TouchableOpacity>
         </View>
+
       </View>
        )}
 

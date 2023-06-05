@@ -86,6 +86,7 @@
   },
   "SearchScreen":{
       "botofiltres":"Apply filters",
+      "botofiltresclean":"Remove filters",
       "botousuaris":"Users",
       "botoeventos": "Events",
       "noresult":"No results were found.",
