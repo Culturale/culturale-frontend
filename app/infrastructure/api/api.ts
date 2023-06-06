@@ -352,4 +352,15 @@ export class API implements IAPI {
     });
   }
 
+  public async getContactsFromNumbers(contacts: any, id: string): Promise<void>  {
+    contacts = contacts.map((phoneNumber) => {
+     return {
+       phoneNumber: phoneNumber.replace(/[^0-9]/g, '') // Eliminar caracteres no numéricos
+     };
+   });
+    await this.post<GetContactsFromNumbersResponse>(`/users/${id}/syncContacts`, {
+     contacts
+ });
+}
+
 }

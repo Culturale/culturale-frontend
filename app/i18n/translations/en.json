@@ -99,6 +99,10 @@
       "DataFiSelect": "Selected end date",
       "Preu": "Maximum price: ",
       "allCategories": "All categories",
-  }
+  },
+  "contacts":{
+    "title": "Add contacts",
+    "noContacts": "You have no contacts in the app"
+  } 
   }
   

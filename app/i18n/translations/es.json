@@ -101,5 +101,9 @@
         "DataFiSelect": "Fecha de fin seleccionada",
         "Preu": "Precio máximo: ",
         "allCategories": "Todas las categorias",
-    }
+    },
+    "contacts":{
+        "title": "Añadir contactos",
+        "noContacts": "No tienes contactos en la APP"
+      } 
 }
