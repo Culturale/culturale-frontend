@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import type { RouteProp } from '@react-navigation/native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
+import { useStripe } from '@stripe/stripe-react-native';
 import { observer } from 'mobx-react-lite';
 import type React from 'react';
 import { useState, useEffect } from 'react';
@@ -19,7 +20,6 @@ import Share from 'react-native-share';
 
 import { Text as TraductionText } from '~/components';
 import { useApplicationLayer } from '~/hooks';
-import { useStripe } from '@stripe/stripe-react-native';
 import type { RootParamList } from '~/navigation';
 
 import { ValoracioScreenStyles as valStyles } from '../valoracio-screen/valoracio-screen.styles';
@@ -41,7 +41,7 @@ export const EventScreen: React.FC<Props> = observer(() => {
   const events = UserController.userInfo.preferits;
   const event = EventController.event;
   const enrolled2 = event?.participants.some(
-    (event) => event._id === UserController.userInfo._id,
+    (event) => event._id === UserController.userInfo._id
   );
 
   const [showSuccess, setShowSuccess] = useState(enrolled2);
@@ -66,14 +66,14 @@ export const EventScreen: React.FC<Props> = observer(() => {
       await FetchPaymentSheetParams(eventId);
 
     await initPaymentSheet({
-      merchantDisplayName: 'Example, Inc.',
-      customerId: customer,
-      customerEphemeralKeySecret: ephemeralKey,
-      paymentIntentClientSecret: paymentIntent,
       allowsDelayedPaymentMethods: true,
+      customerEphemeralKeySecret: ephemeralKey,
+      customerId: customer,
       defaultBillingDetails: {
         name: 'Jane Doe',
       },
+      merchantDisplayName: 'Example, Inc.',
+      paymentIntentClientSecret: paymentIntent,
     });
   }
 
@@ -87,7 +87,7 @@ export const EventScreen: React.FC<Props> = observer(() => {
   }, [eventId]);
 
   const [isFavorite, setIsFavorite] = useState(
-    event && events.some((item) => item._id === event._id),
+    event && events.some((item) => item._id === event._id)
   );
   const handleReadMore = () => {
     navigation.navigate('DescriptionScreen', {
@@ -124,7 +124,7 @@ export const EventScreen: React.FC<Props> = observer(() => {
     if (isFavorite) {
       UserController.removeFavourite(
         event.id,
-        UserController.userInfo.username,
+        UserController.userInfo.username
       );
     } else {
       UserController.addFavourite(event.id, UserController.userInfo.username);
@@ -137,7 +137,7 @@ export const EventScreen: React.FC<Props> = observer(() => {
       <ScrollView>
         <View style={styles.backArrow}>
           <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
-            <Ionicons color="black" name="arrow-back" size={24} />
+            <Ionicons color='black' name='arrow-back' size={24} />
           </TouchableOpacity>
         </View>
         <View style={styles.container}>
@@ -168,36 +168,36 @@ export const EventScreen: React.FC<Props> = observer(() => {
                   <TouchableOpacity onPress={() => Linking.openURL(event.url)}>
                     <TraductionText
                       style={styles.goButton}
-                      tx="eventScreen.information"
+                      tx='eventScreen.information'
                     />
                   </TouchableOpacity>
                   <TouchableOpacity
-                    onPress={handleShare}
                     style={styles.shareContainer}
+                    onPress={handleShare}
                   >
-                    <Ionicons color="black" name="share-outline" size={24} />
-                    <TraductionText tx="eventScreen.share" />
+                    <Ionicons color='black' name='share-outline' size={24} />
+                    <TraductionText tx='eventScreen.share' />
                   </TouchableOpacity>
                 </View>
                 <View style={{ flexDirection: 'column' }}>
                   <View style={styles.subtitleContainer}>
-                    <Ionicons color="#888" name="location-outline" size={16} />
+                    <Ionicons color='#888' name='location-outline' size={16} />
                     <Text style={styles.subtitle}>{event.adress}</Text>
                   </View>
                   <View style={styles.subtitleContainer}>
-                    <Ionicons color="#888" name="calendar-outline" size={16} />
+                    <Ionicons color='#888' name='calendar-outline' size={16} />
                     <Text style={styles.subtitle}>
                       {event.dataIni.toLocaleDateString()}
                     </Text>
                   </View>
                   {showSuccess && (
                     <TouchableOpacity
+                      style={styles.subtitleContainer}
                       onPress={() =>
                         navigation.navigate('ChatScreen', { event: event })
                       }
-                      style={styles.subtitleContainer}
                     >
-                      <Ionicons color="#888" name="chatbox-outline" size={16} />
+                      <Ionicons color='#888' name='chatbox-outline' size={16} />
                       <Text style={styles.subtitle}>Chat</Text>
                     </TouchableOpacity>
                   )}
@@ -234,26 +234,26 @@ export const EventScreen: React.FC<Props> = observer(() => {
                       {price !== '0 €' && (
                         <TraductionText
                           style={styles.buyButtonText}
-                          tx="eventScreen.BuyText"
+                          tx='eventScreen.BuyText'
                         />
                       )}
                       {price === '0 €' && (
                         <TraductionText
                           style={styles.buyButtonText}
-                          tx="eventScreen.Enroll"
+                          tx='eventScreen.Enroll'
                         />
                       )}
                     </TouchableOpacity>
                   ) : (
                     <View style={styles.successContainer}>
                       <Ionicons
-                        color="green"
-                        name="checkmark-circle-outline"
+                        color='green'
+                        name='checkmark-circle-outline'
                         size={32}
                       />
                       <TraductionText
                         style={styles.successText}
-                        tx="eventScreen.succes"
+                        tx='eventScreen.succes'
                       />
                     </View>
                   )}
@@ -261,7 +261,7 @@ export const EventScreen: React.FC<Props> = observer(() => {
                 <TouchableOpacity onPress={handleOpenMaps}>
                   <TraductionText
                     style={styles.goButton}
-                    tx="eventScreen.ComoLlegar"
+                    tx='eventScreen.ComoLlegar'
                   />
                 </TouchableOpacity>
               </View>
@@ -324,7 +324,7 @@ export const EventScreen: React.FC<Props> = observer(() => {
           ) : (
             <TraductionText
               style={styles.goButton}
-              tx="eventScreen.LoadingEvent"
+              tx='eventScreen.LoadingEvent'
             />
           )}
         </View>

@@ -106,7 +106,7 @@ export class API implements IAPI {
 
   public async login(
     username: string,
-    password: string,
+    password: string
   ): Promise<LoginResponse> {
     const res = await this.post<LoginResponse>('/users/login', {
       password,
@@ -121,7 +121,7 @@ export class API implements IAPI {
   }
 
   public async getAllUsers(): Promise<UserDocument[]> {
-    const res = await this.get<GetUsersResponse>(`/users`);
+    const res = await this.get<GetUsersResponse>('/users');
     return res.users;
   }
 
@@ -132,7 +132,7 @@ export class API implements IAPI {
 
   public async getUsers(username: string): Promise<UserDocument[]> {
     const res = await this.get<GetUsersResponse>(
-      `/users/?username=${username}`,
+      `/users/?username=${username}`
     );
     return res.users;
   }
@@ -151,7 +151,7 @@ export class API implements IAPI {
     lat1: number,
     lon1: number,
     lat2: number,
-    lon2: number,
+    lon2: number
   ): Promise<EventDocument[]> {
     const url = `/events/mapa?lat1=${lat1}&lon1=${lon1}&lat2=${lat2}&lon2=${lon2}`;
     const res = await this.get<GetEventsResponse>(url);
@@ -165,16 +165,16 @@ export class API implements IAPI {
 
   public async getEventsByCategory(category: string): Promise<EventDocument[]> {
     const res = await this.get<GetEventsResponse>(
-      `/events/categoria/${category}`,
+      `/events/categoria/${category}`
     );
     return res.events;
   }
 
   public async getEventsByDenominacio(
-    denominacio: string,
+    denominacio: string
   ): Promise<EventDocument[]> {
     const res = await this.get<GetEventsResponse>(
-      `/events/denominacio/${denominacio}`,
+      `/events/denominacio/${denominacio}`
     );
     return res.events;
   }
@@ -185,10 +185,10 @@ export class API implements IAPI {
     dataIni?: Date,
     dataFi?: Date,
     horari?: string,
-    price?: string,
+    price?: string
   ): Promise<EventDocument[]> {
     const res = await this.get<GetEventsResponse>(
-      `/events/filters/?denominacio=${denominacio}&categoria=${categoria}&dataIni=${dataIni}&dataFi=${dataFi}&horari=${horari}&price=${price}`,
+      `/events/filters/?denominacio=${denominacio}&categoria=${categoria}&dataIni=${dataIni}&dataFi=${dataFi}&horari=${horari}&price=${price}`
     );
     return res.events;
   }
@@ -200,7 +200,7 @@ export class API implements IAPI {
     email: string,
     phoneNumber: string,
     usertype: string,
-    profilePicture?: string,
+    profilePicture?: string
   ): Promise<UserDocument> {
     const res = await this.post<SignupResponse>('/users/create', {
       email,
@@ -223,7 +223,7 @@ export class API implements IAPI {
     email: string,
     phoneNumber: string,
     usertype: string,
-    profilePicture?: string,
+    profilePicture?: string
   ): Promise<UserDocument> {
     const res = await this.post<EditUserResponse>('/users/edit', {
       email,
@@ -239,28 +239,28 @@ export class API implements IAPI {
   public async newMessage(
     id: string,
     content: string,
-    userId: string,
+    userId: string
   ): Promise<MessageDocument> {
     const date = new Date();
     const res = await this.post<MessageDocument>('/events/newMessage', {
-      id,
       content,
-      userId,
       date,
+      id,
+      userId,
     });
     return res;
   }
 
   public async removeFriend(
     username: string,
-    follower: string,
+    follower: string
   ): Promise<UserDocument[]> {
     const res = await this.delete<RemoveFollowerResponse>(
       '/users/deleteFollower',
       {
         follower,
         username,
-      },
+      }
     );
 
     return res.followers;
@@ -268,11 +268,11 @@ export class API implements IAPI {
 
   public async addFriend(
     username: string,
-    follower: string,
+    follower: string
   ): Promise<UserDocument[]> {
     const res = await this.post<AddFollowerResponse>('/users/newFollower', {
-      username,
       follower,
+      username,
     });
     console.log(res);
 
@@ -288,14 +288,14 @@ export class API implements IAPI {
 
   public async removeFavourite(
     id: string,
-    username: string,
+    username: string
   ): Promise<EventDocument[]> {
     const res = await this.delete<RemoveFavouriteResponse>(
       '/users/deleteFavourite',
       {
         id,
         username,
-      },
+      }
     );
     return res.favourites;
   }
@@ -334,7 +334,7 @@ export class API implements IAPI {
     eventId: string,
     authorId: string,
     puntuation: number,
-    comment?: string,
+    comment?: string
   ): Promise<ReviewDocument> {
     const res = await this.post<ReviewDocument>('/events/addReview', {
       authorId,
@@ -349,7 +349,8 @@ export class API implements IAPI {
     const res = await this.post<any>('/events/buyTicket', {
       eventId,
     });
-
+    console.log('request payment sheet params');
+    console.log(res);
     return res;
   }
 }
