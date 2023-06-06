@@ -59,6 +59,8 @@ export const EventScreen: React.FC<Props> = observer(() => {
 
   async function buyTicket() {
     await presentPaymentSheet();
+    setShowSuccess(true);
+
   }
 
   async function initializePaymentSheet() {
