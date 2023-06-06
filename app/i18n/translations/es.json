@@ -72,7 +72,8 @@
       "error": "Aún no tienes eventos favoritos"
     },
     "settings": {
-        "changeLanguage": "Cambiar de idioma "
+        "changeLanguage": "Cambiar de idioma ",
+        "contacts": "Contactos"
     },
     "mapa": {
         "title": "Mapa",
@@ -101,5 +102,9 @@
         "DataFiSelect": "Fecha de fin seleccionada",
         "Preu": "Precio máximo: ",
         "allCategories": "Todas las categorias",
-    }
+    },
+    "contacts":{
+        "title": "Añadir contactos",
+        "noContacts": "No tienes contactos en la APP"
+      } 
 }

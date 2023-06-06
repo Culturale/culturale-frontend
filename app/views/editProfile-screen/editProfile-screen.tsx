@@ -111,8 +111,7 @@ export const EditProfileScreen: React.FC<Props> = observer(() => {
       UserController.setProfilePicture(newPhoto);
       setEditingField('');
       setEditValue('');
-
-      console.log(userInfo.profilePicture);
+      handleSaveField();
       }catch(e){
         // eslint-disable-next-line no-console
         console.error(e);

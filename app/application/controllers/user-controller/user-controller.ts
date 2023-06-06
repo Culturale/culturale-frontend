@@ -333,6 +333,16 @@ export class UserController implements IUserController {
   public findUserId(userId: string): IUser | undefined {
     return this.users.find(user => user._id === userId);
   }
+    
+  public getContactsFromNumbers(phoneNumbers: any, id :string): void {
+    const subject = new RequestSubject<void>();
+    subject.startRequest();
+    this.infrastructure.api
+    .getContactsFromNumbers(phoneNumbers, id)
+  };
+  public reportUser(username: string): Promise<void> {
+    return this.infrastructure.api.reportUser(username);
+  }
 }
 
 

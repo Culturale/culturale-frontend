@@ -16,6 +16,7 @@ export interface UserProps {
   followers?: IUser[];
   preferits?: IEvent[];
   eventSub?: IEvent[];
+  contacts?: IUser[];
 }
 
 export class User implements IUser {
@@ -30,6 +31,7 @@ export class User implements IUser {
   public followeds: IUser[];
   public preferits: IEvent[];
   public eventSub: IEvent[];
+  public contacts: IUser[];
 
   constructor(props: UserProps) {
     const {
@@ -44,6 +46,7 @@ export class User implements IUser {
       followers,
       preferits,
       eventSub,
+      contacts,
     } = props;
     this._id = _id;
     this.username = username;
@@ -56,6 +59,7 @@ export class User implements IUser {
     this.followers = followers || [];
     this.preferits = preferits || [];
     this.eventSub = eventSub || [];
+    this.contacts = contacts || [];
 
     makeObservable(this, {
       addEventSub: action,

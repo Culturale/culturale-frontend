@@ -106,60 +106,6 @@ export interface paths {
       };
     };
   };
-  "/users/id/:id": {
-    /** Returns user of id from database */
-    get: {
-      responses: {
-        /** Ok */
-        200: {
-          schema: {
-            user?: definitions["user"];
-          };
-        };
-        /** Unauthorized */
-        403: {
-          schema: {
-            data?: { [key: string]: unknown };
-            error?: definitions["error"];
-          };
-        };
-        /** Internal server error */
-        500: {
-          schema: {
-            data?: { [key: string]: unknown };
-            error?: definitions["error"];
-          };
-        };
-      };
-    };
-  };
-  "/events/denominacio/:denominacio": {
-    /** Returns events by denominacio from database */
-    get: {
-      responses: {
-        /** Ok */
-        200: {
-          schema: {
-            events?: definitions["event"][];
-          };
-        };
-        /** Unauthorized */
-        403: {
-          schema: {
-            data?: { [key: string]: unknown };
-            error?: definitions["error"];
-          };
-        };
-        /** Internal server error */
-        500: {
-          schema: {
-            data?: { [key: string]: unknown };
-            error?: definitions["error"];
-          };
-        };
-      };
-    };
-  };
   "/users/create": {
     /** Creates a user registered in in BE */
     post: {
@@ -381,6 +327,26 @@ export interface paths {
       };
     };
   };
+  "/users/:id/syncContacts": {
+    /** Gets contacts from user and returns the ones that are registered in BE */
+    post: {
+      responses: {
+        /** Ok */
+        200: {
+          schema: {
+            message?: string;
+          };
+        };
+        /** Internal server error */
+        500: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+      };
+    };
+  };
 }
 
 export interface definitions {
@@ -400,7 +366,6 @@ export interface definitions {
     price: string;
     participants?: definitions["user"][];
     chat?: definitions["chat"];
-    categoria?: string;
   };
   user: {
     _id: string;
