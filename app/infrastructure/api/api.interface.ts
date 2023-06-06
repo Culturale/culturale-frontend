@@ -39,10 +39,15 @@ paths['/users/deleteFollower']['delete']['responses']['200']['schema'];
 export type AddFollowerResponse =
 paths['/users/newFollower']['post']['responses']['200']['schema'];
 
+export type ReportResponse =
+paths['/events/reportReview']['put']['responses']['200']['schema'];
+
 export type RemoveFavouriteResponse =
   paths['/users/deleteFavourite']['delete']['responses']['201']['schema'];
 
 export interface IAPI {
+  
+  newEvent: (codi: number, denominacio: string, descripcio: string, preu: string, dataIni: Date, dataFi: Date, adress: string, lat: number, long: number, url: string, categoria: string, horaIni: string, horaFin: string)=> void;
   setup: (token: string) => void;
 
   login: (username: string, password: string) => Promise<LoginResponse>;
@@ -109,4 +114,5 @@ export interface IAPI {
 
   addReview: (eventId: string, authorId: string, puntuation: number,  comment?: string) => Promise<ReviewDocument>;
 
+  reportReview: (reviewId: string)=> Promise<void>;
 }

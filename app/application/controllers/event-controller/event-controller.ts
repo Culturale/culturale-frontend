@@ -232,16 +232,16 @@ export class EventController implements IEventController {
   
   public async addReview(eventId: string, authorId: string, puntuation: number,  comment?: string):Promise<void>{
     try{
-      await this.infrastructure.api.addReview(
+      const val = await this.infrastructure.api.addReview(
         eventId,
         authorId,
         puntuation,
         comment
       );
 
-    const index = this.events.findIndex(e => e._id == eventId);
+    const index = this.events.findIndex(e => e._id === eventId);
     const newEvent = this.events[index];
-    const newReview: IReview =  new Review({authorId, comment, eventId, puntuation});
+    const newReview: IReview =  new Review(val);
     newEvent.updateValoracions(newReview);
     this.events[index] = newEvent;
       
@@ -274,4 +274,17 @@ export class EventController implements IEventController {
     }
   }
 
+
+
+  public async reportReview(reviewId: string):Promise<void>{
+    try{
+      console.log("Review id ", reviewId)
+      await this.infrastructure.api.reportReview(
+        reviewId
+      );      
+    }catch(error){
+      // eslint-disable-next-line no-console
+      console.error("Error en el report", error);
+    }
+  }
 }
