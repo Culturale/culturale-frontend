@@ -77,23 +77,6 @@ export class API implements IAPI {
         throw err;
       });
   }
-  private async put<T>(path: string, body: object): Promise<T> {
-    console.log(JSON.stringify(body))
-     return fetch(this.baseURL + path, {
-       body: JSON.stringify(body),
-       headers: {
-         Accept: 'application/json',
-         Authorization: `Bearer ${this.token}`,
-         'Content-Type': 'application/json',
-       },
-       method: 'PUT',
-     })
-       .then((res) => res.json())
-       .then((data: T) => data)
-       .catch((err: Error) => {
-         throw err;
-       });
-   }
 
   private async get<T>(path: string): Promise<T> {
     return fetch(this.baseURL + path, {
