@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Text, View, Button, TextInput, TouchableOpacity, ScrollView, Modal } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 
@@ -35,6 +35,9 @@ export const NewEventScreen = observer(() => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showDateEndPicker, setShowDateEndPicker] = useState(false);
 
+  useEffect(() => {
+    EventController.getReviewsReport();
+  }, []);
 
   const handleDateChange = (date: Date) => {
     setDataIni(date);

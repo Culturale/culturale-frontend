@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
 
 import { NewEventScreen } from '~/views/empresa';
+import { ShowReportsScreen } from '~/views/empresa';
 
 import type { RootParamListEmpresa, TabParamListEmpresa } from './root-params-empresa';
 
@@ -35,8 +36,7 @@ export const TabNavigatorEmpresa: React.FC = observer(() => {
       })}
     >
       <ProfileStackEmpresa.Screen component={NewEventScreen} name="NewEvent" />
-      <ProfileStackEmpresa.Screen component={NewEventScreen} name="ShowReportsEvents" />
-      <ProfileStackEmpresa.Screen component={NewEventScreen} name="ShowReportsUser" />
+      <ProfileStackEmpresa.Screen component={ShowReportsScreen} name="ShowReportsReviews" />
     </TabEmpresa.Navigator>
   );
 });

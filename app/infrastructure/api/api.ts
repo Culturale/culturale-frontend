@@ -6,6 +6,7 @@ import type {
   EditUserResponse,
   EventDocument,
   GetEventsResponse,
+  GetReviewsResponse,
   GetUsersResponse,
   GetUserResponse,
   GetEventResponse,
@@ -76,6 +77,7 @@ export class API implements IAPI {
         throw err;
       });
   }
+
   private async put<T>(path: string, body: object): Promise<T> {
     console.log(JSON.stringify(body))
      return fetch(this.baseURL + path, {
@@ -200,6 +202,11 @@ export class API implements IAPI {
 
   public async getEventsByDenominacio(denominacio: string): Promise<EventDocument[]> {
     const res = await this.get<GetEventsResponse>(`/events/denominacio/${denominacio}`);
+    return res.events;
+  }
+
+  public async getReviewReport(): Promise<ReviewDocument[]> {
+    const res = await this.get<GetReviewsResponse>('/events/getReportedReviews/');
     return res.events;
   }
 
