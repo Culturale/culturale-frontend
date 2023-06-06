@@ -1,4 +1,4 @@
-import type { IEvent, IMessage, IUser } from '~/domain';
+import type { IEvent, IMessage, IReview, IUser} from '~/domain';
 import type { IRequestSubject } from '~/observables';
 
 export interface IEventController {
@@ -7,6 +7,7 @@ export interface IEventController {
   readonly events: IEvent[];
   readonly eventsmap: IEvent[];
   readonly SearchEvents: IEvent[];
+  readonly EventsReviewReport: IReview[];
 
   /**
    *
@@ -65,6 +66,15 @@ export interface IEventController {
    */
   fetchEventMessages: (eventId: string) => IRequestSubject<void>;
 
+
+    /**
+   *
+   * @public
+   * @description   Fetches all reviews of events and saves them to eventsReviewReport property
+   */
+    getReviewsReport:() => IRequestSubject<void>;
+  
+
   /**
    *
    * @public
@@ -93,7 +103,6 @@ export interface IEventController {
    * @description   Adds review into an event
    */
   reportReview:(reviewId: string) => Promise<void>;
-  
 
 
   /**

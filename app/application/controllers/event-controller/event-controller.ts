@@ -2,7 +2,7 @@ import { action, makeObservable, observable } from 'mobx';
 
 import type { IEvent, IReview, IUser, IMessage } from '~/domain';
 import { Review , eventFactory, messageFactory} from '~/domain';
-import type { EventDocument, IInfrastructure, MessageDocument } from '~/infrastructure';
+import type { EventDocument, IInfrastructure, MessageDocument, ReviewDocument } from '~/infrastructure';
 import type { IRequestSubject } from '~/observables';
 import { RequestSubject } from '~/observables';
 
@@ -14,13 +14,14 @@ export class EventController implements IEventController {
   public eventsmap: IEvent[];
   public SearchEvents: IEvent[];
   public messages: IMessage[];
-  public
+  public EventsReviewReport: IReview[];
   private readonly infrastructure: IInfrastructure;
 
   constructor(infrastructure: IInfrastructure) {
     this.infrastructure = infrastructure;
 
     makeObservable(this, {
+      EventsReviewReport: observable,
       SearchEvents: observable,
       addParticipant: action,
       event: observable,
@@ -30,13 +31,41 @@ export class EventController implements IEventController {
       setEvent: action,
       setEvents: action,
       setEventsMap: action,
+      setEventsReviewReport: action,
       setEventsSearch: action,
       setMessages: action,
     });
   }
 
+  public getReviewsReport(): IRequestSubject<void> {
+    const subject = new RequestSubject<void>();
+    subject.startRequest();
+    
+    this.infrastructure.api
+    .getReviewReport()
+    .then((res: ReviewDocument[]) => {
+      const reviews: IReview[] = [];
+      for (const doc of res) {
+        const review = new Review(doc);
+        reviews.push(review);
+      }
+      this.setEventsReviewReport(reviews);
+      subject.completeRequest();
+    })
+    .catch((e: Error) => {
+      subject.failRequest(e);
+    });
+    
+    return subject;
+  }
+  
+
   public setEvents(events: IEvent[]): void {
     this.events = events;
+  }
+
+  public setEventsReviewReport(reviews: IReview[]): void {
+    this.EventsReviewReport = reviews;
   }
 
   public setMessages(messages: IMessage[]): void {

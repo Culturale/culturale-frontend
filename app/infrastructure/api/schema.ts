@@ -52,8 +52,35 @@ export interface paths {
       };
     };
   };
-  "/users": {
-    /** Returns all users from database */
+  "/events/getReportedReviews": {
+    /** Returns all reviews of events from database */
+    get: {
+      responses: {
+        /** Ok */
+        200: {
+          schema: {
+            reviews?: definitions["review"][];
+          };
+        };
+        /** Unauthorized */
+        403: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+        /** Internal server error */
+        500: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+      };
+    };
+  };
+  "/users/:username": {
+    /** Returns all users of username from database */
     get: {
       responses: {
         /** Ok */

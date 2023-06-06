@@ -5,11 +5,15 @@ export type UserDocument = definitions['user'];
 export type MessageDocument = definitions['message'];
 export type ChatDocument = definitions['chat'];
 export type ReviewDocument = definitions['review'];
+
 export type GetEventResponse =
   paths['/events/code/:id']['get']['responses']['200']['schema'];
 
 export type GetEventsResponse =
   paths['/events']['get']['responses']['200']['schema'];
+
+export type GetReviewsResponse =
+  paths['/events/getReportedReviews']['get']['responses']['200']['schema'];
 
 export type MessageResponse =
   paths['/events/:id/messages']['get']['responses']['200']['schema'];
@@ -105,6 +109,9 @@ export interface IAPI {
     content: string,
     userId: string
   ) => Promise<MessageDocument>;
+  getReviewReport: ()  => Promise<ReviewDocument[]>;
+
+  newMessage: (id: string, content: string, userId: string) => Promise<MessageDocument>;
 
   editUser: (
     id: string,
