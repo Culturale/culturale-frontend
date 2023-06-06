@@ -42,7 +42,9 @@
 
     "myEvents": {
         "calendar": "+ Añadir calendario",
-        "valoration": "+ Añadir valoración"
+        "valoration": "+ Añadir valoración",
+        "inicio": "Mis eventos",
+        "noEvents": "No tienes eventos para el dia seleccionado"
     },
 
     "showFriendsScreen":{
@@ -70,7 +72,8 @@
       "error": "Aún no tienes eventos favoritos"
     },
     "settings": {
-        "changeLanguage": "Cambiar de idioma "
+        "changeLanguage": "Cambiar de idioma ",
+        "contacts": "Contactos"
     },
     "mapa": {
         "title": "Mapa",
@@ -79,5 +82,29 @@
     "valoracio": {
         "new": "Nueva valoración",
         "send": "Enviar"
-    }
+    },
+    "MapScreen":{
+        "titol":"Mapa",
+        "subtitol":"Eventos interesantes cerca de mí...",
+    },
+    "SearchScreen":{
+        "botofiltres":"Aplicar filtros",
+        "botofiltresclean":"Limpiar filtros",
+        "botousuaris":"Usuarios",
+        "botoeventos": "Eventos",
+        "noresult":"No se encontraron resultados.",
+        "cerca": "Búsqueda",
+        "placeholderCercaEventos": "Buscar evento por denominacion",
+        "placeholderCercaUsuaris": "Buscar usuario por username",
+        "DataInici": "Seleccionar fecha de inicio",
+        "DataIniciSelect": "Fecha de inicio seleccionada",
+        "DataFi": "Seleccionar fecha de fin",
+        "DataFiSelect": "Fecha de fin seleccionada",
+        "Preu": "Precio máximo: ",
+        "allCategories": "Todas las categorias",
+    },
+    "contacts":{
+        "title": "Añadir contactos",
+        "noContacts": "No tienes contactos en la APP"
+      } 
 }

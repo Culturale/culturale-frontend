@@ -17,6 +17,15 @@ export const styles = StyleSheet.create({
     title: {
       fontSize: 24,
       fontWeight: 'bold',
-      marginBottom: 20,
+      flexDirection: 'row',
+      
     },
-});
+    contactContainer:{
+      marginTop: 50,
+      flexDirection: 'row',
+      alignItems: 'center',
+      },
+      iconoContacto:{ 
+      fontSize: 30,
+      },
+  });

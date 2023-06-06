@@ -25,14 +25,15 @@ export const ShowUserScreen: React.FC<Props> = observer(() => {
 
   function followUser(): void {
     UserController.followUser(UserController.userInfo.username, user);
-    setFollowers(Nfollowers + 1)
+    setFollowers(Nfollowers + 1);
   }     
   
   function unfollowUser(): void {
     UserController.removeFollowed(UserController.userInfo.username, username);
-    setFollowers(Nfollowers - 1)
+    setFollowers(Nfollowers - 1);
   }
   const [Nfollowers, setFollowers] = useState(user.followers.length);
+  
 
   function isFollowing(): boolean {
     const followeds: IUser[] = UserController.userInfo.followeds;
@@ -43,6 +44,10 @@ export const ShowUserScreen: React.FC<Props> = observer(() => {
     }
     return false;
 }
+async function handleReport() {
+  await UserController.reportUser(username);
+  alert('Usuario reportado correctamente');
+};
   return (
     <View style={Styles.container}>
       <View style={Styles.backArrow}>
@@ -53,7 +58,14 @@ export const ShowUserScreen: React.FC<Props> = observer(() => {
        <View style={Styles.container}>
         <TraductionText style={Styles.title} tx="perfil.perfil"/>
         <View style={Styles.rowProfile}>
-          <View style={Styles.titleData}>
+         <View style={Styles.reportCont}>
+          <TouchableOpacity onPress={() => handleReport()}>
+            <Ionicons name="warning-outline" style={Styles.report} />
+            <Text style={Styles.reportText}>Report</Text>
+          </TouchableOpacity>
+        </View>
+        
+        <View style={Styles.titleData}>
             <Image src={user.profilePicture} style={Styles.foto}/>
             <View style={Styles.contentData}>
             <TouchableOpacity onPress={() => { navigationUsr.navigate('ShowFollowers',{username: user.username}) }}>
@@ -63,7 +75,7 @@ export const ShowUserScreen: React.FC<Props> = observer(() => {
             </View>
             <View style={Styles.contentData}>
             <TouchableOpacity onPress={() => { navigationUsr.navigate('ShowFolloweds', {username: user.username}) }}>
-              <Text style={Styles.number}>{Nfolloweds}</Text>
+              <Text style={Styles.number}>{user.followeds.length}</Text>
               <TraductionText tx='perfil.siguiendo'/>
             </TouchableOpacity>
             </View>

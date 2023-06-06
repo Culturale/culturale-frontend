@@ -48,6 +48,12 @@ export const SettingsScreen = observer(() => {
           <Picker.Item label="English" value="en" />
           <Picker.Item label="Español" value="es" />
         </Picker>
+        <TouchableOpacity  style={styles.contactContainer} onPress={() => { navigation.navigate('ShowContacts'); }}>
+        <Ionicons style={styles.iconoContacto} name="person-circle-outline"/>
+            <View >
+              <TraductionText style={styles.title} tx="settings.contacts"/>
+            </View>
+       </TouchableOpacity>
       </View>
     </>
   );

@@ -38,10 +38,31 @@ export type RemoveFollowerResponse =
 export type AddFollowerResponse =
   paths['/users/newFollower']['post']['responses']['200']['schema'];
 
+export type ReportResponse =
+  paths['/events/reportReview']['put']['responses']['200']['schema'];
+
 export type RemoveFavouriteResponse =
   paths['/users/deleteFavourite']['delete']['responses']['201']['schema'];
 
+export type GetContactsFromNumbersResponse =
+  paths['/users/:id/syncContacts']['post']['responses']['200']['schema'];
+
 export interface IAPI {
+  newEvent: (
+    codi: number,
+    denominacio: string,
+    descripcio: string,
+    preu: string,
+    dataIni: Date,
+    dataFi: Date,
+    adress: string,
+    lat: number,
+    long: number,
+    url: string,
+    categoria: string,
+    horaIni: string,
+    horaFin: string
+  ) => void;
   setup: (token: string) => void;
 
   login: (username: string, password: string) => Promise<LoginResponse>;
@@ -53,7 +74,7 @@ export interface IAPI {
     email: string,
     phoneNumber: string,
     userType: string,
-    profilePicture?: string,
+    profilePicture?: string
   ) => Promise<UserDocument>;
 
   getUserPreferits: (username: string) => Promise<EventDocument[]>;
@@ -72,7 +93,7 @@ export interface IAPI {
     lat1: number,
     lon1: number,
     lat2: number,
-    lon2: number,
+    lon2: number
   ) => Promise<EventDocument[]>;
 
   getEventsByCategory: (category: string) => Promise<EventDocument[]>;
@@ -82,16 +103,17 @@ export interface IAPI {
   newMessage: (
     id: string,
     content: string,
-    userId: string,
+    userId: string
   ) => Promise<MessageDocument>;
 
   editUser: (
+    id: string,
     username: string,
     name: string,
     email: string,
     phoneNumber: string,
     usertype: string,
-    profilePicture?: string,
+    profilePicture?: string
   ) => Promise<UserDocument>;
 
   addParticipant: (id: string, username: string) => Promise<void>;
@@ -102,7 +124,7 @@ export interface IAPI {
     dataIni?: Date,
     dataFi?: Date,
     horari?: string,
-    price?: string,
+    price?: string
   ) => Promise<EventDocument[]>;
 
   getChatMessages: (id: string) => Promise<MessageDocument[]>;
@@ -119,8 +141,11 @@ export interface IAPI {
     eventId: string,
     authorId: string,
     puntuation: number,
-    comment?: string,
+    comment?: string
   ) => Promise<ReviewDocument>;
 
   fetchPaymentSheetParams: (eventId: string) => Promise<any>;
+  reportReview: (reviewId: string) => Promise<void>;
+  getContactsFromNumbers: (contacts: any, id: string) => void;
+  reportUser: (userId: string) => Promise<void>;
 }

@@ -17,7 +17,9 @@ import type {
   SignupResponse,
   UserDocument,
   RemoveFavouriteResponse,
+  ReportResponse,
   MessageResponse,
+  GetContactsFromNumbersResponse,
 } from './api.interface';
 
 export class API implements IAPI {
@@ -36,7 +38,24 @@ export class API implements IAPI {
     });
   }
 
+  newEvent: (
+    codi: number,
+    denominacio: string,
+    descripcio: string,
+    preu: string,
+    dataIni: Date,
+    dataFi: Date,
+    adress: string,
+    lat: number,
+    long: number,
+    url: string,
+    categoria: string,
+    horaIni: string,
+    horaFin: string
+  ) => void;
+
   private async post<T>(path: string, body: object): Promise<T> {
+    console.log(JSON.stringify(body));
     console.log(this.baseURL + path + JSON.stringify(body));
     return fetch(this.baseURL + path, {
       body: JSON.stringify(body),
@@ -82,6 +101,24 @@ export class API implements IAPI {
         'Content-Type': 'application/json',
       },
       method: 'GET',
+    })
+      .then((res) => res.json())
+      .then((data: T) => data)
+      .catch((err: Error) => {
+        throw err;
+      });
+  }
+
+  private async put<T>(path: string, body: object): Promise<T> {
+    console.log(JSON.stringify(body));
+    return fetch(this.baseURL + path, {
+      body: JSON.stringify(body),
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${this.token}`,
+        'Content-Type': 'application/json',
+      },
+      method: 'PUT',
     })
       .then((res) => res.json())
       .then((data: T) => data)
@@ -218,6 +255,7 @@ export class API implements IAPI {
   }
 
   public async editUser(
+    id: string,
     username: string,
     name: string,
     email: string,
@@ -227,6 +265,7 @@ export class API implements IAPI {
   ): Promise<UserDocument> {
     const res = await this.post<EditUserResponse>('/users/edit', {
       email,
+      id,
       name,
       phoneNumber,
       profilePicture,
@@ -350,6 +389,69 @@ export class API implements IAPI {
       eventId,
     });
     console.log('request payment sheet params');
+    console.log(res);
+    return res;
+  }
+
+  public async reportReview(reviewId: string): Promise<void> {
+    await this.put<ReportResponse>('/events/reportReview', {
+      reviewId,
+    });
+  }
+
+  public async reportUser(username: string): Promise<void> {
+    await this.put<ReportResponse>('/users/reportUser', {
+      username,
+    });
+  }
+
+  public async getContactsFromNumbers(
+    contacts: any,
+    id: string
+  ): Promise<void> {
+    contacts = contacts.map((phoneNumber) => {
+      return {
+        phoneNumber: phoneNumber.replace(/[^0-9]/g, ''), // Eliminar caracteres no numéricos
+      };
+    });
+    await this.post<GetContactsFromNumbersResponse>(
+      `/users/${id}/syncContacts`,
+      {
+        contacts,
+      }
+    );
+  }
+
+  public async newEvent(
+    codi: number,
+    denominacio: string,
+    descripcio: string,
+    preu: string,
+    dataIni: Date,
+    dataFi: Date,
+    adress: string,
+    lat: number,
+    long: number,
+    url: string,
+    categoria: string,
+    horaIni: string,
+    horaFin: string
+  ) {
+    const horari = `${horaIni}-${horaFin}`;
+    const res = await this.post<EventDocument>('/events/create', {
+      adress,
+      categoria,
+      codi: Number(codi),
+      dataFi,
+      dataIni,
+      denominacio,
+      descripcio,
+      horari,
+      lat: Number(lat),
+      long: Number(long),
+      preu,
+      url,
+    });
     console.log(res);
     return res;
   }

@@ -17,7 +17,8 @@ export const EditProfileScreenStyles =  StyleSheet.create({
   },
   changePhotoTxt: {
     alignSelf: 'center',
-    color: '34b38a',
+    color: '#34b38a',
+    fontWeight: 'bold',
     padding: 10,
     paddingBottom: 20,
   },
@@ -35,7 +36,7 @@ export const EditProfileScreenStyles =  StyleSheet.create({
   },
   editInputContainer:{
     alignItems: 'center',
-    borderColor: 'gray',
+    borderColor: '#34b38a',
     borderRadius: 5,
     borderWidth: 1,
     flexDirection: 'row',
@@ -69,7 +70,7 @@ export const EditProfileScreenStyles =  StyleSheet.create({
   },
   row: {
     alignItems: 'center',
-    borderBottomColor: '#ccc',
+    borderBottomColor: '#34b38a',
     borderBottomWidth: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',

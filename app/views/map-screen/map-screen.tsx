@@ -171,11 +171,11 @@ export const MapScreen: React.FC<Props> = observer(() => {
         <View style={styles.container}>
     
             <View style={styles.titleContainer}>
-            <TraductionText style={styles.title} tx="mapa.title"/>
+            <TraductionText style={styles.title} tx = 'MapScreen.titol'/>
             </View>
     
             <View style={styles.bottomContainer}>
-                    <TraductionText style={styles.subTitle} tx="mapa.near"/>
+                    <TraductionText style={styles.subTitle} tx = 'MapScreen.subtitol'/>
             </View>
             
             <View style={styles.map}>
@@ -205,7 +205,7 @@ export const MapScreen: React.FC<Props> = observer(() => {
                 >
                 {markers}
                 </MapView>
-            
+                    {language === 'es' && (
                     <View style={styles.searchContainer}>
                         <TextInput placeholder="Introduce el lugar del evento" placeholderTextColor="#000"
                                    style={styles.searchInput} value={searchTerm}
@@ -214,6 +214,17 @@ export const MapScreen: React.FC<Props> = observer(() => {
                             <Ionicons color="white" name="search" size={24} />
                         </TouchableOpacity>
                     </View>
+                    )}
+                    {language === 'en' && (
+                    <View style={styles.searchContainer}>
+                        <TextInput placeholder="Enter the location of the event" placeholderTextColor="#000"
+                                   style={styles.searchInput} value={searchTerm}
+                                   onChangeText={(text) => setSearchTerm(text)} onSubmitEditing={searchEvents}/>        
+                        <TouchableOpacity style={styles.searchButton} onPress={searchEvents}>
+                            <Ionicons color="white" name="search" size={24} />
+                        </TouchableOpacity>
+                    </View>
+                    )}
     
                 <TouchableOpacity style={styles.locationButton} onPress={onPressLocation}>
                     <Ionicons color="white" name="md-locate" size={24} />

@@ -6,11 +6,6 @@ export const EventScreenStyles =StyleSheet.create({
       paddingLeft: 10,
       paddingTop: 30,
     },
-    shareContainer: {
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
     backButton: {
       backgroundColor: '#007AFF',
       borderRadius: 8,
@@ -38,6 +33,11 @@ export const EventScreenStyles =StyleSheet.create({
       fontSize: 18,
       fontWeight: 'bold',
     },
+    comment: {
+      marginLeft:20,
+      marginRight:10,
+      
+    },
     container: {
       display: 'flex',
       marginTop: 0,
@@ -54,6 +54,9 @@ export const EventScreenStyles =StyleSheet.create({
       display: 'flex',
       flexDirection: 'row',
       maxWidth: 250,
+    },
+    filledStar: {
+      color: 'gold',
     },
     goButton: {
       alignSelf: 'flex-start',
@@ -74,6 +77,10 @@ export const EventScreenStyles =StyleSheet.create({
       maxWidth: 50,
       width: '100%',
     },
+    listContainer:{
+      flex: 0,
+      maxHeight: 230,
+  },
     map: {
       borderRadius: 10,
       height: 100,
@@ -85,8 +92,8 @@ export const EventScreenStyles =StyleSheet.create({
       flex: 1,
       height: 5,
       justifyContent: 'center',
-      marginTop: 50,
       marginBottom: 70,
+      marginTop: 50,
     },
     photo: {
       alignSelf: 'flex-start', 
@@ -94,6 +101,7 @@ export const EventScreenStyles =StyleSheet.create({
       height: 125,
       width: 125,
     },
+  
     price: {
       // alignSelf: 'flex-end',
       color: 'black',
@@ -110,22 +118,43 @@ export const EventScreenStyles =StyleSheet.create({
       width: '100%',
     },
   
+    profilePicture: {
+      borderRadius: 20,
+      height: 40,
+      marginLeft:20,
+      marginRight: 10,
+      width: 40,
+    },
+    ratingContainer: {
+      flexDirection: 'row',
+      paddingBottom: 3,
+    },
     readMore: {
       alignSelf: 'flex-end',
       color: '#34b38a',
     },
+    report:{
+    alignContent: 'flex-end',
+    color: 'red',
+    fontSize: 24,
+
+  },
+  
+    reportContainer:{
+    marginLeft: 180,
+  },
+  
     reviewCont: {
       backgroundColor: '#cdcdcd',
       borderRadius: 5,
       margin: 5,
       padding: 5,
     },
-  
     reviewContainer: {
       alignItems: 'flex-start',
       backgroundColor: '#cdebe2',
-      marginBottom: 10,
       borderRadius:30,
+      marginBottom: 10,
       paddingBottom:10,
      
     },
@@ -140,7 +169,6 @@ export const EventScreenStyles =StyleSheet.create({
     reviewDetailsDescription: {
       fontSize: 14,
     },
-  
     reviewDetailsRating: {
       fontSize: 14,
       fontWeight: 'bold',
@@ -156,11 +184,16 @@ export const EventScreenStyles =StyleSheet.create({
       fontSize: 18,
       fontWeight: 'bold',
     },
+    shareContainer: {
+      alignItems: 'center',
+      display: 'flex',
+      flexDirection: 'row',
+    },
     star: {
+      fontSize: 25,
       height: 30,
       marginRight: 2,
       width: 20,
-      fontSize: 25,
     },
     starContainer: {
       flexDirection: 'row',
@@ -176,7 +209,6 @@ export const EventScreenStyles =StyleSheet.create({
       flexDirection: 'row',
       marginBottom: 10,
     },
-  
     successContainer: {
       alignItems: 'center',
       flexDirection: 'row',
@@ -199,35 +231,14 @@ export const EventScreenStyles =StyleSheet.create({
     paddingHorizontal: 10,
     width: '100%',
     },
-    userContainer: {
-      flexDirection: 'row',
+  userContainer: {
       alignItems: 'center',
-    },
-    profilePicture: {
-      width: 40,
-      height: 40,
-      borderRadius: 20,
-      marginRight: 10,
-      marginLeft:20,
-    },
-    username: {
-      fontWeight: 'bold',
-      fontSize: 16,
-      paddingTop: 7,
-    },
-    ratingContainer: {
       flexDirection: 'row',
+      paddingTop: 10,
     },
-    filledStar: {
-      color: 'gold',
-    },
-    comment: {
-      marginLeft:20,
-      marginRight:10,
-      
-    },
-    listContainer:{
-      flex: 0,
-      maxHeight: 230,
-  }
+  username: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      paddingTop: 7,
+    }
 });

@@ -60,6 +60,7 @@ export interface IUserController extends Controller {
    * @public
    */
   modifyUser: (
+    id: string,
     username: string,
     name: string,
     email: string,
@@ -119,4 +120,6 @@ export interface IUserController extends Controller {
   addEventSub: (event: IEvent) => void;
   setEmail: (email: string) => void ;
   setPhoneNumber: (phoneNumber: string) => void ;
+  getContactsFromNumbers:(phoneNumbers: any, id: string) => void;
+  reportUser(username: string): Promise<void>;
 }

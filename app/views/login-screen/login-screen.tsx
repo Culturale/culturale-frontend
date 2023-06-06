@@ -57,7 +57,7 @@ export const LoginScreen: React.FC<Props> = observer(() => {
   }
 
   return (
-    <KeyboardAvoidingView behavior='padding' style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <Image
         source={require('../../../assets/logo.png')}
         style={styles.image}
@@ -99,14 +99,15 @@ export const LoginScreen: React.FC<Props> = observer(() => {
 
 const styles = StyleSheet.create({
   TextInput: {
-    flex: 1,
     height: 50,
     padding: 10,
   },
   container: {
     alignItems: 'center',
     backgroundColor: '#76d7b8',
-    flex: 1,
+    // flex: 1,
+    width: '100%',
+    height: '100%',
     justifyContent: 'center',
   },
   image: {
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#D2FFE6',
     borderRadius: 30,
-    height: 45,
+    // height: 45,
     marginBottom: 20,
     width: '70%',
   },

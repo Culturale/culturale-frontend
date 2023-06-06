@@ -114,6 +114,25 @@ export const ShowUserStyles =  StyleSheet.create({
     fontWeight: 'bold',
     paddingBottom: 20,
   },
+  report:{
+    alignContent: 'flex-end',
+    color: 'red',
+    fontSize: 22,
+    marginLeft: 5,
+  },
+  reportCont:{  
+    alignItems: 'flex-end',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    padding: 10,
+  },
+  reportText:{
+    color: 'red',
+    fontSize: 12,
+  },
+
+
 });
 
   

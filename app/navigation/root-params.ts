@@ -4,6 +4,7 @@ export type RootParamList = {
   Login: undefined;
   Main: undefined;
   Signup: undefined;  
+  Empresa: undefined;
   ShowFriends:undefined;
   ShowFolloweds: { username: string };
   ShowFollowers: { username: string };
@@ -23,6 +24,7 @@ export type RootParamList = {
   Config: undefined;
   DescriptionScreen: { description: string, eventId: string};
   ChatScreen: { event: IEvent };
+  ShowContacts: undefined;
 };
 
 export type TabParamList = {
