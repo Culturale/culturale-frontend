@@ -1,7 +1,7 @@
 import { action, makeObservable, observable } from 'mobx';
 
-import { IEvent, IReview, IUser, Review, IMessage } from '~/domain';
-import { eventFactory, messageFactory} from '~/domain';
+import type { IEvent, IReview, IUser, IMessage } from '~/domain';
+import { Review , eventFactory, messageFactory} from '~/domain';
 import type { EventDocument, IInfrastructure, MessageDocument } from '~/infrastructure';
 import type { IRequestSubject } from '~/observables';
 import { RequestSubject } from '~/observables';
@@ -21,11 +21,11 @@ export class EventController implements IEventController {
     this.infrastructure = infrastructure;
 
     makeObservable(this, {
+      SearchEvents: observable,
       addParticipant: action,
       event: observable,
       events: observable,
       eventsmap: observable,
-      SearchEvents: observable,
       messages: observable,
       setEvent: action,
       setEvents: action,
@@ -239,10 +239,10 @@ export class EventController implements IEventController {
         comment
       );
 
-    const index = this.events.findIndex(e => e._id == eventId);
+    const index = this.events.findIndex(e => e._id === eventId);
     const newEvent = this.events[index];
     const newReview: IReview =  new Review(val);
-    newEvent.updateValoracions(newReview)
+    newEvent.updateValoracions(newReview);
     this.events[index] = newEvent;
       
     }catch(error){
@@ -250,6 +250,30 @@ export class EventController implements IEventController {
       console.error(error);
     }
   }
+
+  public async createEvent(codi: number, denominacio: string, descripcio: string, preu: string, dataIni: Date, dataFi: Date, adress: string, lat: number, long: number, url: string, categoria: string, horaIni: string, horaFin: string):Promise<void>{
+    try{
+      this.infrastructure.api.newEvent(
+        codi,
+        denominacio,
+        descripcio,
+        preu, 
+        dataIni, 
+        dataFi, 
+        adress, 
+        lat, 
+        long,
+        url, 
+        categoria, 
+        horaIni,
+        horaFin
+      );
+    }catch(e){
+      // eslint-disable-next-line no-console
+      console.error(e);
+    }
+  }
+
 
 
   public async reportReview(reviewId: string):Promise<void>{

@@ -23,7 +23,8 @@ export const ProfileScreen = observer(() => {
   useEffect((() => {}), [language]);
  
 
-  const userInfo = UserController.userInfo;
+  const userInfo = UserController.users.filter((user)=> user?.username ===  UserController.userInfo.username)[0];
+  
   const navigationProfile = useNavigation<ProfileNavigation>();
 
 
@@ -101,10 +102,6 @@ export const ProfileScreen = observer(() => {
             <Image source={require('../../../assets/config-logo.png')} style={Styles.icon} />
             <TraductionText style={Styles.configText} tx="perfil.configuracion"/>
           </TouchableOpacity>
-          <View style={Styles.panelConfig}>
-            <Image source={require('../../../assets/card-logo.png')} style={Styles.icon}/>
-            <TraductionText style={Styles.configText} tx="perfil.pagos"/>
-          </View>
           <TouchableOpacity  style={Styles.panelConfig} onPress={() => { navigationProfile.navigate('ShowFriends'); }}>
             <Image source={require('../../../assets/friend-logo.png')} style={Styles.icon}/>
             <TraductionText style={Styles.configText} tx="perfil.amigos"/>

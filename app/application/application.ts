@@ -11,6 +11,7 @@ import { login } from './use-cases';
 import { signup } from './use-cases/signup';
 import type { UseCasesMap } from './use-cases/use-cases';
 import { newmessage } from './use-cases/newmessage';
+import { fetchPaymentSheetParams } from './use-cases/fetch-payment-sheet-params';
 
 export class Application implements IApplication {
   public readonly controllers: Controllers;
@@ -38,10 +39,13 @@ export class Application implements IApplication {
           this.infrastructure,
           this.controllers.UserController,
           username,
-          password
+          password,
         );
         this.useCasesRequests.set('Login', subject);
         return subject;
+      },
+      FetchPaymentSheetParams: (eventId: string) => {
+        return fetchPaymentSheetParams(this.infrastructure, eventId);
       },
       Signup: (
         username: string,
@@ -50,7 +54,7 @@ export class Application implements IApplication {
         email: string,
         phoneNumber: string,
         userType: string,
-        profilePicture?: string
+        profilePicture?: string,
       ) => {
         const subject = signup(
           this.infrastructure,
@@ -61,13 +65,13 @@ export class Application implements IApplication {
           email,
           phoneNumber,
           userType,
-          profilePicture
+          profilePicture,
         );
         this.useCasesRequests.set('Signup', subject);
         return subject;
       },
       NewMessage: (id: string, content: string, userId: string) => {
-        const date= new Date();
+        const date = new Date();
         const subject = newmessage(
           this.infrastructure,
           id,
