@@ -46,6 +46,8 @@ export type RemoveFavouriteResponse =
   paths['/users/deleteFavourite']['delete']['responses']['201']['schema'];
 
 export interface IAPI {
+  
+  newEvent: (codi: number, denominacio: string, descripcio: string, preu: string, dataIni: Date, dataFi: Date, adress: string, lat: number, long: number, url: string, categoria: string, horaIni: string, horaFin: string)=> void;
   setup: (token: string) => void;
 
   login: (username: string, password: string) => Promise<LoginResponse>;
