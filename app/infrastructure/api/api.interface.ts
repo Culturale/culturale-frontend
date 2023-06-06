@@ -119,4 +119,5 @@ export interface IAPI {
 
   reportReview: (reviewId: string)=> Promise<void>;
   getContactsFromNumbers: (contacts: any, id: string)=> void;
+  reportUser: (userId: string)=> Promise<void>;
 }

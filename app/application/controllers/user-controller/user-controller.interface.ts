@@ -121,5 +121,5 @@ export interface IUserController extends Controller {
   setEmail: (email: string) => void ;
   setPhoneNumber: (phoneNumber: string) => void ;
   getContactsFromNumbers:(phoneNumbers: any, id: string) => void;
-
+  reportUser(username: string): Promise<void>;
 }
