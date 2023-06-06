@@ -50,7 +50,7 @@ export const ShowContactsScreen = observer(() => {
     };
     
   
-    const getContacts = () => {
+    const getContacts = async () => {
       console.log('Getting contacts');
       Contacts.getAll()
         .then((contacts: any) => {
@@ -63,7 +63,7 @@ export const ShowContactsScreen = observer(() => {
           console.log('Números de teléfono:', phoneNumbers);
           UserController.getContactsFromNumbers(phoneNumbers, UserController.userInfo._id);
           //console.log('Contactos:', UserController.fetchUser(UserController.userInfo.username).contacts);
-          setContacts(UserController.fetchUser(UserController.userInfo.username).contacts);
+          setContacts(( UserController.fetchUser(UserController.userInfo._id)).contacts);
          
         })
         .catch((error: Error) => {

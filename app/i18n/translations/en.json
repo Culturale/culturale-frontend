@@ -73,7 +73,9 @@
       "noEvents": "You have no events for the selected day"
     },
     "settings": {
-      "changeLanguage": "Change Language "
+      "changeLanguage": "Change Language ",
+      "contacts": "Contacts"
+
     },
     "valoracio": {
       "new": "New rating",

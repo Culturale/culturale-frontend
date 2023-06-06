@@ -48,9 +48,9 @@ export const SettingsScreen = observer(() => {
           <Picker.Item label="English" value="en" />
           <Picker.Item label="Español" value="es" />
         </Picker>
-        <TouchableOpacity   onPress={() => { navigation.navigate('ShowContacts'); }}>
+        <TouchableOpacity  style={styles.contactContainer} onPress={() => { navigation.navigate('ShowContacts'); }}>
+        <Ionicons style={styles.iconoContacto} name="person-circle-outline"/>
             <View >
-              <Ionicons name="person-circle-outline"/>
               <TraductionText style={styles.title} tx="settings.contacts"/>
             </View>
        </TouchableOpacity>
