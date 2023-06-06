@@ -121,7 +121,7 @@ export class API implements IAPI {
   }
 
   public async getAllUsers(): Promise<UserDocument[]> {
-    const res = await this.get<GetUsersResponse>(`/users`);
+    const res = await this.get<GetUsersResponse>('/users');
     return res.users;
   }
 
@@ -211,25 +211,24 @@ export class API implements IAPI {
     profilePicture?: string,
   ): Promise<UserDocument> {
     const res = await this.post<EditUserResponse>('/users/edit', {
-      id,
       email,
+      id,
       name,
       phoneNumber,
       profilePicture,
       username,
       usertype,
     });
-    console.log(res);
     return res.user;
   }
 
   public async newMessage( id: string, content: string, userId: string): Promise<MessageDocument>{
     const date = new Date();
     const res = await this.post<MessageDocument> ('/events/newMessage', {
-      id,
       content,
-      userId,
       date,
+      id,
+      userId,
     });
     return res;
   }
@@ -245,8 +244,8 @@ export class API implements IAPI {
 
   public async addFriend(username: string, follower:string): Promise<UserDocument[]> {
     const res = await this.post<AddFollowerResponse>('/users/newFollower', {
-      username,
-      follower
+      follower,
+      username
     });
     console.log(res);
 
@@ -274,7 +273,7 @@ export class API implements IAPI {
       headers: {
         Accept: 'application/json',
         Authorization: `Bearer ${this.token}`,
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       },
       method: 'DELETE',
     });
@@ -294,6 +293,8 @@ export class API implements IAPI {
     });
   }
 
+
+
   public async getChatMessages(id: string): Promise<MessageDocument[]> {
     const res = await this.get<MessageResponse>(`/events/${id}/messages`);
     return res.messages;
@@ -308,5 +309,26 @@ export class API implements IAPI {
     });
     return res;
   }
+
+  public async newEvent(codi:number, denominacio: string, descripcio: string, preu: string, dataIni: Date, dataFi: Date, adress: string, lat: number, long: number, url: string, categoria: string, horaIni: string, horaFin: string){
+    const horari = `${horaIni}-${horaFin}`;
+    const res = await this.post<EventDocument>('/events/create', {
+      adress,
+      categoria,
+      codi: Number(codi),
+      dataFi, 
+      dataIni, 
+      denominacio,
+      descripcio, 
+      horari,
+      lat: Number(lat), 
+      long: Number(long), 
+      preu,
+      url
+    });
+    console.log(res);
+    return res;
+  }
+
 
 }

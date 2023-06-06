@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
-import { Text, View, Button, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, View, Button, TextInput, TouchableOpacity, ScrollView, Modal } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 
 
@@ -16,15 +16,18 @@ export const NewEventScreen = observer(() => {
   } = useApplicationLayer();
   const [denominacio, setDenominacio] = useState('');
   const [descripcio, setDescripcio] = useState('');
+  const [codi, setCodi] = useState();
+
   const [preu, setPreu] = useState('');
   const [dataIni, setDataIni] = useState(null);
-  const [dataEnd, setDataEnd] = useState(null);
+  const [dataFi, setDataEnd] = useState(null);
   const [adress, setAdress] = useState(null);
   const [lat, setLat] = useState();
   const [long, setLong] = useState();
   const [url, setUrl] = useState();
   const [categoria, setCategoria] = useState();
 
+  const [showPopup, setShowPopup] = useState(false);
 
   const [horaIni, setHoraIni] = useState(null);
   const [horaFin, setHoraFin] = useState(null);
@@ -41,8 +44,26 @@ export const NewEventScreen = observer(() => {
   };
 
   const handleCreateEvent = () => {
-    // Lógica para crear el evento aquí
-    console.log('Evento creado');
+    EventController.createEvent(codi, denominacio, descripcio, preu, dataIni, dataFi, adress, lat, long, url, categoria, horaIni, horaFin);
+    setShowPopup(true);
+    setTimeout(() => {
+      setShowPopup(false);
+      setDenominacio('');
+      setDescripcio('');
+      setCodi(null);
+      setPreu('');
+      setDataIni(null);
+      setDataEnd(null);
+      setAdress(null);
+      setLat(null);
+      setLong(null);
+      setUrl(null);
+      setCategoria(null);
+      setHoraIni(null);
+      setHoraFin(null);
+      setShowDatePicker(false);
+      setShowDateEndPicker(false);
+    }, 2000);
   };
 
   return (
@@ -68,28 +89,37 @@ export const NewEventScreen = observer(() => {
         value={preu}
         onChangeText={setPreu}
       />
+      <TextInput
+        placeholder="Codi"
+        style={Styles.input}
+        value={codi}
+        onChangeText={setCodi}
+        keyboardType="numeric" 
+      />
        <TextInput
         placeholder="Adreça"
         style={Styles.input}
-        value={preu}
+        value={adress}
         onChangeText={setAdress}
       />
        <TextInput
         placeholder="Latitiud"
         style={Styles.input}
-        value={preu}
+        value={lat}
         onChangeText={setLat}
+        keyboardType="numeric" 
       />
        <TextInput
         placeholder="Longitud"
         style={Styles.input}
-        value={preu}
+        value={long}
         onChangeText={setLong}
+        keyboardType="numeric"
       />
       <TextInput
         placeholder="Url"
         style={Styles.input}
-        value={preu}
+        value={url}
         onChangeText={setUrl}
       />
       <View style={Styles.dateOps}>
@@ -116,6 +146,14 @@ export const NewEventScreen = observer(() => {
           />
         )}
       </View>
+      <Modal visible={showPopup} transparent>
+        <View style={Styles.popupContainer}>
+          <View style={Styles.popup}>
+            <Text style={Styles.popupText}>Evento creado!</Text>
+            <Text style={Styles.popupTick}>✔</Text>
+          </View>
+        </View>
+      </Modal>
       <View style={Styles.dateOps}>
         <TouchableOpacity onPress={() => setShowDateEndPicker(!showDateEndPicker)}>
           <Text style={Styles.dataIni}>
@@ -155,7 +193,7 @@ export const NewEventScreen = observer(() => {
             onSelect={setHoraFin}
           />
         </View>
-        <View style={Styles.filterCategoria}>
+        <View>
           <CategoryPicker selectedCategory={categoria} onSelectCategory={setCategoria} />
         </View>
       <View style={Styles.buttonSub}>

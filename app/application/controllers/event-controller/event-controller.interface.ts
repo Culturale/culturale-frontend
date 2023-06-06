@@ -94,4 +94,7 @@ export interface IEventController {
    * @description Sets SearchEvents property
    */
   setEventsSearch: (SearchEvents: IEvent[]) => void;
+
+  createEvent: (codi: number, denominacio: string, descripcio: string, preu: string, dataIni: Date, dataFi: Date, adress: string, lat: number, long: number, url: string, categoria: string, horaIni: string, horaFin: string) => void;
+
 }
