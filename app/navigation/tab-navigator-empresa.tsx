@@ -22,7 +22,7 @@ export const TabNavigatorEmpresa: React.FC = observer(() => {
           let iconName;
           if (route.name === 'NewEvent') {
             iconName = focused ? 'add-circle' : 'add-circle-outline';
-          } else if (route.name === 'ShowReportsEvents') {
+          } else if (route.name === 'ShowReportsReviews') {
             iconName = focused ? 'list' : 'list-outline';
           } else if (route.name === 'ShowReportsUser') {
             iconName = focused ? 'person' : 'person-outline';

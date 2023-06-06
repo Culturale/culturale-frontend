@@ -217,22 +217,11 @@ export class API implements IAPI {
     return res.events;
   }
 
-  public async fetchEventsByFilters(
-    denominacio?: string,
-    categoria?: string,
-    dataIni?: Date,
-    dataFi?: Date,
-    horari?: string,
-    price?: string
-  ): Promise<EventDocument[]> {
-    const res = await this.get<GetEventsResponse>(
-      `/events/filters/?denominacio=${denominacio}&categoria=${categoria}&dataIni=${dataIni}&dataFi=${dataFi}&horari=${horari}&price=${price}`
-    );
   public async getReviewReport(): Promise<ReviewDocument[]> {
-    const res = await this.get<GetReviewsResponse>('/events/getReportedReviews/');
-    return res.events;
+     const res = await this.get<GetReviewsResponse>('/events/getReportedReviews/');
+     return res.events;
   }
-
+  
   public async fetchEventsByFilters(denominacio?: string,
                                     categoria?: string,
                                     dataIni?: Date,
