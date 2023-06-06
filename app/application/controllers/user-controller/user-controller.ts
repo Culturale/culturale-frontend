@@ -6,10 +6,13 @@ import type { ImagePickerAsset } from 'expo-image-picker';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
 
-import { IEvent, IUser, User, eventFactory, userFactory } from '~/domain';
+import type { IEvent, IUser} from '~/domain';
+import { eventFactory, userFactory } from '~/domain';
 import type { EventDocument, IInfrastructure, UserDocument } from '~/infrastructure';
+import type { IRequestSubject} from '~/observables';
+import { RequestSubject } from '~/observables';
+
 import type { IUserController } from './user-controller.interface';
-import { IRequestSubject, RequestSubject } from '~/observables';
 
 export enum DriverRequests {
   Login = 'LOGIN',
@@ -24,32 +27,40 @@ export class UserController implements IUserController {
   public userInfo: IUser;
   private infrastructure: IInfrastructure;
   public users: IUser[];
+  public msguser: IUser;
 
   constructor(infrastructure: IInfrastructure) {
     this.infrastructure = infrastructure;
     makeObservable(this, {
+      addEventSub: action,
       isLoggedIn: observable,
       isLoginNeeded: computed,
       modifyUser: action,
+      msguser: observable,
       removeToken: action,
       setEmail: action,
       setIsLoggedIn: action,
+      setMsgUser: action,
       setName: action,
       setPhoneNumber: action,
       setProfilePicture: action,
       setToken: action,
       setUserInfo: action,
       setUsername: action,
+      setUsers: action,
       token: observable,
       uploadPhoto: action,
       userInfo: observable,
-      users: observable,
-      setUsers: action,
+      users: observable
     });
   }
 
   public setPreferits(events: IEvent[]): void {
     this.userInfo.preferits = events;
+  }
+
+  public setMsgUser(user: IUser): void {
+    this.msguser = user;
   }
 
   public setUsers(users: IUser[]): void {
@@ -91,9 +102,11 @@ export class UserController implements IUserController {
       { fireImmediately: true },
     );
   }
+
   public async removeFollowed(userUsername: string, friendUsername:string): Promise<void> {
     
     try{
+    // eslint-disable-next-line no-console
     console.log(await this.infrastructure.api.removeFriend(friendUsername, userUsername));
 
     // A deja de seguir a B
@@ -118,6 +131,7 @@ export class UserController implements IUserController {
       this.setUsers(newUsers);
     }}
     catch(error){
+      // eslint-disable-next-line no-console
       console.log(error);
     }
   }
@@ -148,9 +162,11 @@ export class UserController implements IUserController {
     }
   } 
   catch(error){
+    // eslint-disable-next-line no-console
     console.log(error);
   }
 }
+
   public async addFavourite(id: string, username: string): Promise<void> {
     await this.infrastructure.api.addFavourite(id, username);
   }
@@ -168,6 +184,7 @@ export class UserController implements IUserController {
   }
   
   public async modifyUser(
+    id: string,
     username: string,
     name: string,
     email: string,
@@ -175,16 +192,23 @@ export class UserController implements IUserController {
     usertype: string,
     profilePicture?: string,
   ): Promise<void> {
-    const res = await this.infrastructure.api.editUser(
-      username,
-      name,
-      email,
-      phoneNumber,
-      usertype,
-      profilePicture,
-    );
-    const user = userFactory(res);
-    this.setUserInfo(user);
+    try{
+      const res = await this.infrastructure.api.editUser(
+        id,
+        username,
+        name,
+        email,
+        phoneNumber,
+        usertype,
+        profilePicture,
+      );
+      const user = userFactory(res);
+      this.setUserInfo(user);
+
+    } catch(e){
+      // eslint-disable-next-line no-console
+      console.error(e);
+    }
   }
 
   public fetchAllUsers(): IRequestSubject<void> {
@@ -207,7 +231,6 @@ export class UserController implements IUserController {
       .catch((e: Error) => {
         subject.failRequest(e);
       });
-    console.log("DEVOLVEMOS EL SUBJECT", subject)
     return subject;
   }
   
@@ -222,7 +245,6 @@ export class UserController implements IUserController {
         const user = userFactory(doc);
         users.push(user);
       }
-      console.log(users);
       this.setUsers(users);
 
       subject.completeRequest();
@@ -232,6 +254,22 @@ export class UserController implements IUserController {
     });
 
     return subject;
+  }
+
+  public fetchUser(id: string): IUser {
+    const subject = new RequestSubject<void>();
+    subject.startRequest();
+    this.infrastructure.api
+    .getUser(id)
+    .then((res: UserDocument) => {
+      const user = userFactory(res);
+      this.setMsgUser(user);
+      subject.completeRequest();
+    })
+    .catch((e: Error) => {
+      subject.failRequest(e);
+    });
+    return this.msguser;
   }
 
   public get isLoginNeeded(): boolean {
@@ -261,7 +299,7 @@ export class UserController implements IUserController {
   }
 
   public addEventSub(event: IEvent): void {
-    this.userInfo.addEventSub(event);
+    this.userInfo.eventSub.push(event);
   }
 
   public setUsername(username: string): void {

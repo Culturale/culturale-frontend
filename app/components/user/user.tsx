@@ -1,6 +1,6 @@
+import { Ionicons } from '@expo/vector-icons';
 import type React from 'react';
 import { View, Text , StyleSheet, Image } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import type { IUser } from '~/domain';
 interface Props {

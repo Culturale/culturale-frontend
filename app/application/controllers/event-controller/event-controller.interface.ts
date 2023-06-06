@@ -1,8 +1,9 @@
-import type { IEvent, IUser } from '~/domain';
+import type { IEvent, IMessage, IUser } from '~/domain';
 import type { IRequestSubject } from '~/observables';
 
 export interface IEventController {
   readonly event: IEvent;
+  readonly messages: IMessage[];
   readonly events: IEvent[];
   readonly eventsmap: IEvent[];
   readonly SearchEvents: IEvent[];
@@ -85,6 +86,14 @@ export interface IEventController {
    * @description Adds review into an event
    */
   addReview: (eventId: string, userId: string, puntuation: number,  comment?: string) => Promise<void>;
+  
+  /**
+   *
+   * @public
+   * @description   Adds review into an event
+   */
+  reportReview:(reviewId: string) => Promise<void>;
+  
 
 
   /**

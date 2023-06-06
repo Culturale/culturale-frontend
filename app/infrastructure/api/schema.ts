@@ -265,6 +265,61 @@ export interface paths {
       };
     };
   };
+  "/users/newFollower": {
+    /** Adds a new  follower */
+    post: {
+      responses: {
+        /** Ok */
+        200: {
+          schema: {
+            followers?: definitions["user"][];
+            message?: string;
+          };
+        };
+        /** Internal server error */
+        404: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+        /** Internal server error */
+        500: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+      };
+    };
+  };
+  "/events/reportReview": {
+    /** Adds a new  report to the review */
+    put: {
+      responses: {
+        /** Ok */
+        200: {
+          schema: {
+            message?: string;
+          };
+        };
+        /** Internal server error */
+        404: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+        /** Internal server error */
+        500: {
+          schema: {
+            data?: { [key: string]: unknown };
+            error?: definitions["error"];
+          };
+        };
+      };
+    };
+  };
 }
 
 export interface definitions {

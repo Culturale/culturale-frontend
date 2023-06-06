@@ -120,4 +120,17 @@ export const MyEventsScreenStyles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  titleMyEvents: {
+    color: '#fff',
+    fontSize: 32,
+    fontWeight: 'bold',
+  },
+
+  titleContainer: {
+    backgroundColor: '#34b38a',
+    justifyContent: 'center',
+    paddingBottom: 5,
+    paddingHorizontal: 32,
+    paddingTop: 20,
+  },
 });

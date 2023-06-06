@@ -6,6 +6,11 @@ export const EventScreenStyles =StyleSheet.create({
       paddingLeft: 10,
       paddingTop: 30,
     },
+    shareContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
     backButton: {
       backgroundColor: '#007AFF',
       borderRadius: 8,
@@ -174,14 +179,12 @@ export const EventScreenStyles =StyleSheet.create({
   
     successContainer: {
       alignItems: 'center',
-      alignSelf: 'flex-end',
       flexDirection: 'row',
       paddingBottom: 10,
     },
     successText: {
       color: 'green',
       fontSize: 16,
-      marginLeft: 8,
     },
     title: {
       fontSize: 24,
@@ -226,5 +229,14 @@ export const EventScreenStyles =StyleSheet.create({
     listContainer:{
       flex: 0,
       maxHeight: 230,
+  },
+  report:{
+    fontSize: 24,
+    color: 'red',
+    alignContent: 'flex-end',
+
+  },
+  reportContainer:{
+    marginLeft: 180,
   }
 });

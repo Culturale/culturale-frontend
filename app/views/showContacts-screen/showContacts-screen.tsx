@@ -6,12 +6,11 @@ import { IUser } from '~/domain';
 import { useApplicationLayer } from '~/hooks';
 import { Text } from '~/components/text';
 import {  useNavigation } from '@react-navigation/native';
-import {  RootParamList } from '~/navigation';
+import {  RootParamList, TabParamList } from '~/navigation';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import { PermissionsAndroid } from 'react-native';
 import Contacts from 'react-native-contacts';
-import { get } from 'mongoose';
 
 
 
@@ -63,7 +62,7 @@ export const ShowContactsScreen = observer(() => {
           );
           console.log('Números de teléfono:', phoneNumbers);
           UserController.getContactsFromNumbers(phoneNumbers, UserController.userInfo._id);
-          console.log('Contactos:', UserController.findUserId(UserController.userInfo._id).contacts);
+          //console.log('Contactos:', UserController.fetchUser(UserController.userInfo.username).contacts);
           setContacts(UserController.findUserId(UserController.userInfo._id).contacts);
          
         })

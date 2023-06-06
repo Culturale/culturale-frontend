@@ -24,12 +24,30 @@ export const RegisterScreenStyles = StyleSheet.create({
     justifyContent: 'center',
   },
 
+   dropDownContainerStyle: {
+    alignSelf: 'center',
+    backgroundColor: '#D2FFE6',
+    marginBottom: 20,
+    width: '70%',
+  },
+  dropDownStyle:{
+    backgroundColor: '#D2FFE6',
+  },
   image: {
     height: 250,
     marginBottom: -70,
     width: 250,
   },
-
+  registerBtnOpen: {
+    alignItems: 'center',
+    backgroundColor: '#34b38a',
+    borderRadius: 25,
+    height: 50,
+    justifyContent: 'center',
+    marginBottom: 80,
+    marginTop: 70,
+    width: '80%',
+  },
   inputView: {
     alignItems: 'center',
     backgroundColor: '#D2FFE6',
@@ -37,6 +55,18 @@ export const RegisterScreenStyles = StyleSheet.create({
     height: 45,
     marginBottom: 20,
     width: '70%',
+  },
+  inputView2: {
+    alignItems: 'center',
+    backgroundColor: '#D2FFE6',
+    borderRadius: 30,
+    height: 45,
+    marginBottom: 20,
+    marginTop: 50,
+    width: '70%',
+  },
+  itemStyle:{
+    justifyContent: 'flex-start',
   },
 
   registerBtn: {

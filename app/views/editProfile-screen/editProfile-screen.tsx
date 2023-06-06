@@ -61,6 +61,7 @@ export const EditProfileScreen: React.FC<Props> = observer(() => {
         break;
     }
     await UserController.modifyUser(
+      userInfo._id,
       userInfo.username,
       userInfo.name,
       userInfo.email,
@@ -93,6 +94,7 @@ export const EditProfileScreen: React.FC<Props> = observer(() => {
       );
       return;
     }
+    
 
     const pickerResult = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
@@ -108,7 +110,11 @@ export const EditProfileScreen: React.FC<Props> = observer(() => {
       const newPhoto = `https://projecteaws.s3.eu-west-3.amazonaws.com/${userInfo.username}`;
       UserController.setProfilePicture(newPhoto);
       setEditingField('');
+      setEditValue('');
+
+      console.log(userInfo.profilePicture);
       }catch(e){
+        // eslint-disable-next-line no-console
         console.error(e);
       }
       // UserController.setProfilePicture(photo);
@@ -132,16 +138,7 @@ export const EditProfileScreen: React.FC<Props> = observer(() => {
         <Text style={Styles.changePhotoTxt}  tx='editProfileScreen.changePhoto'/>
       </TouchableOpacity>
       <View style={Styles.rows}>
-        <View style={Styles.row}>
-          <View style={Styles.column}>
-            <Text style={Styles.titleRow} tx='editProfileScreen.username'/>
-          </View>
-          <View style={Styles.column}>
-            <TouchableOpacity onPress={() => handleEditField('username')}>
-              <TextDynamic>{userInfo.username}</TextDynamic>
-            </TouchableOpacity>
-          </View>
-        </View>
+        
         <View style={Styles.row}>
           <View style={Styles.column}>
             <Text style={Styles.titleRow} tx='editProfileScreen.name'/>

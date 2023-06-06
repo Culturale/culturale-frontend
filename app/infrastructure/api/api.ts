@@ -7,6 +7,7 @@ import type {
   EventDocument,
   GetEventsResponse,
   GetUsersResponse,
+  GetUserResponse,
   GetEventResponse,
   IAPI,
   LoginResponse,
@@ -17,6 +18,8 @@ import type {
   UserDocument,
   RemoveFavouriteResponse,
   GetContactsFromNumbersResponse,
+  ReportResponse,
+  MessageResponse,
 } from './api.interface';
 
 export class API implements IAPI {
@@ -36,6 +39,9 @@ export class API implements IAPI {
   }
 
   private async post<T>(path: string, body: object): Promise<T> {
+   
+   console.log(JSON.stringify(body))
+    console.log(this.baseURL + path + JSON.stringify(body));
     return fetch(this.baseURL + path, {
       body: JSON.stringify(body),
       headers: {
@@ -71,6 +77,23 @@ export class API implements IAPI {
         throw err;
       });
   }
+  private async put<T>(path: string, body: object): Promise<T> {
+    console.log(JSON.stringify(body))
+     return fetch(this.baseURL + path, {
+       body: JSON.stringify(body),
+       headers: {
+         Accept: 'application/json',
+         Authorization: `Bearer ${this.token}`,
+         'Content-Type': 'application/json',
+       },
+       method: 'PUT',
+     })
+       .then((res) => res.json())
+       .then((data: T) => data)
+       .catch((err: Error) => {
+         throw err;
+       });
+   }
 
   private async get<T>(path: string): Promise<T> {
     return fetch(this.baseURL + path, {
@@ -87,6 +110,8 @@ export class API implements IAPI {
         throw err;
       });
   }
+
+ 
 
   public setup(token: string) {
     this.token = token;
@@ -121,6 +146,11 @@ export class API implements IAPI {
   public async getAllUsers(): Promise<UserDocument[]> {
     const res = await this.get<GetUsersResponse>(`/users`);
     return res.users;
+  }
+
+  public async getUser(id: string): Promise<UserDocument> {
+    const res = await this.get<GetUserResponse>(`/users/id/${id}`);
+    return res.user;
   }
 
   public async getUsers(username: string): Promise<UserDocument[]> {
@@ -195,6 +225,7 @@ export class API implements IAPI {
   }
 
   public async editUser(
+    id: string,
     username: string,
     name: string,
     email: string,
@@ -203,6 +234,7 @@ export class API implements IAPI {
     profilePicture?: string,
   ): Promise<UserDocument> {
     const res = await this.post<EditUserResponse>('/users/edit', {
+      id,
       email,
       name,
       phoneNumber,
@@ -210,8 +242,19 @@ export class API implements IAPI {
       username,
       usertype,
     });
-
+    console.log(res);
     return res.user;
+  }
+
+  public async newMessage( id: string, content: string, userId: string): Promise<MessageDocument>{
+    const date = new Date();
+    const res = await this.post<MessageDocument> ('/events/newMessage', {
+      id,
+      content,
+      userId,
+      date,
+    });
+    return res;
   }
 
   public async removeFriend(username: string, follower:string): Promise<UserDocument[]> {
@@ -222,6 +265,7 @@ export class API implements IAPI {
 
     return res.followers;
   }
+
   public async addFriend(username: string, follower:string): Promise<UserDocument[]> {
     const res = await this.post<AddFollowerResponse>('/users/newFollower', {
       username,
@@ -274,15 +318,8 @@ export class API implements IAPI {
   }
 
   public async getChatMessages(id: string): Promise<MessageDocument[]> {
-    const res = await this.axiosClient.get<MessageDocument[]>(
-      `/events/${id}/messages`,
-    );
-
-    if (res.status === 200) {
-      return res.data;
-    } else {
-      throw new Error('Error getting event chat messages');
-    }
+    const res = await this.get<MessageResponse>(`/events/${id}/messages`);
+    return res.messages;
   }
 
   public async addReview(eventId: string, authorId: string, puntuation: number,  comment?: string): Promise<ReviewDocument> {
@@ -304,7 +341,14 @@ export class API implements IAPI {
      await this.post<GetContactsFromNumbersResponse>(`/users/${id}/syncContacts`, {
       contacts
   });
-
 }
+
+  public async reportReview(reviewId: string): Promise<void> {
+   await this.put<ReportResponse>('/events/reportReview', {
+    reviewId,
+    });
+  }
+
+
 }
 

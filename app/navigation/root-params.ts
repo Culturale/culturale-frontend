@@ -22,6 +22,8 @@ export type RootParamList = {
   Search: undefined;
   Config: undefined;
   DescriptionScreen: { description: string, eventId: string};
+  sts: undefined;
+  ChatScreen: { event: IEvent };
   ShowContacts: undefined;
 };
 

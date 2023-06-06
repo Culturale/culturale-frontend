@@ -90,8 +90,9 @@ bottomContainer: {
   },
   titleContainer: {
     backgroundColor: '#34b38a',
+    justifyContent: 'center',
     paddingBottom: 5,
     paddingHorizontal: 32,
-    paddingTop: 50,
+    paddingTop: 20,
   },  
 });
