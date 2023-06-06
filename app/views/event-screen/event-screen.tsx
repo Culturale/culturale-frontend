@@ -4,9 +4,18 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { useStripe } from '@stripe/stripe-react-native';
 import { observer } from 'mobx-react-lite';
-import React, { useState, useEffect} from 'react';
-import { Image, Linking, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import MapView from 'react-native-maps';
+import type React from 'react';
+import { useState, useEffect } from 'react';
+import {
+  Image,
+  Linking,
+  Platform,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
 import Share from 'react-native-share';
 
 import { Text as TraductionText } from '~/components';
@@ -17,8 +26,6 @@ import { ValoracioScreenStyles as valStyles } from '../valoracio-screen/valoraci
 
 import type { EventScreenProps as Props } from './event-screen.props';
 import { EventScreenStyles as styles } from './event-screen.styles';
-
-
 
 type EventScreenNavigation = StackNavigationProp<RootParamList, 'EventScreen'>;
 
@@ -126,9 +133,9 @@ export const EventScreen: React.FC<Props> = observer(() => {
   };
 
   async function handleReport(reviewId: string) {
-      await EventController.reportReview(reviewId);
-      alert('Evento reportado correctamente');
-  };
+    await EventController.reportReview(reviewId);
+    alert('Evento reportado correctamente');
+  }
 
   return (
     <>
@@ -220,50 +227,119 @@ export const EventScreen: React.FC<Props> = observer(() => {
                     justifyContent: 'flex-end',
                     marginTop: 10,
                   }}
-                />
-              </MapView>
-            </View>
-  {/* <ScrollView style={styles.listContainer}> */}
-  {event.valoracions.map((valoracio) => (
-    
-    <View style={styles.reviewContainer} key={valoracio.authorId}>
-      <View style={styles.userContainer}>
-        <Image
-          source={{ uri: UserController.findUserId(valoracio.authorId).profilePicture }}
-          style={styles.profilePicture}
-        />
-        <Text style={styles.username}>{UserController.findUserId(valoracio.authorId).username}</Text>
-      </View>
-      <View style={styles.ratingContainer}>
-        <View style={valStyles.ratingStars}>
-          {[1, 2, 3, 4, 5].map((value) => (
-            <Text
-              key={value}
-              style={[
-                styles.star,
-                value <= valoracio.puntuation ? valStyles.filledStar : null,
-              ]}
-            >
-              &#9733;
-            </Text>
-          ))}
+                >
+                  <Text style={styles.price}>{price}</Text>
+                  {!showSuccess ? (
+                    <TouchableOpacity
+                      style={styles.buyButton}
+                      onPress={
+                        price !== '0 €' ? buyTicket : addParticipantEvent
+                      }
+                    >
+                      {price !== '0 €' && (
+                        <TraductionText
+                          style={styles.buyButtonText}
+                          tx='eventScreen.BuyText'
+                        />
+                      )}
+                      {price === '0 €' && (
+                        <TraductionText
+                          style={styles.buyButtonText}
+                          tx='eventScreen.Enroll'
+                        />
+                      )}
+                    </TouchableOpacity>
+                  ) : (
+                    <View style={styles.successContainer}>
+                      <Ionicons
+                        color='green'
+                        name='checkmark-circle-outline'
+                        size={32}
+                      />
+                      <TraductionText
+                        style={styles.successText}
+                        tx='eventScreen.succes'
+                      />
+                    </View>
+                  )}
+                </View>
+                <TouchableOpacity onPress={handleOpenMaps}>
+                  <TraductionText
+                    style={styles.goButton}
+                    tx='eventScreen.ComoLlegar'
+                  />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.mapContainer}>
+                <MapView
+                  initialRegion={{
+                    latitude: event.lat,
+                    latitudeDelta: 0.02,
+                    longitude: event.long,
+                    longitudeDelta: 0.02,
+                  }}
+                  style={styles.map}
+                >
+                  <Marker
+                    coordinate={{
+                      latitude: event.lat,
+                      longitude: event.long,
+                    }}
+                  />
+                </MapView>
+              </View>
+              {/* <ScrollView style={styles.listContainer}> */}
+              {event.valoracions.map((valoracio) => (
+                <View key={valoracio.authorId} style={styles.reviewContainer}>
+                  <View style={styles.userContainer}>
+                    <Image
+                      source={{
+                        uri: UserController.findUserId(valoracio.authorId)
+                          .profilePicture,
+                      }}
+                      style={styles.profilePicture}
+                    />
+                    <Text style={styles.username}>
+                      {UserController.findUserId(valoracio.authorId).username}
+                    </Text>
+                  </View>
+                  <View style={styles.ratingContainer}>
+                    <View style={valStyles.ratingStars}>
+                      {[1, 2, 3, 4, 5].map((value) => (
+                        <Text
+                          key={value}
+                          style={[
+                            styles.star,
+                            value <= valoracio.puntuation
+                              ? valStyles.filledStar
+                              : null,
+                          ]}
+                        >
+                          &#9733;
+                        </Text>
+                      ))}
+                    </View>
+                    <TouchableOpacity
+                      style={styles.reportContainer}
+                      onPress={() => handleReport(valoracio._id)}
+                    >
+                      <Ionicons name='warning-outline' style={styles.report} />
+                    </TouchableOpacity>
+                  </View>
+                  {valoracio.comment && (
+                    <Text style={styles.comment}>{valoracio.comment}</Text>
+                  )}
+                </View>
+              ))}
+            </>
+          ) : (
+            <TraductionText
+              style={styles.goButton}
+              tx='eventScreen.LoadingEvent'
+            />
+          )}
         </View>
-        <TouchableOpacity onPress={() => handleReport(valoracio._id)} style={styles.reportContainer}>
-          <Ionicons name="warning-outline" style={styles.report} />
-        </TouchableOpacity>
-      </View>
-      {valoracio.comment && (
-        <Text style={styles.comment}>{valoracio.comment}</Text>
-      )}
-       </View>
-  ))}
-             
-          </>
-        ) : (
-          <TraductionText style={styles.goButton} tx="eventScreen.LoadingEvent" />
-        )}
-     </View>
-     </ScrollView>
+      </ScrollView>
     </>
   );
 });
