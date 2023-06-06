@@ -9,6 +9,7 @@ import { ShowFriendsScreen } from '~/views/showFriends-screen';
 import { ValoracioScreen } from '~/views/valoracio-screen';
 
 import type { RootParamList, TabParamList } from './root-params';
+import { ShowContactsScreen } from '~/views/showContacts-screen';
 
 const ProfileStack = createStackNavigator<RootParamList>();
 const Tab = createMaterialBottomTabNavigator<TabParamList>();
@@ -61,6 +62,11 @@ const ProfileStackNavigator: React.FC = observer(() => {
         name="Config"
         options={{ headerShown: false }}
       />
+       <ProfileStack.Screen
+      component={ShowContactsScreen}
+      name="ShowContacts"
+      options={{ headerShown: false }}
+    />
     </ProfileStack.Navigator>
     
   );
@@ -104,6 +110,7 @@ const HomeStackNavigator: React.FC = observer(() => {
         name="ProfileScreen"
         options={{ headerShown: false }}
       />
+     
     </ProfileStack.Navigator>
   );
 });

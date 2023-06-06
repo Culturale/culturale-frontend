@@ -364,7 +364,28 @@ paths:
                   type: object
                 error:
                   $ref: '#/definitions/error'
-
+  /users/:id/syncContacts:
+      post:
+        description: 'Gets contacts from user and returns the ones that are registered in BE'
+        security:
+          - bearerAuth: []
+        responses:
+          '200': 
+            description: Ok
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+          '500':
+            description: Internal server error
+            schema:
+              type: object 
+              properties:
+                data:
+                  type: object
+                error:
+                  $ref: '#/definitions/error'
 definitions:
   event:
     type: object

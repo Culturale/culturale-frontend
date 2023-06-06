@@ -19,6 +19,7 @@ import type {
   RemoveFavouriteResponse,
   ReportResponse,
   MessageResponse,
+  GetContactsFromNumbersResponse,
 } from './api.interface';
 
 export class API implements IAPI {
@@ -353,6 +354,16 @@ export class API implements IAPI {
     });
   }
 
+  public async getContactsFromNumbers(contacts: any, id: string): Promise<void>  {
+    contacts = contacts.map((phoneNumber) => {
+     return {
+       phoneNumber: phoneNumber.replace(/[^0-9]/g, '') // Eliminar caracteres no numéricos
+     };
+   });
+    await this.post<GetContactsFromNumbersResponse>(`/users/${id}/syncContacts`, {
+     contacts
+ });
+}
   public async newEvent(codi:number, denominacio: string, descripcio: string, preu: string, dataIni: Date, dataFi: Date, adress: string, lat: number, long: number, url: string, categoria: string, horaIni: string, horaFin: string){
     const horari = `${horaIni}-${horaFin}`;
     const res = await this.post<EventDocument>('/events/create', {
