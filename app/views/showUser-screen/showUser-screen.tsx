@@ -44,6 +44,10 @@ export const ShowUserScreen: React.FC<Props> = observer(() => {
     }
     return false;
 }
+async function handleReport() {
+  await UserController.reportUser(username);
+  alert('Usuario reportado correctamente');
+};
   return (
     <View style={Styles.container}>
       <View style={Styles.backArrow}>
@@ -54,7 +58,14 @@ export const ShowUserScreen: React.FC<Props> = observer(() => {
        <View style={Styles.container}>
         <TraductionText style={Styles.title} tx="perfil.perfil"/>
         <View style={Styles.rowProfile}>
-          <View style={Styles.titleData}>
+         <View style={Styles.reportCont}>
+          <TouchableOpacity onPress={() => handleReport()}>
+            <Ionicons name="warning-outline" style={Styles.report} />
+            <Text style={Styles.reportText}>Report</Text>
+          </TouchableOpacity>
+        </View>
+        
+        <View style={Styles.titleData}>
             <Image src={user.profilePicture} style={Styles.foto}/>
             <View style={Styles.contentData}>
             <TouchableOpacity onPress={() => { navigationUsr.navigate('ShowFollowers',{username: user.username}) }}>

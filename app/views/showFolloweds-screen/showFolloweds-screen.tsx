@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image, ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import { View, Image, ScrollView, TextInput, TouchableOpacity, Button } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { ShowFriendsStyles as styles } from './showFolloweds-screen.styles';
 import { IUser, User } from '~/domain';
@@ -56,9 +56,11 @@ export const ShowFollowedsScreen = observer(() => {
                 <Image src={amigo.profilePicture} style={styles.foto} />
                 <Text style={styles.username} text={amigo.username} />
               </View>
-              <TouchableOpacity onPress={() => handleRemoveFriend(amigo.username)}>
-                <Text style={styles.removeButton} tx="ShowFollowedsScreen.delete" />
-              </TouchableOpacity>
+              <Button
+                color={"#DC143C" }
+                title={"Unfollow"}
+                onPress={() => (handleRemoveFriend(amigo.username))}
+            ></Button>
             </TouchableOpacity>
           ))}
         </ScrollView>

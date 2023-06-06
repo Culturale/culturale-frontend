@@ -336,6 +336,11 @@ export class API implements IAPI {
     reviewId,
     });
   }
+  public async reportUser(username: string): Promise<void>{
+    await this.put<ReportResponse>('/users/reportUser', {
+      username,
+    });
+  }
 
   public async getContactsFromNumbers(contacts: any, id: string): Promise<void>  {
     contacts = contacts.map((phoneNumber) => {

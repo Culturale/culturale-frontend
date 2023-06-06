@@ -340,6 +340,9 @@ export class UserController implements IUserController {
     this.infrastructure.api
     .getContactsFromNumbers(phoneNumbers, id)
   };
+  public reportUser(username: string): Promise<void> {
+    return this.infrastructure.api.reportUser(username);
+  }
 }
 
 
